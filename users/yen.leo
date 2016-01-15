@@ -21,6 +21,8 @@
 <v t="leo.20151213173830.1" a="E"><vh>假如要在近端檢視, 使用下列按鈕</vh>
 <v t="leo.20151213085727.1"><vh>@button local pelican</vh></v>
 </v>
+<v t="ibm.20160115125316.1"><vh>管理者在產生遠端資料前, 定期清理 post 目錄</vh></v>
+<v t="ibm.20160115125101.1"><vh>@button git rm -fr post</vh></v>
 <v t="amd.20151215180106.1" a="E"><vh>設定與開發</vh>
 <v t="amd.20151216151325.1"><vh>@edit index.html</vh></v>
 <v t="amd.20151216152209.1"><vh>@edit README.md</vh></v>
@@ -94,6 +96,12 @@ pages 文章
 <t tx="amd.20160106094754.1"></t>
 <t tx="amd.20160106094829.1"></t>
 <t tx="amd.20160106095324.1"></t>
+<t tx="ibm.20160115125101.1">@language python
+import os
+# 從 .git 清除既有 post 目錄下的所有資料, 因為若更動相關文章 .md 設定, 將會在資料庫中殘留不必要的檔案資料
+os.system("git rm -rf post")
+g.es("git rm -rf post 執行完畢")</t>
+<t tx="ibm.20160115125316.1"></t>
 <t tx="leo.20151212173315.1"></t>
 <t tx="leo.20151212173315.2">QTreeWidget {
     /* These apply to the selected item, but not to editing items.*/

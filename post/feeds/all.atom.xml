@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cad-lab.github.io/blog/" rel="alternate"></link><link href="http://cad-lab.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://cad-lab.github.io/blog/</id><updated>2016-01-15T12:31:39+08:00</updated><entry><title>使用者貢獻文章標題</title><link href="http://cad-lab.github.io/blog/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-01-15T12:31:39+08:00</updated><author><name>user</name></author><id>tag:cad-lab.github.io,2016-01-15:blog/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章摘要&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cad-lab.github.io/blog/" rel="alternate"></link><link href="http://cad-lab.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://cad-lab.github.io/blog/</id><updated>2016-01-15T12:50:22+08:00</updated><entry><title>電腦輔助設計室網誌開通</title><link href="http://cad-lab.github.io/blog/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-01-15T12:50:22+08:00</updated><author><name>kmol</name></author><id>tag:cad-lab.github.io,2016-01-15:blog/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃&lt;/p&gt;
 
 
-&lt;p&gt;使用者貢獻文章主要內容&lt;/p&gt;</summary><category term="examples"></category></entry><entry><title>電腦輔助設計室網誌開通</title><link href="http://cad-lab.github.io/blog/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-01-15T12:25:06+08:00</updated><author><name>kmol</name></author><id>tag:cad-lab.github.io,2016-01-15:blog/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃&lt;/p&gt;
+&lt;p&gt;CADLab 是綜一館一間配置 63 台個人電腦的教學實驗室&lt;/p&gt;
+&lt;h2&gt;網誌文章分類&lt;/h2&gt;
+&lt;h3&gt;構想&lt;/h3&gt;
+&lt;p&gt;要讓一間二十一世紀國立科技大學的電腦教室發揮應有的功能, 著實需要一些規劃, 我們的構想其實很簡單:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;讓電腦硬體同時具有3個開機磁區&lt;/li&gt;
+&lt;li&gt;每一位使用者都知道如何善用各磁區的內容&lt;/li&gt;
+&lt;li&gt;使用每一位使用者都了解開關機標準流程, 並確實遵守奉行&lt;/li&gt;
+&lt;li&gt;每一台電腦都可以在網路切換下, 使用  IPV4 或 IPV6 協定下的區域與廣域網路主機&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;開機磁區&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Windows 10 - 存放必須要安裝的各種應用程式與套件&lt;/li&gt;
+&lt;li&gt;Windows 10 - 存放無需安裝的可攜綠色套件&lt;/li&gt;
+&lt;li&gt;Ubuntu 14.04 - Server 版加裝 ubuntu-desktop&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;實際情況&lt;/h3&gt;
+&lt;p&gt;另外利用主機建立維修回報系統與使用者操作日誌系統&lt;/p&gt;
+&lt;h3&gt;完成事項&lt;/h3&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry><entry><title>使用者貢獻文章標題</title><link href="http://cad-lab.github.io/blog/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-01-15T12:31:39+08:00</updated><author><name>user</name></author><id>tag:cad-lab.github.io,2016-01-15:blog/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章摘要&lt;/p&gt;
 
 
-&lt;p&gt;CADLab 是綜一館一間配置 63 台個人電腦的教學實驗室&lt;/p&gt;</summary><category term="Labs"></category><category term="綜一館8F"></category></entry></feed>
+&lt;p&gt;使用者貢獻文章主要內容&lt;/p&gt;</summary><category term="examples"></category></entry></feed>
