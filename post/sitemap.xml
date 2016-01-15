@@ -4,98 +4,98 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>http://cad-lab.github.io/blog/</loc>
-<lastmod>2016-01-15T17:10:44-00:00</lastmod>
+<loc>http://cad-lab.github.io/blog/post/</loc>
+<lastmod>2016-01-15T17:31:40-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/archives.html</loc>
-<lastmod>2016-01-15T17:10:44-00:00</lastmod>
+<loc>http://cad-lab.github.io/blog/post/archives.html</loc>
+<lastmod>2016-01-15T17:31:40-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/tags.html</loc>
-<lastmod>2016-01-15T17:10:44-00:00</lastmod>
+<loc>http://cad-lab.github.io/blog/post/tags.html</loc>
+<lastmod>2016-01-15T17:31:40-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/categories.html</loc>
-<lastmod>2016-01-15T17:10:44-00:00</lastmod>
+<loc>http://cad-lab.github.io/blog/post/categories.html</loc>
+<lastmod>2016-01-15T17:31:40-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/pages/about/</loc>
+<loc>http://cad-lab.github.io/blog/post/pages/about/</loc>
 <lastmod>2016-01-15T12:34:18+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</loc>
+<loc>http://cad-lab.github.io/blog/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</loc>
 <lastmod>2016-01-15T12:50:22+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</loc>
+<loc>http://cad-lab.github.io/blog/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</loc>
 <lastmod>2016-01-15T12:31:39+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/category/fan-li.html</loc>
+<loc>http://cad-lab.github.io/blog/post/category/fan-li.html</loc>
 <lastmod>2016-01-15T12:31:39+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/category/gui-hua.html</loc>
+<loc>http://cad-lab.github.io/blog/post/category/gui-hua.html</loc>
 <lastmod>2016-01-15T12:50:22+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/tag/cad.html</loc>
+<loc>http://cad-lab.github.io/blog/post/tag/cad.html</loc>
 <lastmod>2016-01-15T12:50:22+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/tag/examples.html</loc>
+<loc>http://cad-lab.github.io/blog/post/tag/zong-yi-guan-8f.html</loc>
+<lastmod>2016-01-15T12:50:22+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cad-lab.github.io/blog/post/tag/examples.html</loc>
 <lastmod>2016-01-15T12:31:39+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/tag/zong-yi-guan-8f.html</loc>
+<loc>http://cad-lab.github.io/blog/post/author/kmol.html</loc>
 <lastmod>2016-01-15T12:50:22+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/author/kmol.html</loc>
-<lastmod>2016-01-15T12:50:22+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://cad-lab.github.io/blog/author/user.html</loc>
+<loc>http://cad-lab.github.io/blog/post/author/user.html</loc>
 <lastmod>2016-01-15T12:31:39+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
