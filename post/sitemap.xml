@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://cad-lab.github.io/blog/post/</loc>
-<lastmod>2016-01-15T17:31:40-00:00</lastmod>
+<lastmod>2016-01-15T18:24:46-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cad-lab.github.io/blog/post/archives.html</loc>
-<lastmod>2016-01-15T17:31:40-00:00</lastmod>
+<lastmod>2016-01-15T18:24:46-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cad-lab.github.io/blog/post/tags.html</loc>
-<lastmod>2016-01-15T17:31:40-00:00</lastmod>
+<lastmod>2016-01-15T18:24:46-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cad-lab.github.io/blog/post/categories.html</loc>
-<lastmod>2016-01-15T17:31:40-00:00</lastmod>
+<lastmod>2016-01-15T18:24:46-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -39,6 +39,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://cad-lab.github.io/blog/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</loc>
+<lastmod>2016-01-15T18:24:40+08:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://cad-lab.github.io/blog/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</loc>
 <lastmod>2016-01-15T12:50:22+08:00</lastmod>
 <changefreq>monthly</changefreq>
@@ -46,28 +53,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cad-lab.github.io/blog/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</loc>
-<lastmod>2016-01-15T12:31:39+08:00</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
 <loc>http://cad-lab.github.io/blog/post/category/fan-li.html</loc>
-<lastmod>2016-01-15T12:31:39+08:06</lastmod>
+<lastmod>2016-01-15T18:24:40+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cad-lab.github.io/blog/post/category/gui-hua.html</loc>
-<lastmod>2016-01-15T12:50:22+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://cad-lab.github.io/blog/post/tag/cad.html</loc>
 <lastmod>2016-01-15T12:50:22+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
@@ -81,8 +74,15 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://cad-lab.github.io/blog/post/tag/cad.html</loc>
+<lastmod>2016-01-15T12:50:22+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://cad-lab.github.io/blog/post/tag/examples.html</loc>
-<lastmod>2016-01-15T12:31:39+08:06</lastmod>
+<lastmod>2016-01-15T18:24:40+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -96,7 +96,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://cad-lab.github.io/blog/post/author/user.html</loc>
-<lastmod>2016-01-15T12:31:39+08:06</lastmod>
+<lastmod>2016-01-15T18:24:40+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
