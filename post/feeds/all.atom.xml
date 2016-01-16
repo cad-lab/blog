@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cad-lab.github.io/blog/post/" rel="alternate"></link><link href="http://cad-lab.github.io/blog/post/feeds/all.atom.xml" rel="self"></link><id>http://cad-lab.github.io/blog/post/</id><updated>2016-01-15T18:24:40+08:00</updated><entry><title>使用者貢獻文章標題</title><link href="http://cad-lab.github.io/blog/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-01-15T18:24:40+08:00</updated><author><name>user</name></author><id>tag:cad-lab.github.io,2016-01-15:blog/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章摘要&lt;/p&gt;
-
-
-&lt;p&gt;機械設計工程系即時網路連線:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=5" alt="" /&gt; &lt;/p&gt;
-&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=2" alt="" /&gt;&lt;/p&gt;</summary><category term="examples"></category></entry><entry><title>電腦輔助設計室網誌開通</title><link href="http://cad-lab.github.io/blog/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-01-15T12:50:22+08:00</updated><author><name>kmol</name></author><id>tag:cad-lab.github.io,2016-01-15:blog/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/" rel="alternate"></link><link href="http://cadlab.mde.tw/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/</id><updated>2016-01-17T00:18:45+08:00</updated><entry><title>電腦輔助設計室網誌開通</title><link href="http://cadlab.mde.tw/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-01-17T00:18:45+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-01-17:dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃&lt;/p&gt;
 
 
 &lt;p&gt;CADLab 是綜一館一間配置 63 台個人電腦的教學實驗室&lt;/p&gt;
@@ -25,4 +20,9 @@
 &lt;/ol&gt;
 &lt;h3&gt;實際情況&lt;/h3&gt;
 &lt;p&gt;另外利用主機建立維修回報系統與使用者操作日誌系統&lt;/p&gt;
-&lt;h3&gt;完成事項&lt;/h3&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry></feed>
+&lt;h3&gt;完成事項&lt;/h3&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry><entry><title>使用者貢獻文章標題</title><link href="http://cadlab.mde.tw/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-01-17T00:18:45+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-01-17:shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章摘要&lt;/p&gt;
+
+
+&lt;p&gt;機械設計工程系即時網路連線:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=5" alt="" /&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=2" alt="" /&gt;&lt;/p&gt;</summary><category term="examples"></category></entry></feed>
