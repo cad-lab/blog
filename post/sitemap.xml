@@ -4,98 +4,98 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/</loc>
-<lastmod>2016-01-17T00:24:24-00:00</lastmod>
+<loc>http://cadlab.mde.tw/post/</loc>
+<lastmod>2016-01-17T00:27:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/archives.html</loc>
-<lastmod>2016-01-17T00:24:24-00:00</lastmod>
+<loc>http://cadlab.mde.tw/post/archives.html</loc>
+<lastmod>2016-01-17T00:27:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/tags.html</loc>
-<lastmod>2016-01-17T00:24:24-00:00</lastmod>
+<loc>http://cadlab.mde.tw/post/tags.html</loc>
+<lastmod>2016-01-17T00:27:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/categories.html</loc>
-<lastmod>2016-01-17T00:24:24-00:00</lastmod>
+<loc>http://cadlab.mde.tw/post/categories.html</loc>
+<lastmod>2016-01-17T00:27:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/pages/about/</loc>
+<loc>http://cadlab.mde.tw/post/pages/about/</loc>
 <lastmod>2016-01-17T00:18:45+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</loc>
+<loc>http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</loc>
 <lastmod>2016-01-17T00:18:45+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</loc>
+<loc>http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</loc>
 <lastmod>2016-01-17T00:18:45+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/category/fan-li.html</loc>
+<loc>http://cadlab.mde.tw/post/category/fan-li.html</loc>
 <lastmod>2016-01-17T00:18:45+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/category/gui-hua.html</loc>
+<loc>http://cadlab.mde.tw/post/category/gui-hua.html</loc>
 <lastmod>2016-01-17T00:18:45+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/tag/examples.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/zong-yi-guan-8f.html</loc>
 <lastmod>2016-01-17T00:18:45+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/tag/cad.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/examples.html</loc>
 <lastmod>2016-01-17T00:18:45+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/tag/zong-yi-guan-8f.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/cad.html</loc>
 <lastmod>2016-01-17T00:18:45+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/author/kmol.html</loc>
+<loc>http://cadlab.mde.tw/post/author/kmol.html</loc>
 <lastmod>2016-01-17T00:18:45+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/blog/post/author/user.html</loc>
+<loc>http://cadlab.mde.tw/post/author/user.html</loc>
 <lastmod>2016-01-17T00:18:45+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>

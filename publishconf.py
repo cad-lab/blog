@@ -15,7 +15,7 @@ from pelicanconf import *
 # 將所有靜態 html 檔案移到 blog 子目錄
 #SITEURL = 'http://cad-lab.github.io/blog/post'
 # 以下利用 Github CNAME 設定轉換 domain name
-SITEURL = 'http://cadlab.mde.tw/blog/post'
+SITEURL = 'http://cadlab.mde.tw/post'
 # 此設定用於將資料送到 gh-pages, 因此使用絕對 URL 設定
 RELATIVE_URLS = False
 # 為了要讓 local 與 gh-pages 上都能夠使用 Tipue search, 可能要採用不同的 theme
