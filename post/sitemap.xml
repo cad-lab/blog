@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://cadlab.mde.tw/</loc>
-<lastmod>2016-01-17T00:21:45-00:00</lastmod>
+<lastmod>2016-01-17T00:23:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/archives.html</loc>
-<lastmod>2016-01-17T00:21:45-00:00</lastmod>
+<lastmod>2016-01-17T00:23:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/tags.html</loc>
-<lastmod>2016-01-17T00:21:45-00:00</lastmod>
+<lastmod>2016-01-17T00:23:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/categories.html</loc>
-<lastmod>2016-01-17T00:21:45-00:00</lastmod>
+<lastmod>2016-01-17T00:23:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -67,14 +67,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/tag/examples.html</loc>
+<loc>http://cadlab.mde.tw/tag/zong-yi-guan-8f.html</loc>
 <lastmod>2016-01-17T00:18:45+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/tag/zong-yi-guan-8f.html</loc>
+<loc>http://cadlab.mde.tw/tag/examples.html</loc>
 <lastmod>2016-01-17T00:18:45+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
