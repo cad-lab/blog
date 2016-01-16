@@ -15,6 +15,7 @@ from pelicanconf import *
 # 將所有靜態 html 檔案移到 blog 子目錄
 #SITEURL = 'http://cad-lab.github.io/blog/post'
 # 以下利用 Github CNAME 設定轉換 domain name
+# 特別注意 http://cad-lab.github.io/blog 與 http://cadlab.mde.tw 網址的跳轉 (Github)
 SITEURL = 'http://cadlab.mde.tw/post'
 # 此設定用於將資料送到 gh-pages, 因此使用絕對 URL 設定
 RELATIVE_URLS = False
