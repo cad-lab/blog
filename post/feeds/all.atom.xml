@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="./" rel="alternate"></link><link href="./feeds/all.atom.xml" rel="self"></link><id>./</id><updated>2016-01-17T15:55:31+08:00</updated><entry><title>導入 Ubuntu 操作系統</title><link href="./dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-01-17T15:55:31+08:00</updated><author><name>kmol</name></author><id>tag:,2016-01-17:./dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-01-17T15:55:31+08:00</updated><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-01-17T15:55:31+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-01-17:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
 
 
 &lt;p&gt;自從 1995 年, 第1套能在 Windows 操作系統執行的電腦輔助機械設計繪圖軟體套件, SolidWorks, 出現, 並且逐步蔚為風潮之後,  MCAD (Mechanical Computer Aided Design) 中端套件, 幾乎都只能在 Windows 操作系統上運作. 許多機械設計工程系相關師生, 幾乎早已經忘記, 最早的 MCAD 系統可都是在泛 Unix based 的操作系統上運作.&lt;/p&gt;
@@ -43,7 +43,7 @@ sudo apt-get install kazam
 &lt;p&gt;使用: kazam&amp;amp;&lt;/p&gt;
 &lt;p&gt;至於在 Ubuntu 遠端登入到 Windows, 可以使用 Ubuntu Software Center 安裝 remmina, 並且在連線設定上的 Advanced 頁面中, Security 選用 RDP 協定, 即可正確連線.&lt;/p&gt;
 &lt;p&gt;參考資料:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop"&gt;http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop&lt;/a&gt;&lt;/p&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry><entry><title>電腦輔助設計室網誌開通</title><link href="./dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-01-17T00:18:45+08:00</updated><author><name>kmol</name></author><id>tag:,2016-01-17:./dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop"&gt;http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop&lt;/a&gt;&lt;/p&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry><entry><title>電腦輔助設計室網誌開通</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-01-17T00:18:45+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-01-17:post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃&lt;/p&gt;
 
 
 &lt;p&gt;CADLab 是綜一館一間配置 63 台個人電腦的教學實驗室&lt;/p&gt;
@@ -64,7 +64,7 @@ sudo apt-get install kazam
 &lt;/ol&gt;
 &lt;h3&gt;實際情況&lt;/h3&gt;
 &lt;p&gt;另外利用主機建立維修回報系統與使用者操作日誌系統&lt;/p&gt;
-&lt;h3&gt;完成事項&lt;/h3&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry><entry><title>使用者貢獻文章標題</title><link href="./shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-01-17T00:18:45+08:00</updated><author><name>user</name></author><id>tag:,2016-01-17:./shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章摘要&lt;/p&gt;
+&lt;h3&gt;完成事項&lt;/h3&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry><entry><title>使用者貢獻文章標題</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-01-17T00:18:45+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-01-17:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章摘要&lt;/p&gt;
 
 
 &lt;p&gt;機械設計工程系即時網路連線:&lt;/p&gt;
