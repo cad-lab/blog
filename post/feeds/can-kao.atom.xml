@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/can-kao.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-01-18T11:23:38+08:00</updated><entry><title>使用者貢獻文章標題</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-01-18T11:23:38+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-01-18:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章的參考 Leo Editor 檔案&lt;/p&gt;
+
+
+&lt;p&gt;本網誌的系統與靜態資料為一個 Github 倉儲 &lt;a href="https://github.com/cad-lab/blog"&gt;https://github.com/cad-lab/blog&lt;/a&gt;, 只要符合 GNU AFFERO GENERAL PUBLIC LICENSE 授權規範, 任何人都可以取用.&lt;/p&gt;
+&lt;p&gt;本網誌的規劃是希望透過 Gmail 的認証取得參與協同著作的權限後, 各作者可以利用 users 目錄下的 .leo 檔案, 各自維護自己的文章, 基本要求是, 每篇文章, 必須以使用者帳號作為開頭, 並建議依照日期分類, 以避免各用戶的文章彼此覆蓋.&lt;/p&gt;
+&lt;p&gt;各用戶若需要協同著作, 共同維護一篇 content 目錄中的某一個 .md 檔案, 那麼各用戶在 gh-pages 倉儲分支版本提交與推送過程, 就必須設法處理版本內容的衝突, 但各 .md 檔案建議是在 Leo Editor @edit 或@clean 節點下進行協同編輯並處理內容衝突.&lt;/p&gt;
+&lt;p&gt;下圖為機械設計工程系即時網路連線:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=5" alt="" /&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=2" alt="" /&gt;&lt;/p&gt;</summary><category term="Reference"></category><category term="user template"></category></entry></feed>
