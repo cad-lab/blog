@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/dao-yin.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-01-18T11:11:15+08:00</updated><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-01-18T11:11:15+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-01-18:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/dao-yin.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-01-18T11:53:07+08:00</updated><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-01-18T11:53:07+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-01-18:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
 
 
 &lt;p&gt;自從 1995 年, 第1套能在 Windows 操作系統執行的電腦輔助機械設計繪圖軟體套件, SolidWorks, 出現, 並且逐步蔚為風潮之後,  MCAD (Mechanical Computer Aided Design) 中端套件, 幾乎都只能在 Windows 操作系統上運作. 許多機械設計工程系相關師生, 幾乎早已經忘記, 最早的 MCAD 系統可都是在泛 Unix based 的操作系統上運作.&lt;/p&gt;
@@ -26,8 +26,11 @@
 &lt;p&gt;git 透過 sudo apt-get install git 安裝&lt;/p&gt;
 &lt;h2&gt;MCAD 零件與組件繪圖&lt;/h2&gt;
 &lt;p&gt;這裡採用 &lt;a href="http://www.onshape.com"&gt;http://www.onshape.com&lt;/a&gt;, 只需要 Firefox 或 Chromium 瀏覽器就可以運作&lt;/p&gt;
+&lt;p&gt;FreeCAD: &lt;a href="http://www.freecadweb.org/"&gt;http://www.freecadweb.org/&lt;/a&gt; 與 Solvespace: &lt;a href="http://solvespace.com/"&gt;http://solvespace.com/&lt;/a&gt;, 則是能在 Ubuntu 環境運作的 MCAD 套件.&lt;/p&gt;
 &lt;h2&gt;MCAE 工程分析&lt;/h2&gt;
 &lt;p&gt;這裡採用 &lt;a href="http://www.simscale.com"&gt;http://www.simscale.com&lt;/a&gt;, 只需要 Firefox 或 Chromium 瀏覽器就可以運作&lt;/p&gt;
+&lt;p&gt;COMSOL &lt;a href="https://www.comsol.com/system-requirements"&gt;可以&lt;/a&gt;在 Ubuntu 環境中運作&lt;/p&gt;
+&lt;p&gt;Ansys 則&lt;a href="http://www.ansys.com/-/media/Ansys/corporate/files/pdf/solutions/it-professionals/platform-support/platformsupportansys162stategyandplans.pdf?la=en"&gt;建議&lt;/a&gt;在 Red Hat 或 SUSE 商用版上運作&lt;/p&gt;
 &lt;h2&gt;錄製操作流程影片&lt;/h2&gt;
 &lt;p&gt;在 Ubuntu 操作系統中擷取電腦螢幕畫面, 只要按下 PrintScr 按鍵, 就可以直接存為 png 格式檔案&lt;/p&gt;
 &lt;p&gt;操作流程則可以使用 Kazam 將過程錄成 mp4檔案&lt;/p&gt;
@@ -44,5 +47,49 @@ sudo apt-get install kazam
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p&gt;使用: kazam&amp;amp;&lt;/p&gt;
 &lt;p&gt;至於在 Ubuntu 遠端登入到 Windows, 可以使用 Ubuntu Software Center 安裝 remmina, 並且在連線設定上的 Advanced 頁面中, Security 選用 RDP 協定, 即可正確連線.&lt;/p&gt;
+&lt;h2&gt;Ubuntu 檔案架構&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;/bin ­­ binary applications (most of your executable files) &lt;/li&gt;
+&lt;li&gt;/boot ­­ files required to boot (such as the kernel, etc) &lt;/li&gt;
+&lt;li&gt;/dev ­­ your devices (everything from drives to displays) &lt;/li&gt;
+&lt;li&gt;/etc ­­ just about every configuration file for your system &lt;/li&gt;
+&lt;li&gt;/etc/rc.d ­­ contains a number of shell scripts that are run on bootup at different run levels. &lt;/li&gt;
+&lt;li&gt;/etc/X11 ­­ configuration files for the X Window system &lt;/li&gt;
+&lt;li&gt;/home ­­ locally stored user files and folders &lt;/li&gt;
+&lt;li&gt;/lib ­­ system libraries (similar to Program Files) &lt;/li&gt;
+&lt;li&gt;/media ­­ mounted (or loaded) devices such as cdroms, digital cameras, etc. &lt;/li&gt;
+&lt;li&gt;/mnt ­­ mounted file systems &lt;/li&gt;
+&lt;li&gt;/opt ­­ location for “optionally” installed programs &lt;/li&gt;
+&lt;li&gt;/sbin ­­ system ­only binaries&lt;/li&gt;
+&lt;li&gt;/sys ­­ contains information about the system &lt;/li&gt;
+&lt;li&gt;/tmp ­­ temporary files &lt;/li&gt;
+&lt;li&gt;/usr ­­ applications mainly for regular users &lt;/li&gt;
+&lt;li&gt;/var ­­ mainly logs, databases, etc. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Ubuntu 常用指令&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;ls : list directory contents&lt;/li&gt;
+&lt;li&gt;cd : Change Directory&lt;/li&gt;
+&lt;li&gt;pwd : print the current/working directory&lt;/li&gt;
+&lt;li&gt;mkdir : make/create directory&lt;/li&gt;
+&lt;li&gt;rmdir : remove the empty directory&lt;/li&gt;
+&lt;li&gt;rm : remove/delete file&lt;/li&gt;
+&lt;li&gt;mv : rename or move a file/directory&lt;/li&gt;
+&lt;li&gt;man : Manual pages for shell commands&lt;/li&gt;
+&lt;li&gt;cp : Copy Files&lt;/li&gt;
+&lt;li&gt;passwd : Change password for user&lt;/li&gt;
+&lt;li&gt;tar : Creates and extracts files from a tape or disk archive&lt;/li&gt;
+&lt;li&gt;find :  find searches the file located at /&lt;/li&gt;
+&lt;li&gt;grep :  print lines matching a pattern&lt;/li&gt;
+&lt;li&gt;chown :  change file owner and group&lt;/li&gt;
+&lt;li&gt;chgrp :  change group ownership&lt;/li&gt;
+&lt;li&gt;chmod :  change file mode bits&lt;/li&gt;
+&lt;li&gt;ifconfig :  configure a network interface&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;參考資料:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop"&gt;http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop&lt;/a&gt;&lt;/p&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry></feed>
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://help.ubuntu.com/lts/serverguide/serverguide.pdf"&gt;https://help.ubuntu.com/lts/serverguide/serverguide.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ecourts.nic.in/2/mannual/admin_manual.pdf"&gt;http://ecourts.nic.in/2/mannual/admin_manual.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf"&gt;http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop"&gt;http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry></feed>

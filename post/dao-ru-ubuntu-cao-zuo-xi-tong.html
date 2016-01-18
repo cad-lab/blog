@@ -260,7 +260,7 @@ CADLab            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2016-01-18T11:11:15.360117+08:00"> 一 18 一月 2016</time>
+        <i class="fa fa-calendar"></i><time datetime="2016-01-18T11:53:07.276031+08:00"> 一 18 一月 2016</time>
     </span>
             <span class="label label-default">By</span>
             <a href="http://cadlab.mde.tw/post/author/kmol.html"><i class="fa fa-user"></i> kmol</a>
@@ -301,8 +301,11 @@ CADLab            </a>
 <p>git 透過 sudo apt-get install git 安裝</p>
 <h2>MCAD 零件與組件繪圖</h2>
 <p>這裡採用 <a href="http://www.onshape.com">http://www.onshape.com</a>, 只需要 Firefox 或 Chromium 瀏覽器就可以運作</p>
+<p>FreeCAD: <a href="http://www.freecadweb.org/">http://www.freecadweb.org/</a> 與 Solvespace: <a href="http://solvespace.com/">http://solvespace.com/</a>, 則是能在 Ubuntu 環境運作的 MCAD 套件.</p>
 <h2>MCAE 工程分析</h2>
 <p>這裡採用 <a href="http://www.simscale.com">http://www.simscale.com</a>, 只需要 Firefox 或 Chromium 瀏覽器就可以運作</p>
+<p>COMSOL <a href="https://www.comsol.com/system-requirements">可以</a>在 Ubuntu 環境中運作</p>
+<p>Ansys 則<a href="http://www.ansys.com/-/media/Ansys/corporate/files/pdf/solutions/it-professionals/platform-support/platformsupportansys162stategyandplans.pdf?la=en">建議</a>在 Red Hat 或 SUSE 商用版上運作</p>
 <h2>錄製操作流程影片</h2>
 <p>在 Ubuntu 操作系統中擷取電腦螢幕畫面, 只要按下 PrintScr 按鍵, 就可以直接存為 png 格式檔案</p>
 <p>操作流程則可以使用 Kazam 將過程錄成 mp4檔案</p>
@@ -319,8 +322,52 @@ sudo apt-get install kazam
 <p><br /></p>
 <p>使用: kazam&amp;</p>
 <p>至於在 Ubuntu 遠端登入到 Windows, 可以使用 Ubuntu Software Center 安裝 remmina, 並且在連線設定上的 Advanced 頁面中, Security 選用 RDP 協定, 即可正確連線.</p>
+<h2>Ubuntu 檔案架構</h2>
+<ul>
+<li>/bin ­­ binary applications (most of your executable files) </li>
+<li>/boot ­­ files required to boot (such as the kernel, etc) </li>
+<li>/dev ­­ your devices (everything from drives to displays) </li>
+<li>/etc ­­ just about every configuration file for your system </li>
+<li>/etc/rc.d ­­ contains a number of shell scripts that are run on bootup at different run levels. </li>
+<li>/etc/X11 ­­ configuration files for the X Window system </li>
+<li>/home ­­ locally stored user files and folders </li>
+<li>/lib ­­ system libraries (similar to Program Files) </li>
+<li>/media ­­ mounted (or loaded) devices such as cdroms, digital cameras, etc. </li>
+<li>/mnt ­­ mounted file systems </li>
+<li>/opt ­­ location for “optionally” installed programs </li>
+<li>/sbin ­­ system ­only binaries</li>
+<li>/sys ­­ contains information about the system </li>
+<li>/tmp ­­ temporary files </li>
+<li>/usr ­­ applications mainly for regular users </li>
+<li>/var ­­ mainly logs, databases, etc. </li>
+</ul>
+<h2>Ubuntu 常用指令</h2>
+<ul>
+<li>ls : list directory contents</li>
+<li>cd : Change Directory</li>
+<li>pwd : print the current/working directory</li>
+<li>mkdir : make/create directory</li>
+<li>rmdir : remove the empty directory</li>
+<li>rm : remove/delete file</li>
+<li>mv : rename or move a file/directory</li>
+<li>man : Manual pages for shell commands</li>
+<li>cp : Copy Files</li>
+<li>passwd : Change password for user</li>
+<li>tar : Creates and extracts files from a tape or disk archive</li>
+<li>find :  find searches the file located at /</li>
+<li>grep :  print lines matching a pattern</li>
+<li>chown :  change file owner and group</li>
+<li>chgrp :  change group ownership</li>
+<li>chmod :  change file mode bits</li>
+<li>ifconfig :  configure a network interface</li>
+</ul>
 <p>參考資料:</p>
-<p><a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop">http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop</a></p>
+<ol>
+<li><a href="https://help.ubuntu.com/lts/serverguide/serverguide.pdf">https://help.ubuntu.com/lts/serverguide/serverguide.pdf</a></li>
+<li><a href="http://ecourts.nic.in/2/mannual/admin_manual.pdf">http://ecourts.nic.in/2/mannual/admin_manual.pdf</a></li>
+<li><a href="http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf">http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf</a></li>
+<li><a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop">http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop</a></li>
+</ol>
             </div>
             <!-- /.entry-content -->
     <hr/>
@@ -366,13 +413,13 @@ sudo apt-get install kazam
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html">
-                            使用者貢獻文章標題
+                        <a href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html">
+                            導入 Ubuntu 操作系統
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html">
-                            導入 Ubuntu 操作系統
+                        <a href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html">
+                            使用者貢獻文章標題
                         </a>
                     </li>
                     <li class="list-group-item">

@@ -5,35 +5,42 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://cadlab.mde.tw/post/</loc>
-<lastmod>2016-01-18T11:24:09-00:00</lastmod>
+<lastmod>2016-01-18T11:57:12-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/post/archives.html</loc>
-<lastmod>2016-01-18T11:24:09-00:00</lastmod>
+<lastmod>2016-01-18T11:57:12-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/post/tags.html</loc>
-<lastmod>2016-01-18T11:24:09-00:00</lastmod>
+<lastmod>2016-01-18T11:57:12-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/post/categories.html</loc>
-<lastmod>2016-01-18T11:24:09-00:00</lastmod>
+<lastmod>2016-01-18T11:57:12-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/post/pages/about/</loc>
-<lastmod>2016-01-17T00:18:45+08:00</lastmod>
+<lastmod>2016-01-18T11:28:12+08:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html</loc>
+<lastmod>2016-01-18T11:53:07+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -41,13 +48,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</loc>
 <lastmod>2016-01-18T11:23:38+08:00</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html</loc>
-<lastmod>2016-01-18T11:11:15+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -68,7 +68,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://cadlab.mde.tw/post/category/dao-yin.html</loc>
-<lastmod>2016-01-18T11:11:15+08:06</lastmod>
+<lastmod>2016-01-18T11:53:07+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -76,6 +76,20 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://cadlab.mde.tw/post/category/gui-hua.html</loc>
 <lastmod>2016-01-18T11:11:15+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/reference.html</loc>
+<lastmod>2016-01-18T11:23:38+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/mechanical-design.html</loc>
+<lastmod>2016-01-18T11:53:07+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -89,7 +103,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://cadlab.mde.tw/post/tag/ubuntu.html</loc>
-<lastmod>2016-01-18T11:11:15+08:06</lastmod>
+<lastmod>2016-01-18T11:53:07+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -109,22 +123,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/reference.html</loc>
-<lastmod>2016-01-18T11:23:38+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://cadlab.mde.tw/post/tag/mechanical-design.html</loc>
-<lastmod>2016-01-18T11:11:15+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
 <loc>http://cadlab.mde.tw/post/author/kmol.html</loc>
-<lastmod>2016-01-18T11:11:15+08:06</lastmod>
+<lastmod>2016-01-18T11:53:07+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
