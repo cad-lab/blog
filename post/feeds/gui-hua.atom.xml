@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/gui-hua.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-01-18T11:11:15+08:00</updated><entry><title>電腦輔助設計室網誌開通</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-01-18T11:11:15+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-01-18:post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃, 引導勝壓迫、鼓勵勝漠視、開放才有未來&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/gui-hua.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-01-18T15:53:36+08:00</updated><entry><title>電腦輔助設計室網誌開通</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-01-18T15:53:36+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-01-18:post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃, 引導勝壓迫、鼓勵勝漠視、開放才有未來&lt;/p&gt;
 
 
 &lt;p&gt;CADLab 是綜一館一間配置 63 台個人電腦的教學實驗室&lt;/p&gt;
@@ -12,7 +12,7 @@
 &lt;li&gt;參考 (References) - 紀錄其他相關類似教學實驗室的管理方法與現況了解&lt;/li&gt;
 &lt;li&gt;其他 (Misc) - 未能納入上述其他分類的文章&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3&gt;構想&lt;/h3&gt;
+&lt;h2&gt;構想&lt;/h2&gt;
 &lt;p&gt;要讓一間二十一世紀國立科技大學的電腦教室發揮應有的功能, 著實需要一些規劃, 我們的構想其實很簡單:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;讓每一台電腦硬體同時具有3個開機磁區&lt;/li&gt;
@@ -20,9 +20,17 @@
 &lt;li&gt;讓每一位使用者都了解開關機標準流程, 並願意遵守奉行&lt;/li&gt;
 &lt;li&gt;讓每一台電腦都可以在網路切換下, 使用  IPV4 或 IPV6 協定下的區域與廣域網路主機&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4&gt;開機磁區&lt;/h4&gt;
+&lt;h2&gt;開機磁區&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;Windows 10 - 存放必須要安裝的各種應用程式與套件&lt;/li&gt;
 &lt;li&gt;Windows 10 - 存放無需安裝的可攜綠色套件&lt;/li&gt;
 &lt;li&gt;Ubuntu 14.04 - Server 版加裝 ubuntu-desktop&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;CADLab 使用與維護&lt;/h2&gt;
+&lt;p&gt;各班上課時, 每排推派一名輪值生, 負責事項:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;敦促同學不要在電腦桌上用餐&lt;/li&gt;
+&lt;li&gt;上課前後, 負責到 CADLab 日誌, 登記或勾選學員電腦使用情形, 填寫維修單或建議表&lt;/li&gt;
+&lt;li&gt;負責在課後, 確實檢查各電腦是否正常關機, 是否遺留個人物品&lt;/li&gt;
+&lt;li&gt;負責在課後清潔各排座位地板與桌面, 與班上幹部配合全員離開 CADLab 前確實關閉所有照明與空調系統&lt;/li&gt;
 &lt;/ol&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry></feed>

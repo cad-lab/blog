@@ -71,3 +71,5 @@ CATEGORIES_URL = "categories.html"
 #SHOW_ARTICLE_AUTHOR = True
 
 #MENUITEMS = [('Home', '/'), ('Archives', '/archives.html'), ('Search', '/search.html')]
+# 希望將部份常用的 Javascript 最新版程式庫放到這裡, 可以透過 http://cadlab.mde.tw/post/js/ 呼叫
+STATIC_PATHS = ['js']
