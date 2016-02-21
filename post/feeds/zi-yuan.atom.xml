@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/zi-yuan.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-02-21T12:32:59+08:00</updated><entry><title>KMOL 2016 Spring Portable Tool</title><link href="http://cadlab.mde.tw/post/kmol-2016-spring-portable-tool.html" rel="alternate"></link><updated>2016-02-21T12:32:59+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-02-21:post/kmol-2016-spring-portable-tool.html</id><summary type="html">&lt;p&gt;針對 cadlab 上計算機程式、網際內容管理、電腦輔助設計實習與協同產品設計實習等課程, 採用 Python 3.4 打造的 Windows 版可攜程式套件&lt;/p&gt;
+
+
+&lt;p&gt;可攜套件倉儲:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/chiamingyen/kmol2016"&gt;https://github.com/chiamingyen/kmol2016&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;kmol2016 下載:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX"&gt;https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX&lt;/a&gt;&lt;/p&gt;</summary><category term="可攜套件"></category><category term="2016Spring"></category></entry></feed>

@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-01-18T15:53:36+08:00</updated><entry><title>電腦輔助設計室網誌開通</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-01-18T15:53:36+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-01-18:post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃, 引導勝壓迫、鼓勵勝漠視、開放才有未來&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-02-21T18:06:12+08:00</updated><entry><title>使用者貢獻文章標題</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-02-21T18:06:12+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-02-21:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章的參考 Leo Editor 檔案&lt;/p&gt;
+
+
+&lt;p&gt;本網誌的系統與靜態資料為一個 Github 倉儲 &lt;a href="https://github.com/cad-lab/blog"&gt;https://github.com/cad-lab/blog&lt;/a&gt;, 只要符合 GNU AFFERO GENERAL PUBLIC LICENSE 授權規範, 任何人都可以取用.&lt;/p&gt;
+&lt;p&gt;本網誌的規劃是希望透過 Gmail 的認証取得參與協同著作的權限後, 各作者可以利用 users 目錄下的 .leo 檔案, 各自維護自己的文章, 基本要求是, 每篇文章, 必須以使用者帳號作為開頭, 並建議依照日期分類, 以避免各用戶的文章彼此覆蓋.&lt;/p&gt;
+&lt;p&gt;各用戶若需要協同著作, 共同維護一篇 content 目錄中的某一個 .md 檔案, 那麼各用戶在 gh-pages 倉儲分支版本提交與推送過程, 就必須設法處理版本內容的衝突, 但各 .md 檔案建議是在 Leo Editor @edit 或@clean 節點下進行協同編輯並處理內容衝突.&lt;/p&gt;
+&lt;p&gt;下圖為機械設計工程系即時網路連線:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=5" alt="mde realtime network graph" /&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=2" alt="mde realtime network graph" /&gt;&lt;/p&gt;</summary><category term="Reference"></category><category term="user template"></category></entry><entry><title>KMOL 2016 Spring Portable Tool</title><link href="http://cadlab.mde.tw/post/kmol-2016-spring-portable-tool.html" rel="alternate"></link><updated>2016-02-21T12:32:59+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-02-21:post/kmol-2016-spring-portable-tool.html</id><summary type="html">&lt;p&gt;針對 cadlab 上計算機程式、網際內容管理、電腦輔助設計實習與協同產品設計實習等課程, 採用 Python 3.4 打造的 Windows 版可攜程式套件&lt;/p&gt;
+
+
+&lt;p&gt;可攜套件倉儲:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/chiamingyen/kmol2016"&gt;https://github.com/chiamingyen/kmol2016&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;kmol2016 下載:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX"&gt;https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX&lt;/a&gt;&lt;/p&gt;</summary><category term="可攜套件"></category><category term="2016Spring"></category></entry><entry><title>Bezier 曲線導引</title><link href="http://cadlab.mde.tw/post/bezier-qu-xian-dao-yin.html" rel="alternate"></link><updated>2016-02-18T11:38:34+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-02-18:post/bezier-qu-xian-dao-yin.html</id><summary type="html">&lt;p&gt;A primer on Bezier curves&lt;/p&gt;
+
+
+&lt;p&gt;&lt;a href="http://pomax.github.io/bezierinfo/"&gt;http://pomax.github.io/bezierinfo/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://pomax.github.io/bezierjs/"&gt;http://pomax.github.io/bezierjs/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;嘗試將純 Javascript 的環境轉為 Brython based &lt;a href="https://github.com/brython-dev/brython"&gt;https://github.com/brython-dev/brython&lt;/a&gt;, 希望完成之後, 可以讓使用者編寫 Python3 程式碼來操控 Bezier 曲線 &lt;a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"&gt;https://en.wikipedia.org/wiki/B%C3%A9zier_curve&lt;/a&gt;.&lt;/p&gt;</summary><category term="Javascript"></category><category term="程式"></category></entry><entry><title>電腦輔助設計室網誌開通</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-01-18T15:53:36+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-01-18:post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃, 引導勝壓迫、鼓勵勝漠視、開放才有未來&lt;/p&gt;
 
 
 &lt;p&gt;CADLab 是綜一館一間配置 63 台個人電腦的教學實驗室&lt;/p&gt;
@@ -126,12 +145,4 @@ sudo apt-get install kazam
 &lt;li&gt;&lt;a href="http://ecourts.nic.in/2/mannual/admin_manual.pdf"&gt;http://ecourts.nic.in/2/mannual/admin_manual.pdf&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf"&gt;http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop"&gt;http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry><entry><title>使用者貢獻文章標題</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-01-18T11:23:38+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-01-18:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章的參考 Leo Editor 檔案&lt;/p&gt;
-
-
-&lt;p&gt;本網誌的系統與靜態資料為一個 Github 倉儲 &lt;a href="https://github.com/cad-lab/blog"&gt;https://github.com/cad-lab/blog&lt;/a&gt;, 只要符合 GNU AFFERO GENERAL PUBLIC LICENSE 授權規範, 任何人都可以取用.&lt;/p&gt;
-&lt;p&gt;本網誌的規劃是希望透過 Gmail 的認証取得參與協同著作的權限後, 各作者可以利用 users 目錄下的 .leo 檔案, 各自維護自己的文章, 基本要求是, 每篇文章, 必須以使用者帳號作為開頭, 並建議依照日期分類, 以避免各用戶的文章彼此覆蓋.&lt;/p&gt;
-&lt;p&gt;各用戶若需要協同著作, 共同維護一篇 content 目錄中的某一個 .md 檔案, 那麼各用戶在 gh-pages 倉儲分支版本提交與推送過程, 就必須設法處理版本內容的衝突, 但各 .md 檔案建議是在 Leo Editor @edit 或@clean 節點下進行協同編輯並處理內容衝突.&lt;/p&gt;
-&lt;p&gt;下圖為機械設計工程系即時網路連線:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=5" alt="" /&gt; &lt;/p&gt;
-&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=2" alt="" /&gt;&lt;/p&gt;</summary><category term="Reference"></category><category term="user template"></category></entry></feed>
+&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry></feed>
