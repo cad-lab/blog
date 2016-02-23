@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://cadlab.mde.tw/post/</loc>
-<lastmod>2016-02-21T19:05:49-00:00</lastmod>
+<lastmod>2016-02-23T12:34:39-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/post/archives.html</loc>
-<lastmod>2016-02-21T19:05:49-00:00</lastmod>
+<lastmod>2016-02-23T12:34:39-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/post/tags.html</loc>
-<lastmod>2016-02-21T19:05:49-00:00</lastmod>
+<lastmod>2016-02-23T12:34:39-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/post/categories.html</loc>
-<lastmod>2016-02-21T19:05:49-00:00</lastmod>
+<lastmod>2016-02-23T12:34:39-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -34,6 +34,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://cadlab.mde.tw/post/pages/about/</loc>
 <lastmod>2016-02-21T18:35:41+08:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/cadlab-de-li-xiang-she-zhi.html</loc>
+<lastmod>2016-02-23T12:34:30+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -75,7 +82,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://cadlab.mde.tw/post/category/can-kao.html</loc>
-<lastmod>2016-02-21T18:06:12+08:06</lastmod>
+<lastmod>2016-02-23T12:34:30+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -102,15 +109,15 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/cheng-shi.html</loc>
-<lastmod>2016-02-18T11:38:34+08:06</lastmod>
+<loc>http://cadlab.mde.tw/post/tag/2016spring.html</loc>
+<lastmod>2016-02-21T12:32:59+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/mechanical-design.html</loc>
-<lastmod>2016-01-18T11:53:07+08:06</lastmod>
+<loc>http://cadlab.mde.tw/post/tag/cheng-shi.html</loc>
+<lastmod>2016-02-18T11:38:34+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -123,8 +130,15 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/user-template.html</loc>
-<lastmod>2016-02-21T18:06:12+08:06</lastmod>
+<loc>http://cadlab.mde.tw/post/tag/cad.html</loc>
+<lastmod>2016-01-18T15:53:36+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/cadlab.html</loc>
+<lastmod>2016-02-23T12:34:30+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -144,22 +158,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/cad.html</loc>
-<lastmod>2016-01-18T15:53:36+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
 <loc>http://cadlab.mde.tw/post/tag/javascript.html</loc>
 <lastmod>2016-02-18T11:38:34+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://cadlab.mde.tw/post/tag/2016spring.html</loc>
-<lastmod>2016-02-21T12:32:59+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -172,8 +172,22 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://cadlab.mde.tw/post/tag/mechanical-design.html</loc>
+<lastmod>2016-01-18T11:53:07+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/user-template.html</loc>
+<lastmod>2016-02-21T18:06:12+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://cadlab.mde.tw/post/author/kmol.html</loc>
-<lastmod>2016-02-21T12:32:59+08:06</lastmod>
+<lastmod>2016-02-23T12:34:30+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

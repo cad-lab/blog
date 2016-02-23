@@ -38,7 +38,7 @@
 <v t="leo.20151212173803.1"><vh>@edit publishconf.py</vh></v>
 <v t="amd.20151215170221.1"><vh>以下 local_publishconf.py 為近端所使用的設定</vh></v>
 <v t="leo.20151213085752.1"><vh>@edit local_publishconf.py</vh></v>
-<v t="amd.20160120180714.1" a="E"><vh>@path theme</vh>
+<v t="amd.20160120180714.1"><vh>@path theme</vh>
 <v t="amd.20160120180720.1" a="E"><vh>@path pelican-bootstrap3</vh>
 <v t="amd.20160120180746.1" a="E"><vh>@path templates</vh>
 <v t="amd.20160120180758.1"><vh>@edit base.html</vh></v>
@@ -52,13 +52,14 @@
 <v t="amd.20151216001126.1"><vh>md 檔案範例</vh></v>
 <v t="amd.20151215170031.1" a="E"><vh>@path ./../content</vh>
 <v t="amd.20160106093454.1" a="E"><vh>yen 網誌文章</vh>
-<v t="amd.20160106093510.1" a="E"><vh>201601</vh>
+<v t="amd.20160106093510.1"><vh>201601</vh>
 <v t="ibm.20160115121941.1"><vh>@edit yen_20160115.md</vh></v>
 <v t="amd.20160117143423.1"><vh>@edit yen_20160117.md</vh></v>
 <v t="amd.20160120213235.1"><vh>@edit yen_20160120.md</vh></v>
 </v>
 <v t="amd.20160215161310.1" a="E"><vh>201602</vh>
 <v t="amd.20160215161329.1"><vh>@edit yen_20160215.md</vh></v>
+<v t="amd.20160223120511.1"><vh>@edit yen_20160223.md</vh></v>
 </v>
 </v>
 </v>
