@@ -181,12 +181,58 @@ init_mathjax();
         <link rel="stylesheet" href="http://cadlab.mde.tw/post/theme/css/bootstrap.united.min.css" type="text/css"/>
     <link href="http://cadlab.mde.tw/post/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="http://cadlab.mde.tw/post/theme/css/pygments/fruity.css" rel="stylesheet">
+    <link href="http://cadlab.mde.tw/post/theme/css/pygments/monokai.css" rel="stylesheet">
     <link href="http://cadlab.mde.tw/post/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
     <link rel="stylesheet" href="http://cadlab.mde.tw/post/theme/css/style.css" type="text/css"/>
 
         <link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
               title="CADLab ATOM Feed"/>
+
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shCore.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushJScript.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushJava.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushPython.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushSql.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushXml.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushPhp.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCpp.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCss.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCSharp.js"></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/css/shCore.css";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/css/shThemeDefault.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
 
 </head>
 <body>
@@ -239,6 +285,14 @@ CADLab            </a>
     <div class="row">
         <div class="col-sm-9">
 
+            <article>
+                <h2><a href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html">導入 Ubuntu 操作系統</a></h2>
+                <div class="summary"><p>身為一位機械機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?</p>
+
+                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
             <article>
                 <h2><a href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html">CADLab CAD/E 軟體套件使用建議</a></h2>
                 <div class="summary"><p>電腦輔助設計與工程分析是機械設計工程師進行 2D/3D 繪圖與理論分析表達的重要工具, 這裡是我們建議學員使用的 CAD/CAE 軟體套件.</p>
@@ -295,14 +349,6 @@ CADLab            </a>
                 </div>
             </article>
             <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html">導入 Ubuntu 操作系統</a></h2>
-                <div class="summary"><p>身為一位機械機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?</p>
-
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
 
         </div>
         <div class="col-sm-3" id="sidebar">
@@ -313,6 +359,11 @@ CADLab            </a>
 
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html">
+                            導入 Ubuntu 操作系統
+                        </a>
+                    </li>
                     <li class="list-group-item">
                         <a href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html">
                             CADLab CAD/E 軟體套件使用建議
@@ -331,11 +382,6 @@ CADLab            </a>
                     <li class="list-group-item">
                         <a href="http://cadlab.mde.tw/post/cadlab-de-li-xiang-she-zhi.html">
                             Cadlab 的理想設置
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/kmol-2016-spring-portable-tool.html">
-                            KMOL 2016 Spring Portable Tool
                         </a>
                     </li>
                 </ul>

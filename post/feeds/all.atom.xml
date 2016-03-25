@@ -1,5 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-03-25T23:27:36+08:00</updated><entry><title>CADLab CAD/E 軟體套件使用建議</title><link href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html" rel="alternate"></link><updated>2016-03-25T23:27:36+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-25:post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html</id><summary type="html">&lt;p&gt;電腦輔助設計與工程分析是機械設計工程師進行 2D/3D 繪圖與理論分析表達的重要工具, 這裡是我們建議學員使用的 CAD/CAE 軟體套件.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-03-25T23:51:46+08:00</updated><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-03-25T23:51:46+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-25:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
+
+
+&lt;p&gt;自從 1995 年, 第1套能在 Windows 操作系統執行的電腦輔助機械設計繪圖軟體套件, SolidWorks, 出現, 並且逐步蔚為風潮之後,  MCAD (Mechanical Computer Aided Design) 中端套件, 幾乎都只能在 Windows 操作系統上運作. 許多機械設計工程系相關師生, 幾乎早已經忘記, 最早的 MCAD 系統可都是在泛 Unix based 的操作系統上運作.&lt;/p&gt;
+&lt;p&gt;時間轉到 2015 年, Onshape: &lt;a href="http://www.onshape.com"&gt;http://www.onshape.com&lt;/a&gt; 的出現, 雖然截至目前只提供陽春的 MCAD 功能, 但是至少讓原本必須在 Windows 操作系統上才能上課的約束條件, 頓時消失, 因為計算機程式、網際內容管理、電腦輔助設計實習與協同產品設計實習等課程, 已經能夠百分之百在 Ubuntu 操作系統上運作.&lt;/p&gt;
+&lt;p&gt;過去, 我們在 Windows 操作系統上的工作類別, 不外乎:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;文書處理&lt;/li&gt;
+&lt;li&gt;程式編寫與執行&lt;/li&gt;
+&lt;li&gt;MCAD 零件繪圖, 零件組立&lt;/li&gt;
+&lt;li&gt;MCAE 工程分析&lt;/li&gt;
+&lt;li&gt;擷取執行畫面&lt;/li&gt;
+&lt;li&gt;錄製操作流程影片&lt;/li&gt;
+&lt;li&gt;遠端登入到其他電腦 (Remote Desktop)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以下將就這些工作分類, 介紹在 Ubuntu 操作系統中的相對應工具與使用方法.&lt;/p&gt;
+&lt;p&gt;首先, 這裡建議的 Ubuntu 操作系統為 Ubuntu Server 版本加上 ubuntu-desktop 套件的安裝.&lt;/p&gt;
+&lt;p&gt;一旦安裝完成, 第1項文書處理工作就可以由 LibreOffice 套件加以勝任.&lt;/p&gt;
+&lt;h2&gt;程式編寫與執行&lt;/h2&gt;
+&lt;p&gt;這裡包含 Python3, PyQt5, Leo Editor, SciTE, Git 等套件都是跨操作系統, 其中 Python3  已經內建在 Ubuntu 14.04 操作系統中, 只是必須透過 python3 執行, 例如: 必須在命令列中, 輸入 python3 帶出互動式解譯環境.&lt;/p&gt;
+&lt;p&gt;pip3 模組則需要透過 sudo apt-get install python3-pip 安裝&lt;/p&gt;
+&lt;p&gt;PyQt5 則需要透過 sudo apt-get install python3-pyqt5 安裝&lt;/p&gt;
+&lt;p&gt;Leo Editor 透過 sudo pip3 install https://github.com/leo-editor/leo-editor/archive/master.zip 安裝, 並且以 leo&amp;amp; 呼叫&lt;/p&gt;
+&lt;p&gt;SciTE 透過 sudo apt-get install scite 安裝&lt;/p&gt;
+&lt;p&gt;git 透過 sudo apt-get install git 安裝&lt;/p&gt;
+&lt;h2&gt;MCAD 零件與組件繪圖&lt;/h2&gt;
+&lt;p&gt;這裡採用 &lt;a href="http://www.onshape.com"&gt;http://www.onshape.com&lt;/a&gt;, 只需要 Firefox 或 Chromium 瀏覽器就可以運作&lt;/p&gt;
+&lt;p&gt;FreeCAD: &lt;a href="http://www.freecadweb.org/"&gt;http://www.freecadweb.org/&lt;/a&gt; 與 Solvespace: &lt;a href="http://solvespace.com/"&gt;http://solvespace.com/&lt;/a&gt;, 則是能在 Ubuntu 環境運作的 MCAD 套件.&lt;/p&gt;
+&lt;h2&gt;MCAE 工程分析&lt;/h2&gt;
+&lt;p&gt;這裡採用 &lt;a href="http://www.simscale.com"&gt;http://www.simscale.com&lt;/a&gt;, 只需要 Firefox 或 Chromium 瀏覽器就可以運作&lt;/p&gt;
+&lt;p&gt;COMSOL &lt;a href="https://www.comsol.com/system-requirements"&gt;可以&lt;/a&gt;在 Ubuntu 環境中運作&lt;/p&gt;
+&lt;p&gt;Ansys 則&lt;a href="http://www.ansys.com/-/media/Ansys/corporate/files/pdf/solutions/it-professionals/platform-support/platformsupportansys162stategyandplans.pdf?la=en"&gt;建議&lt;/a&gt;在 Red Hat 或 SUSE 商用版上運作&lt;/p&gt;
+&lt;h2&gt;錄製操作流程影片&lt;/h2&gt;
+&lt;p&gt;在 Ubuntu 操作系統中擷取電腦螢幕畫面, 只要按下 PrintScr 按鍵, 就可以直接存為 png 格式檔案&lt;/p&gt;
+&lt;p&gt;操作流程則可以使用 Kazam 將過程錄成 mp4檔案&lt;/p&gt;
+&lt;p&gt;Kazam: &lt;a href="https://code.launchpad.net/~kazam-team/kazam/stable"&gt;https://code.launchpad.net/~kazam-team/kazam/stable&lt;/a&gt; (以 Python 編寫)&lt;/p&gt;
+&lt;p&gt;安裝:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+sudo add-apt-repository ppa:kazam-team/stable-series
+sudo apt-get update
+sudo apt-get install kazam
+&lt;/pre&gt;
+
+&lt;p&gt;使用: kazam&amp;amp;&lt;/p&gt;
+&lt;p&gt;至於在 Ubuntu 遠端登入到 Windows, 可以使用 Ubuntu Software Center 安裝 remmina, 並且在連線設定上的 Advanced 頁面中, Security 選用 RDP 協定, 即可正確連線.&lt;/p&gt;
+&lt;h2&gt;Ubuntu 檔案架構&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;/bin ­­ binary applications (most of your executable files) &lt;/li&gt;
+&lt;li&gt;/boot ­­ files required to boot (such as the kernel, etc) &lt;/li&gt;
+&lt;li&gt;/dev ­­ your devices (everything from drives to displays) &lt;/li&gt;
+&lt;li&gt;/etc ­­ just about every configuration file for your system &lt;/li&gt;
+&lt;li&gt;/etc/rc.d ­­ contains a number of shell scripts that are run on bootup at different run levels. &lt;/li&gt;
+&lt;li&gt;/etc/X11 ­­ configuration files for the X Window system &lt;/li&gt;
+&lt;li&gt;/home ­­ locally stored user files and folders &lt;/li&gt;
+&lt;li&gt;/lib ­­ system libraries (similar to Program Files) &lt;/li&gt;
+&lt;li&gt;/media ­­ mounted (or loaded) devices such as cdroms, digital cameras, etc. &lt;/li&gt;
+&lt;li&gt;/mnt ­­ mounted file systems &lt;/li&gt;
+&lt;li&gt;/opt ­­ location for “optionally” installed programs &lt;/li&gt;
+&lt;li&gt;/sbin ­­ system ­only binaries&lt;/li&gt;
+&lt;li&gt;/sys ­­ contains information about the system &lt;/li&gt;
+&lt;li&gt;/tmp ­­ temporary files &lt;/li&gt;
+&lt;li&gt;/usr ­­ applications mainly for regular users &lt;/li&gt;
+&lt;li&gt;/var ­­ mainly logs, databases, etc. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Ubuntu 常用指令&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;ls : list directory contents&lt;/li&gt;
+&lt;li&gt;cd : Change Directory&lt;/li&gt;
+&lt;li&gt;pwd : print the current/working directory&lt;/li&gt;
+&lt;li&gt;mkdir : make/create directory&lt;/li&gt;
+&lt;li&gt;rmdir : remove the empty directory&lt;/li&gt;
+&lt;li&gt;rm : remove/delete file&lt;/li&gt;
+&lt;li&gt;mv : rename or move a file/directory&lt;/li&gt;
+&lt;li&gt;man : Manual pages for shell commands&lt;/li&gt;
+&lt;li&gt;cp : Copy Files&lt;/li&gt;
+&lt;li&gt;passwd : Change password for user&lt;/li&gt;
+&lt;li&gt;tar : Creates and extracts files from a tape or disk archive&lt;/li&gt;
+&lt;li&gt;find :  find searches the file located at /&lt;/li&gt;
+&lt;li&gt;grep :  print lines matching a pattern&lt;/li&gt;
+&lt;li&gt;chown :  change file owner and group&lt;/li&gt;
+&lt;li&gt;chgrp :  change group ownership&lt;/li&gt;
+&lt;li&gt;chmod :  change file mode bits&lt;/li&gt;
+&lt;li&gt;ifconfig :  configure a network interface&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;參考資料:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://help.ubuntu.com/lts/serverguide/serverguide.pdf"&gt;https://help.ubuntu.com/lts/serverguide/serverguide.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ecourts.nic.in/2/mannual/admin_manual.pdf"&gt;http://ecourts.nic.in/2/mannual/admin_manual.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf"&gt;http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop"&gt;http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry><entry><title>CADLab CAD/E 軟體套件使用建議</title><link href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html" rel="alternate"></link><updated>2016-03-25T23:27:36+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-25:post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html</id><summary type="html">&lt;p&gt;電腦輔助設計與工程分析是機械設計工程師進行 2D/3D 繪圖與理論分析表達的重要工具, 這裡是我們建議學員使用的 CAD/CAE 軟體套件.&lt;/p&gt;
 
 
 &lt;h2&gt;CAD:&lt;/h2&gt;
@@ -121,97 +211,4 @@
 &lt;li&gt;上課前後, 負責到 CADLab 日誌, 登記或勾選學員電腦使用情形, 填寫維修單或建議表&lt;/li&gt;
 &lt;li&gt;負責在課後, 確實檢查各電腦是否正常關機, 是否遺留個人物品&lt;/li&gt;
 &lt;li&gt;負責在課後清潔各排座位地板與桌面, 與班上幹部配合全員離開 CADLab 前確實關閉所有照明與空調系統&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-01-18T11:53:07+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-01-18:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
-
-
-&lt;p&gt;自從 1995 年, 第1套能在 Windows 操作系統執行的電腦輔助機械設計繪圖軟體套件, SolidWorks, 出現, 並且逐步蔚為風潮之後,  MCAD (Mechanical Computer Aided Design) 中端套件, 幾乎都只能在 Windows 操作系統上運作. 許多機械設計工程系相關師生, 幾乎早已經忘記, 最早的 MCAD 系統可都是在泛 Unix based 的操作系統上運作.&lt;/p&gt;
-&lt;p&gt;時間轉到 2015 年, Onshape: &lt;a href="http://www.onshape.com"&gt;http://www.onshape.com&lt;/a&gt; 的出現, 雖然截至目前只提供陽春的 MCAD 功能, 但是至少讓原本必須在 Windows 操作系統上才能上課的約束條件, 頓時消失, 因為計算機程式、網際內容管理、電腦輔助設計實習與協同產品設計實習等課程, 已經能夠百分之百在 Ubuntu 操作系統上運作.&lt;/p&gt;
-&lt;p&gt;過去, 我們在 Windows 操作系統上的工作類別, 不外乎:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;文書處理&lt;/li&gt;
-&lt;li&gt;程式編寫與執行&lt;/li&gt;
-&lt;li&gt;MCAD 零件繪圖, 零件組立&lt;/li&gt;
-&lt;li&gt;MCAE 工程分析&lt;/li&gt;
-&lt;li&gt;擷取執行畫面&lt;/li&gt;
-&lt;li&gt;錄製操作流程影片&lt;/li&gt;
-&lt;li&gt;遠端登入到其他電腦 (Remote Desktop)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;以下將就這些工作分類, 介紹在 Ubuntu 操作系統中的相對應工具與使用方法.&lt;/p&gt;
-&lt;p&gt;首先, 這裡建議的 Ubuntu 操作系統為 Ubuntu Server 版本加上 ubuntu-desktop 套件的安裝.&lt;/p&gt;
-&lt;p&gt;一旦安裝完成, 第1項文書處理工作就可以由 LibreOffice 套件加以勝任.&lt;/p&gt;
-&lt;h2&gt;程式編寫與執行&lt;/h2&gt;
-&lt;p&gt;這裡包含 Python3, PyQt5, Leo Editor, SciTE, Git 等套件都是跨操作系統, 其中 Python3  已經內建在 Ubuntu 14.04 操作系統中, 只是必須透過 python3 執行, 例如: 必須在命令列中, 輸入 python3 帶出互動式解譯環境.&lt;/p&gt;
-&lt;p&gt;pip3 模組則需要透過 sudo apt-get install python3-pip 安裝&lt;/p&gt;
-&lt;p&gt;PyQt5 則需要透過 sudo apt-get install python3-pyqt5 安裝&lt;/p&gt;
-&lt;p&gt;Leo Editor 透過 sudo pip3 install https://github.com/leo-editor/leo-editor/archive/master.zip 安裝, 並且以 leo&amp;amp; 呼叫&lt;/p&gt;
-&lt;p&gt;SciTE 透過 sudo apt-get install scite 安裝&lt;/p&gt;
-&lt;p&gt;git 透過 sudo apt-get install git 安裝&lt;/p&gt;
-&lt;h2&gt;MCAD 零件與組件繪圖&lt;/h2&gt;
-&lt;p&gt;這裡採用 &lt;a href="http://www.onshape.com"&gt;http://www.onshape.com&lt;/a&gt;, 只需要 Firefox 或 Chromium 瀏覽器就可以運作&lt;/p&gt;
-&lt;p&gt;FreeCAD: &lt;a href="http://www.freecadweb.org/"&gt;http://www.freecadweb.org/&lt;/a&gt; 與 Solvespace: &lt;a href="http://solvespace.com/"&gt;http://solvespace.com/&lt;/a&gt;, 則是能在 Ubuntu 環境運作的 MCAD 套件.&lt;/p&gt;
-&lt;h2&gt;MCAE 工程分析&lt;/h2&gt;
-&lt;p&gt;這裡採用 &lt;a href="http://www.simscale.com"&gt;http://www.simscale.com&lt;/a&gt;, 只需要 Firefox 或 Chromium 瀏覽器就可以運作&lt;/p&gt;
-&lt;p&gt;COMSOL &lt;a href="https://www.comsol.com/system-requirements"&gt;可以&lt;/a&gt;在 Ubuntu 環境中運作&lt;/p&gt;
-&lt;p&gt;Ansys 則&lt;a href="http://www.ansys.com/-/media/Ansys/corporate/files/pdf/solutions/it-professionals/platform-support/platformsupportansys162stategyandplans.pdf?la=en"&gt;建議&lt;/a&gt;在 Red Hat 或 SUSE 商用版上運作&lt;/p&gt;
-&lt;h2&gt;錄製操作流程影片&lt;/h2&gt;
-&lt;p&gt;在 Ubuntu 操作系統中擷取電腦螢幕畫面, 只要按下 PrintScr 按鍵, 就可以直接存為 png 格式檔案&lt;/p&gt;
-&lt;p&gt;操作流程則可以使用 Kazam 將過程錄成 mp4檔案&lt;/p&gt;
-&lt;p&gt;Kazam: &lt;a href="https://code.launchpad.net/~kazam-team/kazam/stable"&gt;https://code.launchpad.net/~kazam-team/kazam/stable&lt;/a&gt; (以 Python 編寫)&lt;/p&gt;
-&lt;p&gt;安裝:&lt;/p&gt;
-&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
-2
-3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;sudo add-apt-repository ppa:kazam-team/stable-series
-sudo apt-get update
-sudo apt-get install kazam
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;使用: kazam&amp;amp;&lt;/p&gt;
-&lt;p&gt;至於在 Ubuntu 遠端登入到 Windows, 可以使用 Ubuntu Software Center 安裝 remmina, 並且在連線設定上的 Advanced 頁面中, Security 選用 RDP 協定, 即可正確連線.&lt;/p&gt;
-&lt;h2&gt;Ubuntu 檔案架構&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;/bin ­­ binary applications (most of your executable files) &lt;/li&gt;
-&lt;li&gt;/boot ­­ files required to boot (such as the kernel, etc) &lt;/li&gt;
-&lt;li&gt;/dev ­­ your devices (everything from drives to displays) &lt;/li&gt;
-&lt;li&gt;/etc ­­ just about every configuration file for your system &lt;/li&gt;
-&lt;li&gt;/etc/rc.d ­­ contains a number of shell scripts that are run on bootup at different run levels. &lt;/li&gt;
-&lt;li&gt;/etc/X11 ­­ configuration files for the X Window system &lt;/li&gt;
-&lt;li&gt;/home ­­ locally stored user files and folders &lt;/li&gt;
-&lt;li&gt;/lib ­­ system libraries (similar to Program Files) &lt;/li&gt;
-&lt;li&gt;/media ­­ mounted (or loaded) devices such as cdroms, digital cameras, etc. &lt;/li&gt;
-&lt;li&gt;/mnt ­­ mounted file systems &lt;/li&gt;
-&lt;li&gt;/opt ­­ location for “optionally” installed programs &lt;/li&gt;
-&lt;li&gt;/sbin ­­ system ­only binaries&lt;/li&gt;
-&lt;li&gt;/sys ­­ contains information about the system &lt;/li&gt;
-&lt;li&gt;/tmp ­­ temporary files &lt;/li&gt;
-&lt;li&gt;/usr ­­ applications mainly for regular users &lt;/li&gt;
-&lt;li&gt;/var ­­ mainly logs, databases, etc. &lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;Ubuntu 常用指令&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;ls : list directory contents&lt;/li&gt;
-&lt;li&gt;cd : Change Directory&lt;/li&gt;
-&lt;li&gt;pwd : print the current/working directory&lt;/li&gt;
-&lt;li&gt;mkdir : make/create directory&lt;/li&gt;
-&lt;li&gt;rmdir : remove the empty directory&lt;/li&gt;
-&lt;li&gt;rm : remove/delete file&lt;/li&gt;
-&lt;li&gt;mv : rename or move a file/directory&lt;/li&gt;
-&lt;li&gt;man : Manual pages for shell commands&lt;/li&gt;
-&lt;li&gt;cp : Copy Files&lt;/li&gt;
-&lt;li&gt;passwd : Change password for user&lt;/li&gt;
-&lt;li&gt;tar : Creates and extracts files from a tape or disk archive&lt;/li&gt;
-&lt;li&gt;find :  find searches the file located at /&lt;/li&gt;
-&lt;li&gt;grep :  print lines matching a pattern&lt;/li&gt;
-&lt;li&gt;chown :  change file owner and group&lt;/li&gt;
-&lt;li&gt;chgrp :  change group ownership&lt;/li&gt;
-&lt;li&gt;chmod :  change file mode bits&lt;/li&gt;
-&lt;li&gt;ifconfig :  configure a network interface&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;參考資料:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href="https://help.ubuntu.com/lts/serverguide/serverguide.pdf"&gt;https://help.ubuntu.com/lts/serverguide/serverguide.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://ecourts.nic.in/2/mannual/admin_manual.pdf"&gt;http://ecourts.nic.in/2/mannual/admin_manual.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf"&gt;http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop"&gt;http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry></feed>
+&lt;/ol&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry></feed>

@@ -177,7 +177,7 @@ init_mathjax();
         <meta property="og:title" content="導入 Ubuntu 操作系統"/>
         <meta property="og:url" content="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html"/>
         <meta property="og:description" content="身為一位機械機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?"/>
-        <meta property="article:published_time" content="2016-01-18" />
+        <meta property="article:published_time" content="2016-03-25" />
             <meta property="article:section" content="導引" />
             <meta property="article:tag" content="Ubuntu" />
             <meta property="article:tag" content="Mechanical Design" />
@@ -188,12 +188,58 @@ init_mathjax();
         <link rel="stylesheet" href="http://cadlab.mde.tw/post/theme/css/bootstrap.united.min.css" type="text/css"/>
     <link href="http://cadlab.mde.tw/post/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="http://cadlab.mde.tw/post/theme/css/pygments/fruity.css" rel="stylesheet">
+    <link href="http://cadlab.mde.tw/post/theme/css/pygments/monokai.css" rel="stylesheet">
     <link href="http://cadlab.mde.tw/post/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
     <link rel="stylesheet" href="http://cadlab.mde.tw/post/theme/css/style.css" type="text/css"/>
 
         <link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
               title="CADLab ATOM Feed"/>
+
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shCore.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushJScript.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushJava.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushPython.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushSql.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushXml.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushPhp.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCpp.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCss.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCSharp.js"></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/css/shCore.css";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/css/shThemeDefault.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
 
 </head>
 <body>
@@ -263,7 +309,7 @@ CADLab            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2016-01-18T11:53:07.276031+08:00"> 一 18 一月 2016</time>
+        <i class="fa fa-calendar"></i><time datetime="2016-03-25T23:51:46.908525+08:00"> 五 25 三月 2016</time>
     </span>
             <span class="label label-default">By</span>
             <a href="http://cadlab.mde.tw/post/author/kmol.html"><i class="fa fa-user"></i> kmol</a>
@@ -314,15 +360,12 @@ CADLab            </a>
 <p>操作流程則可以使用 Kazam 將過程錄成 mp4檔案</p>
 <p>Kazam: <a href="https://code.launchpad.net/~kazam-team/kazam/stable">https://code.launchpad.net/~kazam-team/kazam/stable</a> (以 Python 編寫)</p>
 <p>安裝:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre>sudo add-apt-repository ppa:kazam-team/stable-series
+<pre class="brush: python">
+sudo add-apt-repository ppa:kazam-team/stable-series
 sudo apt-get update
 sudo apt-get install kazam
-</pre></div>
-</td></tr></table>
+</pre>
 
-<p><br /></p>
 <p>使用: kazam&amp;</p>
 <p>至於在 Ubuntu 遠端登入到 Windows, 可以使用 Ubuntu Software Center 安裝 remmina, 並且在連線設定上的 Advanced 頁面中, Security 選用 RDP 協定, 即可正確連線.</p>
 <h2>Ubuntu 檔案架構</h2>
@@ -416,6 +459,11 @@ sudo apt-get install kazam
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html">
+                            導入 Ubuntu 操作系統
+                        </a>
+                    </li>
+                    <li class="list-group-item">
                         <a href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html">
                             CADLab CAD/E 軟體套件使用建議
                         </a>
@@ -433,11 +481,6 @@ sudo apt-get install kazam
                     <li class="list-group-item">
                         <a href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti-can-kao.html">
                             使用者貢獻文章標題(參考)
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/cadlab-de-li-xiang-she-zhi.html">
-                            Cadlab 的理想設置
                         </a>
                     </li>
                 </ul>
