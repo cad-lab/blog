@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-03-25T22:49:45+08:00</updated><entry><title>CADLab 學員卡片電腦規格與應用</title><link href="http://cadlab.mde.tw/post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html" rel="alternate"></link><updated>2016-03-25T22:49:45+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-25:post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html</id><summary type="html">&lt;p&gt;卡片電腦 (credit-card sized computer) 的盛行, 除了在操作系統上有機會讓 CADLab 的學員, 得以學習 Windows 10 以外的應用, 最大的功用, 是讓機械設計工程專長的學員能夠實際動手, 理解網路的整合, 並且迎接自造 (self-manufacturing) 時代的蒞臨.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-03-25T23:27:36+08:00</updated><entry><title>CADLab CAD/E 軟體套件使用建議</title><link href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html" rel="alternate"></link><updated>2016-03-25T23:27:36+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-25:post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html</id><summary type="html">&lt;p&gt;電腦輔助設計與工程分析是機械設計工程師進行 2D/3D 繪圖與理論分析表達的重要工具, 這裡是我們建議學員使用的 CAD/CAE 軟體套件.&lt;/p&gt;
+
+
+&lt;h2&gt;CAD:&lt;/h2&gt;
+&lt;p&gt;商用封閉單機套件:&lt;/p&gt;
+&lt;p&gt;SolidWorks 與 PTC Creo&lt;/p&gt;
+&lt;p&gt;雲端封閉套件(提供免費使用方案):&lt;/p&gt;
+&lt;p&gt;Onshape: &lt;a href="http://onshape.com"&gt;http://onshape.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;自由開源套件:&lt;/p&gt;
+&lt;p&gt;Solvespace: &lt;a href="http://solvespace.com/"&gt;http://solvespace.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;FreeCAD: &lt;a href="http://www.freecadweb.org/"&gt;http://www.freecadweb.org/&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;CAE:&lt;/h2&gt;
+&lt;p&gt;商用封閉套件:&lt;/p&gt;
+&lt;p&gt;ansys 與 comsol&lt;/p&gt;
+&lt;p&gt;自由開源套件:&lt;/p&gt;
+&lt;p&gt;Elmer: &lt;a href="https://www.csc.fi/web/elmer"&gt;https://www.csc.fi/web/elmer&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Kratos: &lt;a href="http://www.cimne.com/kratos"&gt;http://www.cimne.com/kratos&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;數值運算:&lt;/h2&gt;
+&lt;p&gt;商用封閉套件:&lt;/p&gt;
+&lt;p&gt;Matlab 與 Mathematica&lt;/p&gt;
+&lt;p&gt;自由開源套件:&lt;/p&gt;
+&lt;p&gt;Jupyter: &lt;a href="http://jupyter.org/"&gt;http://jupyter.org/&lt;/a&gt;&lt;/p&gt;</summary><category term="CADLAB"></category><category term="CAX"></category></entry><entry><title>CADLab 學員卡片電腦規格與應用</title><link href="http://cadlab.mde.tw/post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html" rel="alternate"></link><updated>2016-03-25T22:49:45+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-25:post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html</id><summary type="html">&lt;p&gt;卡片電腦 (credit-card sized computer) 的盛行, 除了在操作系統上有機會讓 CADLab 的學員, 得以學習 Windows 10 以外的應用, 最大的功用, 是讓機械設計工程專長的學員能夠實際動手, 理解網路的整合, 並且迎接自造 (self-manufacturing) 時代的蒞臨.&lt;/p&gt;
 
 
 &lt;h2&gt;Raspberry Pi 3 電腦&lt;/h2&gt;
