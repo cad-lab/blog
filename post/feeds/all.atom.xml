@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-03-28T20:51:55+08:00</updated><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-03-28T20:51:55+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-28:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-03-29T11:59:35+08:00</updated><entry><title>電腦輔助設計室網路連線管理</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-lu-lian-xian-guan-li.html" rel="alternate"></link><updated>2016-03-29T11:59:35+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-29:post/dian-nao-fu-zhu-she-ji-shi-wang-lu-lian-xian-guan-li.html</id><summary type="html">&lt;p&gt;電腦輔助設計室長期以來都是在 IPV4 的架構下, 透過 NAT, 以共用一個網路位址上網, 若以整間教室 63 台電腦為例, 只需要設法利用 9 個固定的 IPV4 網路位址, 讓其中的 9 台電腦同時支援 IPV4 與 IPV6 協定, 並且透過 Squid 代理伺服器的設定, 就可以利用網路負載平衡, 大幅提升用戶的連網速度.&lt;/p&gt;
+
+
+&lt;p&gt;自 2012 年起校園主幹就已經全面支援 IPV6 的網路協定, 但是由於台灣大部份的網站仍然只提供 IPV6 的連線, 因此即使在 IPV6 網址無虞的情況下, 讓每一台電腦輔助設計室的電腦都透過 IPV6 協定取得網址, 仍然需要 IPV4/IPV6 雙支援的代理主機, 才能連結使用所有的網站.&lt;/p&gt;
+&lt;p&gt;因此目前的規劃是, 讓 63 台電腦全部透過 IPV6 協定取得 IP 位址上網, 但是其中的 9 台電腦則以其中規劃好的第3磁區 Ubuntu Server 開機 (其他兩個開機磁區分別為 Windows 7 與 Windows 10), 而且這 9 台電腦是在預先綁定 MAC 位址到雙支援 IPV4/IPV6 的固定 IP 情況下, 自行透過 DNS 設定, 以 Round Robin 的簡單負載平衡, 來服務其他僅設定 IPV6 DHCP Client 連線的電腦.&lt;/p&gt;
+&lt;p&gt;其次, 學員自行攜入 CADLab 使用的 Raspberry Pi 3 隨身卡片電腦, 也可以利用 IEEE 802.11n 的協定取得 IPV6 位址, 然後也是透過雙支援的代理伺服器連線上網. 而使用 git 相關指令之前, 必須確定已經設定&lt;/p&gt;
+&lt;p&gt;git config --global http.proxy http://myproxy.server:port&lt;/p&gt;
+&lt;p&gt;git config --global https.proxy https://myproxy.server:port&lt;/p&gt;</summary><category term="CADLAB"></category><category term="Ｎetwork"></category><category term="IPV6"></category></entry><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-03-28T21:12:17+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-28:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
 
 
 &lt;p&gt;自從 1995 年, 第1套能在 Windows 操作系統執行的電腦輔助機械設計繪圖軟體套件, SolidWorks, 出現, 並且逐步蔚為風潮之後,  MCAD (Mechanical Computer Aided Design) 中端套件, 幾乎都只能在 Windows 操作系統上運作. 許多機械設計工程系相關師生, 幾乎早已經忘記, 最早的 MCAD 系統可都是在泛 Unix based 的操作系統上運作.&lt;/p&gt;
@@ -89,98 +96,10 @@ sudo apt-get install kazam
 &lt;li&gt;&lt;a href="http://ecourts.nic.in/2/mannual/admin_manual.pdf"&gt;http://ecourts.nic.in/2/mannual/admin_manual.pdf&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf"&gt;http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop"&gt;http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry><entry><title>CADLab CAD/E 軟體套件使用建議</title><link href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html" rel="alternate"></link><updated>2016-03-25T23:27:36+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-25:post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html</id><summary type="html">&lt;p&gt;電腦輔助設計與工程分析是機械設計工程師進行 2D/3D 繪圖與理論分析表達的重要工具, 這裡是我們建議學員使用的 CAD/CAE 軟體套件.&lt;/p&gt;
+&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry><entry><title>電腦輔助設計室網誌開通</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-03-28T21:07:27+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-28:post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃, 引導勝壓迫、鼓勵勝漠視、開放才有未來&lt;/p&gt;
 
 
-&lt;h2&gt;CAD:&lt;/h2&gt;
-&lt;p&gt;商用封閉單機套件:&lt;/p&gt;
-&lt;p&gt;SolidWorks 與 PTC Creo&lt;/p&gt;
-&lt;p&gt;雲端封閉套件(提供免費使用方案):&lt;/p&gt;
-&lt;p&gt;Onshape: &lt;a href="http://onshape.com"&gt;http://onshape.com&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;自由開源套件:&lt;/p&gt;
-&lt;p&gt;Solvespace: &lt;a href="http://solvespace.com/"&gt;http://solvespace.com/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;FreeCAD: &lt;a href="http://www.freecadweb.org/"&gt;http://www.freecadweb.org/&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;CAE:&lt;/h2&gt;
-&lt;p&gt;商用封閉套件:&lt;/p&gt;
-&lt;p&gt;ansys 與 comsol&lt;/p&gt;
-&lt;p&gt;自由開源套件:&lt;/p&gt;
-&lt;p&gt;Elmer: &lt;a href="https://www.csc.fi/web/elmer"&gt;https://www.csc.fi/web/elmer&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Kratos: &lt;a href="http://www.cimne.com/kratos"&gt;http://www.cimne.com/kratos&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;數值運算:&lt;/h2&gt;
-&lt;p&gt;商用封閉套件:&lt;/p&gt;
-&lt;p&gt;Matlab 與 Mathematica&lt;/p&gt;
-&lt;p&gt;自由開源套件:&lt;/p&gt;
-&lt;p&gt;Jupyter: &lt;a href="http://jupyter.org/"&gt;http://jupyter.org/&lt;/a&gt;&lt;/p&gt;</summary><category term="CADLAB"></category><category term="CAX"></category></entry><entry><title>CADLab 學員卡片電腦規格與應用</title><link href="http://cadlab.mde.tw/post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html" rel="alternate"></link><updated>2016-03-25T22:49:45+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-25:post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html</id><summary type="html">&lt;p&gt;卡片電腦 (credit-card sized computer) 的盛行, 除了在操作系統上有機會讓 CADLab 的學員, 得以學習 Windows 10 以外的應用, 最大的功用, 是讓機械設計工程專長的學員能夠實際動手, 理解網路的整合, 並且迎接自造 (self-manufacturing) 時代的蒞臨.&lt;/p&gt;
-
-
-&lt;h2&gt;Raspberry Pi 3 電腦&lt;/h2&gt;
-&lt;p&gt;當一間嚴格管理, 軟硬體配置僵化的 CADLab 電腦輔助設計室已經無法滿足現代機械設計科技人才的培育使用時, 導入以 &lt;a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/"&gt;Raspberry Pi 3 Model B&lt;/a&gt; 為基礎的個人隨身卡片電腦, 應該是個不錯的選擇.&lt;/p&gt;
-&lt;p&gt;2016 年 2 月份推出的這一片採用 1.2GHz 64-bit quad-core ARMv8 CPU 的小卡片電腦, 不僅能夠用來控制 &lt;a href="http://delta.firepick.org/"&gt;http://delta.firepick.org/&lt;/a&gt;, 可以安裝執行 &lt;a href="https://github.com/jupyter/jupyterhub"&gt;Jupyter hub&lt;/a&gt;, 而且在 &lt;a href="https://www.raspberrypi.org/downloads/noobs/"&gt;Noobs&lt;/a&gt; 操作系統套件中, 還&lt;a href="https://www.raspberrypi.org/blog/mathematica-10/"&gt;內建&lt;/a&gt;免費的非營利版 Mathematica.&lt;/p&gt;
-&lt;p&gt;以下是我們建議學員自備的 Raspberry Pi 3 Model B 卡片電腦規格:&lt;/p&gt;
-&lt;p&gt;處理器:&lt;/p&gt;
-&lt;p&gt;Broadcom BCM2387 晶片組，1.2GHz 四核心 ARM Cortex-A53.802.11 b/g/n 無線 LAN 和藍牙 4.1&lt;/p&gt;
-&lt;p&gt;GPU:&lt;/p&gt;
-&lt;p&gt;雙核心 VideoCore IVR 多媒體協同處理器。提供 Open GL ES 2.0、硬體加速 OpenVG，以及 1080p30 H.264 高型解碼。支援 1Gpixel/s、1.5Gtexel/s 或 24GFLOPs，並具備材質過濾功能與 DMA 基礎架構&lt;/p&gt;
-&lt;p&gt;記憶體:&lt;/p&gt;
-&lt;p&gt;1GB LPDDR2&lt;/p&gt;
-&lt;p&gt;作業系統:&lt;/p&gt;
-&lt;p&gt;由 Micro SD 記憶卡(建議使用 32 GB 以上) 啟動，建議安裝 Raspbian 操作系統&lt;/p&gt;
-&lt;p&gt;尺寸:&lt;/p&gt;
-&lt;p&gt;85 x 56 x 17mm&lt;/p&gt;
-&lt;p&gt;電源:&lt;/p&gt;
-&lt;p&gt;Micro USB 插槽 5V1，2.5A&lt;/p&gt;
-&lt;h2&gt;Raspbian 安裝配置&lt;/h2&gt;
-&lt;p&gt;當學員拿到 Raspberry Pi 3 卡片電腦之後, 首次配置時, 建議使用 CADLab 教室中的 HDMI 線連接到支援 HDMI 的電腦螢幕後, 進行 &lt;a href="https://www.raspberrypi.org/downloads/raspbian/"&gt;Raspbian&lt;/a&gt; 操作系統的安裝, 安裝後則必須開啟 SSH 的連線, 並且編輯 /etc/lightdm/lightdm.conf 設定檔, 將 [XDMCPServer] 項下的 enabled 設為 true.&lt;/p&gt;
-&lt;h2&gt;CADLab 卡片電腦使用情境&lt;/h2&gt;
-&lt;p&gt;完成 Raspbin 系統安裝後, Raspberry Pi 3 電腦在 CADLab 教室使用, 共有兩種基本情境:&lt;/p&gt;
-&lt;h3&gt;連接滑鼠鍵盤螢幕開機&lt;/h3&gt;
-&lt;p&gt;目前的 CADLab 電腦配置, USB 鍵盤與滑鼠的接頭是採隱藏式保護, 因此學員無法直接以公用的滑鼠與鍵盤連接 Raspberry Pi 3 卡片電腦, 但是若新配置的新電腦設備允許學員使用公用的 USB 鍵盤與滑鼠, 並且提供支援 HDMI 格式的電腦螢幕, 用戶就可以很單純直接用自行攜入的 Raspberry Pi 3 開機使用. 開機後, 可以透過 CADLab 中的 Wifi 連線 (Raspberry Pi 3 Model B 內建 802.11n Wireless LAN) 或實體線 (每桌必須提供 4 或 8 port hub) 上網, 使用較為簡單.&lt;/p&gt;
-&lt;h3&gt;無滑鼠鍵盤螢幕開機&lt;/h3&gt;
-&lt;p&gt;若新配置的 CADLab  電腦設備並不允許學員使用公用的滑鼠與鍵盤, 且桌上並無 hub 可用, 則建議 Raspberry Pi 3 使用者, 可以自帶一條網路跳線, 利用桌上型電腦的多 NIC 連線, 以 &lt;a href="https://sourceforge.net/projects/dhcpserver/"&gt;https://sourceforge.net/projects/dhcpserver/&lt;/a&gt; 發給 Raspberry Pi 3 電腦臨時的內部網路 IP, 然後再利用 &lt;a href="https://sourceforge.net/projects/xming/"&gt;https://sourceforge.net/projects/xming/&lt;/a&gt;, 以 XDMCP 協定 (只建議在內部網路使用, 廣域網路上, 建議採較安全的 SSH 連線), 登入 Raspberry Pi 3, 並且以 Wifi 連線到 CADLab 的 Access Point 後, 確定連線的 IP 位址後, 就可以移除與桌上型電腦的網路跳線, 改採與桌上型電腦同位階的內部網路上網, 然後透過桌上型電腦的 Putty, 以 SSH 連線到 Raspberry Pi 3 進行操控, 或者再透過 xming, 以 XDMCP 協定登入.&lt;/p&gt;
-&lt;p&gt;另外, 假如 Raspberry Pi 3 電腦並無與電腦教室其他電腦設備連線的要求, 用戶希望利用網路跳線與桌機相連後上網, 則建議在桌機上使用代理程式 &lt;a href="http://www.youngzsoft.net/ccproxy/"&gt;http://www.youngzsoft.net/ccproxy/&lt;/a&gt; 的免費版 (可以3個用戶使用), 讓 Raspberry pi 3 電腦以桌機的 proxy server 上網.&lt;/p&gt;</summary><category term="CADLAB"></category><category term="raspberrypi"></category></entry><entry><title>CADLab 網路配線繪圖</title><link href="http://cadlab.mde.tw/post/cadlab-wang-lu-pei-xian-hui-tu.html" rel="alternate"></link><updated>2016-03-25T21:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-25:post/cadlab-wang-lu-pei-xian-hui-tu.html</id><summary type="html">&lt;p&gt;利用程式方法執行網路配線繪圖&lt;/p&gt;
-
-
-&lt;p&gt;CADLab 中的網路配線圖, 就如同 &lt;a href="http://blockdiag.com/en/"&gt;http://blockdiag.com/en/&lt;/a&gt; 專案所示, 可以利用語法描述參數與配置之後, 透過程式方法轉出結果.&lt;/p&gt;
-&lt;p&gt;以 nwdiag &lt;a href="https://bitbucket.org/blockdiag/nwdiag"&gt;https://bitbucket.org/blockdiag/nwdiag&lt;/a&gt; 為例, 在只有 Python3 的 Windows 環境中安裝:&lt;/p&gt;
-&lt;p&gt;pip install nwdiag&lt;/p&gt;
-&lt;p&gt;之後就可以利用 nwdiag 命令解讀 .diag network diagram 描述檔, 並且轉為 png 或 svg 格式.&lt;/p&gt;
-&lt;p&gt;假如是在同時裝有 Python2 與 Python3 的 Ubuntu 環境中安裝 nwdiag:&lt;/p&gt;
-&lt;p&gt;pip3 install nwdiag&lt;/p&gt;
-&lt;p&gt;之後的應用與 Windows 環境相同.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://blockdiag.com/en/"&gt;http://blockdiag.com/en/&lt;/a&gt; 專案還有方塊圖 blockdiag, 序列圖 seqdiag 以及活動圖 actdiag 等相關繪圖的應用.&lt;/p&gt;
-&lt;p&gt;最後假如 CADLab 希望利用 Sphinx 來整理電腦輔助設計室的文件, 則可以套用 &lt;a href="https://github.com/blockdiag"&gt;https://github.com/blockdiag&lt;/a&gt; 中的 extensions 工具.&lt;/p&gt;</summary><category term="CADLAB"></category><category term="network"></category></entry><entry><title>使用者貢獻文章標題(參考)</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti-can-kao.html" rel="alternate"></link><updated>2016-03-03T17:03:55+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-03-03:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti-can-kao.html</id><summary type="html">&lt;p&gt;使用者貢獻文章的參考 Leo Editor 檔案&lt;/p&gt;
-
-
-&lt;p&gt;使用者貢獻文章的內容&lt;/p&gt;</summary><category term="Reference"></category><category term="user template"></category></entry><entry><title>Cadlab 的理想設置</title><link href="http://cadlab.mde.tw/post/cadlab-de-li-xiang-she-zhi.html" rel="alternate"></link><updated>2016-02-23T12:34:30+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-02-23:post/cadlab-de-li-xiang-she-zhi.html</id><summary type="html">&lt;p&gt;一個符合二十一世紀工學院實際需求的電腦輔助設計室, 應該如何規劃配置?&lt;/p&gt;
-
-
-&lt;p&gt;Cadlab 是個熱門的名詞, 代表 Computer Aided Design Laboratory, 也就是電腦輔助設計實驗室, 或簡稱電腦輔助設計室.&lt;/p&gt;
-&lt;p&gt;過去的電腦輔助設計室, 充滿各種讓使用者進行電腦輔助設計的公用電腦, 加上部份伺服器提供相關設計運算或資料儲存之用, 而現在, 這樣的配置可能不再恰當, 尤其是一間配置著 60 幾台最新硬體的桌上型電腦, 但卻採用所謂的防寫卡進行硬碟保護的電腦, 倘若無法隨時配合著經常性的操作系統或應用軟體更新, 這樣的 Cadlab 配置, 更是錯上加錯.&lt;/p&gt;
-&lt;p&gt;其實, 二十一世紀的工學院, 所有課程都應該在數位網路環境中進行, 因此所有這些所謂未來的工程師, 就應該在入學的第1天就被配予一台 17 寸的筆記型電腦, 而且裝載著各種未來幾年甚至離開學校之後, 都還能夠合法使用的相關專業用軟硬體套件.&lt;/p&gt;
-&lt;p&gt;過去, 由於全球協同的步調較慢, 各種產品的生命週期時間較長, 因此允許學校與產業界的差異性容忍度較大, 但是, 近幾年在在各種資訊與通訊軟硬體的快速發展衝擊下, 不僅全球協同的步調加速, 各種產品的生命週期愈來愈短, 促使學校教育單位與產業界必須在某些層面上攜手同步, 否則終將無法培育出適才、適所與適任的未來工程師.&lt;/p&gt;
-&lt;p&gt;而且, 隨著可攜裝置與自造軟硬體的逐步普及, Cadlab 配置中的所謂電腦, 除了包括讓工程師可以隨身攜帶的筆記型電腦以外, 還必須包括各類微控制器與 3D 印表機, 讓 Cadlab 實驗室中的各種系統模擬, 可以透過初步的硬體原型測試基本的可行性.&lt;/p&gt;</summary><category term="CADLAB"></category></entry><entry><title>使用者貢獻文章標題</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-02-21T18:06:12+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-02-21:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章的參考 Leo Editor 檔案&lt;/p&gt;
-
-
-&lt;p&gt;本網誌的系統與靜態資料為一個 Github 倉儲 &lt;a href="https://github.com/cad-lab/blog"&gt;https://github.com/cad-lab/blog&lt;/a&gt;, 只要符合 GNU AFFERO GENERAL PUBLIC LICENSE 授權規範, 任何人都可以取用.&lt;/p&gt;
-&lt;p&gt;本網誌的規劃是希望透過 Gmail 的認証取得參與協同著作的權限後, 各作者可以利用 users 目錄下的 .leo 檔案, 各自維護自己的文章, 基本要求是, 每篇文章, 必須以使用者帳號作為開頭, 並建議依照日期分類, 以避免各用戶的文章彼此覆蓋.&lt;/p&gt;
-&lt;p&gt;各用戶若需要協同著作, 共同維護一篇 content 目錄中的某一個 .md 檔案, 那麼各用戶在 gh-pages 倉儲分支版本提交與推送過程, 就必須設法處理版本內容的衝突, 但各 .md 檔案建議是在 Leo Editor @edit 或@clean 節點下進行協同編輯並處理內容衝突.&lt;/p&gt;
-&lt;p&gt;下圖為機械設計工程系即時網路連線:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=5" alt="mde realtime network graph" /&gt; &lt;/p&gt;
-&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=2" alt="mde realtime network graph" /&gt;&lt;/p&gt;</summary><category term="Reference"></category><category term="user template"></category></entry><entry><title>KMOL 2016 Spring Portable Tool</title><link href="http://cadlab.mde.tw/post/kmol-2016-spring-portable-tool.html" rel="alternate"></link><updated>2016-02-21T12:32:59+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-02-21:post/kmol-2016-spring-portable-tool.html</id><summary type="html">&lt;p&gt;針對 cadlab 上計算機程式、網際內容管理、電腦輔助設計實習與協同產品設計實習等課程, 採用 Python 3.4 打造的 Windows 版可攜程式套件&lt;/p&gt;
-
-
-&lt;p&gt;可攜套件倉儲:&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/chiamingyen/kmol2016"&gt;https://github.com/chiamingyen/kmol2016&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;kmol2016 下載:&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX"&gt;https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX&lt;/a&gt;&lt;/p&gt;</summary><category term="可攜套件"></category><category term="2016Spring"></category></entry><entry><title>Bezier 曲線導引</title><link href="http://cadlab.mde.tw/post/bezier-qu-xian-dao-yin.html" rel="alternate"></link><updated>2016-02-18T11:38:34+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-02-18:post/bezier-qu-xian-dao-yin.html</id><summary type="html">&lt;p&gt;A primer on Bezier curves&lt;/p&gt;
-
-
-&lt;p&gt;&lt;a href="http://pomax.github.io/bezierinfo/"&gt;http://pomax.github.io/bezierinfo/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pomax.github.io/bezierjs/"&gt;http://pomax.github.io/bezierjs/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;嘗試將純 Javascript 的環境轉為 Brython based &lt;a href="https://github.com/brython-dev/brython"&gt;https://github.com/brython-dev/brython&lt;/a&gt;, 希望完成之後, 可以讓使用者編寫 Python3 程式碼來操控 Bezier 曲線 &lt;a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"&gt;https://en.wikipedia.org/wiki/B%C3%A9zier_curve&lt;/a&gt;.&lt;/p&gt;</summary><category term="Javascript"></category><category term="程式"></category></entry><entry><title>電腦輔助設計室網誌開通</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-01-18T15:53:36+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-01-18:post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃, 引導勝壓迫、鼓勵勝漠視、開放才有未來&lt;/p&gt;
-
-
-&lt;p&gt;CADLab 是綜一館一間配置 63 台個人電腦的教學實驗室&lt;/p&gt;
+&lt;p&gt;CADLab 是綜一館一間配置 63+1 台個人電腦的教學實驗室&lt;/p&gt;
 &lt;h2&gt;網誌文章分類&lt;/h2&gt;
 &lt;p&gt;這個網站的文章分類暫定為:&lt;/p&gt;
 &lt;ol&gt;
@@ -211,4 +130,92 @@ sudo apt-get install kazam
 &lt;li&gt;上課前後, 負責到 CADLab 日誌, 登記或勾選學員電腦使用情形, 填寫維修單或建議表&lt;/li&gt;
 &lt;li&gt;負責在課後, 確實檢查各電腦是否正常關機, 是否遺留個人物品&lt;/li&gt;
 &lt;li&gt;負責在課後清潔各排座位地板與桌面, 與班上幹部配合全員離開 CADLab 前確實關閉所有照明與空調系統&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry></feed>
+&lt;/ol&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry><entry><title>CADLab CAD/E 軟體套件使用建議</title><link href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html" rel="alternate"></link><updated>2016-03-28T21:04:24+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-28:post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html</id><summary type="html">&lt;p&gt;電腦輔助設計與工程分析是機械設計工程師進行 2D/3D 繪圖與理論分析表達的重要工具, 這裡是我們建議學員使用的 CAD/CAE 軟體套件.&lt;/p&gt;
+
+
+&lt;h2&gt;CAD:&lt;/h2&gt;
+&lt;p&gt;商用封閉單機套件:&lt;/p&gt;
+&lt;p&gt;SolidWorks 與 PTC Creo&lt;/p&gt;
+&lt;p&gt;雲端封閉套件(提供免費使用方案):&lt;/p&gt;
+&lt;p&gt;Onshape: &lt;a href="http://onshape.com"&gt;http://onshape.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;自由開源套件:&lt;/p&gt;
+&lt;p&gt;Solvespace: &lt;a href="http://solvespace.com/"&gt;http://solvespace.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;FreeCAD: &lt;a href="http://www.freecadweb.org/"&gt;http://www.freecadweb.org/&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;CAE:&lt;/h2&gt;
+&lt;p&gt;商用封閉套件:&lt;/p&gt;
+&lt;p&gt;ansys 與 comsol&lt;/p&gt;
+&lt;p&gt;自由開源套件:&lt;/p&gt;
+&lt;p&gt;Elmer: &lt;a href="https://www.csc.fi/web/elmer"&gt;https://www.csc.fi/web/elmer&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Kratos: &lt;a href="http://www.cimne.com/kratos"&gt;http://www.cimne.com/kratos&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;數值運算:&lt;/h2&gt;
+&lt;p&gt;商用封閉套件:&lt;/p&gt;
+&lt;p&gt;Matlab 與 Mathematica&lt;/p&gt;
+&lt;p&gt;自由開源套件:&lt;/p&gt;
+&lt;p&gt;Jupyter: &lt;a href="http://jupyter.org/"&gt;http://jupyter.org/&lt;/a&gt;&lt;/p&gt;</summary><category term="CADLAB"></category><category term="CAX"></category></entry><entry><title>CADLab 學員卡片電腦規格與應用</title><link href="http://cadlab.mde.tw/post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html" rel="alternate"></link><updated>2016-03-28T21:04:24+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-28:post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html</id><summary type="html">&lt;p&gt;卡片電腦 (credit-card sized computer) 的盛行, 除了在操作系統上有機會讓 CADLab 的學員, 得以學習 Windows 10 以外的應用, 最大的功用, 是讓機械設計工程專長的學員能夠實際動手, 理解網路的整合, 並且迎接自造 (self-manufacturing) 時代的蒞臨.&lt;/p&gt;
+
+
+&lt;h2&gt;Raspberry Pi 3 電腦&lt;/h2&gt;
+&lt;p&gt;當一間嚴格管理, 軟硬體配置僵化的 CADLab 電腦輔助設計室已經無法滿足現代機械設計科技人才的培育使用時, 導入以 &lt;a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/"&gt;Raspberry Pi 3 Model B&lt;/a&gt; 為基礎的個人隨身卡片電腦, 應該是個不錯的選擇.&lt;/p&gt;
+&lt;p&gt;2016 年 2 月份推出的這一片採用 1.2GHz 64-bit quad-core ARMv8 CPU 的小卡片電腦, 不僅能夠用來控制 &lt;a href="http://delta.firepick.org/"&gt;http://delta.firepick.org/&lt;/a&gt;, 可以安裝執行 &lt;a href="https://github.com/jupyter/jupyterhub"&gt;Jupyter hub&lt;/a&gt;, 而且在 &lt;a href="https://www.raspberrypi.org/downloads/noobs/"&gt;Noobs&lt;/a&gt; 操作系統套件中, 還&lt;a href="https://www.raspberrypi.org/blog/mathematica-10/"&gt;內建&lt;/a&gt;免費的非營利版 Mathematica.&lt;/p&gt;
+&lt;p&gt;以下是我們建議學員自備的 Raspberry Pi 3 Model B 卡片電腦規格:&lt;/p&gt;
+&lt;p&gt;處理器:&lt;/p&gt;
+&lt;p&gt;Broadcom BCM2387 晶片組，1.2GHz 四核心 ARM Cortex-A53.802.11 b/g/n 無線 LAN 和藍牙 4.1&lt;/p&gt;
+&lt;p&gt;GPU:&lt;/p&gt;
+&lt;p&gt;雙核心 VideoCore IVR 多媒體協同處理器。提供 Open GL ES 2.0、硬體加速 OpenVG，以及 1080p30 H.264 高型解碼。支援 1Gpixel/s、1.5Gtexel/s 或 24GFLOPs，並具備材質過濾功能與 DMA 基礎架構&lt;/p&gt;
+&lt;p&gt;記憶體:&lt;/p&gt;
+&lt;p&gt;1GB LPDDR2&lt;/p&gt;
+&lt;p&gt;作業系統:&lt;/p&gt;
+&lt;p&gt;由 Micro SD 記憶卡(建議使用 32 GB 以上) 啟動，建議安裝 Raspbian 操作系統&lt;/p&gt;
+&lt;p&gt;尺寸:&lt;/p&gt;
+&lt;p&gt;85 x 56 x 17mm&lt;/p&gt;
+&lt;p&gt;電源:&lt;/p&gt;
+&lt;p&gt;Micro USB 插槽 5V1，2.5A&lt;/p&gt;
+&lt;h2&gt;Raspbian 安裝配置&lt;/h2&gt;
+&lt;p&gt;當學員拿到 Raspberry Pi 3 卡片電腦之後, 首次配置時, 建議使用 CADLab 教室中的 HDMI 線連接到支援 HDMI 的電腦螢幕後, 進行 &lt;a href="https://www.raspberrypi.org/downloads/raspbian/"&gt;Raspbian&lt;/a&gt; 操作系統的安裝, 安裝後則必須開啟 SSH 的連線, 並且編輯 /etc/lightdm/lightdm.conf 設定檔, 將 [XDMCPServer] 項下的 enabled 設為 true.&lt;/p&gt;
+&lt;h2&gt;CADLab 卡片電腦使用情境&lt;/h2&gt;
+&lt;p&gt;完成 Raspbin 系統安裝後, Raspberry Pi 3 電腦在 CADLab 教室使用, 共有兩種基本情境:&lt;/p&gt;
+&lt;h3&gt;連接滑鼠鍵盤螢幕開機&lt;/h3&gt;
+&lt;p&gt;目前的 CADLab 電腦配置, USB 鍵盤與滑鼠的接頭是採隱藏式保護, 因此學員無法直接以公用的滑鼠與鍵盤連接 Raspberry Pi 3 卡片電腦, 但是若新配置的新電腦設備允許學員使用公用的 USB 鍵盤與滑鼠, 並且提供支援 HDMI 格式的電腦螢幕, 用戶就可以很單純直接用自行攜入的 Raspberry Pi 3 開機使用. 開機後, 可以透過 CADLab 中的 Wifi 連線 (Raspberry Pi 3 Model B 內建 802.11n Wireless LAN) 或實體線 (每桌必須提供 4 或 8 port hub) 上網, 使用較為簡單.&lt;/p&gt;
+&lt;h3&gt;無滑鼠鍵盤螢幕開機&lt;/h3&gt;
+&lt;p&gt;若新配置的 CADLab  電腦設備並不允許學員使用公用的滑鼠與鍵盤, 且桌上並無 hub 可用, 則建議 Raspberry Pi 3 使用者, 可以自帶一條網路跳線, 利用桌上型電腦的多 NIC 連線, 以 &lt;a href="https://sourceforge.net/projects/dhcpserver/"&gt;https://sourceforge.net/projects/dhcpserver/&lt;/a&gt; 發給 Raspberry Pi 3 電腦臨時的內部網路 IP, 然後再利用 &lt;a href="https://sourceforge.net/projects/xming/"&gt;https://sourceforge.net/projects/xming/&lt;/a&gt;, 以 XDMCP 協定 (只建議在內部網路使用, 廣域網路上, 建議採較安全的 SSH 連線), 登入 Raspberry Pi 3, 並且以 Wifi 連線到 CADLab 的 Access Point 後, 確定連線的 IP 位址後, 就可以移除與桌上型電腦的網路跳線, 改採與桌上型電腦同位階的內部網路上網, 然後透過桌上型電腦的 Putty, 以 SSH 連線到 Raspberry Pi 3 進行操控, 或者再透過 xming, 以 XDMCP 協定登入.&lt;/p&gt;
+&lt;p&gt;另外, 假如 Raspberry Pi 3 電腦並無與電腦教室其他電腦設備連線的要求, 用戶希望利用網路跳線與桌機相連後上網, 則建議在桌機上使用代理程式 &lt;a href="http://www.youngzsoft.net/ccproxy/"&gt;http://www.youngzsoft.net/ccproxy/&lt;/a&gt; 的免費版 (可以3個用戶使用), 讓 Raspberry pi 3 電腦以桌機的 proxy server 上網.&lt;/p&gt;</summary><category term="CADLAB"></category><category term="raspberrypi"></category></entry><entry><title>CADLab 網路配線繪圖</title><link href="http://cadlab.mde.tw/post/cadlab-wang-lu-pei-xian-hui-tu.html" rel="alternate"></link><updated>2016-03-28T21:04:24+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-28:post/cadlab-wang-lu-pei-xian-hui-tu.html</id><summary type="html">&lt;p&gt;利用程式方法執行網路配線繪圖&lt;/p&gt;
+
+
+&lt;p&gt;CADLab 中的網路配線圖, 就如同 &lt;a href="http://blockdiag.com/en/"&gt;http://blockdiag.com/en/&lt;/a&gt; 專案所示, 可以利用語法描述參數與配置之後, 透過程式方法轉出結果.&lt;/p&gt;
+&lt;p&gt;以 nwdiag &lt;a href="https://bitbucket.org/blockdiag/nwdiag"&gt;https://bitbucket.org/blockdiag/nwdiag&lt;/a&gt; 為例, 在只有 Python3 的 Windows 環境中安裝:&lt;/p&gt;
+&lt;p&gt;pip install nwdiag&lt;/p&gt;
+&lt;p&gt;之後就可以利用 nwdiag 命令解讀 .diag network diagram 描述檔, 並且轉為 png 或 svg 格式.&lt;/p&gt;
+&lt;p&gt;假如是在同時裝有 Python2 與 Python3 的 Ubuntu 環境中安裝 nwdiag:&lt;/p&gt;
+&lt;p&gt;pip3 install nwdiag&lt;/p&gt;
+&lt;p&gt;之後的應用與 Windows 環境相同.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blockdiag.com/en/"&gt;http://blockdiag.com/en/&lt;/a&gt; 專案還有方塊圖 blockdiag, 序列圖 seqdiag 以及活動圖 actdiag 等相關繪圖的應用.&lt;/p&gt;
+&lt;p&gt;最後假如 CADLab 希望利用 Sphinx 來整理電腦輔助設計室的文件, 則可以套用 &lt;a href="https://github.com/blockdiag"&gt;https://github.com/blockdiag&lt;/a&gt; 中的 extensions 工具.&lt;/p&gt;</summary><category term="CADLAB"></category><category term="network"></category></entry><entry><title>Cadlab 的理想設置</title><link href="http://cadlab.mde.tw/post/cadlab-de-li-xiang-she-zhi.html" rel="alternate"></link><updated>2016-03-28T21:04:24+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-28:post/cadlab-de-li-xiang-she-zhi.html</id><summary type="html">&lt;p&gt;一個符合二十一世紀工學院實際需求的電腦輔助設計室, 應該如何規劃配置?&lt;/p&gt;
+
+
+&lt;p&gt;Cadlab 是個熱門的名詞, 代表 Computer Aided Design Laboratory, 也就是電腦輔助設計實驗室, 或簡稱電腦輔助設計室.&lt;/p&gt;
+&lt;p&gt;過去的電腦輔助設計室, 充滿各種讓使用者進行電腦輔助設計的公用電腦, 加上部份伺服器提供相關設計運算或資料儲存之用, 而現在, 這樣的配置可能不再恰當, 尤其是一間配置著 60 幾台最新硬體的桌上型電腦, 但卻採用所謂的防寫卡進行硬碟保護的電腦, 倘若無法隨時配合著經常性的操作系統或應用軟體更新, 這樣的 Cadlab 配置, 更是錯上加錯.&lt;/p&gt;
+&lt;p&gt;其實, 二十一世紀的工學院, 所有課程都應該在數位網路環境中進行, 因此所有這些所謂未來的工程師, 就應該在入學的第1天就被配予一台 17 寸的筆記型電腦, 而且裝載著各種未來幾年甚至離開學校之後, 都還能夠合法使用的相關專業用軟硬體套件.&lt;/p&gt;
+&lt;p&gt;過去, 由於全球協同的步調較慢, 各種產品的生命週期時間較長, 因此允許學校與產業界的差異性容忍度較大, 但是, 近幾年在在各種資訊與通訊軟硬體的快速發展衝擊下, 不僅全球協同的步調加速, 各種產品的生命週期愈來愈短, 促使學校教育單位與產業界必須在某些層面上攜手同步, 否則終將無法培育出適才、適所與適任的未來工程師.&lt;/p&gt;
+&lt;p&gt;而且, 隨著可攜裝置與自造軟硬體的逐步普及, Cadlab 配置中的所謂電腦, 除了包括讓工程師可以隨身攜帶的筆記型電腦以外, 還必須包括各類微控制器與 3D 印表機, 讓 Cadlab 實驗室中的各種系統模擬, 可以透過初步的硬體原型測試基本的可行性.&lt;/p&gt;</summary><category term="CADLAB"></category></entry><entry><title>KMOL 2016 Spring Portable Tool</title><link href="http://cadlab.mde.tw/post/kmol-2016-spring-portable-tool.html" rel="alternate"></link><updated>2016-03-28T21:04:24+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-28:post/kmol-2016-spring-portable-tool.html</id><summary type="html">&lt;p&gt;針對 cadlab 上計算機程式、網際內容管理、電腦輔助設計實習與協同產品設計實習等課程, 採用 Python 3.4 打造的 Windows 版可攜程式套件&lt;/p&gt;
+
+
+&lt;p&gt;可攜套件倉儲:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/chiamingyen/kmol2016"&gt;https://github.com/chiamingyen/kmol2016&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;kmol2016 下載:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX"&gt;https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX&lt;/a&gt;&lt;/p&gt;</summary><category term="可攜套件"></category><category term="2016Spring"></category></entry><entry><title>Bezier 曲線導引</title><link href="http://cadlab.mde.tw/post/bezier-qu-xian-dao-yin.html" rel="alternate"></link><updated>2016-03-28T21:04:24+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-03-28:post/bezier-qu-xian-dao-yin.html</id><summary type="html">&lt;p&gt;A primer on Bezier curves&lt;/p&gt;
+
+
+&lt;p&gt;&lt;a href="http://pomax.github.io/bezierinfo/"&gt;http://pomax.github.io/bezierinfo/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://pomax.github.io/bezierjs/"&gt;http://pomax.github.io/bezierjs/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;嘗試將純 Javascript 的環境轉為 Brython based &lt;a href="https://github.com/brython-dev/brython"&gt;https://github.com/brython-dev/brython&lt;/a&gt;, 希望完成之後, 可以讓使用者編寫 Python3 程式碼來操控 Bezier 曲線 &lt;a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"&gt;https://en.wikipedia.org/wiki/B%C3%A9zier_curve&lt;/a&gt;.&lt;/p&gt;</summary><category term="Javascript"></category><category term="程式"></category></entry><entry><title>使用者貢獻文章標題(參考)</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti-can-kao.html" rel="alternate"></link><updated>2016-03-03T17:03:55+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-03-03:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti-can-kao.html</id><summary type="html">&lt;p&gt;使用者貢獻文章的參考 Leo Editor 檔案&lt;/p&gt;
+
+
+&lt;p&gt;使用者貢獻文章的內容&lt;/p&gt;</summary><category term="Reference"></category><category term="user template"></category></entry><entry><title>使用者貢獻文章標題</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-02-21T18:06:12+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-02-21:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章的參考 Leo Editor 檔案&lt;/p&gt;
+
+
+&lt;p&gt;本網誌的系統與靜態資料為一個 Github 倉儲 &lt;a href="https://github.com/cad-lab/blog"&gt;https://github.com/cad-lab/blog&lt;/a&gt;, 只要符合 GNU AFFERO GENERAL PUBLIC LICENSE 授權規範, 任何人都可以取用.&lt;/p&gt;
+&lt;p&gt;本網誌的規劃是希望透過 Gmail 的認証取得參與協同著作的權限後, 各作者可以利用 users 目錄下的 .leo 檔案, 各自維護自己的文章, 基本要求是, 每篇文章, 必須以使用者帳號作為開頭, 並建議依照日期分類, 以避免各用戶的文章彼此覆蓋.&lt;/p&gt;
+&lt;p&gt;各用戶若需要協同著作, 共同維護一篇 content 目錄中的某一個 .md 檔案, 那麼各用戶在 gh-pages 倉儲分支版本提交與推送過程, 就必須設法處理版本內容的衝突, 但各 .md 檔案建議是在 Leo Editor @edit 或@clean 節點下進行協同編輯並處理內容衝突.&lt;/p&gt;
+&lt;p&gt;下圖為機械設計工程系即時網路連線:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=5" alt="mde realtime network graph" /&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=2" alt="mde realtime network graph" /&gt;&lt;/p&gt;</summary><category term="Reference"></category><category term="user template"></category></entry></feed>

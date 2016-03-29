@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'kmol'
-SITENAME = 'CADLab'
+SITENAME = 'CADLab (虎尾科大MDE)'
 #SITEURL = 'http://cad-lab.github.io/blog/'
 
 # 不要用文章所在目錄作為類別
