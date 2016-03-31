@@ -62,6 +62,9 @@
 <v t="amd.20160328205435.7"><vh>程式設計考量</vh></v>
 </v>
 <v t="amd.20160328205435.8"><vh>Leo Editor 程式開發</vh></v>
+<v t="amd.20160329161653.1" a="E"><vh>Raspberry Pi 專案</vh>
+<v t="amd.20160329161726.1"><vh>audio output 設定</vh></v>
+</v>
 </v>
 <v t="amd.20151215170350.1"><vh>以下為 content 目錄中的 md 檔案</vh></v>
 <v t="amd.20160106093610.1"><vh>協同網誌編寫規範</vh></v>
@@ -89,7 +92,15 @@
 <v t="amd.20160325231101.1"><vh>@clean yen_20160325-1.md</vh>
 <v t="amd.20160328210441.1"><vh>22</vh></v>
 </v>
-<v t="amd.20160329110611.1"><vh>@clean yen_20160329.md</vh></v>
+<v t="amd.20160329110611.1"><vh>@clean yen_20160329.md</vh>
+<v t="amd.20160329120546.1"><vh>33</vh></v>
+</v>
+<v t="amd.20160329122032.1"><vh>＠clean yen_20160329-1.md</vh>
+<v t="amd.20160331205814.1"><vh>35</vh></v>
+</v>
+<v t="amd.20160331195141.1"><vh>@clean yen_20160331.md</vh>
+<v t="amd.20160331205819.1"><vh>37</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -780,6 +791,65 @@ Author: kmol
 git config --global http.proxy http://myproxy.server:port
 
 git config --global https.proxy https://myproxy.server:port</t>
+<t tx="amd.20160329120546.1"></t>
+<t tx="amd.20160329122032.1">@language md
+Title: 該如何編寫一份電腦輔助機械設計使用手冊
+Category: 規劃
+Tags: CADLAB, Ｍanual, MCAD
+Author: kmol
+@others
+我們正在極力推廣使用的電腦輔助機械設計(Mechanical Computer Aided Design)相關套件, 包括 OnShape, Solvespace, FreeCAD, Elmer, V-rep 以及 Jupyter, 該如何用最"好"的方式來編寫使用手冊?
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+假如您已經在使用 OnShape, 一定已經看過 &lt;a href="https://cad.onshape.com/help/"&gt;https://cad.onshape.com/help/&lt;/a&gt;. 對應的 Solvespce 導引 &lt;a href="http://solvespace.com/tutorial.pl"&gt;http://solvespace.com/tutorial.pl&lt;/a&gt; 也是很不錯, 其他的幾個套件, 也都已經有了不錯的英文導引資料, 只是從教導學員協力完成某件電腦輔助設計流程工作的同時, 我們想要試試在 Github 的版次管理模式下, 我們能夠怎樣協同編寫一份電腦輔助設計相關的網頁式手冊.
+
+啟動:
+
+在 Github cad-lab 帳號下新增一個倉儲, 命名為 manual, 然後 git clone 到本地端, 準備置入能夠協同編輯的 Leo Editor 與 Pelican 架構.
+
+git clone https://github.com/cad-lab/manual.git cadlabmanual 之後, 進入 cadlabmanual 目錄, 利用 git branch gh-pages 建立 Github Pages 對應分支, 然後以 git checkout gh-pages 指令將本地端倉儲的工作目錄定位在 gh-pages 分支.
+
+接下來就是放入 Pelican 靜態網頁系統, 就可以開始建立電腦輔助機械設計使用手冊了: &lt;a href="http://cad-lab.github.io/manual/"&gt;http://cad-lab.github.io/manual/&lt;/a&gt;
+
+</t>
+<t tx="amd.20160329161653.1"></t>
+<t tx="amd.20160329161726.1">sudo amixer cset numid=3 &lt;output&gt;
+
+0=auto
+1=headphones
+2=hdmi
+
+使用 耳機
+
+sudo amixer cset numid=3 1
+
+使用 hdmi
+
+sudo amixer cset numid=3 2</t>
+<t tx="amd.20160331195141.1">@language md
+Title: Gigabit 乙太網路線
+Category: 規劃
+Tags: CADLAB
+Author: kmol
+@others
+目前在 CADLab 中使用的網路線為傳輸速率每秒十億 bit (10**9 bit/sec) 的 Category 6 Gigabit Ethernet. 採 1000BASE‑T 無遮蔽雙絞線, 以 EIA/TIA 568B 連接 RJ45 接頭. 其接線方式為接頭向前, 耳朵朝下, 混白線在前, 緊接著色線, 以橘藍綠棕排列後,  再將藍白與綠白對調, 就是 568B 的接法.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+至於 568B 的網路跳線則再將一邊的橘白與橘線, 跟綠白與綠線對調. 因為橘白線的 pin 1 為 Transmit Data+, 橘線 pin2 則是 Transmit Data-, 綠白線 pin3 則為 Receive Data+, 綠線 pin 6 為 Receive Data-. 藍線 pin 4 與棕白 pin 7 同為 Bi-directional+, 而藍白線 pin5 與棕線 pin 8 則同為 Bi-directional-. 為了達到規格中的 Gigabit 傳輸速度, 8 條線都要確實連接, 假如只有 pin 1, 2, 3, 6 接線, 則傳輸速度將會降為 100 Mega bit/sec. 另外, 1000BASE‑T 的無遮蔽雙絞銅線, 建議每段最長為 100 m.
+
+EIA/TIA 568B 的標準雙絞線 (兩端採相同色線排列)
+腳位: 接頭朝前, 耳朵朝下 (橘藍綠棕, 白線在前, 排好後, 藍白與綠白對調)
+顏色: 橘白-橘-綠白-藍-藍白-綠-棕白-棕
+
+Cross Over (EIA/TIA 568B) 線 (一端採標準 EIA/TIA 568B 色線排列, 另一端則將綠線與橘線對調)
+腳位: 接頭朝前, 耳朵朝下
+顏色: 綠白-綠-橘白-藍-藍白-橘-棕白-棕 (即將上面正常線的橘線與綠線對調)
+
+最後, 假如要利用 Raspberry Pi 3 打造成為 Wifi 的 Access Point, 可以參考 &lt;a href="http://blog.itist.tw/2016/03/using-raspberry-pi-3-as-wifi-ap-with-raspbian-jessie.html"&gt;http://blog.itist.tw/2016/03/using-raspberry-pi-3-as-wifi-ap-with-raspbian-jessie.html&lt;/a&gt; 與 &lt;a href="http://raspberry-at-home.com/hotspot-wifi-access-point/"&gt;http://raspberry-at-home.com/hotspot-wifi-access-point/&lt;/a&gt; 與 &lt;a href="https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/"&gt;https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/&lt;/a&gt;</t>
+<t tx="amd.20160331205814.1"></t>
+<t tx="amd.20160331205819.1"></t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
