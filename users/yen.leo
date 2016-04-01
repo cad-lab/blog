@@ -102,6 +102,7 @@
 <v t="amd.20160331205819.1"><vh>37</vh></v>
 </v>
 <v t="amd.20160401141633.1"><vh>@clean yen_20160401.md</vh></v>
+<v t="amd.20160401230037.1"><vh>@clean yen_20160401-1.md</vh></v>
 </v>
 </v>
 </v>
@@ -1116,6 +1117,90 @@ p.b = line1 + line2 + line3 + line4 + line5 + post_content + "\n"
 # 因為節點資料更新, commander 必須 redraw
 c.redraw() 
 g.es("資料已經取回")
+&lt;/pre&gt;
+
+</t>
+<t tx="amd.20160401230037.1">@language md
+Title: CADLab 機械設計系網路配置圖
+Category: 規劃
+Tags: CADLAB, Network Diagram
+Author: kmol
+@others
+我們正在使用 Python3 與 &lt;a href="http://blockdiag.com/en/"&gt;http://blockdiag.com/en/&lt;/a&gt; 中的 nwdiag 工具繪製機械設計工程系的網路配置圖.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+從 &lt;a href="http://project.mde.tw/blog/yen-ji-jie-she-ji-zhuan-ti-de-biao-da-ji-shu-ling-yu-yu-kao-liang-ceng-mian.html"&gt;機械設計專題的表達、技術領域與考量層面&lt;/a&gt; 範例, 可以了解利用文字描述轉成 2D 流程圖, 具有容易修改維護的優點, 這裡運用相同的概念, 嘗試利用類似的 nwdiag 工具, 畫出整個系的網路配置圖.
+
+blockdiag 與 nwdiag 若能夠搭配全球資訊網路上的 Python3 wsgi 程式, 採用資料庫系統來管理機械設計工程系的網路資源配置, 將可以實際納為&lt;a href="http://chiamingyen.github.io/kmolab/blog/tag/wang-ji-nei-rong-guan-li.html"&gt;網際內容管理&lt;/a&gt;課程的教材.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/mde_network_diag.png" width="800" /&gt;
+
+上述 CADLab 網路配置圖對應的 nwdiag 描述文件:
+
+&lt;pre class="brush: bash;"&gt;
+nwdiag {
+    default_fontsize = 15;
+    校主幹 [shape = cloud];
+    校主幹 -- 系路由器;
+    
+    network 系主幹{
+        address = "140.130.17.0/24";
+        系路由器 [address="140.130.17.254"];
+        雲端點名網路;
+        八樓集線器 [address="140.130.17.82"];
+        七樓集線器;
+        六樓集線器;
+        系伺服器群;
+    }
+    
+    network 八樓主幹{
+        address="17.10-82"
+        八樓集線器 [address="140.130.17.82"];
+        老師1伺服器群 [address="140.130.17.10-15"];
+        老師2伺服器群 [address="140.130.17.16-25"];
+        老師3伺服器群 [address="140.130.17.26-60"];
+    }
+    
+    network CAD_CAE{
+        address="17.83";
+        八樓集線器 [address="140.130.17.82"];
+        CAD_NAT [address="140.130.17.82"];
+        CAE_NAT [address="140.130.17.83"];
+    }
+    
+    network 電腦輔助設計室{
+        address="192.168.1.0/24";
+        CAD_NAT [address="192.168.1.1"];
+        CAD1 [address=".2"];
+        CAD2;
+        CAD64 [address=".100"];
+    }
+    
+    network 電腦輔助繪圖室{
+        address="192.168.1.0/24";
+        CAE_NAT [address="192.168.1.1"];
+        CAE1 [address=".2"];
+        CAE2;
+        CAE64 [address=".100"];
+    }
+    
+    network 七樓主幹{
+        address="140.130.17.83-90"
+        七樓集線器;
+        老師4伺服器群 [address="140.130.17.61-63"];
+        老師5伺服器群 [address="140.130.17.64-70"];
+        老師6伺服器群 [address="140.130.17.71-75"];
+    }
+    
+    network 六樓主幹{
+        address="140.130.17.91-100"
+        六樓集線器;
+        老師7伺服器群 [address="140.130.17.76-78"];
+        老師8伺服器群 [address="140.130.17.79-80"];
+        老師9伺服器群 [address="140.130.17.81-95"];
+    }
+}
 &lt;/pre&gt;
 
 </t>
