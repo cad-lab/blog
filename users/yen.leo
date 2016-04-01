@@ -95,12 +95,13 @@
 <v t="amd.20160329110611.1"><vh>@clean yen_20160329.md</vh>
 <v t="amd.20160329120546.1"><vh>33</vh></v>
 </v>
-<v t="amd.20160329122032.1" a="E"><vh>@clean yen_20160329-1.md</vh>
+<v t="amd.20160329122032.1"><vh>@clean yen_20160329-1.md</vh>
 <v t="amd.20160331205814.1"><vh>35</vh></v>
 </v>
 <v t="amd.20160331195141.1"><vh>@clean yen_20160331.md</vh>
 <v t="amd.20160331205819.1"><vh>37</vh></v>
 </v>
+<v t="amd.20160401141633.1"><vh>@clean yen_20160401.md</vh></v>
 </v>
 </v>
 </v>
@@ -850,6 +851,274 @@ Cross Over (EIA/TIA 568B) 線 (一端採標準 EIA/TIA 568B 色線排列, 另一
 最後, 假如要利用 Raspberry Pi 3 打造成為 Wifi 的 Access Point, 可以參考 &lt;a href="http://blog.itist.tw/2016/03/using-raspberry-pi-3-as-wifi-ap-with-raspbian-jessie.html"&gt;http://blog.itist.tw/2016/03/using-raspberry-pi-3-as-wifi-ap-with-raspbian-jessie.html&lt;/a&gt; 與 &lt;a href="http://raspberry-at-home.com/hotspot-wifi-access-point/"&gt;http://raspberry-at-home.com/hotspot-wifi-access-point/&lt;/a&gt; 與 &lt;a href="https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/"&gt;https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/&lt;/a&gt;</t>
 <t tx="amd.20160331205814.1"></t>
 <t tx="amd.20160331205819.1"></t>
+<t tx="amd.20160401141633.1">@language md
+Title: CADLab 學員網誌系統
+Category: 規劃
+Tags: CADLAB, Pelican, Leo Editor
+Author: kmol
+@others
+我們希望每一位 CADLab 電腦輔助設計室的學員都能夠充份利用現階段各種全球資訊網上的工具, 有效管理自己與團隊間的協同產品開發或學習過程的各種資訊.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+這裡所謂的資訊包括:
+
+1. 口語資訊
+2. Text 文字資訊
+3. 2D 圖面資訊
+4. 3D 動態資訊
+5. 系統模擬資訊
+6. 實體模型資訊
+
+其中需要使用的工具包括 Python3, Leo Editor 以及 Pelican, 使用者若在 Windows 環境, 可以直接使用可攜套件: &lt;a href="https://github.com/chiamingyen/kmol2016"&gt;https://github.com/chiamingyen/kmol2016&lt;/a&gt;.
+
+而每位學員均可利用 &lt;a href="http://www.cmsimply.com"&gt;http://www.cmsimply.com&lt;/a&gt; 來收集上述各種資訊內容, 然後再配合時機點與需求, 將資料分別同步到動態 Wordpress 網誌與 Pelican 靜態網誌.
+
+目前所使用的 Leo Editor 網誌系統專案位於: &lt;a href="https://github.com/cad-lab/manual"&gt;https://github.com/cad-lab/manual&lt;/a&gt;, 學員可以在其中加入下列3個 Leo Editor 的指令按鈕, 讓內容與 Wordpress 動態網誌同步.
+
+&lt;pre class="brush: python"&gt;
+#new-to-wordpress
+#coding: utf-8
+import xmlrpc.client
+import datetime
+import os
+
+def get_cat_tag_content(data):
+    # 請注意, 因為 data 來自 .md 的 body pan 內容, 第1行為 @language python
+    # 用跳行符號分割
+    data_list = data.split("\n")
+    #第2行為 title
+    title= data_list[1]
+    #第3行為 category
+    category = data_list[2]
+    #第4行為 tags
+    tags = data_list[3]
+    # 有多項資料的 content 型別為數列
+    # 再將第7行之後的資料數列串回成以跳行隔開的資料
+    content = "\n".join(data_list[6:])
+    # 先將截斷摘要與內文的 pelican md 檔按符號, 換成 Wordpress 的 &lt;!-more-&gt;
+    content = content.replace('&lt;!-- PELICAN_END_SUMMARY --&gt;', '&lt;!--more--&gt;')
+    # 接著若內容有 ~~~python 與 ~~~ 則換成 Wordpress 格式
+    content = content.replace('~~~python', '[code lang="python"]')
+    content = content.replace('~~~', '[/code]')
+    return title, category, tags, content
+    
+os.environ['TZ'] = 'Asia/Taipei'
+
+#################################
+filepath = "/home/amd/Desktop/your_wordpress_account_and_password.txt"
+wordpress = "your-wordpress-site-url"
+fo = open(filepath, "r+")
+data = []
+for line in fo.readlines():
+    data.append(line)
+fo.close()
+
+# 從網誌節點的 parent().h 取得 wp_url
+# 從網誌節點的 parent().b 取得帳號與密碼對應的文字檔案路徑
+wp_url = "https://"+wordpress+"/xmlrpc.php"
+wp_username = data[0]
+wp_password = data[1]
+#################################
+wp_blogid = "0"
+ 
+status_draft = 0
+status_published = 1
+ 
+server = xmlrpc.client.ServerProxy(wp_url)
+
+# 從目前所在節點的 body pan 中取出類別, tags 以及文章內容
+title_str, category_str, tags_str, content = get_cat_tag_content(p.b)
+# title 是一個單獨的字串
+title = title_str.split(":")[1]
+# 指定時間出版
+'''
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime("2013-01-01 00:00",
+"%Y-%m-%d %H:%M"))
+'''
+# 以現在時間出版, 考慮與 Server 時間差八個小時 (480 分鐘), 因此要在 8 個小時前發表
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime((datetime.datetime.now()- \
+datetime.timedelta(minutes=480)).strftime('%Y-%m-%d %H:%M'),"%Y-%m-%d %H:%M"))
+categories = [category_str.split(":")[1]]
+# 請注意, 因為 tags 用逗點隔開, 因此必須透過 split() 再分開成為 list 資料
+# 先用 : 斷開標投頭的 Tags:, 然後再透過逗點隔開, 將標註轉為數列資料
+tags = tags_str.split(":")[1].split(",")
+data = {'title': title, 'description': content, 'dateCreated': date_created, 'categories': categories, 'mt_keywords': tags}
+ 
+post_id = server.metaWeblog.newPost(wp_blogid, wp_username, wp_password, data, status_published)
+# 利用最後的 child 節點來儲存 post_id
+to_save_post_id = p.insertAsLastChild()   
+# 改為內文為空的節點, id 直接標在 head 標題 
+to_save_post_id.b = ""
+to_save_post_id.h = post_id
+# 因為新增節點, commander 必須 redraw
+c.redraw() 
+
+g.es("post_id 為", post_id)
+g.es("已經送出資料!")
+
+'''
+其他 metaWeblog 的用法:
+metaWeblog.newPost (blogid, username, password, struct, publish) returns string(postid)
+metaWeblog.editPost (postid, username, password, struct, publish) returns true
+metaWeblog.getPost (postid, username, password) returns struct(blog content)
+'''
+&lt;/pre&gt;
+
+&lt;pre class="brush: python"&gt;
+#edit-to-wordpress
+#coding: utf-8
+import xmlrpc.client
+import datetime
+import os
+
+def get_cat_tag_content(data):
+    # 請注意, 因為 data 來自 .md 的 body pan 內容, 第1行為 @language python
+    # 用跳行符號分割
+    data_list = data.split("\n")
+    #第2行為 title
+    title= data_list[1]
+    #第3行為 category
+    category = data_list[2]
+    #第4行為 tags
+    tags = data_list[3]
+    # 有多項資料的 content 型別為數列
+    # 再將第7行之後的資料數列串回成以跳行隔開的資料
+    content = "\n".join(data_list[6:])
+    # 先將截斷摘要與內文的 pelican md 檔按符號, 換成 Wordpress 的 &lt;!-more-&gt;
+    content = content.replace('&lt;!-- PELICAN_END_SUMMARY --&gt;', '&lt;!--more--&gt;')
+    # 接著若內容有 ~~~python 與 ~~~ 則換成 Wordpress 格式
+    content = content.replace('~~~python', '[code lang="python"]')
+    content = content.replace('~~~', '[/code]')
+    return title, category, tags, content
+    
+os.environ['TZ'] = 'Asia/Taipei'
+ 
+#################################
+filepath = "/home/amd/Desktop/your_wordpress_account_and_password.txt"
+wordpress = "your-wordpress-site-url"
+fo = open(filepath, "r+")
+data = []
+for line in fo.readlines():
+    data.append(line)
+fo.close()
+
+wp_url = "https://"+wordpress+"/xmlrpc.php"
+wp_username = data[0]
+wp_password = data[1]
+#################################
+wp_blogid = "0"
+ 
+status_draft = 0
+status_published = 1
+ 
+server = xmlrpc.client.ServerProxy(wp_url)
+
+# 從目前所在節點的 body pan 中取出類別, tags 以及文章內容
+title_str, category_str, tags_str, content = get_cat_tag_content(p.b)
+# title 是一個單獨的字串
+title = title_str.split(":")[1]
+# 指定時間出版
+'''
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime("2013-01-01 00:00",
+"%Y-%m-%d %H:%M"))
+'''
+# 以現在時間出版, 考慮與 Server 時間差八個小時 (480 分鐘), 因此要在 8 個小時前發表
+date_created = xmlrpc.client.DateTime(datetime.datetime.strptime((datetime.datetime.now()- \
+datetime.timedelta(minutes=480)).strftime('%Y-%m-%d %H:%M'),"%Y-%m-%d %H:%M"))
+categories = [category_str.split(":")[1]]
+# 請注意, 因為 tags 用逗點隔開, 因此必須透過 split() 再分開成為 list 資料
+tags = tags_str.split(":")[1].split(",")
+data = {'title': title, 'description': content, 'dateCreated': date_created, 'categories': categories, 'mt_keywords': tags}
+
+# 設法取得原 post 的 id
+origin_post = p.getLastChild()
+# 直接從標題取得 post 的 id 號碼
+post_id = origin_post.h
+status = server.metaWeblog.editPost(post_id, wp_username, wp_password, data, status_published)
+
+if status:
+    g.es("資料已經更新!")
+else:
+    g.es("有問題, 資料沒有更新!")
+'''
+其他 metaWeblog 的用法:
+metaWeblog.newPost (blogid, username, password, struct, publish) returns string(postid)
+metaWeblog.editPost (postid, username, password, struct, publish) returns true
+metaWeblog.getPost (postid, username, password) returns struct(blog content)
+'''
+&lt;/pre&gt;
+
+&lt;pre class="brush: python"&gt;
+#get-from-wordpress
+#coding: utf-8
+import xmlrpc.client
+# 導入 html 模組, 使用 html.unescape 轉換 html 特殊符號
+import html
+ 
+#################################
+filepath = "/home/amd/Desktop/your_wordpress_account_and_password.txt"
+wordpress = "your-wordpress-site-url"
+fo = open(filepath, "r+")
+data = []
+for line in fo.readlines():
+    data.append(line)
+fo.close()
+
+# 從網誌節點的 parent().h 取得 wp_url
+# 從網誌節點的 parent().b 取得帳號與密碼對應的文字檔案路徑
+wp_url = "https://"+wordpress+"/xmlrpc.php"
+wp_username = data[0]
+wp_password = data[1]
+#################################
+
+server = xmlrpc.client.ServerProxy(wp_url)
+
+# 設法透過上述網誌網址, 帳號與密碼, 以及文章 id, 取回 categories, tags, 文章標題, 文章內容等資
+
+# 從最後的 child 節點來取 post_id
+origin_post = p.getLastChild()
+post_id = origin_post.h
+# 取回與 post_id 對應的網誌文章內容
+blog_content = server.metaWeblog.getPost(post_id, wp_username, wp_password)
+title = blog_content["title"]
+# 這裡要利用 html.unescape 轉回特殊符號
+description = html.unescape(blog_content["description"])
+mt_text_more = html.unescape(blog_content["mt_text_more"])
+if mt_text_more != "":
+    post_content = description + "\n&lt;!--more--&gt;\n"+mt_text_more
+else:
+    post_content = description
+# 所取回的 categories 為 list
+categories = blog_content["categories"]
+# 所取回的 tags 為以逗點隔開的字串
+mt_keywords = blog_content["mt_keywords"]
+# 取回文章作者
+author = blog_content["wp_author_display_name"]
+p.h = title
+categories_str = ""
+for category in categories:
+    # 假如不是最後一個
+    if category != categories[len(categories)-1]:
+        categories_str += category + ", "
+    else:
+        # 這是最後一個
+        categories_str += category
+line1 = "@language md\n"
+line2 = "Title: " +title + "\n"
+line3 = "Category: " + categories_str + "\n"
+line4 = "Tags: " + mt_keywords + "\n"
+line5 = "Author: " + author + "\n@others\n"
+post_content = post_content.replace('&lt;!--more--&gt;', '\n&lt;!-- PELICAN_END_SUMMARY --&gt;\n')
+post_content = post_content.replace('[code lang="python"]', '~~~python')
+post_content = post_content.replace('[/code]', '~~~')
+p.b = line1 + line2 + line3 + line4 + line5 + post_content + "\n"
+# 因為節點資料更新, commander 必須 redraw
+c.redraw() 
+g.es("資料已經取回")
+&lt;/pre&gt;
+
+</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
