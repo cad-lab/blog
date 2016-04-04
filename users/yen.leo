@@ -103,6 +103,7 @@
 </v>
 <v t="amd.20160401141633.1"><vh>@clean yen_20160401.md</vh></v>
 <v t="amd.20160401230037.1"><vh>@clean yen_20160401-1.md</vh></v>
+<v t="amd.20160402103950.1"><vh>@@clean yen_20160402.md</vh></v>
 </v>
 </v>
 </v>
@@ -429,7 +430,7 @@ Micro USB 插槽 5V1，2.5A
 
 若新配置的 CADLab  電腦設備並不允許學員使用公用的滑鼠與鍵盤, 且桌上並無 hub 可用, 則建議 Raspberry Pi 3 使用者, 可以自帶一條網路跳線, 利用桌上型電腦的多 NIC 連線, 以 &lt;a href="https://sourceforge.net/projects/dhcpserver/"&gt;https://sourceforge.net/projects/dhcpserver/&lt;/a&gt; 發給 Raspberry Pi 3 電腦臨時的內部網路 IP, 然後再利用 &lt;a href="https://sourceforge.net/projects/xming/"&gt;https://sourceforge.net/projects/xming/&lt;/a&gt;, 以 XDMCP 協定 (只建議在內部網路使用, 廣域網路上, 建議採較安全的 SSH 連線), 登入 Raspberry Pi 3, 並且以 Wifi 連線到 CADLab 的 Access Point 後, 確定連線的 IP 位址後, 就可以移除與桌上型電腦的網路跳線, 改採與桌上型電腦同位階的內部網路上網, 然後透過桌上型電腦的 Putty, 以 SSH 連線到 Raspberry Pi 3 進行操控, 或者再透過 xming, 以 XDMCP 協定登入.
 
-另外, 假如 Raspberry Pi 3 電腦並無與電腦教室其他電腦設備連線的要求, 用戶希望利用網路跳線與桌機相連後上網, 則建議在桌機上使用代理程式 &lt;a href="http://www.youngzsoft.net/ccproxy/"&gt;http://www.youngzsoft.net/ccproxy/&lt;/a&gt; 的免費版 (可以3個用戶使用), 讓 Raspberry pi 3 電腦以桌機的 proxy server 上網.
+另外, 假如 Raspberry Pi 3 電腦並無與電腦教室其他電腦設備連線的要求, 用戶希望利用網路跳線與桌機相連後上網, 則建議在桌機上使用代理程式 &lt;a href="http://www.youngzsoft.net/ccproxy/"&gt;http://www.youngzsoft.net/ccproxy/&lt;/a&gt; 的免費版 (可以3個用戶使用), 讓 Raspberry pi 3 電腦以桌機的 proxy server 上網, 或者設法將桌上型電腦 Windows 7 或 10 操作系統上的第2片網路卡橋接到第1片已經上網的網卡上, Raspberry Pi 3 就可以藉此設定直接上網.
 
 </t>
 <t tx="amd.20160325231101.1">@language md
@@ -1204,6 +1205,17 @@ nwdiag {
 &lt;/pre&gt;
 
 </t>
+<t tx="amd.20160402103950.1">@language md
+Title: 機械設計工程專業學員程式語言學習
+Category: 規劃
+Tags: CADLAB, Programming
+Author: kmol
+@others
+程式語言對於機械設計工程師愈來愈重要, 因為全球化協同產品開發的模式方興未艾, 要整合的不同領域與時區的相關技術團隊愈來愈多, 而機械設計通常至少負責團隊中 2D 工程尺寸, 3D 零組件圖, 動態模擬與電腦輔助工程分析的任務, 假如沒有一個隨選客製化並且納入產品生命週期管理架構的雲端系統, 機械設計工程單位將會是各專長領域人士爭相追索資料的單位.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃

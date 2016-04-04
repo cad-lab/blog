@@ -177,7 +177,7 @@ init_mathjax();
         <meta property="og:title" content="CADLab 學員卡片電腦規格與應用"/>
         <meta property="og:url" content="http://cadlab.mde.tw/post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html"/>
         <meta property="og:description" content="卡片電腦 (credit-card sized computer) 的盛行, 除了在操作系統上有機會讓 CADLab 的學員, 得以學習 Windows 10 以外的應用, 最大的功用, 是讓機械設計工程專長的學員能夠實際動手, 理解網路的整合, 並且迎接自造 (self-manufacturing) 時代的蒞臨."/>
-        <meta property="article:published_time" content="2016-03-28" />
+        <meta property="article:published_time" content="2016-04-04" />
             <meta property="article:section" content="參考" />
             <meta property="article:tag" content="CADLAB" />
             <meta property="article:tag" content="raspberrypi" />
@@ -310,7 +310,7 @@ CADLab (虎尾科大MDE)            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2016-03-28T21:04:24.647902+08:00"> 一 28 三月 2016</time>
+        <i class="fa fa-calendar"></i><time datetime="2016-04-04T15:24:25.679142+08:00"> 一 04 四月 2016</time>
     </span>
             <span class="label label-default">By</span>
             <a href="http://cadlab.mde.tw/post/author/kmol.html"><i class="fa fa-user"></i> kmol</a>
@@ -351,7 +351,7 @@ CADLab (虎尾科大MDE)            </a>
 <p>目前的 CADLab 電腦配置, USB 鍵盤與滑鼠的接頭是採隱藏式保護, 因此學員無法直接以公用的滑鼠與鍵盤連接 Raspberry Pi 3 卡片電腦, 但是若新配置的新電腦設備允許學員使用公用的 USB 鍵盤與滑鼠, 並且提供支援 HDMI 格式的電腦螢幕, 用戶就可以很單純直接用自行攜入的 Raspberry Pi 3 開機使用. 開機後, 可以透過 CADLab 中的 Wifi 連線 (Raspberry Pi 3 Model B 內建 802.11n Wireless LAN) 或實體線 (每桌必須提供 4 或 8 port hub) 上網, 使用較為簡單.</p>
 <h3>無滑鼠鍵盤螢幕開機</h3>
 <p>若新配置的 CADLab  電腦設備並不允許學員使用公用的滑鼠與鍵盤, 且桌上並無 hub 可用, 則建議 Raspberry Pi 3 使用者, 可以自帶一條網路跳線, 利用桌上型電腦的多 NIC 連線, 以 <a href="https://sourceforge.net/projects/dhcpserver/">https://sourceforge.net/projects/dhcpserver/</a> 發給 Raspberry Pi 3 電腦臨時的內部網路 IP, 然後再利用 <a href="https://sourceforge.net/projects/xming/">https://sourceforge.net/projects/xming/</a>, 以 XDMCP 協定 (只建議在內部網路使用, 廣域網路上, 建議採較安全的 SSH 連線), 登入 Raspberry Pi 3, 並且以 Wifi 連線到 CADLab 的 Access Point 後, 確定連線的 IP 位址後, 就可以移除與桌上型電腦的網路跳線, 改採與桌上型電腦同位階的內部網路上網, 然後透過桌上型電腦的 Putty, 以 SSH 連線到 Raspberry Pi 3 進行操控, 或者再透過 xming, 以 XDMCP 協定登入.</p>
-<p>另外, 假如 Raspberry Pi 3 電腦並無與電腦教室其他電腦設備連線的要求, 用戶希望利用網路跳線與桌機相連後上網, 則建議在桌機上使用代理程式 <a href="http://www.youngzsoft.net/ccproxy/">http://www.youngzsoft.net/ccproxy/</a> 的免費版 (可以3個用戶使用), 讓 Raspberry pi 3 電腦以桌機的 proxy server 上網.</p>
+<p>另外, 假如 Raspberry Pi 3 電腦並無與電腦教室其他電腦設備連線的要求, 用戶希望利用網路跳線與桌機相連後上網, 則建議在桌機上使用代理程式 <a href="http://www.youngzsoft.net/ccproxy/">http://www.youngzsoft.net/ccproxy/</a> 的免費版 (可以3個用戶使用), 讓 Raspberry pi 3 電腦以桌機的 proxy server 上網, 或者設法將桌上型電腦 Windows 7 或 10 操作系統上的第2片網路卡橋接到第1片已經上網的網卡上, Raspberry Pi 3 就可以藉此設定直接上網.</p>
             </div>
             <!-- /.entry-content -->
     <hr/>
@@ -397,6 +397,11 @@ CADLab (虎尾科大MDE)            </a>
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html">
+                            CADLab 學員卡片電腦規格與應用
+                        </a>
+                    </li>
+                    <li class="list-group-item">
                         <a href="http://cadlab.mde.tw/post/cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu.html">
                             CADLab 機械設計系網路配置圖
                         </a>
@@ -414,11 +419,6 @@ CADLab (虎尾科大MDE)            </a>
                     <li class="list-group-item">
                         <a href="http://cadlab.mde.tw/post/gigabit-yi-tai-wang-lu-xian.html">
                             Gigabit 乙太網路線
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-lu-lian-xian-guan-li.html">
-                            電腦輔助設計室網路連線管理
                         </a>
                     </li>
                 </ul>
