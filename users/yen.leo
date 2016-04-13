@@ -23,7 +23,7 @@
 </v>
 <v t="ibm.20160115125316.1"><vh>管理者在產生遠端資料前, 定期清理 post 目錄</vh></v>
 <v t="ibm.20160115125101.1"><vh>@button git rm -fr post</vh></v>
-<v t="amd.20151215180106.1" a="E"><vh>設定與開發</vh>
+<v t="amd.20151215180106.1"><vh>設定與開發</vh>
 <v t="amd.20151216151325.1"><vh>@edit index.html</vh></v>
 <v t="amd.20151216152209.1"><vh>@edit README.md</vh></v>
 <v t="amd.20160118111604.1"><vh>@edit LICENSE</vh></v>
@@ -52,7 +52,7 @@
 </v>
 </v>
 </v>
-<v t="amd.20160328205435.1" a="E"><vh>Wordpress 端</vh>
+<v t="amd.20160328205435.1"><vh>Wordpress 端</vh>
 <v t="amd.20160328205435.2" a="E"><vh>@button new to wp (pelican)</vh>
 <v t="amd.20160328205435.3"><vh>md 檔案的格式</vh></v>
 <v t="amd.20160328205435.4"><vh>將 md 節點內容送到 Wordpress 方法</vh></v>
@@ -66,12 +66,18 @@
 <v t="amd.20160329161726.1"><vh>audio output 設定</vh></v>
 </v>
 </v>
+<v t="amd.20160410195347.1" a="E"><vh>blockdiag</vh>
+<v t="amd.20160410195347.2"><vh>@button blockdiag</vh></v>
+<v t="amd.20160410195347.3"><vh>blockdiag</vh></v>
+<v t="amd.20160410195347.4"><vh>@button nwdiag</vh></v>
+<v t="amd.20160410195347.5"><vh>nwdiag</vh></v>
+</v>
 <v t="amd.20151215170350.1"><vh>以下為 content 目錄中的 md 檔案</vh></v>
 <v t="amd.20160106093610.1"><vh>協同網誌編寫規範</vh></v>
 <v t="amd.20151216001126.1"><vh>md 檔案範例</vh></v>
 <v t="amd.20151215170031.1" a="E"><vh>@path ./../content</vh>
 <v t="amd.20160106093454.1" a="E"><vh>yen 網誌文章</vh>
-<v t="amd.20160106093510.1" a="E"><vh>201601</vh>
+<v t="amd.20160106093510.1"><vh>201601</vh>
 <v t="ibm.20160115121941.1"><vh>@clean yen_20160115.md</vh></v>
 <v t="amd.20160117143423.1"><vh>@clean yen_20160117.md</vh>
 <v t="amd.20160328210705.1"><vh>30</vh></v>
@@ -104,6 +110,9 @@
 <v t="amd.20160401141633.1"><vh>@clean yen_20160401.md</vh></v>
 <v t="amd.20160401230037.1"><vh>@clean yen_20160401-1.md</vh></v>
 <v t="amd.20160402103950.1"><vh>@@clean yen_20160402.md</vh></v>
+</v>
+<v t="amd.20160412201150.1" a="E"><vh>201604</vh>
+<v t="amd.20160412201156.1"><vh>@clean yen_20160412.md</vh></v>
 </v>
 </v>
 </v>
@@ -1216,6 +1225,232 @@ Author: kmol
 &lt;!-- PELICAN_END_SUMMARY --&gt;
 
 https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages</t>
+<t tx="amd.20160410195347.1"></t>
+<t tx="amd.20160410195347.2">@language python
+import os
+# 節點的 body 內容設為 content
+content = p.b
+with open('test.diag', 'w') as f:
+    f.write(content)
+f.closed
+# 存為 svg
+#os.system("blockdiag -Tsvg test.diag" )
+# 存為 png, 使用 fireflysung.ttf
+#os.system("blockdiag -f fireflysung.ttf test.diag" )
+os.system("blockdiag test.diag" )
+g.es("已經存 test.png 檔案")</t>
+<t tx="amd.20160410195347.3">
+blockdiag {
+    default_shape = roundedbox;
+    // 內定寬度為 128
+    node_width = 140;
+    // 內定高度為 40
+    node_height = 50;
+    default_fontsize = 15;
+    default_node_color = "lightyellow";
+    edge_layout = flowchart;
+    // 表達方式
+    表達 [label = "六種表達方式"];
+    1 [label = "口語表達(聲音)"];
+    2 [label = "文字表達", color="#99ff33"];
+    3 [label = "2D表達(靜態影像)"];
+    4 [label = "3D表達(動態影像)"];
+    5 [label = "理論表達(定量分析)"];
+    6 [label = "實體表達", color="#99ff33"];
+    表達 -&gt; 1;
+    表達 -&gt; 2;
+    表達 -&gt; 3;
+    表達 -&gt; 4;
+    表達 -&gt; 5;
+    表達 -&gt; 6;
+    // 學門
+    學門 [label = "四種技術領域"];
+    學門1 [label = "熱流力學"];
+    學門2 [label = "固體力學"];
+    學門3 [label = "電機電子"];
+    學門4 [label = "資訊通信", color="#99ff33"];
+    學門 -&gt; 學門1;
+    學門 -&gt; 學門2;
+    學門 -&gt; 學門3;
+    學門 -&gt; 學門4;
+    // 流程
+    流程 [label = "四個層面"];
+    流程1 [label = "設計", color="#99ff33"];
+    流程2 [label = "製造"];
+    流程3 [label = "控制"];
+    流程4 [label = "管理", color="#99ff33"];
+    流程 -&gt; 流程1;
+    流程 -&gt; 流程2;
+    流程 -&gt; 流程3;
+    流程 -&gt; 流程4;
+    //專題
+    //專題 [label = "機械設計專題", stacked];
+    專題 [label = "隨身卡片電腦選購", stacked, color="#ff5050"];
+    專題 -&gt; 表達;
+    專題 -&gt; 流程;
+    專題 -&gt; 學門;
+}
+</t>
+<t tx="amd.20160410195347.4">@language python
+import os
+# 節點的 body 內容設為 content
+content = p.b
+with open('test.diag', 'w') as f:
+    f.write(content)
+f.closed
+# 存為 svg
+#os.system("nwdiag -Tsvg test.diag" )
+# 存為 png, 使用 fireflysung.ttf
+#os.system("nwdiag -f fireflysung.ttf test.diag" )
+os.system("nwdiag test.diag" )
+g.es("已經存 test.png 檔案")</t>
+<t tx="amd.20160410195347.5">/*
+nwdiag {
+  network dmz {
+      address = "210.x.x.x/24"
+
+      web01 [address = "210.x.x.1"];
+      web02 [address = "210.x.x.2"];
+  }
+  network internal {
+      address = "172.x.x.x/24";
+
+      web01 [address = "172.x.x.1"];
+      web02 [address = "172.x.x.2"];
+      db01;
+      db02;
+  }
+}
+*/
+
+nwdiag {
+    default_fontsize = 15;
+    校主幹 [shape = cloud];
+    校主幹 -- 系路由器;
+    
+    network 系主幹{
+        address = "140.130.17.0/24";
+        系路由器 [address="140.130.17.254"];
+        雲端點名網路;
+        八樓集線器 [address="140.130.17.82"];
+        七樓集線器;
+        六樓集線器;
+        系伺服器群;
+    }
+    
+    network 八樓主幹{
+        address="17.10-82"
+        八樓集線器 [address="140.130.17.82"];
+        老師1伺服器群 [address="140.130.17.10-15"];
+        老師2伺服器群 [address="140.130.17.16-25"];
+        老師3伺服器群 [address="140.130.17.26-60"];
+    }
+    
+    network CAD_CAE{
+        address="17.83";
+        八樓集線器 [address="140.130.17.82"];
+        CAD_NAT [address="140.130.17.82"];
+        CAE_NAT [address="140.130.17.83"];
+    }
+    
+    network 電腦輔助設計室{
+        address="192.168.1.0/24";
+        CAD_NAT [address="192.168.1.1"];
+        CAD1 [address=".2"];
+        CAD2;
+        CAD64 [address=".100"];
+    }
+    
+    network 電腦輔助繪圖室{
+        address="192.168.1.0/24";
+        CAE_NAT [address="192.168.1.1"];
+        CAE1 [address=".2"];
+        CAE2;
+        CAE64 [address=".100"];
+    }
+    
+    network 七樓主幹{
+        address="140.130.17.83-90"
+        七樓集線器;
+        老師4伺服器群 [address="140.130.17.61-63"];
+        老師5伺服器群 [address="140.130.17.64-70"];
+        老師6伺服器群 [address="140.130.17.71-75"];
+    }
+    
+    network 六樓主幹{
+        address="140.130.17.91-100"
+        六樓集線器;
+        老師7伺服器群 [address="140.130.17.76-78"];
+        老師8伺服器群 [address="140.130.17.79-80"];
+        老師9伺服器群 [address="140.130.17.81-95"];
+    }
+}</t>
+<t tx="amd.20160412201150.1"></t>
+<t tx="amd.20160412201156.1">@language md
+Title: Onshape 提供免費教育單位帳號
+Category:導引
+Tags: Onshape, MCAD
+Author: kmol
+@others
+從 &lt;a href="https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan"&gt;https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan&lt;/a&gt; 得知, Onshpae 除了提供各種身份的用戶有使用限度的免費帳號以外, 從 2016.04.07 開始更加碼, 讓教育單位可以免費, 且沒有使用限度的情況下, 來探索使用這個劃時代的雲端電腦輔助機械設計套件.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+##穩定的網路連線是使用 Onshpae 的必要條件
+
+假如電腦教室網路連線穩定, 六十名學生可以同時利用 Firefox 或 Chrome,  登入到 &lt;a href="https://www.onshape.com"&gt;Onshape&lt;/a&gt; 執行協同產品設計, 登記免費的教育單位專用帳號後, 只要完成電子郵箱驗證, 就會自動登入系統.
+
+##Onshape 的 Document 是專案容器
+
+登入後, 可以利用左側的 Tutorials &amp; Samples 來了解 Onshpae 的用法:
+
+Onshape 中的 Documents 為設計專案層次 (Project level) 的文件庫 (Container), 可以納入 3D 零件, 3D 組件, 工程圖, 以及從外部轉入的各式檔案.
+
+##Onshape 操作無需存檔, 而且保有流程版本
+
+在 Onshpae 環境中操作零件繪圖, 使用者無需手動存檔, 只要完成任何操作, 都會自動儲存版本, 而且可以在各版本之間遊走.
+
+登入 Onshape, 就可以利用左上角的 Create 按鈕建立 Document 專案文件, 然後再利用左下角的 + 號, 選擇要建立零件, 組件, 工程圖或者是從本地端上傳各式文件.
+
+假如是建立零件, 與其他 MCAD 套件類似, 可以選擇 Sketch 再選擇作圖平面, 或者先選擇作圖平面, 再選擇 Sketch 繪製平面輪廓, 輪廓繪圖, 可以直接在 3D 環境畫圖, 或者利用滑鼠右鍵帶出 View normal to sketch plane 的功能, 以垂直繪圖面的平面上進行繪圖.
+
+##Onshape 可以轉出各式檔案
+
+各種基本的平面繪圖與尺寸標定或約束條件設定, 都與其他傳統的單機 MCAD 大同小異, 雖然 Onshape 與 Solid Edge 採用相同的 PARASOLID kernel, 但是所有的零組件檔案, 可以直接以點選下方的零組件 Tab, 再以滑鼠右鍵帶出 Export 功能, 然後轉成 PARASOLID 或 ACIS 核心檔,甚至也能直接轉成 Solidworks 格式檔案, 當然也能轉成 IGES, STEP, RHINO, STL 等格式.
+
+##Onshape 擁有直覺的組立約束
+
+當使用者在 Onshape 零件繪製模式下完成基本零件, 就可以利用左下方的 + 建立組立檔, 將各零件一一放入進行組裝.
+
+&lt;a href="https://cad.onshape.com/help/Content/mate-fastened.htm"&gt;Fastened mate&lt;/a&gt; 主要用於焊接式的組合, 約束條件置入後, 兩個零件間已經沒有任何自由度而結為一體.
+
+&lt;a href="https://cad.onshape.com/help/Content/mate-revolute.htm"&gt;Revolute mate&lt;/a&gt; 主要用於旋轉軸式的組合, 約束條件置入後, 兩個零件間只留下一個旋轉自由度.
+
+&lt;a href="https://cad.onshape.com/help/Content/mate-slider.htm"&gt;Slider mate&lt;/a&gt; 主要用於滑塊式的組合, 約束條件置入後, 兩個零件間只留下一個平移自由度.
+
+&lt;a href="https://cad.onshape.com/help/Content/mate-planar.htm"&gt;Planar mate&lt;/a&gt; 主要用於面接式組合, 約束條件置入後, 兩個零件面對面靠接, 只允許兩個方向的移動自由度, 以及垂直靠接面方向的一個旋轉自由度.
+
+&lt;a href="https://cad.onshape.com/help/Content/mate-cylindrical.htm&gt;Cylindrical mate&lt;/a&gt; 主要用於圓柱螺栓式的組合, 約束條件置入後, 兩個零件將具有旋轉與前進或後退的兩個自由度.
+
+&lt;a href="https://cad.onshape.com/help/Content/mate-pin_slot.htm"&gt;Pin slot mate&lt;/a&gt; 主要用於插銷式組合, 約束條件置入後, 兩個零件具有旋轉與側向平移等兩個自由度.
+
+&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Ball mate&lt;/a&gt; 主要用於球接頭式的組合, 約束條件置入後, 將保留3個方向的旋轉自由度.
+
+&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Tangent mate&lt;/a&gt; 則是比較特殊的相切組立, 約束條件置入後, 兩個零件將始終保持相切的關係.
+
+##簡單的組立應用
+
+根據上述基本功能, 就可以完成下列腳踏車鏈條的基本組立:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/onshape_bike_chain_assembly.png" width="800" /&gt;
+
+教育版對應帳號下所完成的 &lt;a href="https://cad.onshape.com/documents/29d1a262b055745e59be7c09/w/1f25948ad73282e2440ffdcf"&gt;Bike chain Document&lt;/a&gt;.
+
+
+
+
+
+</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
