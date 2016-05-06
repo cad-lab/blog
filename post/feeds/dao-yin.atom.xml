@@ -1,5 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/dao-yin.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-04-13T12:22:04+08:00</updated><entry><title>Onshape 提供免費教育單位帳號</title><link href="http://cadlab.mde.tw/post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html" rel="alternate"></link><updated>2016-04-13T12:22:04+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-04-13:post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan"&gt;https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan&lt;/a&gt; 得知, Onshpae 除了提供各種身份的用戶有使用限度的免費帳號以外, 從 2016.04.07 開始更加碼, 讓教育單位可以免費, 且沒有使用限度的情況下, 來探索使用這個劃時代的雲端電腦輔助機械設計套件.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/dao-yin.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-05-07T00:15:02+08:00</updated><entry><title>Wordpress 網誌文章中的網際程式碼</title><link href="http://cadlab.mde.tw/post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html" rel="alternate"></link><updated>2016-05-07T00:15:02+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-07:post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.w3.org/Graphics/SVG/History"&gt;SVG 歷史&lt;/a&gt; 與 &lt;a href="https://en.wikipedia.org/wiki/WebGL#History"&gt;WebGL 歷史&lt;/a&gt;, 以及 &lt;a href="https://github.com/socketio/socket.io/blob/master/History.md"&gt; socket.io 歷史&lt;/a&gt;, 也許不難發現, 多人協同在瀏覽器為基礎的應用程式環境, 已然成型.Pelican 靜態網頁與 Wordpress 的整合方案&lt;/p&gt;
+
+
+&lt;p&gt;儘管如此, 要將所有的工作全時在網路連線的環境中完成, 可能仍言之過早, 比較讓人確定的是, 多點觸控的平台伴隨著本地端的桌機或者是筆電, 還會繼續是主流的電腦輔助設計環境.&lt;/p&gt;
+&lt;p&gt;在這樣的所謂 Web Based (網際) 環境中, 身為一位機械設計工程師, 除了要關注傳統的 2D/3D 靜態與動態內容表達外, 能否逐步導入多點觸控裝置的資料, 便成為重點.&lt;/p&gt;
+&lt;p&gt;以網際 2D 繪圖而言, 2013 年推出的 &lt;a href="http://snapsvg.io/"&gt;http://snapsvg.io/&lt;/a&gt;, 就是一套能夠順應未來電腦輔助機械設計繪圖的工具之一.&lt;/p&gt;
+&lt;p&gt;從 &lt;a href="http://chiamingyen.github.io/kmolab/blog/dao-ru-brython-yu-snapsvg-wang-ji-hui-tu.html"&gt;導入 Brython 與 Snap.svg 網際繪圖&lt;/a&gt; 的說明中, 我們已經知道能夠透過網際的 Brython 來呼叫並運用 snap.svg 程式庫, 但是假如希望完成如 &lt;a href="http://project.mde.tw/blog/yen-pelican-jing-tai-wang-ye-yu-wordpress-de-zheng-he-fang-an.html"&gt;Pelican 靜態網頁與 Wordpress 的整合方案&lt;/a&gt; 中所談到的資料整合, 並且導入 snap.svg 到 Wordpress 與 Pelican 網誌系統, 來需要注意到 Wordpress 對於內文中處理程式碼的用法, 否則由 Pelican 靜態網誌轉進 Wordpress 系統中的所有 Brython 或 Javascript 程式內容, 將會全數被 Wordpress 當作一般文字資料處理.&lt;/p&gt;
+&lt;p&gt;應對的方法很簡單, 只需要明確利用 html 的註解標註, 跳過 Wordpress 對於 Brython 與 Javascript 程式碼的額外處理就行.&lt;/p&gt;
+&lt;p&gt;以下舉 Snap.svg 典型的動態模擬為例:&lt;/p&gt;
+&lt;script type="text/javascript" src="http://brython.info/src/brython_dist.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+//&lt;!--
+window.onload=function(){
+brython(1);
+}
+//--&gt;
+&lt;/script&gt;
+
+&lt;p&gt;&lt;svg width="800" height="600" viewBox="0 0 800 600" id="svgout"&gt;&lt;/svg&gt;&lt;/p&gt;
+&lt;script type="text/python"&gt;
+#&lt;!--
+from javascript import JSConstructor
+from browser import alert
+from browser import window, document
+
+# 透過 window 與 JSConstructor 從 Brython 物件 snap 擷取 Snap 物件的內容
+snap = JSConstructor(window.Snap)
+
+# 使用 id 為 "svgout" 的 svg 標註進行繪圖
+s = snap("#svgout")
+
+offsetY = 50
+
+# 是否標示出繪圖範圍
+#borderRect = s.rect(0,0,800,640,10,10).attr({ 'stroke': "silver", 'fill': "silver", 'strokeWidth': "3" })
+
+g = s.group().transform('t250,120')
+r0 = s.rect(150,150,100,100,20,20).attr({ 'fill': "orange", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c0 = s.circle(225,225,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4"  }).attr({ 'id': 'c0' })
+g0 = s.group( r0,c0 ).attr({ 'id': 'g0' })
+#g0.animate({ 'transform' : 't250,120r360,225,225' },4000)
+g0.appendTo( g )
+g0.animate({ 'transform' : 'r360,225,225' },4000)
+# 讓 g0 可以拖動
+g0.drag()
+
+r1 = s.rect(100,100,100,100,20,20).attr({ 'fill': "red", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c1 = s.circle(175,175,10).attr({ 'fill': "silver", 'stroke': "black" , 'strokeWidth': "4"}).attr({ 'id': 'c1' })
+g1 = s.group( r1,c1 ).attr({ 'id': 'g1' })
+g1.appendTo( g0 ).attr({ 'id': 'g1' })
+g1.animate({ 'transform' : 'r360,175,175' },4000)
+
+r2 = s.rect(50,50,100,100,20,20).attr({ 'fill': "blue", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c2 = s.circle(125,125,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c2' })
+g2 = s.group(r2,c2).attr({ 'id': 'g2' })
+
+g2.appendTo( g1 );
+g2.animate( { 'transform' : 'r360,125,125' },4000);
+
+r3 = s.rect(0,0,100,100,20,20).attr({ 'fill': "yellow", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c3 = s.circle(75,75,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c3' })
+g3 = s.group(r3,c3).attr({ 'id': 'g3' })
+
+g3.appendTo( g2 )
+g3.animate( { 'transform' : 'r360,75,75' },4000)
+
+r4 = s.rect(-50,-50,100,100,20,20).attr({ 'fill': "green", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c4 = s.circle(25,25,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c4' })
+g4 = s.group(r4,c4).attr({ 'id': 'g4' });
+g4.appendTo( g3 )
+g4.animate( { 'transform' : 'r360,25,25' },4000)
+#--&gt;
+&lt;/script&gt;
+
+&lt;p&gt;Brython 程式碼:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+&amp;lt;script type="text/javascript" src="http://brython.info/src/brython_dist.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"&amp;gt;&amp;lt;/script&amp;gt;
+
+&amp;lt;script&amp;gt;
+//&amp;lt;!--
+window.onload=function(){
+brython(1);
+}
+//--&amp;gt;
+&amp;lt;/script&amp;gt;
+
+&amp;lt;svg width="800" height="600" viewBox="0 0 800 600" id="svgout"&amp;gt;&amp;lt;/svg&amp;gt;
+
+&amp;lt;script type="text/python"&amp;gt;
+#&amp;lt;!--
+from javascript import JSConstructor
+from browser import alert
+from browser import window, document
+
+# 透過 window 與 JSConstructor 從 Brython 物件 snap 擷取 Snap 物件的內容
+snap = JSConstructor(window.Snap)
+
+# 使用 id 為 "svgout" 的 svg 標註進行繪圖
+s = snap("#svgout")
+
+offsetY = 50
+
+# 是否標示出繪圖範圍
+#borderRect = s.rect(0,0,800,640,10,10).attr({ 'stroke': "silver", 'fill': "silver", 'strokeWidth': "3" })
+
+g = s.group().transform('t250,120')
+r0 = s.rect(150,150,100,100,20,20).attr({ 'fill': "orange", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c0 = s.circle(225,225,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4"  }).attr({ 'id': 'c0' })
+g0 = s.group( r0,c0 ).attr({ 'id': 'g0' })
+#g0.animate({ 'transform' : 't250,120r360,225,225' },4000)
+g0.appendTo( g )
+g0.animate({ 'transform' : 'r360,225,225' },4000)
+# 讓 g0 可以拖動
+g0.drag()
+
+r1 = s.rect(100,100,100,100,20,20).attr({ 'fill': "red", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c1 = s.circle(175,175,10).attr({ 'fill': "silver", 'stroke': "black" , 'strokeWidth': "4"}).attr({ 'id': 'c1' })
+g1 = s.group( r1,c1 ).attr({ 'id': 'g1' })
+g1.appendTo( g0 ).attr({ 'id': 'g1' })
+g1.animate({ 'transform' : 'r360,175,175' },4000)
+
+r2 = s.rect(50,50,100,100,20,20).attr({ 'fill': "blue", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c2 = s.circle(125,125,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c2' })
+g2 = s.group(r2,c2).attr({ 'id': 'g2' })
+
+g2.appendTo( g1 );
+g2.animate( { 'transform' : 'r360,125,125' },4000);
+
+r3 = s.rect(0,0,100,100,20,20).attr({ 'fill': "yellow", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c3 = s.circle(75,75,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c3' })
+g3 = s.group(r3,c3).attr({ 'id': 'g3' })
+
+g3.appendTo( g2 )
+g3.animate( { 'transform' : 'r360,75,75' },4000)
+
+r4 = s.rect(-50,-50,100,100,20,20).attr({ 'fill': "green", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c4 = s.circle(25,25,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c4' })
+g4 = s.group(r4,c4).attr({ 'id': 'g4' });
+g4.appendTo( g3 )
+g4.animate( { 'transform' : 'r360,25,25' },4000)
+#--&amp;gt;
+&amp;lt;/script&amp;gt;
+&lt;/pre&gt;</summary><category term="Wordpress"></category><category term="MCAD"></category></entry><entry><title>Onshape 提供免費教育單位帳號</title><link href="http://cadlab.mde.tw/post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html" rel="alternate"></link><updated>2016-05-06T23:52:29+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-06:post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan"&gt;https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan&lt;/a&gt; 得知, Onshpae 除了提供各種身份的用戶有使用限度的免費帳號以外, 從 2016.04.07 開始更加碼, 讓教育單位可以免費, 且沒有使用限度的情況下, 來探索使用這個劃時代的雲端電腦輔助機械設計套件.&lt;/p&gt;
 
 
 &lt;h2&gt;穩定的網路連線是使用 Onshpae 的必要條件&lt;/h2&gt;
