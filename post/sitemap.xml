@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://cadlab.mde.tw/post/</loc>
-<lastmod>2016-05-11T16:55:12-00:00</lastmod>
+<lastmod>2016-05-14T23:17:18-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/post/archives.html</loc>
-<lastmod>2016-05-11T16:55:12-00:00</lastmod>
+<lastmod>2016-05-14T23:17:18-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/post/tags.html</loc>
-<lastmod>2016-05-11T16:55:12-00:00</lastmod>
+<lastmod>2016-05-14T23:17:18-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://cadlab.mde.tw/post/categories.html</loc>
-<lastmod>2016-05-11T16:55:12-00:00</lastmod>
+<lastmod>2016-05-14T23:17:18-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -34,6 +34,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://cadlab.mde.tw/post/pages/about/</loc>
 <lastmod>2016-05-11T11:12:54+08:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html</loc>
+<lastmod>2016-05-14T23:16:31+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -166,7 +173,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://cadlab.mde.tw/post/category/dao-yin.html</loc>
-<lastmod>2016-05-11T11:12:54+08:06</lastmod>
+<lastmod>2016-05-14T23:16:31+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -186,7 +193,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/manual.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/pelican.html</loc>
 <lastmod>2016-05-11T11:12:54+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
@@ -200,14 +207,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/wordpress.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/python3.html</loc>
+<lastmod>2016-05-14T23:16:31+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/cax.html</loc>
 <lastmod>2016-05-11T11:12:54+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/mechanical-design.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/ipv6.html</loc>
+<lastmod>2016-05-11T11:12:54+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/mcad.html</loc>
 <lastmod>2016-05-11T11:12:54+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
@@ -221,14 +242,21 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/raspberrypi.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/2016spring.html</loc>
 <lastmod>2016-05-11T11:12:54+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/network.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/user-template.html</loc>
+<lastmod>2016-05-11T11:12:54+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/mechanical-design.html</loc>
 <lastmod>2016-05-11T11:12:54+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
@@ -249,49 +277,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/user-template.html</loc>
-<lastmod>2016-05-11T11:12:54+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://cadlab.mde.tw/post/tag/zong-yi-guan-8f.html</loc>
-<lastmod>2016-05-11T16:53:14+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://cadlab.mde.tw/post/tag/cax.html</loc>
-<lastmod>2016-05-11T11:12:54+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://cadlab.mde.tw/post/tag/ke-xi-tao-jian.html</loc>
-<lastmod>2016-05-11T11:12:54+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://cadlab.mde.tw/post/tag/reference.html</loc>
-<lastmod>2016-05-11T11:12:54+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://cadlab.mde.tw/post/tag/cad.html</loc>
-<lastmod>2016-05-11T16:53:14+08:06</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://cadlab.mde.tw/post/tag/mcad.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/javascript.html</loc>
 <lastmod>2016-05-11T11:12:54+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
@@ -305,14 +291,42 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/ipv6.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/wordpress.html</loc>
 <lastmod>2016-05-11T11:12:54+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/pelican.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/manual.html</loc>
+<lastmod>2016-05-11T11:12:54+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/module.html</loc>
+<lastmod>2016-05-14T23:16:31+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/reference.html</loc>
+<lastmod>2016-05-11T11:12:54+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/zong-yi-guan-8f.html</loc>
+<lastmod>2016-05-11T16:53:14+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/network.html</loc>
 <lastmod>2016-05-11T11:12:54+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
@@ -326,14 +340,21 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/2016spring.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/cad.html</loc>
+<lastmod>2016-05-11T16:53:14+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://cadlab.mde.tw/post/tag/raspberrypi.html</loc>
 <lastmod>2016-05-11T11:12:54+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://cadlab.mde.tw/post/tag/javascript.html</loc>
+<loc>http://cadlab.mde.tw/post/tag/ke-xi-tao-jian.html</loc>
 <lastmod>2016-05-11T11:12:54+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
@@ -341,7 +362,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://cadlab.mde.tw/post/author/kmol.html</loc>
-<lastmod>2016-05-11T16:53:14+08:06</lastmod>
+<lastmod>2016-05-14T23:16:31+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

@@ -77,14 +77,14 @@
 <v t="amd.20151216001126.1"><vh>md 檔案範例</vh></v>
 <v t="amd.20151215170031.1" a="E"><vh>@path ./../content</vh>
 <v t="amd.20160106093454.1" a="E"><vh>yen 網誌文章</vh>
-<v t="amd.20160106093510.1" a="E"><vh>201601</vh>
+<v t="amd.20160106093510.1"><vh>201601</vh>
 <v t="ibm.20160115121941.1"><vh>@clean yen_20160115.md</vh></v>
 <v t="amd.20160117143423.1"><vh>@clean yen_20160117.md</vh>
 <v t="amd.20160328210705.1"><vh>30</vh></v>
 </v>
 <v t="amd.20160120213235.1"><vh>@clean yen_20160120.md</vh></v>
 </v>
-<v t="amd.20160215161310.1" a="E"><vh>201602</vh>
+<v t="amd.20160215161310.1"><vh>201602</vh>
 <v t="amd.20160215161329.1"><vh>@clean yen_20160215.md</vh></v>
 <v t="amd.20160223120511.1"><vh>@clean yen_20160223.md</vh>
 <v t="amd.20160328210652.1"><vh>28</vh></v>
@@ -111,13 +111,14 @@
 <v t="amd.20160401230037.1"><vh>@clean yen_20160401-1.md</vh></v>
 <v t="amd.20160402103950.1"><vh>@@clean yen_20160402.md</vh></v>
 </v>
-<v t="amd.20160412201150.1" a="E"><vh>201604</vh>
+<v t="amd.20160412201150.1"><vh>201604</vh>
 <v t="amd.20160412201156.1"><vh>@clean yen_20160412.md</vh></v>
 </v>
 <v t="amd.20160506230749.1"><vh>201605</vh></v>
 <v t="amd.20160506230801.1"><vh>@clean yen_20160506.md</vh>
 <v t="amd.20160506235635.1"><vh>43</vh></v>
 </v>
+<v t="amd.20160514153227.1"><vh>@clean yen_20160514.md</vh></v>
 </v>
 </v>
 <v t="amd.20160106094754.1" a="E"><vh>@path ./../content/pages</vh>
@@ -1618,6 +1619,148 @@ g4.animate( { 'transform' : 'r360,25,25' },4000)
 &amp;lt;/script&amp;gt;
 &lt;/pre&gt;</t>
 <t tx="amd.20160506235635.1"></t>
+<t tx="amd.20160514153227.1">@language md
+Title: 常用 Python3 程式模組
+Category:導引
+Tags: Python3, module
+Author: kmol
+@others
+&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+其中的 &lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt; 與 &lt;a href="http://flask.pocoo.org/"&gt;Flask&lt;/a&gt; 位階相似, 但是
+特性卻有很大差別, CherryPy 小而自給自足, Flask 則架構較具彈性, 許多延伸功能都採 extension 方式補足, 有關 CherryPy 的各種用法, 請參考 &lt;a href="http://cad-lab.github.io/manual/post/cherrypy-shi-yong-shou-ce.html"&gt;http://cad-lab.github.io/manual/post/cherrypy-shi-yong-shou-ce.html&lt;/a&gt;.
+
+&lt;a href="https://github.com/zzzeek/mako"&gt;https://github.com/zzzeek/mako&lt;/a&gt; 的最大特色, 是將 Python 的語法直接放到 template 文件中, 儘管如此可能會讓使用者將原本應該放在控制端的資料流程, 分散到展示端, 但是實際採用後, 也沒有發生太大問題, 反而可以利用相同的網際程式, 直接套用到 Mako 與 Flask 內建的 template 語法中, 進行比較.
+
+github3.py 針對 Github 倉儲新增協同者的程式片斷範例:
+
+&lt;pre class="brush: python"&gt;
+@app.route('/yourrepoadd', methods=['POST'])
+def yourrepoadd():
+    account = request.form["account"]
+    repository = "yourrepo"
+    url = "https://github.com/youraccount/yourrepo.git"
+    # 登入系統
+    g = github3.login("youraccount", "yourpassword")
+    # 以下則新增協同者
+    #g.repository(倉儲帳號, 倉儲名稱).add_collaborator(協同者 github 帳號)
+    # 若新增 collaborator 成功傳回 True 否則傳回 False
+    if g.repository("youraccount", repository).add_collaborator(account):
+        # 共同使用 cpaadd.html
+        return render_template("cpaadd.html", account=account, repository=repository, url=url)
+    else:
+        return render_template("cpaerror.html")
+&lt;/pre&gt;
+
+至於 authomatic 的使用, 共有3個步驟:
+
+## 1. 取得 key 與 secret
+
+設定網址:
+
+https://console.developers.google.com
+
+總共有兩項設定:
+
+1. 啟用 Google + API
+2. 然後到憑證處建立專案, 設定授權的 URI
+
+設定目的在希望透過 Google+ API 讓 Web browser (Javascript) 能夠擷取 User data, 這時需要的是 Create an OAuth 2.0 client ID, 建立專案後, 必須選擇 Authorized Javascript origins 為 http://your.server.domain.name 與 http://localhost:5000, 而 Authorized redirect URIs 為: http://your.server.domain.name/autho_login/google/ 與 http://localhost:5000/autho_login/google/
+
+## 2. 導入模組, 進行設定
+
+&lt;pre class="brush: python"&gt;
+import authomatic
+from authomatic.providers import oauth2
+
+CONFIG = {
+        'google': {
+            'class_': oauth2.Google,
+            'consumer_key': '1234567.apps.googleusercontent.com',
+            'consumer_secret': '87654321',
+            #'scope': oauth2.Google.user_info_scope
+            # 以下只允許(瞭解您在 Google 上的身分)與(檢視電子郵件地址)
+            'scope': ['email']
+        }
+    }
+&lt;/pre&gt;
+
+## 3. 配合建立登入連結
+
+&lt;pre class="brush: python"&gt;
+@app.route('/autho_login/&amp;lt;provider_name&amp;gt;/', methods=['GET', 'POST'])
+def autho_login(provider_name):
+    
+    # We need response object for the WerkzeugAdapter.
+    response = make_response()
+    
+    # Log the user in, pass it the adapter and the provider name.
+    result = authomatic.login(WerkzeugAdapter(request, response), provider_name)
+    
+    # If there is no LoginResult object, the login procedure is still pending.
+    if result:
+        if result.user:
+            # We need to update the user to get more info.
+            result.user.update()
+            
+        # 利用 session 登記登入者的 email
+        session['login_email'] = result.user.email
+        
+        # 這裡必須分近端與雲端, 因為 google logout redirect 的 url 不同
+        if 'OPENSHIFT_REPO_DIR' in os.environ.keys():
+            # 表示程式在雲端執行
+            local = False
+        else:
+            # 表示在近端執行
+            local = True
+        # The rest happens inside the template.
+        return render_template('autho_login.html', result=result, local=local)
+    
+    # Don't forget to return the response.
+    return response
+&lt;/pre&gt;
+
+## oauth2 登入的情境
+
+使用 oauth2 的目的, 在利用既有的使用者帳號進行應用程式的登入, 例如, 使用 facebook 或 gmail 帳號登入到我們所開發的網際應用程式, 好處是, 使用者無需在各類網際程式中額外再申請帳號, 而程式開發者也可以免去管理使用者帳號的難題.
+
+但是, 為了在使用者被 oauth2 協定轉介到 gmail 登入頁面, 完成登入後, 就會再帶著帳號擁有者所允許的相關訊息, 回到網際應用程式中, 通常這些網際程式會利用 session 與 cookie 來儲存使用者登入的身份資料, 如此一來, 便有以下情境:
+
+假如使用者在選擇登入到網際程式之前, 已經登入到 gmail, 那麼使用者無需再輸入帳號密碼, 只要同意允許擷取帳號資料 ,就會直接跳轉到網際程式功能中, 特別注意到, 這時 gmail 有使用者登入的 session 與 cookie, 而且使用者的瀏覽器還存在登入到網際應用程式的狀態.
+
+第2種情況則是, 使用者被轉介到 gmail 登入畫面時, 才輸入帳號密碼登入, 之後情境就與上述第1種情況相同.
+
+上述兩種情況, 在瀏覽器中, 使用者的狀態是同時登入到 gmail 與網際程式中, 即便使用者登入網際程式後, 若使用者沒有主動登出 gmail, 這位使用者在瀏覽器的狀態中, 仍然保持登入到 gmail 的狀態.
+
+因此第3種情況則是, 使用者經由 oauth2 協定轉介到 gmail 登入後同意讓網際程式擷取帳號資料後, 就能登入到網際程式中, 隨後使用這主動登出 gmail, 並不會影響仍然登入到網際程式中的狀態, 一直到使用者選擇登出網際應用程式為止.
+
+理論上, 假如我們所開發的網際程式, 只是透過一系列上述的設定, 藉由 gmail 的帳號, 來登入我們所開發的網際程式, 比較好的作法是一旦完成我們網際應用程式的登入後, 可以經由程式方法登出使用者的 gmail 帳號, 然後再由使用者決定何時要登出我們所開發的網際程式.
+
+以下就是利用 Javascript 在登入應用程式之後, 設法登出使用者 gmail 帳號的設計, 並且同時支援本地端程式開發與雲端應用的情況:
+
+&lt;pre class="brush: python"&gt;
+{# autho_login.html #}
+{% extends "autho_base.html" %}
+
+{% block body %}
+
+&amp;lt;!-- 這裡應該要再分近端與雲端的不同處理流程, 而且要在設定時便取得綁定的雲端網址 --&amp;gt;
+{% if local %}
+&amp;lt;script type="text/javascript"&amp;gt;
+window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:5000/check_login";
+&amp;lt;/script&amp;gt;
+{% else %}
+&amp;lt;script type="text/javascript"&amp;gt;
+window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://your.server.domain.name/check_login";
+&amp;lt;/script&amp;gt;
+{% endif %}
+
+{% endblock body %}
+&lt;/pre&gt;
+
+</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
