@@ -1768,7 +1768,7 @@ Category:導引
 Tags: MCAD, DVCS
 Author: kmol
 @others
-&lt;a href="http://bazaar.canonical.com/en/"&gt;Bazaar&lt;/a&gt; (2004 年從 &lt;a href="https://www.gnu.org/software/gnu-arch/"&gt;Gnu arch&lt;/a&gt; 分出), &lt;a href="http://www.bitkeeper.com/"&gt;BitKeeper&lt;/a&gt;, &lt;a href="http://darcs.net/"&gt;darcs&lt;/a&gt;, &lt;a href="https://github.com/git"&gt;Git&lt;/a&gt;, &lt;a href="https://www.mercurial-scm.org/"&gt;Mercurial&lt;/a&gt; 是目前較為常見的分散式版次管理 (Distributed Version Control Systems, DVCS) 技術, 其中自 1998 年前後推出, 唯一商用閉源的 Bitkeeper, 也終於在 2016.05.09, 宣佈轉為開放原始碼套件: &lt;a href="https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93"&gt;https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93&lt;/a&gt;.
+&lt;a href="http://bazaar.canonical.com/en/"&gt;Bazaar&lt;/a&gt; (2004 年從 &lt;a href="https://www.gnu.org/software/gnu-arch/"&gt;Gnu arch&lt;/a&gt; 分出), &lt;a href="http://www.bitkeeper.com/"&gt;BitKeeper&lt;/a&gt;, &lt;a href="http://darcs.net/"&gt;darcs&lt;/a&gt;, &lt;a href="https://github.com/git"&gt;Git&lt;/a&gt;, &lt;a href="https://www.mercurial-scm.org/"&gt;Mercurial&lt;/a&gt; 是目前較為常見的分散式版本管理 (Distributed Version Control Systems, DVCS) 技術, 其中自 1998 年前後推出, 唯一商用閉源的 Bitkeeper, 也終於在 2016.05.09, 宣佈轉為開放原始碼套件: &lt;a href="https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93"&gt;https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93&lt;/a&gt;.
 
 &lt;!-- PELICAN_END_SUMMARY --&gt;
 
