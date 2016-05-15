@@ -111,7 +111,7 @@
 <v t="amd.20160401230037.1"><vh>@clean yen_20160401-1.md</vh></v>
 <v t="amd.20160402103950.1"><vh>@@clean yen_20160402.md</vh></v>
 </v>
-<v t="amd.20160412201150.1"><vh>201604</vh>
+<v t="amd.20160412201150.1" a="E"><vh>201604</vh>
 <v t="amd.20160412201156.1"><vh>@clean yen_20160412.md</vh></v>
 </v>
 <v t="amd.20160506230749.1"><vh>201605</vh></v>
@@ -119,6 +119,7 @@
 <v t="amd.20160506235635.1"><vh>43</vh></v>
 </v>
 <v t="amd.20160514153227.1"><vh>@clean yen_20160514.md</vh></v>
+<v t="amd.20160515165148.1"><vh>@clean yen_20160515.md</vh></v>
 </v>
 </v>
 <v t="amd.20160106094754.1" a="E"><vh>@path ./../content/pages</vh>
@@ -1734,7 +1735,7 @@ def autho_login(provider_name):
 
 上述兩種情況, 在瀏覽器中, 使用者的狀態是同時登入到 gmail 與網際程式中, 即便使用者登入網際程式後, 若使用者沒有主動登出 gmail, 這位使用者在瀏覽器的狀態中, 仍然保持登入到 gmail 的狀態.
 
-因此第3種情況則是, 使用者經由 oauth2 協定轉介到 gmail 登入後同意讓網際程式擷取帳號資料後, 就能登入到網際程式中, 隨後使用這主動登出 gmail, 並不會影響仍然登入到網際程式中的狀態, 一直到使用者選擇登出網際應用程式為止.
+因此第3種情況則是, 使用者經由 oauth2 協定轉介到 gmail 登入後同意讓網際程式擷取帳號資料後, 就能登入到網際程式中, 隨後使用者主動登出 gmail, 並不會影響仍然登入到網際程式中的狀態, 一直到使用者選擇登出網際應用程式為止.
 
 理論上, 假如我們所開發的網際程式, 只是透過一系列上述的設定, 藉由 gmail 的帳號, 來登入我們所開發的網際程式, 比較好的作法是一旦完成我們網際應用程式的登入後, 可以經由程式方法登出使用者的 gmail 帳號, 然後再由使用者決定何時要登出我們所開發的網際程式.
 
@@ -1761,6 +1762,77 @@ window.location="https://www.google.com/accounts/Logout?continue=https://appengi
 &lt;/pre&gt;
 
 </t>
+<t tx="amd.20160515165148.1">@language md
+Title: 電腦輔助機械設計流程中的分散式版本管理
+Category:導引
+Tags: MCAD, DVCS
+Author: kmol
+@others
+&lt;a href="http://bazaar.canonical.com/en/"&gt;Bazaar&lt;/a&gt; (2004 年從 &lt;a href="https://www.gnu.org/software/gnu-arch/"&gt;Gnu arch&lt;/a&gt; 分出), &lt;a href="http://www.bitkeeper.com/"&gt;BitKeeper&lt;/a&gt;, &lt;a href="http://darcs.net/"&gt;darcs&lt;/a&gt;, &lt;a href="https://github.com/git"&gt;Git&lt;/a&gt;, &lt;a href="https://www.mercurial-scm.org/"&gt;Mercurial&lt;/a&gt; 是目前較為常見的分散式版次管理 (Distributed Version Control Systems, DVCS) 技術, 其中自 1998 年前後推出, 唯一商用閉源的 Bitkeeper, 也終於在 2016.05.09, 宣佈轉為開放原始碼套件: &lt;a href="https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93"&gt;https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93&lt;/a&gt;.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+其實, 早在 1995 年左右的 &lt;a href="https://en.wikipedia.org/wiki/Sun_WorkShop_TeamWare"&gt;Sun WorkShop TeamWare&lt;/a&gt; 就已經擁有分散式版本的相關技術, 而且在許多與機械設計相關的 PDM/PLM 系統中, 也都提供各種分散式版本控管的功能, 只是大多與封閉的檔案系統格式搭配使用, 使得多人協同模式下的電腦輔助機械設計流程, 成本不斷推升, 而且造成導入新技術的步調緩慢.
+
+當然, 這些國際大公司面對快速發展的數位虛擬與雲端技術, 眼看無法透過賣斷的使用授權來限制使用者, 也紛紛隨著許多創新的先行者 (例如: Onshape), 喊出不再販售大而無當的單機賣斷版本套件, 而改採較具彈性的網路訂閱授權.
+
+接下來, 當快速進展的全球協同模式必得讓各方團隊開始自行打造各式本地端、區域網路端、廣域網路端與雲端上的網際服務系統時, 目前最佳的授權認証模式, 則多採取 &lt;a href="https://tools.ietf.org/html/rfc6749"&gt;oauth2&lt;/a&gt; 的協定進行, 例如: Onshape 已經釋出 node.js 相容的程式模組: &lt;a href="https://github.com/onshape/passport-onshape"&gt;https://github.com/onshape/passport-onshape&lt;/a&gt;.
+
+儘管如此, 身為一般的機械設計產品開發團隊, 仍然無法像全球大量持續甩開 Microsoft 約束的程式開發者一樣, 熱烈擁抱諸如 Linux 與 FreeBSD 相關分支, 因為 &lt;a href="http://www.freecadweb.org/"&gt;http://www.freecadweb.org/&lt;/a&gt; 尚未大到可以取代許多封閉套件的地步, 現階段只能期待 Onshape 的授權方案能夠持續友善, 未來能夠有機會藉著清楚展示設計流程的分散式版本管理, 讓使用者能夠從此自混水中解脫.
+
+儘管 Onshape 的 API 使用授權尚未全面釋出, 但是假如希望先利用 oauth2 自行打造一個網際產品設計開發系統, 可以參考下列的簡單程式開發描述:
+
+1. 讓使用者以 Gmail 帳號, 經由 google 制式流程登入後轉回應用程式
+
+    使用技術: oauth2
+    
+2. 網際程式可以在本地端、區域網路端與雲端平台上佈署, 得到相同執行結果
+
+   使用技術: 利用物件案例的啟始, 建立所需的環境目錄架構,  以及起始資料庫檔案等, 利用操作系統模組讀取特定變數判定執行環境
+   
+3. 資料庫存取技術與分頁
+
+4. 人性化的 Javascript 或 Brython 環境導入
+
+5. 美化的 Template 與 css 導入
+
+6. Github, bitbucket 與 &lt;a href="https://gogs.io/"&gt;gogs&lt;/a&gt; 的程式開發版本管理
+
+7. 規劃所要維護的資料表: 
+
+人員名單含角色管理
+
+事件管理
+
+網際運算 (結合 Jupyter)
+
+參考資料:
+
+flask
+
+&lt;a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-now-with-python-3-support"&gt;http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-now-with-python-3-support&lt;/a&gt;
+
+oauth2
+
+&lt;a href="http://oauth.net/2/"&gt;http://oauth.net/2/&lt;/a&gt;
+
+&lt;a href="https://blog.yorkxin.org/posts/2013/09/30/oauth2-1-introduction/"&gt;https://blog.yorkxin.org/posts/2013/09/30/oauth2-1-introduction/&lt;/a&gt;
+
+&lt;a href="https://tools.ietf.org/html/rfc6749"&gt;https://tools.ietf.org/html/rfc6749&lt;/a&gt;
+
+git
+
+&lt;a href="https://github.com/git"&gt;https://github.com/git&lt;/a&gt;
+
+working flow
+
+&lt;a href="https://www.drupal.org/node/803746"&gt;https://www.drupal.org/node/803746&lt;/a&gt;
+
+Jupyter and oauth2
+
+&lt;a href="https://github.com/jupyterhub/oauthenticator"&gt;https://github.com/jupyterhub/oauthenticator&lt;/a&gt;
+
+&lt;a href="https://github.com/ryanlovett/jh-google-oauthenticator"&gt;https://github.com/ryanlovett/jh-google-oauthenticator&lt;/a&gt;</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
