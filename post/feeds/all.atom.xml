@@ -1,5 +1,1470 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-05-15T17:58:56+08:00</updated><entry><title>電腦輔助機械設計流程中的分散式版本管理</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html" rel="alternate"></link><updated>2016-05-15T17:58:56+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-15:post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html</id><summary type="html">&lt;p&gt;&lt;a href="http://bazaar.canonical.com/en/"&gt;Bazaar&lt;/a&gt; (2004 年從 &lt;a href="https://www.gnu.org/software/gnu-arch/"&gt;Gnu arch&lt;/a&gt; 分出), &lt;a href="http://www.bitkeeper.com/"&gt;BitKeeper&lt;/a&gt;, &lt;a href="http://darcs.net/"&gt;darcs&lt;/a&gt;, &lt;a href="https://github.com/git"&gt;Git&lt;/a&gt;, &lt;a href="https://www.mercurial-scm.org/"&gt;Mercurial&lt;/a&gt; 是目前較為常見的分散式版本管理 (Distributed Version Control Systems, DVCS) 技術, 其中自 1998 年前後推出, 唯一商用閉源的 Bitkeeper, 也終於在 2016.05.09, 宣佈轉為開放原始碼套件: &lt;a href="https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93"&gt;https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93&lt;/a&gt;.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-05-17T12:59:34+08:00</updated><entry><title>網際機械設計 2D 繪圖</title><link href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html" rel="alternate"></link><updated>2016-05-17T12:59:34+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-17:post/wang-ji-ji-jie-she-ji-2d-hui-tu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://2015fallhw.github.io/arcidau/Flintlock.html"&gt;http://2015fallhw.github.io/arcidau/Flintlock.html&lt;/a&gt; 是一個典型的網際機械設計 2D 繪圖範例, CADLab 希望能夠利用 Brython 重新建立一個直接以 Python3 在網頁中繪圖的類似應用.&lt;/p&gt;
+
+
+&lt;style type="text/css" media="screen"&gt;
+
+#flintlockImg {
+  float: right;
+  display: inline;  /* IE6 hack to fix double margin bug */
+  width: 24em;
+  margin: 1em 2em 1em 1em;
+}
+
+#flintlockImg img {
+  width: 100%;
+  padding: 0.5em;
+  border: 1px solid #404040;
+}
+
+#cvsUpper, #cvsLower {
+  position: relative;
+  width: 600px;
+  height: 300px;
+  text-align: center;  /* this will center console if it has display:inline-block */
+  background-color: #aabdd3;
+}
+&lt;/style&gt;
+
+&lt;script type="text/javascript" src="http://brython.info/src/brython_dist.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/Cango-8v03.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/Cango2D-7v01-min.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/CangoAxes-1v33.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/flintlockPartDefs-02.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/CangoAnimation-4v01.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+window.onload=function(){
+brython(1);
+}
+&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+
+    if (typeof addLoadEvent === "undefined")
+    {
+      var addLoadEvent = function(func)
+      {
+        var oldonload = window.onload;
+        if (typeof window.onload != 'function')
+        {
+          window.onload = func;
+        }
+        else
+        {
+            window.onload = function(){oldonload(); func();}
+        }
+      }
+    }
+
+    if (typeof addEvent === "undefined")
+    {
+      var addEvent = function(element, eventType, handler)
+      {
+        if (element.attachEvent)
+        {
+          return element.attachEvent('on'+eventType, handler);
+        }
+        return element.addEventListener(eventType, handler, false);
+      };
+    }
+
+    function cancelBubble(e)
+    {
+      var evt = e ? e:window.event;
+      if (evt.stopPropagation) evt.stopPropagation();
+      if (evt.cancelBubble!=null) evt.cancelBubble = true;
+    }
+&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+
+function enableBtn(btnId)
+{
+  var btn = document.getElementById(btnId);
+  btn.disabled = false;
+}
+
+function disableBtn(btnId)
+{
+  var btn = document.getElementById(btnId);
+  btn.disabled = true;
+}
+
+function FlintlockDemo(cvsU, cvsL)
+{
+  "use strict"
+  var innerGCL0, innerGCL1,
+      outerGC,
+      // Lock components (Cango2D groups)
+      cockObj,
+      fizzenObj,
+      plateObj,
+      searSpringObj,
+      searObj,
+      tumblerObj,
+      mainSpringObj,
+      screwsObj,
+      // draw outside in lower canvas
+      plateOutside,
+      cockOutside,
+      fizzenOutside,
+      fizzenSpring,
+      outScrews;
+
+  this.fire_JS = function()
+    {
+    innerGCL0.playAnimation(0, 1000);   // play for 1000 then pause
+    outerGC.playAnimation(0, 1000);
+
+    disableBtn('cock');
+    disableBtn('fire');
+    setTimeout("enableBtn('load')", 1000);
+  };
+
+  this.load_JS = function()
+  {
+    innerGCL0.playAnimation(1000, 3500);    // resume from pause play until 3500
+    outerGC.playAnimation(1000, 3500);
+
+    disableBtn('load');
+    disableBtn('fire');
+    setTimeout("enableBtn('cock')", 2500);
+
+  };
+
+  this.cock_JS = function()
+  {
+    innerGCL0.playAnimation(3500, 5000);      // resume from pause play until 5000
+    outerGC.playAnimation(3500, 5000);
+
+    disableBtn('load');
+    disableBtn('cock');
+    setTimeout("enableBtn('fire')", 1500);
+  };
+
+  // Upper display
+  innerGCL0 = new Cango(cvsU);                     // layer for the cock and fizzen
+  innerGCL0.setWorldCoords(-250, -100, 500);       // square pixels origin in center of canvas
+  innerGCL1 = new Cango(innerGCL0.createLayer());  // layer for main spring and sear
+  innerGCL1.dupCtx(innerGCL0);
+
+  // construct all the component objects
+  cockObj = makeCock(innerGCL0);
+  fizzenObj = makeFizzenInside(innerGCL0);
+  plateObj = makePlate(innerGCL0);
+  searSpringObj = makeSearSpring(innerGCL1);
+  searObj = makeSear(innerGCL1);
+  tumblerObj = makeTumbler(innerGCL1);
+  mainSpringObj = makeMainSpring(innerGCL1);
+  screwsObj = makeScrews(innerGCL1);
+
+        var innerTwnr = new Tweener(0, 5000);
+  var innerData = {
+      cockRot:     [0, 54, 54, 18, 18,  0],
+    cockRotTimes:[0, 10, 20, 60, 70, 90],
+    fizzenRot:     [0, 0, 73, 73,  0],
+    fizzenRotTimes:[0, 4,  8, 60, 70],
+    searSpringRot:     [0, -5, -6, -3.5,  0, -2, -3.5, -3.5,  0,  0, -2, -3, -3.5,  0],
+    searSpringRotTimes:[0,  5, 10,   15, 20, 30,   40,   50, 60, 70, 75, 80,   85, 90],
+    searRot:     [0, 10, 12,  7,  0,  4,   7,   7,  0,  0,  4, 5.5,  7,  0],
+    searRotTimes:[0,  5, 10, 15, 20, 30,  40,  50, 60, 70, 75,  80, 85, 90],
+      tumblerRot:     [0, 54, 54, 18, 18,  0],
+    tumblerRotTimes:[0, 10, 20, 60, 70, 90],
+    mainSpringRot:     [0, -7, -7, -2, -2,  0],
+    mainSpringRotTimes:[0, 10, 20, 60, 70, 90]
+  };
+
+  function initCock(opts)
+  {
+    this.nextState.x = cockCxOfs;
+    this.nextState.y = -cockCyOfs;
+  }
+
+  function initFissen(opts)
+  {
+    this.nextState.x = fizzenCxOfs;
+    this.nextState.y = -fizzenCyOfs;
+  }
+
+  function initSearSpring(opts)
+  {
+    this.nextState.x = searSpringCxOfs;
+    this.nextState.y = -searSpringCyOfs;
+  }
+
+  function initSear(opts)
+  {
+    this.nextState.x = searCxOfs;
+    this.nextState.y = -searCyOfs;
+  }
+
+  function initMainSpring(opts)
+  {
+    this.nextState.x = mainSpringCxOfs;
+    this.nextState.y = -mainSpringCyOfs;
+  }
+
+  function cockPathFn(time, opts)
+  {
+    var cockRotVal = innerTwnr.getVal(time, opts.cockRot, opts.cockRotTimes);
+
+    this.nextState.rot = cockRotVal;
+  }
+
+  function fizzenPathFn(time, opts)
+  {
+    var fizzenRotVal = innerTwnr.getVal(time, opts.fizzenRot, opts.fizzenRotTimes);
+
+    this.nextState.rot = fizzenRotVal;
+  }
+
+  function searSpringPathFn(time, opts)
+  {
+    var searSpringRotVal = innerTwnr.getVal(time, opts.searSpringRot, opts.searSpringRotTimes);
+
+    this.nextState.rot = searSpringRotVal;
+  }
+
+  function searPathFn(time, opts)
+  {
+    var searRotVal = innerTwnr.getVal(time, opts.searRot, opts.searRotTimes);
+
+    this.nextState.rot = searRotVal;
+  }
+
+  function tumblerPathFn(time, opts)
+  {
+    var tumblerRotVal = innerTwnr.getVal(time, opts.tumblerRot, opts.tumblerRotTimes);
+
+    this.nextState.rot = tumblerRotVal;
+  }
+
+  function mainSpringPathFn(time, opts)
+  {
+    var mainSpringRotVal = innerTwnr.getVal(time, opts.mainSpringRot, opts.mainSpringRotTimes);
+
+    this.nextState.rot = mainSpringRotVal;
+  }
+
+  innerGCL0.animate(cockObj, initCock, cockPathFn, innerData);
+  innerGCL0.animate(fizzenObj, initFissen, fizzenPathFn, innerData);
+  innerGCL0.animate(plateObj);
+  innerGCL1.animate(searSpringObj, initSearSpring, searSpringPathFn, innerData);
+  innerGCL1.animate(searObj, initSear, searPathFn, innerData);
+  innerGCL1.animate(tumblerObj, initCock, tumblerPathFn, innerData);
+  innerGCL1.animate(mainSpringObj, initMainSpring, mainSpringPathFn, innerData);
+  innerGCL1.animate(screwsObj);
+
+  // Lower display
+  outerGC = new Cango(cvsL);
+  outerGC.setWorldCoords(-250, -100, 500);
+
+  // construct all the component objects
+  plateOutside = makePlateOutside(outerGC);
+  cockOutside = makeCockOutside(outerGC);
+  fizzenOutside = makeFizzenOutside(outerGC);
+  fizzenSpring = makeFizzenSpring(outerGC);
+  outScrews = makeOutScrews(outerGC);
+
+        var outerTwnr = new Tweener(0, 5000);
+  var outerData = {
+      outerCockRot:     [0, -54, -54, -18, -18,  0],
+    outerCockRotTimes:[0,  10,  20,  60,  70, 90],
+    outerFizRot:     [0, 0, -73, -73,  0],
+    outerFizRotTimes:[0, 4,   8,  60, 70],
+    outerFizSpringRot:     [0, 0, 5, 6, 3.5, 0,  0,    3,  4,    3,  0],
+    outerFizSpringRotTimes:[0, 4, 5, 6,   7, 8, 60, 62.5, 65, 67.5, 70]
+  };
+
+  function initCockOutside(opts)
+  {
+    this.nextState.x = -cockCxOfs;
+    this.nextState.y = -cockCyOfs;
+  }
+
+  function initFissenOutside(opts)
+  {
+    this.nextState.x = -fizzenCxOfs;
+    this.nextState.y = -fizzenCyOfs;
+  }
+
+  function initFissenSpring(opts)
+  {
+    this.nextState.x = -fizzenSpringCxOfs;
+    this.nextState.y = -fizzenSpringCyOfs;
+  }
+
+  function outerCockPathFn(time, opts)
+  {
+    var cockRotVal = outerTwnr.getVal(time, opts.outerCockRot, opts.outerCockRotTimes);
+
+    this.nextState.rot = cockRotVal;
+  }
+
+  function outerFizzenPathFn(time, opts)
+  {
+    var fizzenRotVal = outerTwnr.getVal(time, opts.outerFizRot, opts.outerFizRotTimes);
+
+    this.nextState.rot = fizzenRotVal;
+  }
+
+  function fizzenSpringPathFn(time, opts)
+  {
+    var fizzenSpringRotVal = outerTwnr.getVal(time, opts.outerFizSpringRot, opts.outerFizSpringRotTimes);
+
+    this.nextState.rot = fizzenSpringRotVal;
+  }
+
+  outerGC.animate(plateOutside);
+  outerGC.animate(cockOutside, initCockOutside, outerCockPathFn, outerData);
+  outerGC.animate(fizzenOutside, initFissenOutside, outerFizzenPathFn, outerData);
+  outerGC.animate(fizzenSpring, initFissenSpring, fizzenSpringPathFn, outerData);
+  outerGC.animate(outScrews);
+
+  disableBtn('load');
+  disableBtn('cock');
+  enableBtn('fire');
+}
+
+var consoleBtns =
+{
+  f1:function(){demo.load_JS()},
+  f2:function(){demo.cock_JS()},
+  f3:function(){demo.fire_JS()},
+  f4:function(){}
+};
+
+&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+addLoadEvent( function(){
+  demo = new FlintlockDemo('cvsUpper', 'cvsLower');
+  enableStickyNav();
+});
+&lt;/script&gt;
+
+&lt;div class="consoleHolder"&gt;
+&lt;div class="console"&gt;
+&lt;div class="bezel"&gt;
+
+    &lt;div class="scrnBevel"&gt;
+    &lt;canvas id="cvsUpper" width="600" height="300"&gt;&lt;/canvas&gt;
+    &lt;canvas id="cvsLower" width="600" height="300"&gt;&lt;/canvas&gt;
+    &lt;/div&gt;  &lt;!-- scrnBevel --&gt;
+
+    &lt;table class="btnHolder" cellspacing="0" cellpadding="0"&gt;
+    &lt;tr align="center"&gt;
+      &lt;td width="33%"&gt;&lt;button type="button" onclick="consoleBtns.f1()" class="button-link" id="load"&gt;HALF COCK&lt;/button&gt;&lt;/td&gt;
+      &lt;td width="33%"&gt;&lt;button type="button" onclick="consoleBtns.f2()" class="button-link" id="cock"&gt;COCK&lt;/button&gt;&lt;/td&gt;
+      &lt;td width="33%"&gt;&lt;button type="button" onclick="consoleBtns.f3()" class="button-link" id="fire"&gt;FIRE&lt;/button&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/table&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;&lt;!-- bezel --&gt;
+&lt;div style="clear: both;"&gt;&lt;/div&gt;
+&lt;/div&gt; &lt;!-- console --&gt;
+&lt;/div&gt;   &lt;!-- consoleHolder --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;利用 &lt;a href="http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js"&gt;http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js&lt;/a&gt; 程式庫, 繪製正齒輪:&lt;/p&gt;
+&lt;!-- 齒輪繪圖 --&gt;
+
+&lt;canvas id='gear1' width='800' height='750'&gt;&lt;/canvas&gt;
+
+&lt;script type="text/python"&gt;
+# 將 導入的 document 設為 doc 主要原因在於與舊程式碼相容
+from browser import document as doc
+# 由於 Python3 與 Javascript 程式碼已經不再混用, 因此來自 Javascript 的變數, 必須居中透過 window 物件轉換
+from browser import window
+# 針對 Javascript 既有的物件, 則必須透過 JSConstructor 轉換
+from javascript import JSConstructor
+import math
+
+# 主要用來取得畫布大小
+canvas = doc["gear1"]
+# 此程式採用 Cango Javascript 程式庫繪圖, 因此無需 ctx
+#ctx = canvas.getContext("2d")
+# 針對類別的轉換, 將 Cango.js 中的 Cango 物件轉為 Python cango 物件
+cango = JSConstructor(window.Cango)
+# 針對變數的轉換, shapeDefs 在 Cango 中資料型別為變數, 可以透過 window 轉換
+shapedefs = window.shapeDefs
+# 目前 Cango 結合 Animation 在 Brython 尚無法運作, 此刻只能繪製靜態圖形
+# in CangoAnimation.js
+#interpolate1 = window.interpolate
+# Cobi 與 createGearTooth 都是 Cango Javascript 程式庫中的物件
+cobj = JSConstructor(window.Cobj)
+creategeartooth = JSConstructor(window.createGearTooth)
+
+# 經由 Cango 轉換成 Brython 的 cango, 指定將圖畫在 id="plotarea" 的 canvas 上
+cgo = cango("gear1")
+
+######################################
+# 畫正齒輪輪廓
+#####################################
+# n 為齒數
+n = 17
+# pa 為壓力角
+pa = 25
+# m 為模數, 根據畫布的寬度, 計算適合的模數大小
+# Module = mm of pitch diameter per tooth
+m = 0.8*canvas.width/n
+# pr 為節圓半徑
+pr = n*m/2 # gear Pitch radius
+# generate gear
+data = creategeartooth(m, n, pa)
+# Brython 程式中的 print 會將資料印在 Browser 的 console 區
+#print(data)
+gearTooth = cobj(data, "SHAPE", {
+        "fillColor":"#ddd0dd",
+        "border": True,
+        "strokeColor": "#606060" })
+gearTooth.rotate(180/n) # rotate gear 1/2 tooth to mesh
+# 單齒的齒形資料經過旋轉後, 將資料複製到 gear 物件中
+gear = gearTooth.dup()
+# gear 為單一齒的輪廓資料
+#cgo.render(gearTooth)
+
+# 利用單齒輪廓旋轉, 產生整個正齒輪外形
+for i in range(1, n):
+    # 將 gearTooth 中的資料複製到 newTooth
+    newTooth = gearTooth.dup()
+    # 配合迴圈, newTooth 的齒形資料進行旋轉, 然後利用 appendPath 方法, 將資料併入 gear
+    newTooth.rotate(360*i/n)
+    # appendPath 為 Cango 程式庫中的方法, 第二個變數為 True, 表示要刪除最前頭的 Move to SVG Path 標註符號
+    gear.appendPath(newTooth, True) # trim move command = True
+
+# 建立軸孔
+# add axle hole, hr 為 hole radius
+hr = 0.6*pr # diameter of gear shaft
+shaft = cobj(shapedefs.circle(hr), "PATH")
+shaft.revWinding()
+gear.appendPath(shaft) # retain the 'moveTo' command for shaft sub path
+cx = canvas.width/2
+cy = canvas.height/2
+gear.translate(cx, cy)
+# render 繪出靜態正齒輪輪廓
+cgo.render(gear)
+&lt;/script&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;上述正齒輪繪圖原始碼:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+&amp;lt;canvas id='gear1' width='800' height='750'&amp;gt;&amp;lt;/canvas&amp;gt;
+
+&amp;lt;script type="text/python"&amp;gt;
+# 將 導入的 document 設為 doc 主要原因在於與舊程式碼相容
+from browser import document as doc
+# 由於 Python3 與 Javascript 程式碼已經不再混用, 因此來自 Javascript 的變數, 必須居中透過 window 物件轉換
+from browser import window
+# 針對 Javascript 既有的物件, 則必須透過 JSConstructor 轉換
+from javascript import JSConstructor
+import math
+
+# 主要用來取得畫布大小
+canvas = doc["gear1"]
+# 此程式採用 Cango Javascript 程式庫繪圖, 因此無需 ctx
+#ctx = canvas.getContext("2d")
+# 針對類別的轉換, 將 Cango.js 中的 Cango 物件轉為 Python cango 物件
+cango = JSConstructor(window.Cango)
+# 針對變數的轉換, shapeDefs 在 Cango 中資料型別為變數, 可以透過 window 轉換
+shapedefs = window.shapeDefs
+# 目前 Cango 結合 Animation 在 Brython 尚無法運作, 此刻只能繪製靜態圖形
+# in CangoAnimation.js
+#interpolate1 = window.interpolate
+# Cobi 與 createGearTooth 都是 Cango Javascript 程式庫中的物件
+cobj = JSConstructor(window.Cobj)
+creategeartooth = JSConstructor(window.createGearTooth)
+
+# 經由 Cango 轉換成 Brython 的 cango, 指定將圖畫在 id="plotarea" 的 canvas 上
+cgo = cango("gear1")
+
+######################################
+# 畫正齒輪輪廓
+#####################################
+# n 為齒數
+n = 17
+# pa 為壓力角
+pa = 25
+# m 為模數, 根據畫布的寬度, 計算適合的模數大小
+# Module = mm of pitch diameter per tooth
+m = 0.8*canvas.width/n
+# pr 為節圓半徑
+pr = n*m/2 # gear Pitch radius
+# generate gear
+data = creategeartooth(m, n, pa)
+# Brython 程式中的 print 會將資料印在 Browser 的 console 區
+#print(data)
+gearTooth = cobj(data, "SHAPE", {
+        "fillColor":"#ddd0dd",
+        "border": True,
+        "strokeColor": "#606060" })
+gearTooth.rotate(180/n) # rotate gear 1/2 tooth to mesh
+# 單齒的齒形資料經過旋轉後, 將資料複製到 gear 物件中
+gear = gearTooth.dup()
+# gear 為單一齒的輪廓資料
+#cgo.render(gearTooth)
+
+# 利用單齒輪廓旋轉, 產生整個正齒輪外形
+for i in range(1, n):
+    # 將 gearTooth 中的資料複製到 newTooth
+    newTooth = gearTooth.dup()
+    # 配合迴圈, newTooth 的齒形資料進行旋轉, 然後利用 appendPath 方法, 將資料併入 gear
+    newTooth.rotate(360*i/n)
+    # appendPath 為 Cango 程式庫中的方法, 第二個變數為 True, 表示要刪除最前頭的 Move to SVG Path 標註符號
+    gear.appendPath(newTooth, True) # trim move command = True
+
+# 建立軸孔
+# add axle hole, hr 為 hole radius
+hr = 0.6*pr # diameter of gear shaft
+shaft = cobj(shapedefs.circle(hr), "PATH")
+shaft.revWinding()
+gear.appendPath(shaft) # retain the 'moveTo' command for shaft sub path
+cx = canvas.width/2
+cy = canvas.height/2
+gear.translate(cx, cy)
+# render 繪出靜態正齒輪輪廓
+cgo.render(gear)
+&amp;lt;/script&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;直接利用 Canvas 繪製正齒輪:&lt;/p&gt;
+&lt;canvas id='gear2' width='800' height='700'&gt;&lt;/canvas&gt;
+
+&lt;script type="text/python3"&gt;
+# 導入 browser 模組中的 document, 並設為 doc 變數
+from browser import document as doc
+import math
+# deg 為角度轉為徑度的轉換因子
+deg = math.pi/180.
+# 定義 Spur 類別
+class Spur(object):
+    def __init__(self, ctx):
+        self.ctx = ctx
+
+    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
+        self.ctx.beginPath()
+        self.ctx.lineWidth = width
+        self.ctx.moveTo(x1, y1)
+        self.ctx.lineTo(x2, y2)
+        self.ctx.strokeStyle = fill
+        self.ctx.stroke()
+    #
+    # 定義一個繪正齒輪的繪圖函式
+    # midx 為齒輪圓心 x 座標
+    # midy 為齒輪圓心 y 座標
+    # rp 為節圓半徑, n 為齒數
+    # pa 為壓力角 (deg)
+    # rot 為旋轉角 (deg)
+    # 已經針對 n 大於等於 52 齒時的繪圖錯誤修正, 因為 base circle 與齒根圓大小必須進行判斷
+    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
+        # 齒輪漸開線分成 15 線段繪製
+        imax = 15
+        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
+        self.create_line(midx, midy, midx, midy-rp)
+        # 畫出 rp 圓, 畫圓函式尚未定義
+        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
+        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
+        # 模數也就是齒冠大小
+        a=2*rp/n
+        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
+        d=2.5*rp/n
+        # ra 為齒輪的外圍半徑
+        ra=rp+a
+        # 畫出 ra 圓, 畫圓函式尚未定義
+        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
+        # rb 則為齒輪的基圓半徑
+        # 基圓為漸開線長齒之基準圓
+        rb=rp*math.cos(pa*deg)
+        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
+        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
+        # rd 為齒根圓半徑
+        rd=rp-d
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
+        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
+        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
+        # 將圓弧分成 imax 段來繪製漸開線
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        if rd&gt;rb:
+            dr = (ra-rd)/imax
+        else:
+            dr=(ra-rb)/imax
+        # tan(pa*deg)-pa*deg 為漸開線函數
+        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
+        for j in range(n):
+            ang=-2.*j*math.pi/n+sigma
+            ang2=2.*j*math.pi/n+sigma
+            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
+            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(alpha-ang)
+                ypt=r*math.cos(alpha-ang)
+                xd=rd*math.sin(-ang)
+                yd=rd*math.cos(-ang)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    lfx=midx+xpt
+                    lfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # the line from last end of dedendum point to the recent
+            # end of dedendum point
+            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
+            # 下列為齒根圓上用來近似圓弧的直線
+            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(ang2-alpha)
+                ypt=r*math.cos(ang2-alpha)
+                xd=rd*math.sin(ang2)
+                yd=rd*math.cos(ang2)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    rfx=midx+xpt
+                    rfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
+            # 下列為齒頂圓上用來近似圓弧的直線
+            self.create_line(lfx,lfy,rfx,rfy,fill=color)
+
+# 準備在 id="gear2" 的 canvas 中繪圖
+canvas = doc["gear2"]
+ctx = canvas.getContext("2d")
+x = (canvas.width)/2
+y = (canvas.height)/2
+r = 0.8*(canvas.width/2)
+# 齒數
+n = 53
+# 壓力角
+pa = 20
+Spur(ctx).Gear(x, y, r, n, pa, "blue")
+&lt;/script&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;上述直接利用 Canvas 繪正齒輪的原始碼:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+&amp;lt;canvas id='gear2' width='800' height='700'&amp;gt;&amp;lt;/canvas&amp;gt;
+
+&amp;lt;script type="text/python3"&amp;gt;
+# 導入 browser 模組中的 document, 並設為 doc 變數
+from browser import document as doc
+import math
+# deg 為角度轉為徑度的轉換因子
+deg = math.pi/180.
+# 定義 Spur 類別
+class Spur(object):
+    def __init__(self, ctx):
+        self.ctx = ctx
+
+    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
+        self.ctx.beginPath()
+        self.ctx.lineWidth = width
+        self.ctx.moveTo(x1, y1)
+        self.ctx.lineTo(x2, y2)
+        self.ctx.strokeStyle = fill
+        self.ctx.stroke()
+    #
+    # 定義一個繪正齒輪的繪圖函式
+    # midx 為齒輪圓心 x 座標
+    # midy 為齒輪圓心 y 座標
+    # rp 為節圓半徑, n 為齒數
+    # pa 為壓力角 (deg)
+    # rot 為旋轉角 (deg)
+    # 已經針對 n 大於等於 52 齒時的繪圖錯誤修正, 因為 base circle 與齒根圓大小必須進行判斷
+    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
+        # 齒輪漸開線分成 15 線段繪製
+        imax = 15
+        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
+        self.create_line(midx, midy, midx, midy-rp)
+        # 畫出 rp 圓, 畫圓函式尚未定義
+        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
+        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
+        # 模數也就是齒冠大小
+        a=2*rp/n
+        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
+        d=2.5*rp/n
+        # ra 為齒輪的外圍半徑
+        ra=rp+a
+        # 畫出 ra 圓, 畫圓函式尚未定義
+        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
+        # rb 則為齒輪的基圓半徑
+        # 基圓為漸開線長齒之基準圓
+        rb=rp*math.cos(pa*deg)
+        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
+        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
+        # rd 為齒根圓半徑
+        rd=rp-d
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
+        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
+        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
+        # 將圓弧分成 imax 段來繪製漸開線
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        if rd&amp;gt;rb:
+            dr = (ra-rd)/imax
+        else:
+            dr=(ra-rb)/imax
+        # tan(pa*deg)-pa*deg 為漸開線函數
+        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
+        for j in range(n):
+            ang=-2.*j*math.pi/n+sigma
+            ang2=2.*j*math.pi/n+sigma
+            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
+            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&amp;gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(alpha-ang)
+                ypt=r*math.cos(alpha-ang)
+                xd=rd*math.sin(-ang)
+                yd=rd*math.cos(-ang)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    lfx=midx+xpt
+                    lfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # the line from last end of dedendum point to the recent
+            # end of dedendum point
+            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
+            # 下列為齒根圓上用來近似圓弧的直線
+            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&amp;gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(ang2-alpha)
+                ypt=r*math.cos(ang2-alpha)
+                xd=rd*math.sin(ang2)
+                yd=rd*math.cos(ang2)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    rfx=midx+xpt
+                    rfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
+            # 下列為齒頂圓上用來近似圓弧的直線
+            self.create_line(lfx,lfy,rfx,rfy,fill=color)
+
+# 準備在 id="gear2" 的 canvas 中繪圖
+canvas = doc["gear2"]
+ctx = canvas.getContext("2d")
+x = (canvas.width)/2
+y = (canvas.height)/2
+r = 0.8*(canvas.width/2)
+# 齒數
+n = 53
+# 壓力角
+pa = 20
+Spur(ctx).Gear(x, y, r, n, pa, "blue")
+&amp;lt;/script&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;正齒輪囓合繪圖:&lt;/p&gt;
+&lt;canvas id='gear3' width='800' height='400'&gt;&lt;/canvas&gt;
+
+&lt;script type="text/python3"&gt;
+# 導入 browser 模組中的 document, 並設為 doc 變數
+from browser import document as doc
+import math
+# deg 為角度轉為徑度的轉換因子
+deg = math.pi/180.
+# 定義 Spur 類別
+class Spur(object):
+    def __init__(self, ctx):
+        self.ctx = ctx
+
+    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
+        self.ctx.beginPath()
+        self.ctx.lineWidth = width
+        self.ctx.moveTo(x1, y1)
+        self.ctx.lineTo(x2, y2)
+        self.ctx.strokeStyle = fill
+        self.ctx.stroke()
+    #
+    # 定義一個繪正齒輪的繪圖函式
+    # midx 為齒輪圓心 x 座標
+    # midy 為齒輪圓心 y 座標
+    # rp 為節圓半徑, n 為齒數
+    # pa 為壓力角 (deg)
+    # rot 為旋轉角 (deg)
+    # 已經針對 n 大於等於 52 齒時的繪圖錯誤修正, 因為 base circle 與齒根圓大小必須進行判斷
+    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
+        # 齒輪漸開線分成 15 線段繪製
+        imax = 15
+        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
+        self.create_line(midx, midy, midx, midy-rp)
+        # 畫出 rp 圓, 畫圓函式尚未定義
+        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
+        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
+        # 模數也就是齒冠大小
+        a=2*rp/n
+        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
+        d=2.5*rp/n
+        # ra 為齒輪的外圍半徑
+        ra=rp+a
+        # 畫出 ra 圓, 畫圓函式尚未定義
+        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
+        # rb 則為齒輪的基圓半徑
+        # 基圓為漸開線長齒之基準圓
+        rb=rp*math.cos(pa*deg)
+        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
+        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
+        # rd 為齒根圓半徑
+        rd=rp-d
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
+        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
+        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
+        # 將圓弧分成 imax 段來繪製漸開線
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        if rd&gt;rb:
+            dr = (ra-rd)/imax
+        else:
+            dr=(ra-rb)/imax
+        # tan(pa*deg)-pa*deg 為漸開線函數
+        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
+        for j in range(n):
+            ang=-2.*j*math.pi/n+sigma
+            ang2=2.*j*math.pi/n+sigma
+            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
+            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(alpha-ang)
+                ypt=r*math.cos(alpha-ang)
+                xd=rd*math.sin(-ang)
+
+                yd=rd*math.cos(-ang)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    lfx=midx+xpt
+                    lfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # the line from last end of dedendum point to the recent
+            # end of dedendum point
+            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
+            # 下列為齒根圓上用來近似圓弧的直線
+            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(ang2-alpha)
+                ypt=r*math.cos(ang2-alpha)
+                xd=rd*math.sin(ang2)
+                yd=rd*math.cos(ang2)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    rfx=midx+xpt
+                    rfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
+            # 下列為齒頂圓上用來近似圓弧的直線
+            self.create_line(lfx,lfy,rfx,rfy,fill=color)
+
+# 準備在 id="gear3" 的 canvas 中繪圖
+canvas = doc["gear3"]
+ctx = canvas.getContext("2d")
+
+# 模數決定齒的尺寸大小, 囓合齒輪組必須有相同的模數與壓力角
+# 壓力角 pa 單位為角度
+pa = 20
+# 第1齒輪齒數
+n_g1 = 17
+# 第2齒輪齒數
+n_g2 = 11
+# 第3齒輪齒數
+n_g3 = 13
+# m 為模數, 根據畫布的寬度, 計算適合的模數大小
+m = (0.8*canvas.width)/(n_g1+n_g2+n_g3)
+# 根據模數 m, 計算各齒輪的節圓半徑
+rp_g1 = m*n_g1/2
+rp_g2 = m*n_g2/2
+rp_g3 = m*n_g3/2
+#單一正齒輪繪圖呼叫格式 Spur(ctx).Gear(x, y, r, n, pa, "blue")
+# 開始繪製囓合齒輪輪廓
+# 繪圖第1齒輪的圓心座標, 因為希望繪圖佔去 canvas.width 的 80%, 所以兩邊各預留 10% 距離
+x_g1 = canvas.width*0.1+rp_g1
+# y 方向繪圖區域上方預留 canvas.height 的 20%
+y_g1 = canvas.height*0.2+rp_g1
+# 第2齒輪的圓心座標, 假設排列成水平, 表示各齒輪圓心 y 座標相同
+x_g2 = x_g1 + rp_g1 + rp_g2
+y_g2 = y_g1
+# 第3齒輪的圓心座標
+x_g3 = x_g1 + rp_g1 + 2*rp_g2 + rp_g3
+y_g3 = y_g1
+
+# 將第1齒輪順時鐘轉 90 度, 也就是 math.pi/2
+# 使用 ctx.save() 與 ctx.restore() 以確保各齒輪以相對座標進行旋轉繪圖
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g1, y_g1)
+# rotate to engage
+ctx.rotate(math.pi/2)
+# put it back
+ctx.translate(-x_g1, -y_g1)
+# 繪製第一個齒輪輪廓
+Spur(ctx).Gear(x_g1, y_g1, rp_g1, n_g1, pa, "blue")
+ctx.restore()
+
+# 將第2齒輪逆時鐘轉 90 度之後, 再多轉一齒, 以便與第1齒輪進行囓合
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g2, y_g2)
+# rotate to engage
+ctx.rotate(-math.pi/2-math.pi/n_g2)
+# put it back
+ctx.translate(-x_g2, -y_g2)
+Spur(ctx).Gear(x_g2, y_g2, rp_g2, n_g2, pa, "black")
+ctx.restore()
+
+# 將第3齒輪逆時鐘轉 90 度之後, 再往回轉第2齒輪定位帶動轉角, 然後再逆時鐘多轉一齒, 以便與第2齒輪進行囓合
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g3, y_g3)
+# rotate to engage
+# math.pi+math.pi/n_g2 為第2齒輪從順時鐘轉 90 度之後, 必須配合目前的標記線所作的齒輪 2 轉動角度, 要轉換到齒輪3 的轉動角度
+# 必須乘上兩齒輪齒數的比例, 若齒輪2 大, 則齒輪3 會轉動較快
+# 第1個 -math.pi/2 為將原先垂直的第3齒輪定位線逆時鐘旋轉 90 度
+# -math.pi/n_g3 則是第3齒與第2齒定位線重合後, 必須再逆時鐘多轉一齒的轉角, 以便進行囓合
+# (math.pi+math.pi/n_g2)*n_g2/n_g3 則是第2齒原定位線為順時鐘轉動 90 度, 
+# 但是第2齒輪為了與第1齒輪囓合, 已經距離定位線, 多轉了 180 度, 再加上第2齒輪的一齒角度, 因為要帶動第3齒輪定位, 
+# 這個修正角度必須要再配合第2齒與第3齒的轉速比加以轉換成第3齒輪的轉角, 因此乘上 n_g2/n_g3
+ctx.rotate(-math.pi/2-math.pi/n_g3+(math.pi+math.pi/n_g2)*n_g2/n_g3)
+# put it back
+ctx.translate(-x_g3, -y_g3)
+Spur(ctx).Gear(x_g3, y_g3, rp_g3, n_g3, pa, "red")
+ctx.restore()
+&lt;/script&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;上述正齒輪囓合繪圖原始碼:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+&amp;lt;canvas id='gear3' width='800' height='400'&amp;gt;&amp;lt;/canvas&amp;gt;
+
+&amp;lt;script type="text/python3"&amp;gt;
+# 導入 browser 模組中的 document, 並設為 doc 變數
+from browser import document as doc
+import math
+# deg 為角度轉為徑度的轉換因子
+deg = math.pi/180.
+# 定義 Spur 類別
+class Spur(object):
+    def __init__(self, ctx):
+        self.ctx = ctx
+
+    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
+        self.ctx.beginPath()
+        self.ctx.lineWidth = width
+        self.ctx.moveTo(x1, y1)
+        self.ctx.lineTo(x2, y2)
+        self.ctx.strokeStyle = fill
+        self.ctx.stroke()
+    #
+    # 定義一個繪正齒輪的繪圖函式
+    # midx 為齒輪圓心 x 座標
+    # midy 為齒輪圓心 y 座標
+    # rp 為節圓半徑, n 為齒數
+    # pa 為壓力角 (deg)
+    # rot 為旋轉角 (deg)
+    # 已經針對 n 大於等於 52 齒時的繪圖錯誤修正, 因為 base circle 與齒根圓大小必須進行判斷
+    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
+        # 齒輪漸開線分成 15 線段繪製
+        imax = 15
+        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
+        self.create_line(midx, midy, midx, midy-rp)
+        # 畫出 rp 圓, 畫圓函式尚未定義
+        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
+        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
+        # 模數也就是齒冠大小
+        a=2*rp/n
+        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
+        d=2.5*rp/n
+        # ra 為齒輪的外圍半徑
+        ra=rp+a
+        # 畫出 ra 圓, 畫圓函式尚未定義
+        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
+        # rb 則為齒輪的基圓半徑
+        # 基圓為漸開線長齒之基準圓
+        rb=rp*math.cos(pa*deg)
+        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
+        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
+        # rd 為齒根圓半徑
+        rd=rp-d
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
+        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
+        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
+        # 將圓弧分成 imax 段來繪製漸開線
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        if rd&amp;gt;rb:
+            dr = (ra-rd)/imax
+        else:
+            dr=(ra-rb)/imax
+        # tan(pa*deg)-pa*deg 為漸開線函數
+        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
+        for j in range(n):
+            ang=-2.*j*math.pi/n+sigma
+            ang2=2.*j*math.pi/n+sigma
+            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
+            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&amp;gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(alpha-ang)
+                ypt=r*math.cos(alpha-ang)
+                xd=rd*math.sin(-ang)
+
+                yd=rd*math.cos(-ang)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    lfx=midx+xpt
+                    lfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # the line from last end of dedendum point to the recent
+            # end of dedendum point
+            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
+            # 下列為齒根圓上用來近似圓弧的直線
+            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&amp;gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(ang2-alpha)
+                ypt=r*math.cos(ang2-alpha)
+                xd=rd*math.sin(ang2)
+                yd=rd*math.cos(ang2)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    rfx=midx+xpt
+                    rfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
+            # 下列為齒頂圓上用來近似圓弧的直線
+            self.create_line(lfx,lfy,rfx,rfy,fill=color)
+
+# 準備在 id="gear3" 的 canvas 中繪圖
+canvas = doc["gear3"]
+ctx = canvas.getContext("2d")
+
+# 模數決定齒的尺寸大小, 囓合齒輪組必須有相同的模數與壓力角
+# 壓力角 pa 單位為角度
+pa = 20
+# 第1齒輪齒數
+n_g1 = 17
+# 第2齒輪齒數
+n_g2 = 11
+# 第3齒輪齒數
+n_g3 = 13
+# m 為模數, 根據畫布的寬度, 計算適合的模數大小
+m = (0.8*canvas.width)/(n_g1+n_g2+n_g3)
+# 根據模數 m, 計算各齒輪的節圓半徑
+rp_g1 = m*n_g1/2
+rp_g2 = m*n_g2/2
+rp_g3 = m*n_g3/2
+#單一正齒輪繪圖呼叫格式 Spur(ctx).Gear(x, y, r, n, pa, "blue")
+# 開始繪製囓合齒輪輪廓
+# 繪圖第1齒輪的圓心座標, 因為希望繪圖佔去 canvas.width 的 80%, 所以兩邊各預留 10% 距離
+x_g1 = canvas.width*0.1+rp_g1
+# y 方向繪圖區域上方預留 canvas.height 的 20%
+y_g1 = canvas.height*0.2+rp_g1
+# 第2齒輪的圓心座標, 假設排列成水平, 表示各齒輪圓心 y 座標相同
+x_g2 = x_g1 + rp_g1 + rp_g2
+y_g2 = y_g1
+# 第3齒輪的圓心座標
+x_g3 = x_g1 + rp_g1 + 2*rp_g2 + rp_g3
+y_g3 = y_g1
+
+# 將第1齒輪順時鐘轉 90 度, 也就是 math.pi/2
+# 使用 ctx.save() 與 ctx.restore() 以確保各齒輪以相對座標進行旋轉繪圖
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g1, y_g1)
+# rotate to engage
+ctx.rotate(math.pi/2)
+# put it back
+ctx.translate(-x_g1, -y_g1)
+# 繪製第一個齒輪輪廓
+Spur(ctx).Gear(x_g1, y_g1, rp_g1, n_g1, pa, "blue")
+ctx.restore()
+
+# 將第2齒輪逆時鐘轉 90 度之後, 再多轉一齒, 以便與第1齒輪進行囓合
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g2, y_g2)
+# rotate to engage
+ctx.rotate(-math.pi/2-math.pi/n_g2)
+# put it back
+ctx.translate(-x_g2, -y_g2)
+Spur(ctx).Gear(x_g2, y_g2, rp_g2, n_g2, pa, "black")
+ctx.restore()
+
+# 將第3齒輪逆時鐘轉 90 度之後, 再往回轉第2齒輪定位帶動轉角, 然後再逆時鐘多轉一齒, 以便與第2齒輪進行囓合
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g3, y_g3)
+# rotate to engage
+# math.pi+math.pi/n_g2 為第2齒輪從順時鐘轉 90 度之後, 必須配合目前的標記線所作的齒輪 2 轉動角度, 要轉換到齒輪3 的轉動角度
+# 必須乘上兩齒輪齒數的比例, 若齒輪2 大, 則齒輪3 會轉動較快
+# 第1個 -math.pi/2 為將原先垂直的第3齒輪定位線逆時鐘旋轉 90 度
+# -math.pi/n_g3 則是第3齒與第2齒定位線重合後, 必須再逆時鐘多轉一齒的轉角, 以便進行囓合
+# (math.pi+math.pi/n_g2)*n_g2/n_g3 則是第2齒原定位線為順時鐘轉動 90 度, 
+# 但是第2齒輪為了與第1齒輪囓合, 已經距離定位線, 多轉了 180 度, 再加上第2齒輪的一齒角度, 因為要帶動第3齒輪定位, 
+# 這個修正角度必須要再配合第2齒與第3齒的轉速比加以轉換成第3齒輪的轉角, 因此乘上 n_g2/n_g3
+ctx.rotate(-math.pi/2-math.pi/n_g3+(math.pi+math.pi/n_g2)*n_g2/n_g3)
+# put it back
+ctx.translate(-x_g3, -y_g3)
+Spur(ctx).Gear(x_g3, y_g3, rp_g3, n_g3, pa, "red")
+ctx.restore()
+&amp;lt;/script&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;轉為 Brython 繪圖的模擬應用:&lt;/p&gt;
+&lt;canvas id='robot' width='800' height='400'&gt;&lt;/canvas&gt;
+
+&lt;script type="text/python"&gt;
+from javascript import JSConstructor
+from browser import window
+
+cango2d = JSConstructor(window.Cango2D)
+shapedefs = window.shapeDefs
+obj2d = JSConstructor(window.Obj2D)
+tweener = JSConstructor(window.Tweener)
+
+cgo = cango2d("robot")
+# 清除畫面
+cgo.clearCanvas("lightyellow")
+cgo.setWorldCoords(-50, -50, 300)
+
+# 加上基軸與第一桿
+# 畫筆移到 -20, -10, 畫直線到 -10,-10 以及 -10,0 
+standData = ['M', -20,-10, 'L', -10,-10, -10,0, 'A', 10,10,0,0,0,10,0, 'L',10,-10, 20,-10, 20,-40, -20,-40,'z']
+stand = obj2d(standData, "SHAPE", {
+        "fillColor":'darkgray',
+        "border": True,
+        "strokeColor": "#222222" })
+axle0 = obj2d(shapedefs.circle(10), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222" })
+armGrp = cgo.createGroup2D(stand, axle0)
+
+segData = ['M',0,-8, 'A',8,8,0,0,0,0,8, 'L',50,8, 'A',8,8,0,0,0,50,-8, 'Z']
+seg1 = obj2d(segData, "SHAPE", {
+        "fillColor":'darkGray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": -1 })
+# 利用 zIndex 決定疊層的先後次序
+axle1 = obj2d(shapedefs.circle(8), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": 1 })
+axle1.translate(50, 0)
+seg1Grp = cgo.createGroup2D(seg1, axle1)
+armGrp.addObj(seg1Grp)
+
+# 加上第二軸
+seg2 = obj2d(segData, "SHAPE", {
+        "fillColor":'darkGray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": -1 })
+axle2 = obj2d(shapedefs.circle(8), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": 1 })
+axle2.translate(50, 0)
+seg2Grp = cgo.createGroup2D(seg2, axle2)
+cgo.render(seg2Grp)
+# 請注意 seg2Grp 加上 seg1Grp 物件上
+seg1Grp.addObj(seg2Grp)
+
+seg3 = obj2d(segData, "SHAPE", {
+        'fillColor':'darkGray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': -1 })
+axle3 = obj2d(shapedefs.circle(6), "SHAPE", {
+        'fillColor':'gray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': 1 })
+axle3.translate(50, 0)
+seg3Grp = cgo.createGroup2D(seg3, axle3)
+seg2Grp.addObj(seg3Grp)
+
+seg4Data = ['M',0,-6, 'A',6,6,0,0,0,0,6, 'L',40,6, 40,12, 50,12, 50,-12, 40,-12, 40,-6, 'Z']
+seg4 = obj2d(seg4Data, "SHAPE", {
+        'fillColor':'darkGray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': -1 })
+seg3Grp.addObj(seg4)
+
+# setup animation
+animData = {'s1': [0, 80, 45, 0],
+                  's2': [0, -60, -60, 0],
+                  's3': [0, -90, 0, 90, 0],
+                  's4': [0, 30, -90, 0]}
+
+armTwnr = tweener(0, 3500, 'loop')
+
+def initArm(opts):
+    seg2Grp.transform.translate(50,0)
+    seg3Grp.transform.translate(50,0)
+    seg4.transform.translate(50,0)
+
+
+def armPathFn(time, opts):
+    seg1Rot = armTwnr.getVal(time, opts.s1)
+    seg2Rot = armTwnr.getVal(time, opts.s2)
+    seg3Rot = armTwnr.getVal(time, opts.s3)
+    seg4Rot = armTwnr.getVal(time, opts.s4)
+
+    seg1Grp.transform.rotate(seg1Rot)
+    seg2Grp.transform.rotate(seg2Rot)
+    seg2Grp.transform.translate(50,0)
+    seg3Grp.transform.rotate(seg3Rot)
+    seg3Grp.transform.translate(50,0)
+    seg4.transform.rotate(seg4Rot)
+    seg4.transform.translate(50,0)
+
+cgo.animate(armGrp, initArm, armPathFn, animData)
+cgo.playAnimation()
+&lt;/script&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;上述動態模擬的原始碼:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+&amp;lt;canvas id='robot' width='800' height='400'&amp;gt;&amp;lt;/canvas&amp;gt;
+
+&amp;lt;script type="text/python"&amp;gt;
+from javascript import JSConstructor
+from browser import window
+
+cango2d = JSConstructor(window.Cango2D)
+shapedefs = window.shapeDefs
+obj2d = JSConstructor(window.Obj2D)
+tweener = JSConstructor(window.Tweener)
+
+cgo = cango2d("robot")
+# 清除畫面
+cgo.clearCanvas("lightyellow")
+cgo.setWorldCoords(-50, -50, 300)
+
+# 加上基軸與第一桿
+# 畫筆移到 -20, -10, 畫直線到 -10,-10 以及 -10,0 
+standData = ['M', -20,-10, 'L', -10,-10, -10,0, 'A', 10,10,0,0,0,10,0, 'L',10,-10, 20,-10, 20,-40, -20,-40,'z']
+stand = obj2d(standData, "SHAPE", {
+        "fillColor":'darkgray',
+        "border": True,
+        "strokeColor": "#222222" })
+axle0 = obj2d(shapedefs.circle(10), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222" })
+armGrp = cgo.createGroup2D(stand, axle0)
+
+segData = ['M',0,-8, 'A',8,8,0,0,0,0,8, 'L',50,8, 'A',8,8,0,0,0,50,-8, 'Z']
+seg1 = obj2d(segData, "SHAPE", {
+        "fillColor":'darkGray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": -1 })
+# 利用 zIndex 決定疊層的先後次序
+axle1 = obj2d(shapedefs.circle(8), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": 1 })
+axle1.translate(50, 0)
+seg1Grp = cgo.createGroup2D(seg1, axle1)
+armGrp.addObj(seg1Grp)
+
+# 加上第二軸
+seg2 = obj2d(segData, "SHAPE", {
+        "fillColor":'darkGray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": -1 })
+axle2 = obj2d(shapedefs.circle(8), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": 1 })
+axle2.translate(50, 0)
+seg2Grp = cgo.createGroup2D(seg2, axle2)
+cgo.render(seg2Grp)
+# 請注意 seg2Grp 加上 seg1Grp 物件上
+seg1Grp.addObj(seg2Grp)
+
+seg3 = obj2d(segData, "SHAPE", {
+        'fillColor':'darkGray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': -1 })
+axle3 = obj2d(shapedefs.circle(6), "SHAPE", {
+        'fillColor':'gray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': 1 })
+axle3.translate(50, 0)
+seg3Grp = cgo.createGroup2D(seg3, axle3)
+seg2Grp.addObj(seg3Grp)
+
+seg4Data = ['M',0,-6, 'A',6,6,0,0,0,0,6, 'L',40,6, 40,12, 50,12, 50,-12, 40,-12, 40,-6, 'Z']
+seg4 = obj2d(seg4Data, "SHAPE", {
+        'fillColor':'darkGray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': -1 })
+seg3Grp.addObj(seg4)
+
+# setup animation
+animData = {'s1': [0, 80, 45, 0],
+                  's2': [0, -60, -60, 0],
+                  's3': [0, -90, 0, 90, 0],
+                  's4': [0, 30, -90, 0]}
+
+armTwnr = tweener(0, 3500, 'loop')
+
+def initArm(opts):
+    seg2Grp.transform.translate(50,0)
+    seg3Grp.transform.translate(50,0)
+    seg4.transform.translate(50,0)
+
+
+def armPathFn(time, opts):
+    seg1Rot = armTwnr.getVal(time, opts.s1)
+    seg2Rot = armTwnr.getVal(time, opts.s2)
+    seg3Rot = armTwnr.getVal(time, opts.s3)
+    seg4Rot = armTwnr.getVal(time, opts.s4)
+
+    seg1Grp.transform.rotate(seg1Rot)
+    seg2Grp.transform.rotate(seg2Rot)
+    seg2Grp.transform.translate(50,0)
+    seg3Grp.transform.rotate(seg3Rot)
+    seg3Grp.transform.translate(50,0)
+    seg4.transform.rotate(seg4Rot)
+    seg4.transform.translate(50,0)
+
+cgo.animate(armGrp, initArm, armPathFn, animData)
+cgo.playAnimation()
+&amp;lt;/script&amp;gt;
+&lt;/pre&gt;</summary><category term="MCAD"></category><category term="Web based"></category></entry><entry><title>電腦輔助機械設計流程中的分散式版本管理</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html" rel="alternate"></link><updated>2016-05-15T17:58:56+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-15:post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html</id><summary type="html">&lt;p&gt;&lt;a href="http://bazaar.canonical.com/en/"&gt;Bazaar&lt;/a&gt; (2004 年從 &lt;a href="https://www.gnu.org/software/gnu-arch/"&gt;Gnu arch&lt;/a&gt; 分出), &lt;a href="http://www.bitkeeper.com/"&gt;BitKeeper&lt;/a&gt;, &lt;a href="http://darcs.net/"&gt;darcs&lt;/a&gt;, &lt;a href="https://github.com/git"&gt;Git&lt;/a&gt;, &lt;a href="https://www.mercurial-scm.org/"&gt;Mercurial&lt;/a&gt; 是目前較為常見的分散式版本管理 (Distributed Version Control Systems, DVCS) 技術, 其中自 1998 年前後推出, 唯一商用閉源的 Bitkeeper, 也終於在 2016.05.09, 宣佈轉為開放原始碼套件: &lt;a href="https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93"&gt;https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93&lt;/a&gt;.&lt;/p&gt;
 
 
 &lt;p&gt;其實, 早在 1995 年左右的 &lt;a href="https://en.wikipedia.org/wiki/Sun_WorkShop_TeamWare"&gt;Sun WorkShop TeamWare&lt;/a&gt; 就已經擁有分散式版本的相關技術, 而且在許多與機械設計相關的 PDM/PLM 系統中, 也都提供各種分散式版本控管的功能, 只是大多與封閉的檔案系統格式搭配使用, 使得多人協同模式下的電腦輔助機械設計流程, 成本不斷推升, 而且造成導入新技術的步調緩慢.&lt;/p&gt;

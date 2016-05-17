@@ -1,8 +1,333 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/dao-yin.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-05-17T12:59:34+08:00</updated><entry><title>網際機械設計 2D 繪圖</title><link href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html" rel="alternate"></link><updated>2016-05-17T12:59:34+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-17:post/wang-ji-ji-jie-she-ji-2d-hui-tu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://2015fallhw.github.io/arcidau/Flintlock.html"&gt;http://2015fallhw.github.io/arcidau/Flintlock.html&lt;/a&gt; 是一個典型的網際機械設計 2D 繪圖範例, CADLab 希望能夠利用 Brython 重新建立一個直接以 Python3 在網頁中繪圖的類似應用.&lt;/p&gt;
+<!DOCTYPE html>
+<html lang="en"
+>
+<head>
+    <title>網際機械設計 2D 繪圖 - CADLab (虎尾科大MDE)</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-&lt;style type="text/css" media="screen"&gt;
+
+
+<style type="text/css">
+
+/*some stuff for output/input prompts*/
+div.cell{border:1px solid transparent;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}div.cell.selected{border-radius:4px;border:thin #ababab solid}
+div.cell.edit_mode{border-radius:4px;border:thin #008000 solid}
+div.cell{width:100%;padding:5px 5px 5px 0;margin:0;outline:none}
+div.prompt{min-width:11ex;padding:.4em;margin:0;font-family:monospace;text-align:right;line-height:1.21429em}
+@media (max-width:480px){div.prompt{text-align:left}}div.inner_cell{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1}
+div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;line-height:1.21429em}
+div.prompt:empty{padding-top:0;padding-bottom:0}
+div.input{page-break-inside:avoid;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;}
+div.inner_cell{width:90%;}
+div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;}
+div.input_prompt{color:navy;border-top:1px solid transparent;}
+div.output_wrapper{margin-top:5px;position:relative;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
+div.output_scroll{height:24em;width:100%;overflow:auto;border-radius:4px;-webkit-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);-moz-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);}
+div.output_collapsed{margin:0px;padding:0px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
+div.out_prompt_overlay{height:100%;padding:0px 0.4em;position:absolute;border-radius:4px;}
+div.out_prompt_overlay:hover{-webkit-box-shadow:inset 0 0 1px #000000;-moz-box-shadow:inset 0 0 1px #000000;box-shadow:inset 0 0 1px #000000;background:rgba(240, 240, 240, 0.5);}
+div.output_prompt{color:darkred;}
+
+a.anchor-link:link{text-decoration:none;padding:0px 20px;visibility:hidden;}
+h1:hover .anchor-link,h2:hover .anchor-link,h3:hover .anchor-link,h4:hover .anchor-link,h5:hover .anchor-link,h6:hover .anchor-link{visibility:visible;}
+/* end stuff for output/input prompts*/
+
+
+.highlight-ipynb .hll { background-color: #ffffcc }
+.highlight-ipynb  { background: #f8f8f8; }
+.highlight-ipynb .c { color: #408080; font-style: italic } /* Comment */
+.highlight-ipynb .err { border: 1px solid #FF0000 } /* Error */
+.highlight-ipynb .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight-ipynb .o { color: #666666 } /* Operator */
+.highlight-ipynb .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight-ipynb .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight-ipynb .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight-ipynb .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight-ipynb .gd { color: #A00000 } /* Generic.Deleted */
+.highlight-ipynb .ge { font-style: italic } /* Generic.Emph */
+.highlight-ipynb .gr { color: #FF0000 } /* Generic.Error */
+.highlight-ipynb .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight-ipynb .gi { color: #00A000 } /* Generic.Inserted */
+.highlight-ipynb .go { color: #888888 } /* Generic.Output */
+.highlight-ipynb .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight-ipynb .gs { font-weight: bold } /* Generic.Strong */
+.highlight-ipynb .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight-ipynb .gt { color: #0044DD } /* Generic.Traceback */
+.highlight-ipynb .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight-ipynb .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight-ipynb .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight-ipynb .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight-ipynb .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight-ipynb .kt { color: #B00040 } /* Keyword.Type */
+.highlight-ipynb .m { color: #666666 } /* Literal.Number */
+.highlight-ipynb .s { color: #BA2121 } /* Literal.String */
+.highlight-ipynb .na { color: #7D9029 } /* Name.Attribute */
+.highlight-ipynb .nb { color: #008000 } /* Name.Builtin */
+.highlight-ipynb .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight-ipynb .no { color: #880000 } /* Name.Constant */
+.highlight-ipynb .nd { color: #AA22FF } /* Name.Decorator */
+.highlight-ipynb .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight-ipynb .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight-ipynb .nf { color: #0000FF } /* Name.Function */
+.highlight-ipynb .nl { color: #A0A000 } /* Name.Label */
+.highlight-ipynb .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight-ipynb .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight-ipynb .nv { color: #19177C } /* Name.Variable */
+.highlight-ipynb .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight-ipynb .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight-ipynb .mf { color: #666666 } /* Literal.Number.Float */
+.highlight-ipynb .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight-ipynb .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight-ipynb .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight-ipynb .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight-ipynb .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight-ipynb .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight-ipynb .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight-ipynb .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight-ipynb .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight-ipynb .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight-ipynb .sx { color: #008000 } /* Literal.String.Other */
+.highlight-ipynb .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight-ipynb .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight-ipynb .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight-ipynb .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight-ipynb .vc { color: #19177C } /* Name.Variable.Class */
+.highlight-ipynb .vg { color: #19177C } /* Name.Variable.Global */
+.highlight-ipynb .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight-ipynb .il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
+
+<style type="text/css">
+/* Overrides of notebook CSS for static HTML export */
+div.entry-content {
+  overflow: visible;
+  padding: 8px;
+}
+.input_area {
+  padding: 0.2em;
+}
+
+a.heading-anchor {
+ white-space: normal;
+}
+
+.rendered_html
+code {
+ font-size: .8em;
+}
+
+pre.ipynb {
+  color: black;
+  background: #f7f7f7;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0px;
+  font-size: 13px;
+}
+
+/* remove the prompt div from text cells */
+div.text_cell .prompt {
+    display: none;
+}
+
+/* remove horizontal padding from text cells, */
+/* so it aligns with outer body text */
+div.text_cell_render {
+    padding: 0.5em 0em;
+}
+
+img.anim_icon{padding:0; border:0; vertical-align:middle; -webkit-box-shadow:none; -box-shadow:none}
+</style>
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+<script type="text/javascript">
+init_mathjax = function() {
+    if (window.MathJax) {
+        // MathJax loaded
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+            },
+            displayAlign: 'left', // Change this to 'center' to center equations.
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 0}}
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
+}
+init_mathjax();
+</script>
+
+<link rel="canonical" href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html">
+
+        <meta name="author" content="kmol" />
+        <meta name="keywords" content="MCAD,Web based" />
+        <meta name="description" content="http://2015fallhw.github.io/arcidau/Flintlock.html 是一個典型的網際機械設計 2D 繪圖範例, CADLab 希望能夠利用 Brython 重新建立一個直接以 Python3 在網頁中繪圖的類似應用." />
+
+        <meta property="og:site_name" content="CADLab (虎尾科大MDE)" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="網際機械設計 2D 繪圖"/>
+        <meta property="og:url" content="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html"/>
+        <meta property="og:description" content="http://2015fallhw.github.io/arcidau/Flintlock.html 是一個典型的網際機械設計 2D 繪圖範例, CADLab 希望能夠利用 Brython 重新建立一個直接以 Python3 在網頁中繪圖的類似應用."/>
+        <meta property="article:published_time" content="2016-05-17" />
+            <meta property="article:section" content="導引" />
+            <meta property="article:tag" content="MCAD" />
+            <meta property="article:tag" content="Web based" />
+            <meta property="article:author" content="kmol" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://cadlab.mde.tw/post/theme/css/bootstrap.united.min.css" type="text/css"/>
+    <link href="http://cadlab.mde.tw/post/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://cadlab.mde.tw/post/theme/css/pygments/monokai.css" rel="stylesheet">
+    <link href="http://cadlab.mde.tw/post/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cadlab.mde.tw/post/theme/css/style.css" type="text/css"/>
+
+        <link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="CADLab (虎尾科大MDE) ATOM Feed"/>
+
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shCore.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushJScript.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushJava.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushPython.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushSql.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushXml.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushPhp.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCpp.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCss.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCSharp.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushBash.js"></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/css/shCore.css";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/css/shThemeDefault.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://cadlab.mde.tw/post/" class="navbar-brand">
+CADLab (虎尾科大MDE)            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="http://cadlab.mde.tw/post/pages/about/">
+                             About
+                          </a></li>
+                        <li >
+                            <a href="http://cadlab.mde.tw/post/category/can-kao.html">參考</a>
+                        </li>
+                        <li class="active">
+                            <a href="http://cadlab.mde.tw/post/category/dao-yin.html">導引</a>
+                        </li>
+                        <li >
+                            <a href="http://cadlab.mde.tw/post/category/gui-hua.html">規劃</a>
+                        </li>
+                        <li >
+                            <a href="http://cadlab.mde.tw/post/category/zi-yuan.html">資源</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="http://cadlab.mde.tw/post/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+              <li><a href="http://cadlab.mde.tw/post/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html"
+                       rel="bookmark"
+                       title="Permalink to 網際機械設計 2D 繪圖">
+                        網際機械設計 2D 繪圖
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-05-17T12:59:34.894986+08:00"> 二 17 五月 2016</time>
+    </span>
+            <span class="label label-default">By</span>
+            <a href="http://cadlab.mde.tw/post/author/kmol.html"><i class="fa fa-user"></i> kmol</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://cadlab.mde.tw/post/tag/mcad.html">MCAD</a>
+        /
+	<a href="http://cadlab.mde.tw/post/tag/web-based.html">Web based</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p><a href="http://2015fallhw.github.io/arcidau/Flintlock.html">http://2015fallhw.github.io/arcidau/Flintlock.html</a> 是一個典型的網際機械設計 2D 繪圖範例, CADLab 希望能夠利用 Brython 重新建立一個直接以 Python3 在網頁中繪圖的類似應用.</p>
+
+
+<style type="text/css" media="screen">
 
 #flintlockImg {
   float: right;
@@ -24,29 +349,29 @@
   text-align: center;  /* this will center console if it has display:inline-block */
   background-color: #aabdd3;
 }
-&lt;/style&gt;
+</style>
 
-&lt;script type="text/javascript" src="http://brython.info/src/brython_dist.js"&gt;&lt;/script&gt;
+<script type="text/javascript" src="http://brython.info/src/brython_dist.js"></script>
 
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/Cango-8v03.js"&gt;&lt;/script&gt;
+<script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/Cango-8v03.js"></script>
 
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/Cango2D-7v01-min.js"&gt;&lt;/script&gt;
+<script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/Cango2D-7v01-min.js"></script>
 
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/CangoAxes-1v33.js"&gt;&lt;/script&gt;
+<script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/CangoAxes-1v33.js"></script>
 
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/flintlockPartDefs-02.js"&gt;&lt;/script&gt;
+<script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/flintlockPartDefs-02.js"></script>
 
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/CangoAnimation-4v01.js"&gt;&lt;/script&gt;
+<script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/CangoAnimation-4v01.js"></script>
 
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js"&gt;&lt;/script&gt;
+<script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js"></script>
 
-&lt;script&gt;
+<script>
 window.onload=function(){
 brython(1);
 }
-&lt;/script&gt;
+</script>
 
-&lt;script type="text/javascript"&gt;
+<script type="text/javascript">
 
     if (typeof addLoadEvent === "undefined")
     {
@@ -82,9 +407,9 @@ brython(1);
       if (evt.stopPropagation) evt.stopPropagation();
       if (evt.cancelBubble!=null) evt.cancelBubble = true;
     }
-&lt;/script&gt;
+</script>
 
-&lt;script type="text/javascript"&gt;
+<script type="text/javascript">
 
 function enableBtn(btnId)
 {
@@ -342,43 +667,124 @@ var consoleBtns =
   f4:function(){}
 };
 
-&lt;/script&gt;
+</script>
 
-&lt;script type="text/javascript"&gt;
+<script type="text/javascript">
 addLoadEvent( function(){
   demo = new FlintlockDemo('cvsUpper', 'cvsLower');
   enableStickyNav();
 });
-&lt;/script&gt;
+</script>
 
-&lt;div class="consoleHolder"&gt;
-&lt;div class="console"&gt;
-&lt;div class="bezel"&gt;
+<div class="consoleHolder">
+<div class="console">
+<div class="bezel">
 
-    &lt;div class="scrnBevel"&gt;
-    &lt;canvas id="cvsUpper" width="600" height="300"&gt;&lt;/canvas&gt;
-    &lt;canvas id="cvsLower" width="600" height="300"&gt;&lt;/canvas&gt;
-    &lt;/div&gt;  &lt;!-- scrnBevel --&gt;
+    <div class="scrnBevel">
+    <canvas id="cvsUpper" width="600" height="300"></canvas>
+    <canvas id="cvsLower" width="600" height="300"></canvas>
+    </div>  <!-- scrnBevel -->
 
-    &lt;table class="btnHolder" cellspacing="0" cellpadding="0"&gt;
-    &lt;tr align="center"&gt;
-      &lt;td width="33%"&gt;&lt;button type="button" onclick="consoleBtns.f1()" class="button-link" id="load"&gt;HALF COCK&lt;/button&gt;&lt;/td&gt;
-      &lt;td width="33%"&gt;&lt;button type="button" onclick="consoleBtns.f2()" class="button-link" id="cock"&gt;COCK&lt;/button&gt;&lt;/td&gt;
-      &lt;td width="33%"&gt;&lt;button type="button" onclick="consoleBtns.f3()" class="button-link" id="fire"&gt;FIRE&lt;/button&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;/table&gt;
+    <table class="btnHolder" cellspacing="0" cellpadding="0">
+    <tr align="center">
+      <td width="33%"><button type="button" onclick="consoleBtns.f1()" class="button-link" id="load">HALF COCK</button></td>
+      <td width="33%"><button type="button" onclick="consoleBtns.f2()" class="button-link" id="cock">COCK</button></td>
+      <td width="33%"><button type="button" onclick="consoleBtns.f3()" class="button-link" id="fire">FIRE</button></td>
+    </tr>
+    </table>
 
-&lt;/div&gt;
+</div>
 
-&lt;p&gt;&lt;!-- bezel --&gt;
-&lt;div style="clear: both;"&gt;&lt;/div&gt;
-&lt;/div&gt; &lt;!-- console --&gt;
-&lt;/div&gt;   &lt;!-- consoleHolder --&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;
-&lt;br/&gt;&lt;/p&gt;
-&lt;p&gt;利用 &lt;a href="http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js"&gt;http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js&lt;/a&gt; 程式庫, 繪製正齒輪:&lt;/p&gt;
-&lt;!-- 齒輪繪圖 --&gt;
+<p><!-- bezel -->
+<div style="clear: both;"></div>
+</div> <!-- console -->
+</div>   <!-- consoleHolder --></p>
+<p><br />
+<br/></p>
+<p>利用 <a href="http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js">http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js</a> 程式庫, 繪製正齒輪:</p>
+<!-- 齒輪繪圖 -->
 
+<canvas id='gear1' width='800' height='750'></canvas>
+
+<script type="text/python">
+# 將 導入的 document 設為 doc 主要原因在於與舊程式碼相容
+from browser import document as doc
+# 由於 Python3 與 Javascript 程式碼已經不再混用, 因此來自 Javascript 的變數, 必須居中透過 window 物件轉換
+from browser import window
+# 針對 Javascript 既有的物件, 則必須透過 JSConstructor 轉換
+from javascript import JSConstructor
+import math
+
+# 主要用來取得畫布大小
+canvas = doc["gear1"]
+# 此程式採用 Cango Javascript 程式庫繪圖, 因此無需 ctx
+#ctx = canvas.getContext("2d")
+# 針對類別的轉換, 將 Cango.js 中的 Cango 物件轉為 Python cango 物件
+cango = JSConstructor(window.Cango)
+# 針對變數的轉換, shapeDefs 在 Cango 中資料型別為變數, 可以透過 window 轉換
+shapedefs = window.shapeDefs
+# 目前 Cango 結合 Animation 在 Brython 尚無法運作, 此刻只能繪製靜態圖形
+# in CangoAnimation.js
+#interpolate1 = window.interpolate
+# Cobi 與 createGearTooth 都是 Cango Javascript 程式庫中的物件
+cobj = JSConstructor(window.Cobj)
+creategeartooth = JSConstructor(window.createGearTooth)
+
+# 經由 Cango 轉換成 Brython 的 cango, 指定將圖畫在 id="plotarea" 的 canvas 上
+cgo = cango("gear1")
+
+######################################
+# 畫正齒輪輪廓
+#####################################
+# n 為齒數
+n = 17
+# pa 為壓力角
+pa = 25
+# m 為模數, 根據畫布的寬度, 計算適合的模數大小
+# Module = mm of pitch diameter per tooth
+m = 0.8*canvas.width/n
+# pr 為節圓半徑
+pr = n*m/2 # gear Pitch radius
+# generate gear
+data = creategeartooth(m, n, pa)
+# Brython 程式中的 print 會將資料印在 Browser 的 console 區
+#print(data)
+gearTooth = cobj(data, "SHAPE", {
+        "fillColor":"#ddd0dd",
+        "border": True,
+        "strokeColor": "#606060" })
+gearTooth.rotate(180/n) # rotate gear 1/2 tooth to mesh
+# 單齒的齒形資料經過旋轉後, 將資料複製到 gear 物件中
+gear = gearTooth.dup()
+# gear 為單一齒的輪廓資料
+#cgo.render(gearTooth)
+
+# 利用單齒輪廓旋轉, 產生整個正齒輪外形
+for i in range(1, n):
+    # 將 gearTooth 中的資料複製到 newTooth
+    newTooth = gearTooth.dup()
+    # 配合迴圈, newTooth 的齒形資料進行旋轉, 然後利用 appendPath 方法, 將資料併入 gear
+    newTooth.rotate(360*i/n)
+    # appendPath 為 Cango 程式庫中的方法, 第二個變數為 True, 表示要刪除最前頭的 Move to SVG Path 標註符號
+    gear.appendPath(newTooth, True) # trim move command = True
+
+# 建立軸孔
+# add axle hole, hr 為 hole radius
+hr = 0.6*pr # diameter of gear shaft
+shaft = cobj(shapedefs.circle(hr), "PATH")
+shaft.revWinding()
+gear.appendPath(shaft) # retain the 'moveTo' command for shaft sub path
+cx = canvas.width/2
+cy = canvas.height/2
+gear.translate(cx, cy)
+# render 繪出靜態正齒輪輪廓
+cgo.render(gear)
+</script>
+
+<p><br />
+<br /></p>
+<p>上述正齒輪繪圖原始碼:</p>
+<pre class="brush: python">
 &lt;canvas id='gear1' width='800' height='750'&gt;&lt;/canvas&gt;
 
 &lt;script type="text/python"&gt;
@@ -455,91 +861,151 @@ gear.translate(cx, cy)
 # render 繪出靜態正齒輪輪廓
 cgo.render(gear)
 &lt;/script&gt;
+</pre>
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;上述正齒輪繪圖原始碼:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-&amp;lt;canvas id='gear1' width='800' height='750'&amp;gt;&amp;lt;/canvas&amp;gt;
+<p><br /><br /></p>
+<p>直接利用 Canvas 繪製正齒輪:</p>
+<canvas id='gear2' width='800' height='700'></canvas>
 
-&amp;lt;script type="text/python"&amp;gt;
-# 將 導入的 document 設為 doc 主要原因在於與舊程式碼相容
+<script type="text/python3">
+# 導入 browser 模組中的 document, 並設為 doc 變數
 from browser import document as doc
-# 由於 Python3 與 Javascript 程式碼已經不再混用, 因此來自 Javascript 的變數, 必須居中透過 window 物件轉換
-from browser import window
-# 針對 Javascript 既有的物件, 則必須透過 JSConstructor 轉換
-from javascript import JSConstructor
 import math
+# deg 為角度轉為徑度的轉換因子
+deg = math.pi/180.
+# 定義 Spur 類別
+class Spur(object):
+    def __init__(self, ctx):
+        self.ctx = ctx
 
-# 主要用來取得畫布大小
-canvas = doc["gear1"]
-# 此程式採用 Cango Javascript 程式庫繪圖, 因此無需 ctx
-#ctx = canvas.getContext("2d")
-# 針對類別的轉換, 將 Cango.js 中的 Cango 物件轉為 Python cango 物件
-cango = JSConstructor(window.Cango)
-# 針對變數的轉換, shapeDefs 在 Cango 中資料型別為變數, 可以透過 window 轉換
-shapedefs = window.shapeDefs
-# 目前 Cango 結合 Animation 在 Brython 尚無法運作, 此刻只能繪製靜態圖形
-# in CangoAnimation.js
-#interpolate1 = window.interpolate
-# Cobi 與 createGearTooth 都是 Cango Javascript 程式庫中的物件
-cobj = JSConstructor(window.Cobj)
-creategeartooth = JSConstructor(window.createGearTooth)
+    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
+        self.ctx.beginPath()
+        self.ctx.lineWidth = width
+        self.ctx.moveTo(x1, y1)
+        self.ctx.lineTo(x2, y2)
+        self.ctx.strokeStyle = fill
+        self.ctx.stroke()
+    #
+    # 定義一個繪正齒輪的繪圖函式
+    # midx 為齒輪圓心 x 座標
+    # midy 為齒輪圓心 y 座標
+    # rp 為節圓半徑, n 為齒數
+    # pa 為壓力角 (deg)
+    # rot 為旋轉角 (deg)
+    # 已經針對 n 大於等於 52 齒時的繪圖錯誤修正, 因為 base circle 與齒根圓大小必須進行判斷
+    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
+        # 齒輪漸開線分成 15 線段繪製
+        imax = 15
+        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
+        self.create_line(midx, midy, midx, midy-rp)
+        # 畫出 rp 圓, 畫圓函式尚未定義
+        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
+        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
+        # 模數也就是齒冠大小
+        a=2*rp/n
+        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
+        d=2.5*rp/n
+        # ra 為齒輪的外圍半徑
+        ra=rp+a
+        # 畫出 ra 圓, 畫圓函式尚未定義
+        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
+        # rb 則為齒輪的基圓半徑
+        # 基圓為漸開線長齒之基準圓
+        rb=rp*math.cos(pa*deg)
+        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
+        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
+        # rd 為齒根圓半徑
+        rd=rp-d
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
+        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
+        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
+        # 將圓弧分成 imax 段來繪製漸開線
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        if rd>rb:
+            dr = (ra-rd)/imax
+        else:
+            dr=(ra-rb)/imax
+        # tan(pa*deg)-pa*deg 為漸開線函數
+        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
+        for j in range(n):
+            ang=-2.*j*math.pi/n+sigma
+            ang2=2.*j*math.pi/n+sigma
+            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
+            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd>rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(alpha-ang)
+                ypt=r*math.cos(alpha-ang)
+                xd=rd*math.sin(-ang)
+                yd=rd*math.cos(-ang)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    lfx=midx+xpt
+                    lfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # the line from last end of dedendum point to the recent
+            # end of dedendum point
+            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
+            # 下列為齒根圓上用來近似圓弧的直線
+            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd>rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(ang2-alpha)
+                ypt=r*math.cos(ang2-alpha)
+                xd=rd*math.sin(ang2)
+                yd=rd*math.cos(ang2)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    rfx=midx+xpt
+                    rfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
+            # 下列為齒頂圓上用來近似圓弧的直線
+            self.create_line(lfx,lfy,rfx,rfy,fill=color)
 
-# 經由 Cango 轉換成 Brython 的 cango, 指定將圖畫在 id="plotarea" 的 canvas 上
-cgo = cango("gear1")
+# 準備在 id="gear2" 的 canvas 中繪圖
+canvas = doc["gear2"]
+ctx = canvas.getContext("2d")
+x = (canvas.width)/2
+y = (canvas.height)/2
+r = 0.8*(canvas.width/2)
+# 齒數
+n = 53
+# 壓力角
+pa = 20
+Spur(ctx).Gear(x, y, r, n, pa, "blue")
+</script>
 
-######################################
-# 畫正齒輪輪廓
-#####################################
-# n 為齒數
-n = 17
-# pa 為壓力角
-pa = 25
-# m 為模數, 根據畫布的寬度, 計算適合的模數大小
-# Module = mm of pitch diameter per tooth
-m = 0.8*canvas.width/n
-# pr 為節圓半徑
-pr = n*m/2 # gear Pitch radius
-# generate gear
-data = creategeartooth(m, n, pa)
-# Brython 程式中的 print 會將資料印在 Browser 的 console 區
-#print(data)
-gearTooth = cobj(data, "SHAPE", {
-        "fillColor":"#ddd0dd",
-        "border": True,
-        "strokeColor": "#606060" })
-gearTooth.rotate(180/n) # rotate gear 1/2 tooth to mesh
-# 單齒的齒形資料經過旋轉後, 將資料複製到 gear 物件中
-gear = gearTooth.dup()
-# gear 為單一齒的輪廓資料
-#cgo.render(gearTooth)
-
-# 利用單齒輪廓旋轉, 產生整個正齒輪外形
-for i in range(1, n):
-    # 將 gearTooth 中的資料複製到 newTooth
-    newTooth = gearTooth.dup()
-    # 配合迴圈, newTooth 的齒形資料進行旋轉, 然後利用 appendPath 方法, 將資料併入 gear
-    newTooth.rotate(360*i/n)
-    # appendPath 為 Cango 程式庫中的方法, 第二個變數為 True, 表示要刪除最前頭的 Move to SVG Path 標註符號
-    gear.appendPath(newTooth, True) # trim move command = True
-
-# 建立軸孔
-# add axle hole, hr 為 hole radius
-hr = 0.6*pr # diameter of gear shaft
-shaft = cobj(shapedefs.circle(hr), "PATH")
-shaft.revWinding()
-gear.appendPath(shaft) # retain the 'moveTo' command for shaft sub path
-cx = canvas.width/2
-cy = canvas.height/2
-gear.translate(cx, cy)
-# render 繪出靜態正齒輪輪廓
-cgo.render(gear)
-&amp;lt;/script&amp;gt;
-&lt;/pre&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;直接利用 Canvas 繪製正齒輪:&lt;/p&gt;
+<p><br /><br /></p>
+<p>上述直接利用 Canvas 繪正齒輪的原始碼:</p>
+<pre class="brush: python">
 &lt;canvas id='gear2' width='800' height='700'&gt;&lt;/canvas&gt;
 
 &lt;script type="text/python3"&gt;
@@ -677,13 +1143,13 @@ n = 53
 pa = 20
 Spur(ctx).Gear(x, y, r, n, pa, "blue")
 &lt;/script&gt;
+</pre>
 
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;上述直接利用 Canvas 繪正齒輪的原始碼:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-&amp;lt;canvas id='gear2' width='800' height='700'&amp;gt;&amp;lt;/canvas&amp;gt;
+<p><br /><br /></p>
+<p>正齒輪囓合繪圖:</p>
+<canvas id='gear3' width='800' height='400'></canvas>
 
-&amp;lt;script type="text/python3"&amp;gt;
+<script type="text/python3">
 # 導入 browser 模組中的 document, 並設為 doc 變數
 from browser import document as doc
 import math
@@ -738,7 +1204,7 @@ class Spur(object):
         # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
         # 將圓弧分成 imax 段來繪製漸開線
         # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-        if rd&amp;gt;rb:
+        if rd>rb:
             dr = (ra-rd)/imax
         else:
             dr=(ra-rb)/imax
@@ -751,7 +1217,7 @@ class Spur(object):
             lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
             for i in range(imax+1):
                 # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-                if rd&amp;gt;rb:
+                if rd>rb:
                     r=rd+i*dr
                 else:
                     r=rb+i*dr
@@ -760,6 +1226,7 @@ class Spur(object):
                 xpt=r*math.sin(alpha-ang)
                 ypt=r*math.cos(alpha-ang)
                 xd=rd*math.sin(-ang)
+
                 yd=rd*math.cos(-ang)
                 # i=0 時, 繪線起點由齒根圓上的點, 作為起點
                 if(i==0):
@@ -780,7 +1247,7 @@ class Spur(object):
             self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
             for i in range(imax+1):
                 # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-                if rd&amp;gt;rb:
+                if rd>rb:
                     r=rd+i*dr
                 else:
                     r=rb+i*dr
@@ -806,22 +1273,84 @@ class Spur(object):
             # 下列為齒頂圓上用來近似圓弧的直線
             self.create_line(lfx,lfy,rfx,rfy,fill=color)
 
-# 準備在 id="gear2" 的 canvas 中繪圖
-canvas = doc["gear2"]
+# 準備在 id="gear3" 的 canvas 中繪圖
+canvas = doc["gear3"]
 ctx = canvas.getContext("2d")
-x = (canvas.width)/2
-y = (canvas.height)/2
-r = 0.8*(canvas.width/2)
-# 齒數
-n = 53
-# 壓力角
-pa = 20
-Spur(ctx).Gear(x, y, r, n, pa, "blue")
-&amp;lt;/script&amp;gt;
-&lt;/pre&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;正齒輪囓合繪圖:&lt;/p&gt;
+# 模數決定齒的尺寸大小, 囓合齒輪組必須有相同的模數與壓力角
+# 壓力角 pa 單位為角度
+pa = 20
+# 第1齒輪齒數
+n_g1 = 17
+# 第2齒輪齒數
+n_g2 = 11
+# 第3齒輪齒數
+n_g3 = 13
+# m 為模數, 根據畫布的寬度, 計算適合的模數大小
+m = (0.8*canvas.width)/(n_g1+n_g2+n_g3)
+# 根據模數 m, 計算各齒輪的節圓半徑
+rp_g1 = m*n_g1/2
+rp_g2 = m*n_g2/2
+rp_g3 = m*n_g3/2
+#單一正齒輪繪圖呼叫格式 Spur(ctx).Gear(x, y, r, n, pa, "blue")
+# 開始繪製囓合齒輪輪廓
+# 繪圖第1齒輪的圓心座標, 因為希望繪圖佔去 canvas.width 的 80%, 所以兩邊各預留 10% 距離
+x_g1 = canvas.width*0.1+rp_g1
+# y 方向繪圖區域上方預留 canvas.height 的 20%
+y_g1 = canvas.height*0.2+rp_g1
+# 第2齒輪的圓心座標, 假設排列成水平, 表示各齒輪圓心 y 座標相同
+x_g2 = x_g1 + rp_g1 + rp_g2
+y_g2 = y_g1
+# 第3齒輪的圓心座標
+x_g3 = x_g1 + rp_g1 + 2*rp_g2 + rp_g3
+y_g3 = y_g1
+
+# 將第1齒輪順時鐘轉 90 度, 也就是 math.pi/2
+# 使用 ctx.save() 與 ctx.restore() 以確保各齒輪以相對座標進行旋轉繪圖
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g1, y_g1)
+# rotate to engage
+ctx.rotate(math.pi/2)
+# put it back
+ctx.translate(-x_g1, -y_g1)
+# 繪製第一個齒輪輪廓
+Spur(ctx).Gear(x_g1, y_g1, rp_g1, n_g1, pa, "blue")
+ctx.restore()
+
+# 將第2齒輪逆時鐘轉 90 度之後, 再多轉一齒, 以便與第1齒輪進行囓合
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g2, y_g2)
+# rotate to engage
+ctx.rotate(-math.pi/2-math.pi/n_g2)
+# put it back
+ctx.translate(-x_g2, -y_g2)
+Spur(ctx).Gear(x_g2, y_g2, rp_g2, n_g2, pa, "black")
+ctx.restore()
+
+# 將第3齒輪逆時鐘轉 90 度之後, 再往回轉第2齒輪定位帶動轉角, 然後再逆時鐘多轉一齒, 以便與第2齒輪進行囓合
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g3, y_g3)
+# rotate to engage
+# math.pi+math.pi/n_g2 為第2齒輪從順時鐘轉 90 度之後, 必須配合目前的標記線所作的齒輪 2 轉動角度, 要轉換到齒輪3 的轉動角度
+# 必須乘上兩齒輪齒數的比例, 若齒輪2 大, 則齒輪3 會轉動較快
+# 第1個 -math.pi/2 為將原先垂直的第3齒輪定位線逆時鐘旋轉 90 度
+# -math.pi/n_g3 則是第3齒與第2齒定位線重合後, 必須再逆時鐘多轉一齒的轉角, 以便進行囓合
+# (math.pi+math.pi/n_g2)*n_g2/n_g3 則是第2齒原定位線為順時鐘轉動 90 度, 
+# 但是第2齒輪為了與第1齒輪囓合, 已經距離定位線, 多轉了 180 度, 再加上第2齒輪的一齒角度, 因為要帶動第3齒輪定位, 
+# 這個修正角度必須要再配合第2齒與第3齒的轉速比加以轉換成第3齒輪的轉角, 因此乘上 n_g2/n_g3
+ctx.rotate(-math.pi/2-math.pi/n_g3+(math.pi+math.pi/n_g2)*n_g2/n_g3)
+# put it back
+ctx.translate(-x_g3, -y_g3)
+Spur(ctx).Gear(x_g3, y_g3, rp_g3, n_g3, pa, "red")
+ctx.restore()
+</script>
+
+<p><br /><br /></p>
+<p>上述正齒輪囓合繪圖原始碼:</p>
+<pre class="brush: python">
 &lt;canvas id='gear3' width='800' height='400'&gt;&lt;/canvas&gt;
 
 &lt;script type="text/python3"&gt;
@@ -1022,214 +1551,129 @@ ctx.translate(-x_g3, -y_g3)
 Spur(ctx).Gear(x_g3, y_g3, rp_g3, n_g3, pa, "red")
 ctx.restore()
 &lt;/script&gt;
+</pre>
 
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;上述正齒輪囓合繪圖原始碼:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-&amp;lt;canvas id='gear3' width='800' height='400'&amp;gt;&amp;lt;/canvas&amp;gt;
+<p><br /><br /></p>
+<p>轉為 Brython 繪圖的模擬應用:</p>
+<canvas id='robot' width='800' height='400'></canvas>
 
-&amp;lt;script type="text/python3"&amp;gt;
-# 導入 browser 模組中的 document, 並設為 doc 變數
-from browser import document as doc
-import math
-# deg 為角度轉為徑度的轉換因子
-deg = math.pi/180.
-# 定義 Spur 類別
-class Spur(object):
-    def __init__(self, ctx):
-        self.ctx = ctx
+<script type="text/python">
+from javascript import JSConstructor
+from browser import window
 
-    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
-        self.ctx.beginPath()
-        self.ctx.lineWidth = width
-        self.ctx.moveTo(x1, y1)
-        self.ctx.lineTo(x2, y2)
-        self.ctx.strokeStyle = fill
-        self.ctx.stroke()
-    #
-    # 定義一個繪正齒輪的繪圖函式
-    # midx 為齒輪圓心 x 座標
-    # midy 為齒輪圓心 y 座標
-    # rp 為節圓半徑, n 為齒數
-    # pa 為壓力角 (deg)
-    # rot 為旋轉角 (deg)
-    # 已經針對 n 大於等於 52 齒時的繪圖錯誤修正, 因為 base circle 與齒根圓大小必須進行判斷
-    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
-        # 齒輪漸開線分成 15 線段繪製
-        imax = 15
-        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
-        self.create_line(midx, midy, midx, midy-rp)
-        # 畫出 rp 圓, 畫圓函式尚未定義
-        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
-        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
-        # 模數也就是齒冠大小
-        a=2*rp/n
-        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
-        d=2.5*rp/n
-        # ra 為齒輪的外圍半徑
-        ra=rp+a
-        # 畫出 ra 圓, 畫圓函式尚未定義
-        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
-        # rb 則為齒輪的基圓半徑
-        # 基圓為漸開線長齒之基準圓
-        rb=rp*math.cos(pa*deg)
-        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
-        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
-        # rd 為齒根圓半徑
-        rd=rp-d
-        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
-        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
-        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
-        # 將圓弧分成 imax 段來繪製漸開線
-        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-        if rd&amp;gt;rb:
-            dr = (ra-rd)/imax
-        else:
-            dr=(ra-rb)/imax
-        # tan(pa*deg)-pa*deg 為漸開線函數
-        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
-        for j in range(n):
-            ang=-2.*j*math.pi/n+sigma
-            ang2=2.*j*math.pi/n+sigma
-            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
-            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
-            for i in range(imax+1):
-                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-                if rd&amp;gt;rb:
-                    r=rd+i*dr
-                else:
-                    r=rb+i*dr
-                theta=math.sqrt((r*r)/(rb*rb)-1.)
-                alpha=theta-math.atan(theta)
-                xpt=r*math.sin(alpha-ang)
-                ypt=r*math.cos(alpha-ang)
-                xd=rd*math.sin(-ang)
+cango2d = JSConstructor(window.Cango2D)
+shapedefs = window.shapeDefs
+obj2d = JSConstructor(window.Obj2D)
+tweener = JSConstructor(window.Tweener)
 
-                yd=rd*math.cos(-ang)
-                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
-                if(i==0):
-                    last_x = midx+xd
-                    last_y = midy-yd
-                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
-                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
-                # 最後一點, 則為齒頂圓
-                if(i==imax):
-                    lfx=midx+xpt
-                    lfy=midy-ypt
-                last_x = midx+xpt
-                last_y = midy-ypt
-            # the line from last end of dedendum point to the recent
-            # end of dedendum point
-            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
-            # 下列為齒根圓上用來近似圓弧的直線
-            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
-            for i in range(imax+1):
-                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-                if rd&amp;gt;rb:
-                    r=rd+i*dr
-                else:
-                    r=rb+i*dr
-                theta=math.sqrt((r*r)/(rb*rb)-1.)
-                alpha=theta-math.atan(theta)
-                xpt=r*math.sin(ang2-alpha)
-                ypt=r*math.cos(ang2-alpha)
-                xd=rd*math.sin(ang2)
-                yd=rd*math.cos(ang2)
-                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
-                if(i==0):
-                    last_x = midx+xd
-                    last_y = midy-yd
-                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
-                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
-                # 最後一點, 則為齒頂圓
-                if(i==imax):
-                    rfx=midx+xpt
-                    rfy=midy-ypt
-                last_x = midx+xpt
-                last_y = midy-ypt
-            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
-            # 下列為齒頂圓上用來近似圓弧的直線
-            self.create_line(lfx,lfy,rfx,rfy,fill=color)
+cgo = cango2d("robot")
+# 清除畫面
+cgo.clearCanvas("lightyellow")
+cgo.setWorldCoords(-50, -50, 300)
 
-# 準備在 id="gear3" 的 canvas 中繪圖
-canvas = doc["gear3"]
-ctx = canvas.getContext("2d")
+# 加上基軸與第一桿
+# 畫筆移到 -20, -10, 畫直線到 -10,-10 以及 -10,0 
+standData = ['M', -20,-10, 'L', -10,-10, -10,0, 'A', 10,10,0,0,0,10,0, 'L',10,-10, 20,-10, 20,-40, -20,-40,'z']
+stand = obj2d(standData, "SHAPE", {
+        "fillColor":'darkgray',
+        "border": True,
+        "strokeColor": "#222222" })
+axle0 = obj2d(shapedefs.circle(10), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222" })
+armGrp = cgo.createGroup2D(stand, axle0)
 
-# 模數決定齒的尺寸大小, 囓合齒輪組必須有相同的模數與壓力角
-# 壓力角 pa 單位為角度
-pa = 20
-# 第1齒輪齒數
-n_g1 = 17
-# 第2齒輪齒數
-n_g2 = 11
-# 第3齒輪齒數
-n_g3 = 13
-# m 為模數, 根據畫布的寬度, 計算適合的模數大小
-m = (0.8*canvas.width)/(n_g1+n_g2+n_g3)
-# 根據模數 m, 計算各齒輪的節圓半徑
-rp_g1 = m*n_g1/2
-rp_g2 = m*n_g2/2
-rp_g3 = m*n_g3/2
-#單一正齒輪繪圖呼叫格式 Spur(ctx).Gear(x, y, r, n, pa, "blue")
-# 開始繪製囓合齒輪輪廓
-# 繪圖第1齒輪的圓心座標, 因為希望繪圖佔去 canvas.width 的 80%, 所以兩邊各預留 10% 距離
-x_g1 = canvas.width*0.1+rp_g1
-# y 方向繪圖區域上方預留 canvas.height 的 20%
-y_g1 = canvas.height*0.2+rp_g1
-# 第2齒輪的圓心座標, 假設排列成水平, 表示各齒輪圓心 y 座標相同
-x_g2 = x_g1 + rp_g1 + rp_g2
-y_g2 = y_g1
-# 第3齒輪的圓心座標
-x_g3 = x_g1 + rp_g1 + 2*rp_g2 + rp_g3
-y_g3 = y_g1
+segData = ['M',0,-8, 'A',8,8,0,0,0,0,8, 'L',50,8, 'A',8,8,0,0,0,50,-8, 'Z']
+seg1 = obj2d(segData, "SHAPE", {
+        "fillColor":'darkGray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": -1 })
+# 利用 zIndex 決定疊層的先後次序
+axle1 = obj2d(shapedefs.circle(8), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": 1 })
+axle1.translate(50, 0)
+seg1Grp = cgo.createGroup2D(seg1, axle1)
+armGrp.addObj(seg1Grp)
 
-# 將第1齒輪順時鐘轉 90 度, 也就是 math.pi/2
-# 使用 ctx.save() 與 ctx.restore() 以確保各齒輪以相對座標進行旋轉繪圖
-ctx.save()
-# translate to the origin of second gear
-ctx.translate(x_g1, y_g1)
-# rotate to engage
-ctx.rotate(math.pi/2)
-# put it back
-ctx.translate(-x_g1, -y_g1)
-# 繪製第一個齒輪輪廓
-Spur(ctx).Gear(x_g1, y_g1, rp_g1, n_g1, pa, "blue")
-ctx.restore()
+# 加上第二軸
+seg2 = obj2d(segData, "SHAPE", {
+        "fillColor":'darkGray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": -1 })
+axle2 = obj2d(shapedefs.circle(8), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": 1 })
+axle2.translate(50, 0)
+seg2Grp = cgo.createGroup2D(seg2, axle2)
+cgo.render(seg2Grp)
+# 請注意 seg2Grp 加上 seg1Grp 物件上
+seg1Grp.addObj(seg2Grp)
 
-# 將第2齒輪逆時鐘轉 90 度之後, 再多轉一齒, 以便與第1齒輪進行囓合
-ctx.save()
-# translate to the origin of second gear
-ctx.translate(x_g2, y_g2)
-# rotate to engage
-ctx.rotate(-math.pi/2-math.pi/n_g2)
-# put it back
-ctx.translate(-x_g2, -y_g2)
-Spur(ctx).Gear(x_g2, y_g2, rp_g2, n_g2, pa, "black")
-ctx.restore()
+seg3 = obj2d(segData, "SHAPE", {
+        'fillColor':'darkGray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': -1 })
+axle3 = obj2d(shapedefs.circle(6), "SHAPE", {
+        'fillColor':'gray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': 1 })
+axle3.translate(50, 0)
+seg3Grp = cgo.createGroup2D(seg3, axle3)
+seg2Grp.addObj(seg3Grp)
 
-# 將第3齒輪逆時鐘轉 90 度之後, 再往回轉第2齒輪定位帶動轉角, 然後再逆時鐘多轉一齒, 以便與第2齒輪進行囓合
-ctx.save()
-# translate to the origin of second gear
-ctx.translate(x_g3, y_g3)
-# rotate to engage
-# math.pi+math.pi/n_g2 為第2齒輪從順時鐘轉 90 度之後, 必須配合目前的標記線所作的齒輪 2 轉動角度, 要轉換到齒輪3 的轉動角度
-# 必須乘上兩齒輪齒數的比例, 若齒輪2 大, 則齒輪3 會轉動較快
-# 第1個 -math.pi/2 為將原先垂直的第3齒輪定位線逆時鐘旋轉 90 度
-# -math.pi/n_g3 則是第3齒與第2齒定位線重合後, 必須再逆時鐘多轉一齒的轉角, 以便進行囓合
-# (math.pi+math.pi/n_g2)*n_g2/n_g3 則是第2齒原定位線為順時鐘轉動 90 度, 
-# 但是第2齒輪為了與第1齒輪囓合, 已經距離定位線, 多轉了 180 度, 再加上第2齒輪的一齒角度, 因為要帶動第3齒輪定位, 
-# 這個修正角度必須要再配合第2齒與第3齒的轉速比加以轉換成第3齒輪的轉角, 因此乘上 n_g2/n_g3
-ctx.rotate(-math.pi/2-math.pi/n_g3+(math.pi+math.pi/n_g2)*n_g2/n_g3)
-# put it back
-ctx.translate(-x_g3, -y_g3)
-Spur(ctx).Gear(x_g3, y_g3, rp_g3, n_g3, pa, "red")
-ctx.restore()
-&amp;lt;/script&amp;gt;
-&lt;/pre&gt;
+seg4Data = ['M',0,-6, 'A',6,6,0,0,0,0,6, 'L',40,6, 40,12, 50,12, 50,-12, 40,-12, 40,-6, 'Z']
+seg4 = obj2d(seg4Data, "SHAPE", {
+        'fillColor':'darkGray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': -1 })
+seg3Grp.addObj(seg4)
 
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;轉為 Brython 繪圖的模擬應用:&lt;/p&gt;
+# setup animation
+animData = {'s1': [0, 80, 45, 0],
+                  's2': [0, -60, -60, 0],
+                  's3': [0, -90, 0, 90, 0],
+                  's4': [0, 30, -90, 0]}
+
+armTwnr = tweener(0, 3500, 'loop')
+
+def initArm(opts):
+    seg2Grp.transform.translate(50,0)
+    seg3Grp.transform.translate(50,0)
+    seg4.transform.translate(50,0)
+
+
+def armPathFn(time, opts):
+    seg1Rot = armTwnr.getVal(time, opts.s1)
+    seg2Rot = armTwnr.getVal(time, opts.s2)
+    seg3Rot = armTwnr.getVal(time, opts.s3)
+    seg4Rot = armTwnr.getVal(time, opts.s4)
+
+    seg1Grp.transform.rotate(seg1Rot)
+    seg2Grp.transform.rotate(seg2Rot)
+    seg2Grp.transform.translate(50,0)
+    seg3Grp.transform.rotate(seg3Rot)
+    seg3Grp.transform.translate(50,0)
+    seg4.transform.rotate(seg4Rot)
+    seg4.transform.translate(50,0)
+
+cgo.animate(armGrp, initArm, armPathFn, animData)
+cgo.playAnimation()
+</script>
+
+<p><br /><br /></p>
+<p>上述動態模擬的原始碼:</p>
+<pre class="brush: python">
 &lt;canvas id='robot' width='800' height='400'&gt;&lt;/canvas&gt;
 
 &lt;script type="text/python"&gt;
@@ -1345,555 +1789,173 @@ def armPathFn(time, opts):
 cgo.animate(armGrp, initArm, armPathFn, animData)
 cgo.playAnimation()
 &lt;/script&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;上述動態模擬的原始碼:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-&amp;lt;canvas id='robot' width='800' height='400'&amp;gt;&amp;lt;/canvas&amp;gt;
-
-&amp;lt;script type="text/python"&amp;gt;
-from javascript import JSConstructor
-from browser import window
-
-cango2d = JSConstructor(window.Cango2D)
-shapedefs = window.shapeDefs
-obj2d = JSConstructor(window.Obj2D)
-tweener = JSConstructor(window.Tweener)
-
-cgo = cango2d("robot")
-# 清除畫面
-cgo.clearCanvas("lightyellow")
-cgo.setWorldCoords(-50, -50, 300)
-
-# 加上基軸與第一桿
-# 畫筆移到 -20, -10, 畫直線到 -10,-10 以及 -10,0 
-standData = ['M', -20,-10, 'L', -10,-10, -10,0, 'A', 10,10,0,0,0,10,0, 'L',10,-10, 20,-10, 20,-40, -20,-40,'z']
-stand = obj2d(standData, "SHAPE", {
-        "fillColor":'darkgray',
-        "border": True,
-        "strokeColor": "#222222" })
-axle0 = obj2d(shapedefs.circle(10), "SHAPE", {
-        "fillColor":'gray',
-        "border": True,
-        "strokeColor": "#222222" })
-armGrp = cgo.createGroup2D(stand, axle0)
-
-segData = ['M',0,-8, 'A',8,8,0,0,0,0,8, 'L',50,8, 'A',8,8,0,0,0,50,-8, 'Z']
-seg1 = obj2d(segData, "SHAPE", {
-        "fillColor":'darkGray',
-        "border": True,
-        "strokeColor": "#222222",
-        "zIndex": -1 })
-# 利用 zIndex 決定疊層的先後次序
-axle1 = obj2d(shapedefs.circle(8), "SHAPE", {
-        "fillColor":'gray',
-        "border": True,
-        "strokeColor": "#222222",
-        "zIndex": 1 })
-axle1.translate(50, 0)
-seg1Grp = cgo.createGroup2D(seg1, axle1)
-armGrp.addObj(seg1Grp)
-
-# 加上第二軸
-seg2 = obj2d(segData, "SHAPE", {
-        "fillColor":'darkGray',
-        "border": True,
-        "strokeColor": "#222222",
-        "zIndex": -1 })
-axle2 = obj2d(shapedefs.circle(8), "SHAPE", {
-        "fillColor":'gray',
-        "border": True,
-        "strokeColor": "#222222",
-        "zIndex": 1 })
-axle2.translate(50, 0)
-seg2Grp = cgo.createGroup2D(seg2, axle2)
-cgo.render(seg2Grp)
-# 請注意 seg2Grp 加上 seg1Grp 物件上
-seg1Grp.addObj(seg2Grp)
-
-seg3 = obj2d(segData, "SHAPE", {
-        'fillColor':'darkGray',
-        'border': True,
-        'strokeColor': "#222222",
-        'zIndex': -1 })
-axle3 = obj2d(shapedefs.circle(6), "SHAPE", {
-        'fillColor':'gray',
-        'border': True,
-        'strokeColor': "#222222",
-        'zIndex': 1 })
-axle3.translate(50, 0)
-seg3Grp = cgo.createGroup2D(seg3, axle3)
-seg2Grp.addObj(seg3Grp)
-
-seg4Data = ['M',0,-6, 'A',6,6,0,0,0,0,6, 'L',40,6, 40,12, 50,12, 50,-12, 40,-12, 40,-6, 'Z']
-seg4 = obj2d(seg4Data, "SHAPE", {
-        'fillColor':'darkGray',
-        'border': True,
-        'strokeColor': "#222222",
-        'zIndex': -1 })
-seg3Grp.addObj(seg4)
-
-# setup animation
-animData = {'s1': [0, 80, 45, 0],
-                  's2': [0, -60, -60, 0],
-                  's3': [0, -90, 0, 90, 0],
-                  's4': [0, 30, -90, 0]}
-
-armTwnr = tweener(0, 3500, 'loop')
-
-def initArm(opts):
-    seg2Grp.transform.translate(50,0)
-    seg3Grp.transform.translate(50,0)
-    seg4.transform.translate(50,0)
-
-
-def armPathFn(time, opts):
-    seg1Rot = armTwnr.getVal(time, opts.s1)
-    seg2Rot = armTwnr.getVal(time, opts.s2)
-    seg3Rot = armTwnr.getVal(time, opts.s3)
-    seg4Rot = armTwnr.getVal(time, opts.s4)
-
-    seg1Grp.transform.rotate(seg1Rot)
-    seg2Grp.transform.rotate(seg2Rot)
-    seg2Grp.transform.translate(50,0)
-    seg3Grp.transform.rotate(seg3Rot)
-    seg3Grp.transform.translate(50,0)
-    seg4.transform.rotate(seg4Rot)
-    seg4.transform.translate(50,0)
-
-cgo.animate(armGrp, initArm, armPathFn, animData)
-cgo.playAnimation()
-&amp;lt;/script&amp;gt;
-&lt;/pre&gt;</summary><category term="MCAD"></category><category term="Web based"></category></entry><entry><title>電腦輔助機械設計流程中的分散式版本管理</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html" rel="alternate"></link><updated>2016-05-15T17:58:56+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-15:post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html</id><summary type="html">&lt;p&gt;&lt;a href="http://bazaar.canonical.com/en/"&gt;Bazaar&lt;/a&gt; (2004 年從 &lt;a href="https://www.gnu.org/software/gnu-arch/"&gt;Gnu arch&lt;/a&gt; 分出), &lt;a href="http://www.bitkeeper.com/"&gt;BitKeeper&lt;/a&gt;, &lt;a href="http://darcs.net/"&gt;darcs&lt;/a&gt;, &lt;a href="https://github.com/git"&gt;Git&lt;/a&gt;, &lt;a href="https://www.mercurial-scm.org/"&gt;Mercurial&lt;/a&gt; 是目前較為常見的分散式版本管理 (Distributed Version Control Systems, DVCS) 技術, 其中自 1998 年前後推出, 唯一商用閉源的 Bitkeeper, 也終於在 2016.05.09, 宣佈轉為開放原始碼套件: &lt;a href="https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93"&gt;https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93&lt;/a&gt;.&lt;/p&gt;
-
-
-&lt;p&gt;其實, 早在 1995 年左右的 &lt;a href="https://en.wikipedia.org/wiki/Sun_WorkShop_TeamWare"&gt;Sun WorkShop TeamWare&lt;/a&gt; 就已經擁有分散式版本的相關技術, 而且在許多與機械設計相關的 PDM/PLM 系統中, 也都提供各種分散式版本控管的功能, 只是大多與封閉的檔案系統格式搭配使用, 使得多人協同模式下的電腦輔助機械設計流程, 成本不斷推升, 而且造成導入新技術的步調緩慢.&lt;/p&gt;
-&lt;p&gt;當然, 這些國際大公司面對快速發展的數位虛擬與雲端技術, 眼看無法透過賣斷的使用授權來限制使用者, 也紛紛隨著許多創新的先行者 (例如: Onshape), 喊出不再販售大而無當的單機賣斷版本套件, 而改採較具彈性的網路訂閱授權.&lt;/p&gt;
-&lt;p&gt;接下來, 當快速進展的全球協同模式必得讓各方團隊開始自行打造各式本地端、區域網路端、廣域網路端與雲端上的網際服務系統時, 目前最佳的授權認証模式, 則多採取 &lt;a href="https://tools.ietf.org/html/rfc6749"&gt;oauth2&lt;/a&gt; 的協定進行, 例如: Onshape 已經釋出 node.js 相容的程式模組: &lt;a href="https://github.com/onshape/passport-onshape"&gt;https://github.com/onshape/passport-onshape&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;儘管如此, 身為一般的機械設計產品開發團隊, 仍然無法像全球大量持續甩開 Microsoft 約束的程式開發者一樣, 熱烈擁抱諸如 Linux 與 FreeBSD 相關分支, 因為 &lt;a href="http://www.freecadweb.org/"&gt;http://www.freecadweb.org/&lt;/a&gt; 尚未大到可以取代許多封閉套件的地步, 現階段只能期待 Onshape 的授權方案能夠持續友善, 未來能夠有機會藉著清楚展示設計流程的分散式版本管理, 讓使用者能夠從此自混水中解脫.&lt;/p&gt;
-&lt;p&gt;儘管 Onshape 的 API 使用授權尚未全面釋出, 但是假如希望先利用 oauth2 自行打造一個網際產品設計開發系統, 可以參考下列的簡單程式開發描述:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;讓使用者以 Gmail 帳號, 經由 google 制式流程登入後轉回應用程式&lt;/p&gt;
-&lt;p&gt;使用技術: oauth2&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;網際程式可以在本地端、區域網路端與雲端平台上佈署, 得到相同執行結果&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;使用技術: 利用物件案例的啟始, 建立所需的環境目錄架構,  以及起始資料庫檔案等, 利用操作系統模組讀取特定變數判定執行環境&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;資料庫存取技術與分頁&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;人性化的 Javascript 或 Brython 環境導入&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;美化的 Template 與 css 導入&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Github, bitbucket 與 &lt;a href="https://gogs.io/"&gt;gogs&lt;/a&gt; 的程式開發版本管理&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;規劃所要維護的資料表: &lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;人員名單含角色管理&lt;/p&gt;
-&lt;p&gt;事件管理&lt;/p&gt;
-&lt;p&gt;網際運算 (結合 Jupyter)&lt;/p&gt;
-&lt;p&gt;參考資料:&lt;/p&gt;
-&lt;p&gt;flask&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-now-with-python-3-support"&gt;http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-now-with-python-3-support&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;oauth2&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://oauth.net/2/"&gt;http://oauth.net/2/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://blog.yorkxin.org/posts/2013/09/30/oauth2-1-introduction/"&gt;https://blog.yorkxin.org/posts/2013/09/30/oauth2-1-introduction/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://tools.ietf.org/html/rfc6749"&gt;https://tools.ietf.org/html/rfc6749&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;git&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/git"&gt;https://github.com/git&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;working flow&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://www.drupal.org/node/803746"&gt;https://www.drupal.org/node/803746&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Jupyter and oauth2&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/jupyterhub/oauthenticator"&gt;https://github.com/jupyterhub/oauthenticator&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/ryanlovett/jh-google-oauthenticator"&gt;https://github.com/ryanlovett/jh-google-oauthenticator&lt;/a&gt;&lt;/p&gt;</summary><category term="MCAD"></category><category term="DVCS"></category></entry><entry><title>常用 Python3 程式模組</title><link href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html" rel="alternate"></link><updated>2016-05-15T16:51:44+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-15:post/chang-yong-python3-cheng-shi-mo-zu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.&lt;/p&gt;
-
-
-&lt;p&gt;其中的 &lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt; 與 &lt;a href="http://flask.pocoo.org/"&gt;Flask&lt;/a&gt; 位階相似, 但是
-特性卻有很大差別, CherryPy 小而自給自足, Flask 則架構較具彈性, 許多延伸功能都採 extension 方式補足, 有關 CherryPy 的各種用法, 請參考 &lt;a href="http://cad-lab.github.io/manual/post/cherrypy-shi-yong-shou-ce.html"&gt;http://cad-lab.github.io/manual/post/cherrypy-shi-yong-shou-ce.html&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/zzzeek/mako"&gt;https://github.com/zzzeek/mako&lt;/a&gt; 的最大特色, 是將 Python 的語法直接放到 template 文件中, 儘管如此可能會讓使用者將原本應該放在控制端的資料流程, 分散到展示端, 但是實際採用後, 也沒有發生太大問題, 反而可以利用相同的網際程式, 直接套用到 Mako 與 Flask 內建的 template 語法中, 進行比較.&lt;/p&gt;
-&lt;p&gt;github3.py 針對 Github 倉儲新增協同者的程式片斷範例:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-@app.route('/yourrepoadd', methods=['POST'])
-def yourrepoadd():
-    account = request.form["account"]
-    repository = "yourrepo"
-    url = "https://github.com/youraccount/yourrepo.git"
-    # 登入系統
-    g = github3.login("youraccount", "yourpassword")
-    # 以下則新增協同者
-    #g.repository(倉儲帳號, 倉儲名稱).add_collaborator(協同者 github 帳號)
-    # 若新增 collaborator 成功傳回 True 否則傳回 False
-    if g.repository("youraccount", repository).add_collaborator(account):
-        # 共同使用 cpaadd.html
-        return render_template("cpaadd.html", account=account, repository=repository, url=url)
-    else:
-        return render_template("cpaerror.html")
-&lt;/pre&gt;
-
-&lt;p&gt;至於 authomatic 的使用, 共有3個步驟:&lt;/p&gt;
-&lt;h2&gt;1. 取得 key 與 secret&lt;/h2&gt;
-&lt;p&gt;設定網址:&lt;/p&gt;
-&lt;p&gt;https://console.developers.google.com&lt;/p&gt;
-&lt;p&gt;總共有兩項設定:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;啟用 Google + API&lt;/li&gt;
-&lt;li&gt;然後到憑證處建立專案, 設定授權的 URI&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;設定目的在希望透過 Google+ API 讓 Web browser (Javascript) 能夠擷取 User data, 這時需要的是 Create an OAuth 2.0 client ID, 建立專案後, 必須選擇 Authorized Javascript origins 為 http://your.server.domain.name 與 http://localhost:5000, 而 Authorized redirect URIs 為: http://your.server.domain.name/autho_login/google/ 與 http://localhost:5000/autho_login/google/&lt;/p&gt;
-&lt;h2&gt;2. 導入模組, 進行設定&lt;/h2&gt;
-&lt;pre class="brush: python"&gt;
-import authomatic
-from authomatic.providers import oauth2
-
-CONFIG = {
-        'google': {
-            'class_': oauth2.Google,
-            'consumer_key': '1234567.apps.googleusercontent.com',
-            'consumer_secret': '87654321',
-            #'scope': oauth2.Google.user_info_scope
-            # 以下只允許(瞭解您在 Google 上的身分)與(檢視電子郵件地址)
-            'scope': ['email']
-        }
-    }
-&lt;/pre&gt;
-
-&lt;h2&gt;3. 配合建立登入連結&lt;/h2&gt;
-&lt;pre class="brush: python"&gt;
-@app.route('/autho_login/&amp;lt;provider_name&amp;gt;/', methods=['GET', 'POST'])
-def autho_login(provider_name):
-
-    # We need response object for the WerkzeugAdapter.
-    response = make_response()
-
-    # Log the user in, pass it the adapter and the provider name.
-    result = authomatic.login(WerkzeugAdapter(request, response), provider_name)
-
-    # If there is no LoginResult object, the login procedure is still pending.
-    if result:
-        if result.user:
-            # We need to update the user to get more info.
-            result.user.update()
-
-        # 利用 session 登記登入者的 email
-        session['login_email'] = result.user.email
-
-        # 這裡必須分近端與雲端, 因為 google logout redirect 的 url 不同
-        if 'OPENSHIFT_REPO_DIR' in os.environ.keys():
-            # 表示程式在雲端執行
-            local = False
-        else:
-            # 表示在近端執行
-            local = True
-        # The rest happens inside the template.
-        return render_template('autho_login.html', result=result, local=local)
-
-    # Don't forget to return the response.
-    return response
-&lt;/pre&gt;
-
-&lt;h2&gt;oauth2 登入的情境&lt;/h2&gt;
-&lt;p&gt;使用 oauth2 的目的, 在利用既有的使用者帳號進行應用程式的登入, 例如, 使用 facebook 或 gmail 帳號登入到我們所開發的網際應用程式, 好處是, 使用者無需在各類網際程式中額外再申請帳號, 而程式開發者也可以免去管理使用者帳號的難題.&lt;/p&gt;
-&lt;p&gt;但是, 為了在使用者被 oauth2 協定轉介到 gmail 登入頁面, 完成登入後, 就會再帶著帳號擁有者所允許的相關訊息, 回到網際應用程式中, 通常這些網際程式會利用 session 與 cookie 來儲存使用者登入的身份資料, 如此一來, 便有以下情境:&lt;/p&gt;
-&lt;p&gt;假如使用者在選擇登入到網際程式之前, 已經登入到 gmail, 那麼使用者無需再輸入帳號密碼, 只要同意允許擷取帳號資料 ,就會直接跳轉到網際程式功能中, 特別注意到, 這時 gmail 有使用者登入的 session 與 cookie, 而且使用者的瀏覽器還存在登入到網際應用程式的狀態.&lt;/p&gt;
-&lt;p&gt;第2種情況則是, 使用者被轉介到 gmail 登入畫面時, 才輸入帳號密碼登入, 之後情境就與上述第1種情況相同.&lt;/p&gt;
-&lt;p&gt;上述兩種情況, 在瀏覽器中, 使用者的狀態是同時登入到 gmail 與網際程式中, 即便使用者登入網際程式後, 若使用者沒有主動登出 gmail, 這位使用者在瀏覽器的狀態中, 仍然保持登入到 gmail 的狀態.&lt;/p&gt;
-&lt;p&gt;因此第3種情況則是, 使用者經由 oauth2 協定轉介到 gmail 登入後同意讓網際程式擷取帳號資料後, 就能登入到網際程式中, 隨後使用者主動登出 gmail, 並不會影響仍然登入到網際程式中的狀態, 一直到使用者選擇登出網際應用程式為止.&lt;/p&gt;
-&lt;p&gt;理論上, 假如我們所開發的網際程式, 只是透過一系列上述的設定, 藉由 gmail 的帳號, 來登入我們所開發的網際程式, 比較好的作法是一旦完成我們網際應用程式的登入後, 可以經由程式方法登出使用者的 gmail 帳號, 然後再由使用者決定何時要登出我們所開發的網際程式.&lt;/p&gt;
-&lt;p&gt;以下就是利用 Javascript 在登入應用程式之後, 設法登出使用者 gmail 帳號的設計, 並且同時支援本地端程式開發與雲端應用的情況:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-{# autho_login.html #}
-{% extends "autho_base.html" %}
-
-{% block body %}
-
-&amp;lt;!-- 這裡應該要再分近端與雲端的不同處理流程, 而且要在設定時便取得綁定的雲端網址 --&amp;gt;
-{% if local %}
-&amp;lt;script type="text/javascript"&amp;gt;
-window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:5000/check_login";
-&amp;lt;/script&amp;gt;
-{% else %}
-&amp;lt;script type="text/javascript"&amp;gt;
-window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://your.server.domain.name/check_login";
-&amp;lt;/script&amp;gt;
-{% endif %}
-
-{% endblock body %}
-&lt;/pre&gt;</summary><category term="Python3"></category><category term="module"></category></entry><entry><title>Onshape 提供免費教育單位帳號</title><link href="http://cadlab.mde.tw/post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan"&gt;https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan&lt;/a&gt; 得知, Onshpae 除了提供各種身份的用戶有使用限度的免費帳號以外, 從 2016.04.07 開始更加碼, 讓教育單位可以免費, 且沒有使用限度的情況下, 來探索使用這個劃時代的雲端電腦輔助機械設計套件.&lt;/p&gt;
-
-
-&lt;h2&gt;穩定的網路連線是使用 Onshpae 的必要條件&lt;/h2&gt;
-&lt;p&gt;假如電腦教室網路連線穩定, 六十名學生可以同時利用 Firefox 或 Chrome,  登入到 &lt;a href="https://www.onshape.com"&gt;Onshape&lt;/a&gt; 執行協同產品設計, 登記免費的教育單位專用帳號後, 只要完成電子郵箱驗證, 就會自動登入系統.&lt;/p&gt;
-&lt;h2&gt;Onshape 的 Document 是專案容器&lt;/h2&gt;
-&lt;p&gt;登入後, 可以利用左側的 Tutorials &amp;amp; Samples 來了解 Onshpae 的用法:&lt;/p&gt;
-&lt;p&gt;Onshape 中的 Documents 為設計專案層次 (Project level) 的文件庫 (Container), 可以納入 3D 零件, 3D 組件, 工程圖, 以及從外部轉入的各式檔案.&lt;/p&gt;
-&lt;h2&gt;Onshape 操作無需存檔, 而且保有流程版本&lt;/h2&gt;
-&lt;p&gt;在 Onshpae 環境中操作零件繪圖, 使用者無需手動存檔, 只要完成任何操作, 都會自動儲存版本, 而且可以在各版本之間遊走.&lt;/p&gt;
-&lt;p&gt;登入 Onshape, 就可以利用左上角的 Create 按鈕建立 Document 專案文件, 然後再利用左下角的 + 號, 選擇要建立零件, 組件, 工程圖或者是從本地端上傳各式文件.&lt;/p&gt;
-&lt;p&gt;假如是建立零件, 與其他 MCAD 套件類似, 可以選擇 Sketch 再選擇作圖平面, 或者先選擇作圖平面, 再選擇 Sketch 繪製平面輪廓, 輪廓繪圖, 可以直接在 3D 環境畫圖, 或者利用滑鼠右鍵帶出 View normal to sketch plane 的功能, 以垂直繪圖面的平面上進行繪圖.&lt;/p&gt;
-&lt;h2&gt;Onshape 可以轉出各式檔案&lt;/h2&gt;
-&lt;p&gt;各種基本的平面繪圖與尺寸標定或約束條件設定, 都與其他傳統的單機 MCAD 大同小異, 雖然 Onshape 與 Solid Edge 採用相同的 PARASOLID kernel, 但是所有的零組件檔案, 可以直接以點選下方的零組件 Tab, 再以滑鼠右鍵帶出 Export 功能, 然後轉成 PARASOLID 或 ACIS 核心檔,甚至也能直接轉成 Solidworks 格式檔案, 當然也能轉成 IGES, STEP, RHINO, STL 等格式.&lt;/p&gt;
-&lt;h2&gt;Onshape 擁有直覺的組立約束&lt;/h2&gt;
-&lt;p&gt;當使用者在 Onshape 零件繪製模式下完成基本零件, 就可以利用左下方的 + 建立組立檔, 將各零件一一放入進行組裝.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-fastened.htm"&gt;Fastened mate&lt;/a&gt; 主要用於焊接式的組合, 約束條件置入後, 兩個零件間已經沒有任何自由度而結為一體.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-revolute.htm"&gt;Revolute mate&lt;/a&gt; 主要用於旋轉軸式的組合, 約束條件置入後, 兩個零件間只留下一個旋轉自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-slider.htm"&gt;Slider mate&lt;/a&gt; 主要用於滑塊式的組合, 約束條件置入後, 兩個零件間只留下一個平移自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-planar.htm"&gt;Planar mate&lt;/a&gt; 主要用於面接式組合, 約束條件置入後, 兩個零件面對面靠接, 只允許兩個方向的移動自由度, 以及垂直靠接面方向的一個旋轉自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-cylindrical.htm&gt;Cylindrical mate&lt;/a&gt; 主要用於圓柱螺栓式的組合, 約束條件置入後, 兩個零件將具有旋轉與前進或後退的兩個自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-pin_slot.htm"&gt;Pin slot mate&lt;/a&gt; 主要用於插銷式組合, 約束條件置入後, 兩個零件具有旋轉與側向平移等兩個自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Ball mate&lt;/a&gt; 主要用於球接頭式的組合, 約束條件置入後, 將保留3個方向的旋轉自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Tangent mate&lt;/a&gt; 則是比較特殊的相切組立, 約束條件置入後, 兩個零件將始終保持相切的關係.&lt;/p&gt;
-&lt;h2&gt;簡單的組立應用&lt;/h2&gt;
-&lt;p&gt;根據上述基本功能, 就可以完成下列腳踏車鏈條的基本組立:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/onshape_bike_chain_assembly.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;教育版對應帳號下所完成的 &lt;a href="https://cad.onshape.com/documents/29d1a262b055745e59be7c09/w/1f25948ad73282e2440ffdcf"&gt;Bike chain Document&lt;/a&gt;.&lt;/p&gt;</summary><category term="Onshape"></category><category term="MCAD"></category></entry><entry><title>Wordpress 網誌文章中的網際程式碼</title><link href="http://cadlab.mde.tw/post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.w3.org/Graphics/SVG/History"&gt;SVG 歷史&lt;/a&gt; 與 &lt;a href="https://en.wikipedia.org/wiki/WebGL#History"&gt;WebGL 歷史&lt;/a&gt;, 以及 &lt;a href="https://github.com/socketio/socket.io/blob/master/History.md"&gt; socket.io 歷史&lt;/a&gt;, 也許不難發現, 多人協同在瀏覽器為基礎的應用程式環境, 已然成型.&lt;/p&gt;
-
-
-&lt;p&gt;儘管如此, 要將所有的工作全時在網路連線的環境中完成, 可能仍言之過早, 比較讓人確定的是, 多點觸控的平台伴隨著本地端的桌機或者是筆電, 還會繼續是主流的電腦輔助設計環境.&lt;/p&gt;
-&lt;p&gt;在這樣的所謂 Web Based (網際) 環境中, 身為一位機械設計工程師, 除了要關注傳統的 2D/3D 靜態與動態內容表達外, 能否逐步導入多點觸控裝置的資料, 便成為重點.&lt;/p&gt;
-&lt;p&gt;以網際 2D 繪圖而言, 2013 年推出的 &lt;a href="http://snapsvg.io/"&gt;http://snapsvg.io/&lt;/a&gt;, 就是一套能夠順應未來電腦輔助機械設計繪圖的工具之一.&lt;/p&gt;
-&lt;p&gt;從 &lt;a href="http://chiamingyen.github.io/kmolab/blog/dao-ru-brython-yu-snapsvg-wang-ji-hui-tu.html"&gt;導入 Brython 與 Snap.svg 網際繪圖&lt;/a&gt; 的說明中, 我們已經知道能夠透過網際的 Brython 來呼叫並運用 snap.svg 程式庫, 但是假如希望完成如 &lt;a href="http://project.mde.tw/blog/yen-pelican-jing-tai-wang-ye-yu-wordpress-de-zheng-he-fang-an.html"&gt;Pelican 靜態網頁與 Wordpress 的整合方案&lt;/a&gt; 中所談到的資料整合, 並且導入 snap.svg 到 Wordpress 與 Pelican 網誌系統, 需要注意到 Wordpress 對於內文中處理程式碼的用法, 否則由 Pelican 靜態網誌轉進 Wordpress 系統中的所有 Brython 或 Javascript 程式內容, 將會全數被 Wordpress 當作一般文字資料處理.&lt;/p&gt;
-&lt;p&gt;應對的方法很簡單, 只需要明確利用 html 的註解標註, 跳過 Wordpress 對於 Brython 與 Javascript 程式碼的額外處理就行.&lt;/p&gt;
-&lt;p&gt;以下舉 Snap.svg 典型的動態模擬為例:&lt;/p&gt;
-&lt;script type="text/javascript" src="http://brython.info/src/brython_dist.js"&gt;&lt;/script&gt;
-
-&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"&gt;&lt;/script&gt;
-
-&lt;script&gt;
-//&lt;!--
-window.onload=function(){
-brython(1);
-}
-//--&gt;
-&lt;/script&gt;
-
-&lt;p&gt;&lt;svg width="800" height="600" viewBox="0 0 800 600" id="svgout"&gt;&lt;/svg&gt;&lt;/p&gt;
-&lt;script type="text/python"&gt;
-#&lt;!--
-from javascript import JSConstructor
-from browser import alert
-from browser import window, document
-
-# 透過 window 與 JSConstructor 從 Brython 物件 snap 擷取 Snap 物件的內容
-snap = JSConstructor(window.Snap)
-
-# 使用 id 為 "svgout" 的 svg 標註進行繪圖
-s = snap("#svgout")
-
-offsetY = 50
-
-# 是否標示出繪圖範圍
-#borderRect = s.rect(0,0,800,640,10,10).attr({ 'stroke': "silver", 'fill': "silver", 'strokeWidth': "3" })
-
-g = s.group().transform('t250,120')
-r0 = s.rect(150,150,100,100,20,20).attr({ 'fill': "orange", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
-c0 = s.circle(225,225,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4"  }).attr({ 'id': 'c0' })
-g0 = s.group( r0,c0 ).attr({ 'id': 'g0' })
-#g0.animate({ 'transform' : 't250,120r360,225,225' },4000)
-g0.appendTo( g )
-g0.animate({ 'transform' : 'r360,225,225' },4000)
-# 讓 g0 可以拖動
-g0.drag()
-
-r1 = s.rect(100,100,100,100,20,20).attr({ 'fill': "red", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
-c1 = s.circle(175,175,10).attr({ 'fill': "silver", 'stroke': "black" , 'strokeWidth': "4"}).attr({ 'id': 'c1' })
-g1 = s.group( r1,c1 ).attr({ 'id': 'g1' })
-g1.appendTo( g0 ).attr({ 'id': 'g1' })
-g1.animate({ 'transform' : 'r360,175,175' },4000)
-
-r2 = s.rect(50,50,100,100,20,20).attr({ 'fill': "blue", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
-c2 = s.circle(125,125,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c2' })
-g2 = s.group(r2,c2).attr({ 'id': 'g2' })
-
-g2.appendTo( g1 );
-g2.animate( { 'transform' : 'r360,125,125' },4000);
-
-r3 = s.rect(0,0,100,100,20,20).attr({ 'fill': "yellow", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
-c3 = s.circle(75,75,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c3' })
-g3 = s.group(r3,c3).attr({ 'id': 'g3' })
-
-g3.appendTo( g2 )
-g3.animate( { 'transform' : 'r360,75,75' },4000)
-
-r4 = s.rect(-50,-50,100,100,20,20).attr({ 'fill': "green", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
-c4 = s.circle(25,25,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c4' })
-g4 = s.group(r4,c4).attr({ 'id': 'g4' });
-g4.appendTo( g3 )
-g4.animate( { 'transform' : 'r360,25,25' },4000)
-#--&gt;
-&lt;/script&gt;
-
-&lt;p&gt;Brython 程式碼:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-&amp;lt;script type="text/javascript" src="http://brython.info/src/brython_dist.js"&amp;gt;&amp;lt;/script&amp;gt;
-&amp;lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"&amp;gt;&amp;lt;/script&amp;gt;
-
-&amp;lt;script&amp;gt;
-//&amp;lt;!--
-window.onload=function(){
-brython(1);
-}
-//--&amp;gt;
-&amp;lt;/script&amp;gt;
-
-&amp;lt;svg width="800" height="600" viewBox="0 0 800 600" id="svgout"&amp;gt;&amp;lt;/svg&amp;gt;
-
-&amp;lt;script type="text/python"&amp;gt;
-#&amp;lt;!--
-from javascript import JSConstructor
-from browser import alert
-from browser import window, document
-
-# 透過 window 與 JSConstructor 從 Brython 物件 snap 擷取 Snap 物件的內容
-snap = JSConstructor(window.Snap)
-
-# 使用 id 為 "svgout" 的 svg 標註進行繪圖
-s = snap("#svgout")
-
-offsetY = 50
-
-# 是否標示出繪圖範圍
-#borderRect = s.rect(0,0,800,640,10,10).attr({ 'stroke': "silver", 'fill': "silver", 'strokeWidth': "3" })
-
-g = s.group().transform('t250,120')
-r0 = s.rect(150,150,100,100,20,20).attr({ 'fill': "orange", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
-c0 = s.circle(225,225,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4"  }).attr({ 'id': 'c0' })
-g0 = s.group( r0,c0 ).attr({ 'id': 'g0' })
-#g0.animate({ 'transform' : 't250,120r360,225,225' },4000)
-g0.appendTo( g )
-g0.animate({ 'transform' : 'r360,225,225' },4000)
-# 讓 g0 可以拖動
-g0.drag()
-
-r1 = s.rect(100,100,100,100,20,20).attr({ 'fill': "red", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
-c1 = s.circle(175,175,10).attr({ 'fill': "silver", 'stroke': "black" , 'strokeWidth': "4"}).attr({ 'id': 'c1' })
-g1 = s.group( r1,c1 ).attr({ 'id': 'g1' })
-g1.appendTo( g0 ).attr({ 'id': 'g1' })
-g1.animate({ 'transform' : 'r360,175,175' },4000)
-
-r2 = s.rect(50,50,100,100,20,20).attr({ 'fill': "blue", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
-c2 = s.circle(125,125,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c2' })
-g2 = s.group(r2,c2).attr({ 'id': 'g2' })
-
-g2.appendTo( g1 );
-g2.animate( { 'transform' : 'r360,125,125' },4000);
-
-r3 = s.rect(0,0,100,100,20,20).attr({ 'fill': "yellow", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
-c3 = s.circle(75,75,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c3' })
-g3 = s.group(r3,c3).attr({ 'id': 'g3' })
-
-g3.appendTo( g2 )
-g3.animate( { 'transform' : 'r360,75,75' },4000)
-
-r4 = s.rect(-50,-50,100,100,20,20).attr({ 'fill': "green", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
-c4 = s.circle(25,25,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c4' })
-g4 = s.group(r4,c4).attr({ 'id': 'g4' });
-g4.appendTo( g3 )
-g4.animate( { 'transform' : 'r360,25,25' },4000)
-#--&amp;gt;
-&amp;lt;/script&amp;gt;
-&lt;/pre&gt;</summary><category term="Wordpress"></category><category term="MCAD"></category></entry><entry><title>Bezier 曲線導引</title><link href="http://cadlab.mde.tw/post/bezier-qu-xian-dao-yin.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/bezier-qu-xian-dao-yin.html</id><summary type="html">&lt;p&gt;A primer on Bezier curves&lt;/p&gt;
-
-
-&lt;p&gt;&lt;a href="http://pomax.github.io/bezierinfo/"&gt;http://pomax.github.io/bezierinfo/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pomax.github.io/bezierjs/"&gt;http://pomax.github.io/bezierjs/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;嘗試將純 Javascript 的環境轉為 Brython based &lt;a href="https://github.com/brython-dev/brython"&gt;https://github.com/brython-dev/brython&lt;/a&gt;, 希望完成之後, 可以讓使用者編寫 Python3 程式碼來操控 Bezier 曲線 &lt;a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"&gt;https://en.wikipedia.org/wiki/B%C3%A9zier_curve&lt;/a&gt;.&lt;/p&gt;</summary><category term="Javascript"></category><category term="程式"></category></entry><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
-
-
-&lt;p&gt;自從 1995 年, 第1套能在 Windows 操作系統執行的電腦輔助機械設計繪圖軟體套件, SolidWorks, 出現, 並且逐步蔚為風潮之後,  MCAD (Mechanical Computer Aided Design) 中端套件, 幾乎都只能在 Windows 操作系統上運作. 許多機械設計工程系相關師生, 幾乎早已經忘記, 最早的 MCAD 系統可都是在泛 Unix based 的操作系統上運作.&lt;/p&gt;
-&lt;p&gt;時間轉到 2015 年, Onshape: &lt;a href="http://www.onshape.com"&gt;http://www.onshape.com&lt;/a&gt; 的出現, 雖然截至目前只提供陽春的 MCAD 功能, 但是至少讓原本必須在 Windows 操作系統上才能上課的約束條件, 頓時消失, 因為計算機程式、網際內容管理、電腦輔助設計實習與協同產品設計實習等課程, 已經能夠百分之百在 Ubuntu 操作系統上運作.&lt;/p&gt;
-&lt;p&gt;過去, 我們在 Windows 操作系統上的工作類別, 不外乎:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;文書處理&lt;/li&gt;
-&lt;li&gt;程式編寫與執行&lt;/li&gt;
-&lt;li&gt;MCAD 零件繪圖, 零件組立&lt;/li&gt;
-&lt;li&gt;MCAE 工程分析&lt;/li&gt;
-&lt;li&gt;擷取執行畫面&lt;/li&gt;
-&lt;li&gt;錄製操作流程影片&lt;/li&gt;
-&lt;li&gt;遠端登入到其他電腦 (Remote Desktop)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;以下將就這些工作分類, 介紹在 Ubuntu 操作系統中的相對應工具與使用方法.&lt;/p&gt;
-&lt;p&gt;首先, 這裡建議的 Ubuntu 操作系統為 Ubuntu Server 版本加上 ubuntu-desktop 套件的安裝.&lt;/p&gt;
-&lt;p&gt;一旦安裝完成, 第1項文書處理工作就可以由 LibreOffice 套件加以勝任.&lt;/p&gt;
-&lt;h2&gt;程式編寫與執行&lt;/h2&gt;
-&lt;p&gt;這裡包含 Python3, PyQt5, Leo Editor, SciTE, Git 等套件都是跨操作系統, 其中 Python3  已經內建在 Ubuntu 14.04 操作系統中, 只是必須透過 python3 執行, 例如: 必須在命令列中, 輸入 python3 帶出互動式解譯環境.&lt;/p&gt;
-&lt;p&gt;pip3 模組則需要透過 sudo apt-get install python3-pip 安裝&lt;/p&gt;
-&lt;p&gt;PyQt5 則需要透過 sudo apt-get install python3-pyqt5 安裝&lt;/p&gt;
-&lt;p&gt;Leo Editor 透過 sudo pip3 install https://github.com/leo-editor/leo-editor/archive/master.zip 安裝, 並且以 leo&amp;amp; 呼叫&lt;/p&gt;
-&lt;p&gt;SciTE 透過 sudo apt-get install scite 安裝&lt;/p&gt;
-&lt;p&gt;git 透過 sudo apt-get install git 安裝&lt;/p&gt;
-&lt;h2&gt;MCAD 零件與組件繪圖&lt;/h2&gt;
-&lt;p&gt;這裡採用 &lt;a href="http://www.onshape.com"&gt;http://www.onshape.com&lt;/a&gt;, 只需要 Firefox 或 Chromium 瀏覽器就可以運作&lt;/p&gt;
-&lt;p&gt;FreeCAD: &lt;a href="http://www.freecadweb.org/"&gt;http://www.freecadweb.org/&lt;/a&gt; 與 Solvespace: &lt;a href="http://solvespace.com/"&gt;http://solvespace.com/&lt;/a&gt;, 則是能在 Ubuntu 環境運作的 MCAD 套件.&lt;/p&gt;
-&lt;h2&gt;MCAE 工程分析&lt;/h2&gt;
-&lt;p&gt;這裡採用 &lt;a href="http://www.simscale.com"&gt;http://www.simscale.com&lt;/a&gt;, 只需要 Firefox 或 Chromium 瀏覽器就可以運作&lt;/p&gt;
-&lt;p&gt;COMSOL &lt;a href="https://www.comsol.com/system-requirements"&gt;可以&lt;/a&gt;在 Ubuntu 環境中運作&lt;/p&gt;
-&lt;p&gt;Ansys 則&lt;a href="http://www.ansys.com/-/media/Ansys/corporate/files/pdf/solutions/it-professionals/platform-support/platformsupportansys162stategyandplans.pdf?la=en"&gt;建議&lt;/a&gt;在 Red Hat 或 SUSE 商用版上運作&lt;/p&gt;
-&lt;h2&gt;錄製操作流程影片&lt;/h2&gt;
-&lt;p&gt;在 Ubuntu 操作系統中擷取電腦螢幕畫面, 只要按下 PrintScr 按鍵, 就可以直接存為 png 格式檔案&lt;/p&gt;
-&lt;p&gt;操作流程則可以使用 Kazam 將過程錄成 mp4檔案&lt;/p&gt;
-&lt;p&gt;Kazam: &lt;a href="https://code.launchpad.net/~kazam-team/kazam/stable"&gt;https://code.launchpad.net/~kazam-team/kazam/stable&lt;/a&gt; (以 Python 編寫)&lt;/p&gt;
-&lt;p&gt;安裝:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-sudo add-apt-repository ppa:kazam-team/stable-series
-sudo apt-get update
-sudo apt-get install kazam
-&lt;/pre&gt;
-
-&lt;p&gt;使用: kazam&amp;amp;&lt;/p&gt;
-&lt;p&gt;至於在 Ubuntu 遠端登入到 Windows, 可以使用 Ubuntu Software Center 安裝 remmina, 並且在連線設定上的 Advanced 頁面中, Security 選用 RDP 協定, 即可正確連線.&lt;/p&gt;
-&lt;h2&gt;Ubuntu 檔案架構&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;/bin ­­ binary applications (most of your executable files) &lt;/li&gt;
-&lt;li&gt;/boot ­­ files required to boot (such as the kernel, etc) &lt;/li&gt;
-&lt;li&gt;/dev ­­ your devices (everything from drives to displays) &lt;/li&gt;
-&lt;li&gt;/etc ­­ just about every configuration file for your system &lt;/li&gt;
-&lt;li&gt;/etc/rc.d ­­ contains a number of shell scripts that are run on bootup at different run levels. &lt;/li&gt;
-&lt;li&gt;/etc/X11 ­­ configuration files for the X Window system &lt;/li&gt;
-&lt;li&gt;/home ­­ locally stored user files and folders &lt;/li&gt;
-&lt;li&gt;/lib ­­ system libraries (similar to Program Files) &lt;/li&gt;
-&lt;li&gt;/media ­­ mounted (or loaded) devices such as cdroms, digital cameras, etc. &lt;/li&gt;
-&lt;li&gt;/mnt ­­ mounted file systems &lt;/li&gt;
-&lt;li&gt;/opt ­­ location for “optionally” installed programs &lt;/li&gt;
-&lt;li&gt;/sbin ­­ system ­only binaries&lt;/li&gt;
-&lt;li&gt;/sys ­­ contains information about the system &lt;/li&gt;
-&lt;li&gt;/tmp ­­ temporary files &lt;/li&gt;
-&lt;li&gt;/usr ­­ applications mainly for regular users &lt;/li&gt;
-&lt;li&gt;/var ­­ mainly logs, databases, etc. &lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;Ubuntu 常用指令&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;ls : list directory contents&lt;/li&gt;
-&lt;li&gt;cd : Change Directory&lt;/li&gt;
-&lt;li&gt;pwd : print the current/working directory&lt;/li&gt;
-&lt;li&gt;mkdir : make/create directory&lt;/li&gt;
-&lt;li&gt;rmdir : remove the empty directory&lt;/li&gt;
-&lt;li&gt;rm : remove/delete file&lt;/li&gt;
-&lt;li&gt;mv : rename or move a file/directory&lt;/li&gt;
-&lt;li&gt;man : Manual pages for shell commands&lt;/li&gt;
-&lt;li&gt;cp : Copy Files&lt;/li&gt;
-&lt;li&gt;passwd : Change password for user&lt;/li&gt;
-&lt;li&gt;tar : Creates and extracts files from a tape or disk archive&lt;/li&gt;
-&lt;li&gt;find :  find searches the file located at /&lt;/li&gt;
-&lt;li&gt;grep :  print lines matching a pattern&lt;/li&gt;
-&lt;li&gt;chown :  change file owner and group&lt;/li&gt;
-&lt;li&gt;chgrp :  change group ownership&lt;/li&gt;
-&lt;li&gt;chmod :  change file mode bits&lt;/li&gt;
-&lt;li&gt;ifconfig :  configure a network interface&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;參考資料:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href="https://help.ubuntu.com/lts/serverguide/serverguide.pdf"&gt;https://help.ubuntu.com/lts/serverguide/serverguide.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://ecourts.nic.in/2/mannual/admin_manual.pdf"&gt;http://ecourts.nic.in/2/mannual/admin_manual.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf"&gt;http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop"&gt;http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry></feed>
+</pre>
+            </div>
+            <!-- /.entry-content -->
+    <hr/>
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'cadlab'; // required: replace example with your forum shortname
+
+                    var disqus_identifier = 'wang-ji-ji-jie-she-ji-2d-hui-tu';
+                var disqus_url = 'http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html';
+
+            var disqus_config = function () {
+                this.language = "en";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+                <ul class="list-group" id="recentposts">
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html">
+                            網際機械設計 2D 繪圖
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html">
+                            電腦輔助機械設計流程中的分散式版本管理
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html">
+                            常用 Python3 程式模組
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html">
+                            電腦輔助設計室網誌開通
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html">
+                            Onshape 提供免費教育單位帳號
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="http://cadlab.mde.tw/post/categories.html"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
+                <ul class="list-group" id="categories">
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/category/can-kao.html">
+                            <i class="fa fa-folder-open fa-lg"></i> 參考
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/category/dao-yin.html">
+                            <i class="fa fa-folder-open fa-lg"></i> 導引
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/category/gui-hua.html">
+                            <i class="fa fa-folder-open fa-lg"></i> 規劃
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/category/zi-yuan.html">
+                            <i class="fa fa-folder-open fa-lg"></i> 資源
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="http://cadlab.mde.tw/post/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group list-inline tagcloud" id="tags">
+                </ul>
+            </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="https://github.com/DandyDev/pelican-bootstrap3/" target="_blank">
+                pelican-bootstrap3
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="https://github.com/getpelican/pelican-plugins" target="_blank">
+                pelican-plugins
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="https://github.com/Tipue/Tipue-Search" target="_blank">
+                Tipue search
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2016 kmol
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://cadlab.mde.tw/post/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://cadlab.mde.tw/post/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://cadlab.mde.tw/post/theme/js/respond.min.js"></script>
+
+    <!-- Disqus -->
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'cadlab'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <!-- End Disqus Code -->
+
+</body>
+</html>
