@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/misc.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-05-18T22:07:03+08:00</updated><entry><title>Onshape 即將釋出 Featurescript 程式語言</title><link href="http://cadlab.mde.tw/post/onshape-ji-jiang-shi-chu-featurescript-cheng-shi-yu-yan.html" rel="alternate"></link><updated>2016-05-18T22:07:03+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-18:post/onshape-ji-jiang-shi-chu-featurescript-cheng-shi-yu-yan.html</id><summary type="html">&lt;p&gt;今天早上參加 Onshape 在台灣所舉行的首次實體論壇，除了持續感受到 Onshape 團隊滿滿的誠意外，最大的收穫就是得知 Featurescript 特徵程式語言，即將開放各界使用。&lt;/p&gt;
+
+
+&lt;p&gt;所謂的 Featurescript， 根據了解，是一種可以透過 Feature Studio， 讓使用者修改或延伸 Onshape 特徵指令的新程式語言，據悉，目前 Onshape 所指供的特徵指令功能，也是透過 Featurescript 打造。&lt;/p&gt;
+&lt;p&gt;並且，未來使用者所打造的各式客製化 Featurescript 程式，可以在 Onshape App store 中免費公開或販售。&lt;/p&gt;</summary><category term="Onshape"></category><category term="Featurescript"></category></entry></feed>

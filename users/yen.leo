@@ -121,6 +121,9 @@
 <v t="amd.20160514153227.1"><vh>@clean yen_20160514.md</vh></v>
 <v t="amd.20160515165148.1"><vh>@clean yen_20160515.md</vh></v>
 <v t="amd.20160517115058.1"><vh>@clean yen_20160517.md</vh></v>
+<v t="amd.20160518215337.1" a="E"><vh>@clean yen_20160518.md</vh>
+<v t="amd.20160518215339.1"><vh>57</vh></v>
+</v>
 </v>
 </v>
 <v t="amd.20160106094754.1" a="E"><vh>@path ./../content/pages</vh>
@@ -3316,6 +3319,22 @@ cgo.animate(armGrp, initArm, armPathFn, animData)
 cgo.playAnimation()
 &amp;lt;/script&amp;gt;
 &lt;/pre&gt;</t>
+<t tx="amd.20160518215337.1">@language md
+Title: Onshape 即將釋出 Featurescript 程式語言
+Category: MISC
+Tags: Onshape, Featurescript
+Author: kmol
+@others
+今天早上參加 Onshape 在台灣所舉行的首次實體論壇，除了持續感受到 Onshape 團隊滿滿的誠意外，最大的收穫就是得知 Featurescript 特徵程式語言，即將開放各界使用。
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+所謂的 Featurescript， 根據了解，是一種可以透過 Feature Studio， 讓使用者修改或延伸 Onshape 特徵指令的新程式語言，據悉，目前 Onshape 所指供的特徵指令功能，也是透過 Featurescript 打造。
+
+並且，未來使用者所打造的各式客製化 Featurescript 程式，可以在 Onshape App store 中免費公開或販售。
+
+</t>
+<t tx="amd.20160518215339.1"></t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
