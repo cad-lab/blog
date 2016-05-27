@@ -126,6 +126,7 @@
 </v>
 <v t="amd.20160521222238.1"><vh>@clean yen_20160521.md</vh></v>
 <v t="amd.20160527201408.1"><vh>@clean yen_20160527.md</vh></v>
+<v t="amd.20160527213220.1"><vh>@clean yen_20160527-1.md</vh></v>
 </v>
 </v>
 <v t="amd.20160106094754.1" a="E"><vh>@path ./../content/pages</vh>
@@ -3374,6 +3375,22 @@ Author: kmol
 第1磁區的網路設置以純 IPV4 為主, 並將最後一排的 9 台電腦, 以 IPV4/IPV6 雙支援的固定 IP 啟動 Ubuntu + &lt;a href="http://www.squid-cache.org/"&gt;Squid&lt;/a&gt; (選擇第3磁區開機), 讓上課師生自行選擇開機後透過 &lt;a href="https://en.wikipedia.org/wiki/Round-robin_DNS"&gt;Round Robin DNS&lt;/a&gt; 配置域名的代理主機增速上網.
 
 第2磁區擬採 Windows 10 Pro 開機, 並全數使用無需安裝的程式套件, 以提升套件使用效能, 網路配置則彈性配置純 IPV4 或純 IPV6 位址上網, 當採用純 IPV6 上網時, 必須啟動電腦輔助設計室中的 9 台 IPV4/IPV6 雙支援代理主機 (以 Ubuntu 磁區開機).</t>
+<t tx="amd.20160527213220.1">@language md
+Title: 雲端平台上的電腦輔助機械設計
+Category: MISC
+Tags: CADLab, MCAD
+Author: kmol
+@others
+
+&lt;a href="https://www.onshape.com/"&gt;Onshape&lt;/a&gt; 在 &lt;a href="http://wordpress-2015course.rhcloud.com/?p=4514"&gt;2015年12月&lt;/a&gt;正式全面對外公開之後, 已經啟動電腦輔助機械設計的雲端世代, 為了追求高效能的全球協同產品設計流程, 利用跨硬體裝置, 免安裝, 具備設計特徵版次管理, 而且提供類似 Featurescript 客製化功能建構環境 (i.e. Feature Studio) 的全雲端電腦輔助機械設計工具, 將會日漸完備.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+面對 Onshape 的破壞性創新產品挑戰, SolidWorks 也以採用 &lt;a href="http://www.3ds.com/about-3ds/3dexperience-platform/"&gt;3dexperience platform&lt;/a&gt; 核心技術為主體, 推出全新的全雲端產品: &lt;a href="http://xdesign.solidworks.com/"&gt;Xdesign&lt;/a&gt; 回應.
+
+目前, SolidWorks 單機版約佔全球市場&lt;a href="http://blog.cnccookbook.com/2015/01/20/results-2015-cad-survey/"&gt;超過五分之一&lt;/a&gt;, 未來將與自家的 Xdesign 與 Onshape 免安裝全雲端產品, 競逐全球電腦輔助機械設計軟體市場. 
+
+因此, 2016 年可以說是電腦輔助機械設計的雲端元年, 正好比 2006 年推出的 &lt;a href="https://en.wikipedia.org/wiki/Google_Docs,_Sheets,_and_Slides"&gt;Google Doc&lt;/a&gt;, 晚了十年.</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
