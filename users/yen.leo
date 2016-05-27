@@ -125,6 +125,7 @@
 <v t="amd.20160518215339.1"><vh>57</vh></v>
 </v>
 <v t="amd.20160521222238.1"><vh>@clean yen_20160521.md</vh></v>
+<v t="amd.20160527201408.1"><vh>@clean yen_20160527.md</vh></v>
 </v>
 </v>
 <v t="amd.20160106094754.1" a="E"><vh>@path ./../content/pages</vh>
@@ -3353,6 +3354,26 @@ Author: kmol
 事實上，「大學教育政策白皮書」中所提到的觀點，或許是台灣一般大學與科技大學所共同面臨的問題，但，就基本體制上，仍然要有所區分，方能貫徹彼此的教育目標，為社會的現在與未來，提供充足的人力資源。吾人以為，一般大學的最高目標在追求學術的卓越，而科技大學則必須掌握技術的領先，學術強調的是其具備未來的主導性，卓越的學術指的是高瞻遠矚，是未來有用的技術；而技術的領先是要培養能馬上為企業所用的科技尖兵，是能馬上將知識轉化為商品的創新發明家。也許，隨著科技進化的速度日益增快，學術與技術的區隔，也就變得越來越小，但一般大學與科技大學應有的角色與定位，仍不失為各大學爭取重點特色時，所應強調的重點。
 
 最後，談到本校在通過改名為科技大學後，如何在「大學教育政策白皮書」的指導方針下，爭取市場定位，並積極發展出屬於自己的特色，吾人以為，必須要先從小處做起，慢慢往大處做；必須要先由內做起，然後再漸漸往外落實。小處在哪裡，必須先用科學化與合理化來管理學校的每一個角落，然後才能談替企業診斷，為財團解憂。必須要先在校內建立起知識經濟的體系，然後才有可能與社會上全民學習的脈動相結合。未來，全球化經濟發展的趨勢或許很難臆測，但本校單類多科的包袱，如何逐步轉化為本校的重點特色，將是一項嚴酷的考驗，成敗的關鍵，就看現在。</t>
+<t tx="amd.20160527201408.1">@language md
+Title: 電腦輔助設計室的電腦開機磁區設置
+Category: MISC
+Tags: CADLab, Windows 10
+Author: kmol
+@others
+
+第1磁區: Windows 10 Pro + &lt;a href="https://msdn.microsoft.com/zh-tw/virtualization/hyperv_on_windows/quick_start/walkthrough_install"&gt;Hyper-V&lt;/a&gt; 安裝 Windows 7 Professional
+
+第2磁區: Windows 10 Pro + 可攜免安裝程式套件
+
+第3磁區: &lt;a href="http://releases.ubuntu.com/16.04/"&gt;Ubuntu 16.04&lt;/a&gt; Server + ubuntu-desktop
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+第1磁區擬舀採 Windows 10 Pro 開機, 並安裝常用的 CAD/CAE/CAM 相關軟體套件的安裝為主, 針對無法在 Windows 10 Pro 執行的套件, 則建議安裝在 Hyper-V 模式下的 Windows 7 Professional 開機磁區中.
+
+第1磁區的網路設置以純 IPV4 為主, 並將最後一排的 9 台電腦, 以 IPV4/IPV6 雙支援的固定 IP 啟動 Ubuntu + &lt;a href="http://www.squid-cache.org/"&gt;Squid&lt;/a&gt; (選擇第3磁區開機), 讓上課師生自行選擇開機後透過 &lt;a href="https://en.wikipedia.org/wiki/Round-robin_DNS"&gt;Round Robin DNS&lt;/a&gt; 配置域名的代理主機增速上網.
+
+第2磁區擬採 Windows 10 Pro 開機, 並全數使用無需安裝的程式套件, 以提升套件使用效能, 網路配置則彈性配置純 IPV4 或純 IPV6 位址上網, 當採用純 IPV6 上網時, 必須啟動電腦輔助設計室中的 9 台 IPV4/IPV6 雙支援代理主機 (以 Ubuntu 磁區開機).</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃

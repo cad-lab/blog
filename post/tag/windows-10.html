@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>CADLab 機械設計系網路配置圖 - CADLab (虎尾科大MDE)</title>
+    <title>Windows 10 - CADLab (虎尾科大MDE)</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -166,22 +166,16 @@ init_mathjax = function() {
 init_mathjax();
 </script>
 
-<link rel="canonical" href="http://cadlab.mde.tw/post/cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu.html">
 
-        <meta name="author" content="kmol" />
-        <meta name="keywords" content="CADLAB,Network Diagram" />
-        <meta name="description" content="我們正在使用 Python3 與 http://blockdiag.com/en/ 中的 nwdiag 工具繪製機械設計工程系的網路配置圖." />
+    <meta name="author" content="kmol" />
+    <meta name="keywords" content="Windows 10" />
 
+    <!-- Open Graph tags -->
         <meta property="og:site_name" content="CADLab (虎尾科大MDE)" />
-        <meta property="og:type" content="article"/>
-        <meta property="og:title" content="CADLab 機械設計系網路配置圖"/>
-        <meta property="og:url" content="http://cadlab.mde.tw/post/cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu.html"/>
-        <meta property="og:description" content="我們正在使用 Python3 與 http://blockdiag.com/en/ 中的 nwdiag 工具繪製機械設計工程系的網路配置圖."/>
-        <meta property="article:published_time" content="2016-05-11" />
-            <meta property="article:section" content="規劃" />
-            <meta property="article:tag" content="CADLAB" />
-            <meta property="article:tag" content="Network Diagram" />
-            <meta property="article:author" content="kmol" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="CADLab (虎尾科大MDE)"/>
+        <meta property="og:url" content="http://cadlab.mde.tw/post"/>
+        <meta property="og:description" content="CADLab (虎尾科大MDE)"/>
 
 
     <!-- Bootstrap -->
@@ -268,7 +262,7 @@ CADLab (虎尾科大MDE)            </a>
                         <li >
                             <a href="http://cadlab.mde.tw/post/category/dao-yin.html">導引</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="http://cadlab.mde.tw/post/category/gui-hua.html">規劃</a>
                         </li>
                         <li >
@@ -296,142 +290,16 @@ CADLab (虎尾科大MDE)            </a>
     <div class="row">
         <div class="col-sm-9">
 
-    <section id="content">
-        <article>
-            <header class="page-header">
-                <h1>
-                    <a href="http://cadlab.mde.tw/post/cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu.html"
-                       rel="bookmark"
-                       title="Permalink to CADLab 機械設計系網路配置圖">
-                        CADLab 機械設計系網路配置圖
-                    </a>
-                </h1>
-            </header>
-            <div class="entry-content">
-                <div class="panel">
-                    <div class="panel-body">
-<footer class="post-info">
-    <span class="label label-default">Date</span>
-    <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2016-05-11T11:12:54.469850+08:00"> 三 11 五月 2016</time>
-    </span>
-            <span class="label label-default">By</span>
-            <a href="http://cadlab.mde.tw/post/author/kmol.html"><i class="fa fa-user"></i> kmol</a>
+            <article>
+                <h2><a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-de-dian-nao-kai-ji-ci-qu-she-zhi.html">電腦輔助設計室的電腦開機磁區設置</a></h2>
+                <div class="summary"><p>第1磁區: Windows 10 Pro + <a href="https://msdn.microsoft.com/zh-tw/virtualization/hyperv_on_windows/quick_start/walkthrough_install">Hyper-V</a> 安裝 Windows 7 Professional</p>
+<p>第2磁區: Windows 10 Pro + 可攜免安裝程式套件</p>
+<p>第3磁區: <a href="http://releases.ubuntu.com/16.04/">Ubuntu 16.04</a> Server + ubuntu-desktop</p>
 
-
-
-<span class="label label-default">Tags</span>
-	<a href="http://cadlab.mde.tw/post/tag/cadlab.html">CADLAB</a>
-        /
-	<a href="http://cadlab.mde.tw/post/tag/network-diagram.html">Network Diagram</a>
-    
-</footer><!-- /.post-info -->                    </div>
+                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-de-dian-nao-kai-ji-ci-qu-she-zhi.html">more ...</a>
                 </div>
-                <p>我們正在使用 Python3 與 <a href="http://blockdiag.com/en/">http://blockdiag.com/en/</a> 中的 nwdiag 工具繪製機械設計工程系的網路配置圖.</p>
-
-
-<p>從 <a href="http://project.mde.tw/blog/yen-ji-jie-she-ji-zhuan-ti-de-biao-da-ji-shu-ling-yu-yu-kao-liang-ceng-mian.html">機械設計專題的表達、技術領域與考量層面</a> 範例, 可以了解利用文字描述轉成 2D 流程圖, 具有容易修改維護的優點, 這裡運用相同的概念, 嘗試利用類似的 nwdiag 工具, 畫出整個系的網路配置圖.</p>
-<p>blockdiag 與 nwdiag 若能夠搭配全球資訊網路上的 Python3 wsgi 程式, 採用資料庫系統來管理機械設計工程系的網路資源配置, 將可以實際納為<a href="http://chiamingyen.github.io/kmolab/blog/tag/wang-ji-nei-rong-guan-li.html">網際內容管理</a>課程的教材.</p>
-<p><img src="http://cad-lab.github.io/cadlab_data/files/mde_network_diag.png" width="800" /></p>
-<p>上述 CADLab 網路配置圖對應的 nwdiag 描述文件:</p>
-<pre class="brush: bash;">
-nwdiag {
-    default_fontsize = 15;
-    校主幹 [shape = cloud];
-    校主幹 -- 系路由器;
-
-    network 系主幹{
-        address = "140.130.17.0/24";
-        系路由器 [address="140.130.17.254"];
-        雲端點名網路;
-        八樓集線器 [address="140.130.17.82"];
-        七樓集線器;
-        六樓集線器;
-        系伺服器群;
-    }
-
-    network 八樓主幹{
-        address="17.10-82"
-        八樓集線器 [address="140.130.17.82"];
-        老師1伺服器群 [address="140.130.17.10-15"];
-        老師2伺服器群 [address="140.130.17.16-25"];
-        老師3伺服器群 [address="140.130.17.26-60"];
-    }
-
-    network CAD_CAE{
-        address="17.83";
-        八樓集線器 [address="140.130.17.82"];
-        CAD_NAT [address="140.130.17.82"];
-        CAE_NAT [address="140.130.17.83"];
-    }
-
-    network 電腦輔助設計室{
-        address="192.168.1.0/24";
-        CAD_NAT [address="192.168.1.1"];
-        CAD1 [address=".2"];
-        CAD2;
-        CAD64 [address=".100"];
-    }
-
-    network 電腦輔助繪圖室{
-        address="192.168.1.0/24";
-        CAE_NAT [address="192.168.1.1"];
-        CAE1 [address=".2"];
-        CAE2;
-        CAE64 [address=".100"];
-    }
-
-    network 七樓主幹{
-        address="140.130.17.83-90"
-        七樓集線器;
-        老師4伺服器群 [address="140.130.17.61-63"];
-        老師5伺服器群 [address="140.130.17.64-70"];
-        老師6伺服器群 [address="140.130.17.71-75"];
-    }
-
-    network 六樓主幹{
-        address="140.130.17.91-100"
-        六樓集線器;
-        老師7伺服器群 [address="140.130.17.76-78"];
-        老師8伺服器群 [address="140.130.17.79-80"];
-        老師9伺服器群 [address="140.130.17.81-95"];
-    }
-}
-</pre>
-            </div>
-            <!-- /.entry-content -->
-    <hr/>
-    <section class="comments" id="comments">
-        <h2>Comments</h2>
-
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-            var disqus_shortname = 'cadlab'; // required: replace example with your forum shortname
-
-                    var disqus_identifier = 'cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu';
-                var disqus_url = 'http://cadlab.mde.tw/post/cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu.html';
-
-            var disqus_config = function () {
-                this.language = "en";
-            };
-
-            /* * * DON'T EDIT BELOW THIS LINE * * */
-            (function () {
-                var dsq = document.createElement('script');
-                dsq.type = 'text/javascript';
-                dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
-            Disqus.</a></noscript>
-        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-    </section>
-        </article>
-    </section>
+            </article>
+            <hr/>
 
         </div>
         <div class="col-sm-3" id="sidebar">
@@ -445,26 +313,6 @@ nwdiag {
                     <li class="list-group-item">
                         <a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-de-dian-nao-kai-ji-ci-qu-she-zhi.html">
                             電腦輔助設計室的電腦開機磁區設置
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/da-xue-jiao-yu-zheng-ce-bai-pi-shu-du-hou-xin-de-bao-gao.html">
-                            大學教育政策白皮書讀後心得報告
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/onshape-ji-jiang-shi-chu-featurescript-cheng-shi-yu-yan.html">
-                            Onshape 即將釋出 Featurescript 程式語言
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html">
-                            網際機械設計 2D 繪圖
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html">
-                            電腦輔助機械設計流程中的分散式版本管理
                         </a>
                     </li>
                 </ul>
