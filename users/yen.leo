@@ -3382,7 +3382,7 @@ Tags: CADLab, MCAD
 Author: kmol
 @others
 
-&lt;a href="https://www.onshape.com/"&gt;Onshape&lt;/a&gt; 在 &lt;a href="http://wordpress-2015course.rhcloud.com/?p=4514"&gt;2015年12月&lt;/a&gt;正式全面對外公開之後, 已經啟動電腦輔助機械設計的雲端世代, 為了追求高效能的全球協同產品設計流程, 利用跨硬體裝置, 免安裝, 具備設計特徵版次管理, 而且提供類似 Featurescript 客製化功能建構環境 (i.e. Feature Studio) 的全雲端電腦輔助機械設計工具, 將會日漸完備.
+&lt;a href="https://www.onshape.com/"&gt;Onshape&lt;/a&gt; 在 &lt;a href="http://wordpress-2015course.rhcloud.com/?p=4514"&gt;2015年12月&lt;/a&gt;正式全面對外公開之後, 已經啟動電腦輔助機械設計的雲端世代, 為了追求高效能的全球協同產品設計流程, 利用跨硬體裝置, 免安裝, 具備設計特徵版次管理, 而且提供類似 &lt;a href="https://cad.onshape.com/FsDoc/"&gt;Featurescript&lt;/a&gt; 客製化功能建構環境 (i.e. Feature Studio) 的全雲端電腦輔助機械設計工具, 將會日漸完備.
 
 &lt;!-- PELICAN_END_SUMMARY --&gt;
 
