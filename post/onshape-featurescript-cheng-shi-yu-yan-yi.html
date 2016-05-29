@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en"
+>
+<head>
+    <title>Onshape FeatureScript 程式語言 (一) - CADLab (虎尾科大MDE)</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<style type="text/css">
+
+/*some stuff for output/input prompts*/
+div.cell{border:1px solid transparent;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}div.cell.selected{border-radius:4px;border:thin #ababab solid}
+div.cell.edit_mode{border-radius:4px;border:thin #008000 solid}
+div.cell{width:100%;padding:5px 5px 5px 0;margin:0;outline:none}
+div.prompt{min-width:11ex;padding:.4em;margin:0;font-family:monospace;text-align:right;line-height:1.21429em}
+@media (max-width:480px){div.prompt{text-align:left}}div.inner_cell{display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1}
+div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;line-height:1.21429em}
+div.prompt:empty{padding-top:0;padding-bottom:0}
+div.input{page-break-inside:avoid;display:-webkit-box;-webkit-box-orient:horizontal;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:horizontal;-moz-box-align:stretch;display:box;box-orient:horizontal;box-align:stretch;}
+div.inner_cell{width:90%;}
+div.input_area{border:1px solid #cfcfcf;border-radius:4px;background:#f7f7f7;}
+div.input_prompt{color:navy;border-top:1px solid transparent;}
+div.output_wrapper{margin-top:5px;position:relative;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
+div.output_scroll{height:24em;width:100%;overflow:auto;border-radius:4px;-webkit-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);-moz-box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);box-shadow:inset 0 2px 8px rgba(0, 0, 0, 0.8);}
+div.output_collapsed{margin:0px;padding:0px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-box-align:stretch;display:-moz-box;-moz-box-orient:vertical;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;width:100%;}
+div.out_prompt_overlay{height:100%;padding:0px 0.4em;position:absolute;border-radius:4px;}
+div.out_prompt_overlay:hover{-webkit-box-shadow:inset 0 0 1px #000000;-moz-box-shadow:inset 0 0 1px #000000;box-shadow:inset 0 0 1px #000000;background:rgba(240, 240, 240, 0.5);}
+div.output_prompt{color:darkred;}
+
+a.anchor-link:link{text-decoration:none;padding:0px 20px;visibility:hidden;}
+h1:hover .anchor-link,h2:hover .anchor-link,h3:hover .anchor-link,h4:hover .anchor-link,h5:hover .anchor-link,h6:hover .anchor-link{visibility:visible;}
+/* end stuff for output/input prompts*/
+
+
+.highlight-ipynb .hll { background-color: #ffffcc }
+.highlight-ipynb  { background: #f8f8f8; }
+.highlight-ipynb .c { color: #408080; font-style: italic } /* Comment */
+.highlight-ipynb .err { border: 1px solid #FF0000 } /* Error */
+.highlight-ipynb .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight-ipynb .o { color: #666666 } /* Operator */
+.highlight-ipynb .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight-ipynb .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight-ipynb .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight-ipynb .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight-ipynb .gd { color: #A00000 } /* Generic.Deleted */
+.highlight-ipynb .ge { font-style: italic } /* Generic.Emph */
+.highlight-ipynb .gr { color: #FF0000 } /* Generic.Error */
+.highlight-ipynb .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight-ipynb .gi { color: #00A000 } /* Generic.Inserted */
+.highlight-ipynb .go { color: #888888 } /* Generic.Output */
+.highlight-ipynb .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight-ipynb .gs { font-weight: bold } /* Generic.Strong */
+.highlight-ipynb .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight-ipynb .gt { color: #0044DD } /* Generic.Traceback */
+.highlight-ipynb .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight-ipynb .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight-ipynb .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight-ipynb .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight-ipynb .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight-ipynb .kt { color: #B00040 } /* Keyword.Type */
+.highlight-ipynb .m { color: #666666 } /* Literal.Number */
+.highlight-ipynb .s { color: #BA2121 } /* Literal.String */
+.highlight-ipynb .na { color: #7D9029 } /* Name.Attribute */
+.highlight-ipynb .nb { color: #008000 } /* Name.Builtin */
+.highlight-ipynb .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight-ipynb .no { color: #880000 } /* Name.Constant */
+.highlight-ipynb .nd { color: #AA22FF } /* Name.Decorator */
+.highlight-ipynb .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight-ipynb .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight-ipynb .nf { color: #0000FF } /* Name.Function */
+.highlight-ipynb .nl { color: #A0A000 } /* Name.Label */
+.highlight-ipynb .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight-ipynb .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight-ipynb .nv { color: #19177C } /* Name.Variable */
+.highlight-ipynb .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight-ipynb .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight-ipynb .mf { color: #666666 } /* Literal.Number.Float */
+.highlight-ipynb .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight-ipynb .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight-ipynb .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight-ipynb .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight-ipynb .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight-ipynb .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight-ipynb .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight-ipynb .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight-ipynb .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight-ipynb .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight-ipynb .sx { color: #008000 } /* Literal.String.Other */
+.highlight-ipynb .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight-ipynb .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight-ipynb .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight-ipynb .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight-ipynb .vc { color: #19177C } /* Name.Variable.Class */
+.highlight-ipynb .vg { color: #19177C } /* Name.Variable.Global */
+.highlight-ipynb .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight-ipynb .il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
+
+<style type="text/css">
+/* Overrides of notebook CSS for static HTML export */
+div.entry-content {
+  overflow: visible;
+  padding: 8px;
+}
+.input_area {
+  padding: 0.2em;
+}
+
+a.heading-anchor {
+ white-space: normal;
+}
+
+.rendered_html
+code {
+ font-size: .8em;
+}
+
+pre.ipynb {
+  color: black;
+  background: #f7f7f7;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0px;
+  font-size: 13px;
+}
+
+/* remove the prompt div from text cells */
+div.text_cell .prompt {
+    display: none;
+}
+
+/* remove horizontal padding from text cells, */
+/* so it aligns with outer body text */
+div.text_cell_render {
+    padding: 0.5em 0em;
+}
+
+img.anim_icon{padding:0; border:0; vertical-align:middle; -webkit-box-shadow:none; -box-shadow:none}
+</style>
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+<script type="text/javascript">
+init_mathjax = function() {
+    if (window.MathJax) {
+        // MathJax loaded
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+            },
+            displayAlign: 'left', // Change this to 'center' to center equations.
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 0}}
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
+}
+init_mathjax();
+</script>
+
+<link rel="canonical" href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan-yi.html">
+
+        <meta name="author" content="kmol" />
+        <meta name="keywords" content="CADLab,MCAD" />
+        <meta name="description" content="接續上一篇文章, 整理目前 Onshape 已經釋出的 FeatureScript 相關應用範例." />
+
+        <meta property="og:site_name" content="CADLab (虎尾科大MDE)" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Onshape FeatureScript 程式語言 (一)"/>
+        <meta property="og:url" content="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan-yi.html"/>
+        <meta property="og:description" content="接續上一篇文章, 整理目前 Onshape 已經釋出的 FeatureScript 相關應用範例."/>
+        <meta property="article:published_time" content="2016-05-29" />
+            <meta property="article:section" content="MISC" />
+            <meta property="article:tag" content="CADLab" />
+            <meta property="article:tag" content="MCAD" />
+            <meta property="article:author" content="kmol" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://cadlab.mde.tw/post/theme/css/bootstrap.united.min.css" type="text/css"/>
+    <link href="http://cadlab.mde.tw/post/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://cadlab.mde.tw/post/theme/css/pygments/monokai.css" rel="stylesheet">
+    <link href="http://cadlab.mde.tw/post/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cadlab.mde.tw/post/theme/css/style.css" type="text/css"/>
+
+        <link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="CADLab (虎尾科大MDE) ATOM Feed"/>
+
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shCore.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushJScript.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushJava.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushPython.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushSql.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushXml.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushPhp.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCpp.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCss.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushCSharp.js"></script>
+<script type="text/javascript" src="http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/shBrushBash.js"></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/css/shCore.css";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://cad-lab.github.io/cadlab_data/files/syntaxhighlighter/css/shThemeDefault.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://cadlab.mde.tw/post/" class="navbar-brand">
+CADLab (虎尾科大MDE)            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="http://cadlab.mde.tw/post/pages/about/">
+                             About
+                          </a></li>
+                        <li >
+                            <a href="http://cadlab.mde.tw/post/category/can-kao.html">參考</a>
+                        </li>
+                        <li >
+                            <a href="http://cadlab.mde.tw/post/category/dao-yin.html">導引</a>
+                        </li>
+                        <li >
+                            <a href="http://cadlab.mde.tw/post/category/gui-hua.html">規劃</a>
+                        </li>
+                        <li class="active">
+                            <a href="http://cadlab.mde.tw/post/category/misc.html">Misc</a>
+                        </li>
+                        <li >
+                            <a href="http://cadlab.mde.tw/post/category/zi-yuan.html">資源</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="http://cadlab.mde.tw/post/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+              <li><a href="http://cadlab.mde.tw/post/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan-yi.html"
+                       rel="bookmark"
+                       title="Permalink to Onshape FeatureScript 程式語言 (一)">
+                        Onshape FeatureScript 程式語言 (一)
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-05-29T17:00:54.707837+08:00"> 日 29 五月 2016</time>
+    </span>
+            <span class="label label-default">By</span>
+            <a href="http://cadlab.mde.tw/post/author/kmol.html"><i class="fa fa-user"></i> kmol</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://cadlab.mde.tw/post/tag/cadlab.html">CADLab</a>
+        /
+	<a href="http://cadlab.mde.tw/post/tag/mcad.html">MCAD</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>接續上一篇文章, 整理目前 Onshape 已經釋出的 FeatureScript 相關應用範例.</p>
+
+
+<p><a href="https://cad.onshape.com/documents/574941a2e4b05f50e871a75a/w/1c096ba7cb6b4bb6d74f8ffa/e/8c83ef9b92095a980e185cf8">Curve Pattern FeatureScript 程式 Document</a></p>
+<p><a href="https://cad.onshape.com/documents/57494139e4b04aa3f56f8243/w/cad51c78bef702f93d689668/e/0cfa9d7c4606e1f2ae32be16">Helix in Fill FeatureScript 程式 Document</a></p>
+<p><a href="https://cad.onshape.com/documents/57494120e4b04aa3f56f8206/w/d17e3ff3f757fabdb9084368/e/ab4048d5790d64d16e68e02d">3D Spline Fill FeatureScript 程式 Document</a></p>
+<p><a href="https://cad.onshape.com/documents/57494101e4b04aa3f56f81ed/w/b2ffdc215aff14ea3817b535/e/1626934c31793c1d4d18eb6f">Brick FeatureScript 程式 Document</a></p>
+<p><a href="https://cad.onshape.com/documents/57494096e4b05f50e871a70e/w/165ebc7b4103e5b6c91e3f5b/e/bfd58761a0e39c157f11bd42">Measure Distance FeatureScript 程式 Document</a></p>
+<p><a href="https://cad.onshape.com/documents/5749420ae4b04aa3f56f8288/w/ed9f79b9809ffe7610f9c537/e/aa01cfec5e04037e7ca611b7">Lighten FeatureScript 程式 Document</a></p>
+<p>Snap Hook FeatureScript 原始碼:</p>
+<pre class="brush: jscript">
+/*    
+    Snap Hook
+
+    This custom feature creates a common fastening feature in plastic part design.
+
+    The Snap Hook is just one version of this type of fastening feature 
+    and could be easily extended to include many other types. This was built
+    to show that you can create complex, compound features easily.
+
+    Version 1 - April 26, 2016 - Neil Cooke, Onshape Inc.
+*/ 
+
+FeatureScript 336;
+import(path : "onshape/std/geometry.fs", version : "336.0");
+
+annotation { "Feature Type Name" : "Snap Hook" }
+export const SnapHook = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        annotation { "Name" : "Sketch point locations", "Filter" : EntityType.VERTEX && SketchObject.YES && ConstructionObject.NO }
+        definition.locations is Query;
+
+        annotation { "Name" : "Height type" }
+        definition.style is HookStyle;
+
+        if (definition.style == HookStyle.BLIND)
+        {
+            annotation { "Name" : "Height", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isLength(definition.height, HOOK_HEIGHT);
+        }
+        else
+        {
+            annotation { "Name" : "Parallel face or plane", "Filter" : EntityType.FACE, "MaxNumberOfPicks" : 1 }
+            definition.parallelFace is Query;
+        }
+
+        annotation { "Name" : "Width", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.hookWidth, HOOK_WIDTH);
+
+        annotation { "Name" : "Flip direction", "UIHint" : "OPPOSITE_DIRECTION" }
+        definition.hookFlipDirection is boolean;
+
+        annotation { "Name" : "Edge to define direction", "Filter" : EntityType.EDGE, "MaxNumberOfPicks" : 1 }
+        definition.hookDirection is Query;
+
+        annotation { "Name" : "Thickness", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.hookThickness, HOOK_THK);
+
+        annotation { "Name" : "Undercut depth", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.hookDepth, HOOK_THK);
+
+        annotation { "Name" : "Lip height", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.flatHeight, HOOK_LIP);
+
+        annotation { "Name" : "Insertion angle", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isAngle(definition.deflectionAngle, HOOK_ANGLE);
+
+        annotation { "Name" : "Draft", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"], "Default" : true }
+        definition.hasDraft is boolean;
+
+        if (definition.hasDraft == true)
+        {
+            annotation { "Name" : "Draft angle", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"] }
+            isAngle(definition.draftAngle, ANGLE_STRICT_90_BOUNDS);
+
+            annotation { "Name" : "Back face draft angle", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isAngle(definition.backDraftAngle, ANGLE_STRICT_90_BOUNDS);
+        }
+        annotation { "Name" : "Cutout", "Default" : true }
+        definition.hasCutout is boolean;
+
+        annotation { "Name" : "Merge scope", "Filter" : EntityType.BODY && BodyType.SOLID }
+        definition.booleanScope is Query;
+    }
+
+    {
+        // get all the user selected locations
+        const locations = evaluateQuery(context, definition.locations);
+
+        // if a solid body intersects the first point in the list, automatically use that in the merge scope
+        const targetBody = evaluateQuery(context, qContainsPoint(qBodyType(qEverything(EntityType.BODY), BodyType.SOLID), evVertexPoint(context, { "vertex" : locations[0] })));
+
+        if (size(targetBody) == 0 && definition.booleanScope != undefined)
+            definition.targetBody = definition.booleanScope; // if not, get user to select merge scope
+        else
+            definition.targetBody = targetBody[0];
+
+        var sketchPlane is Plane = evOwnerSketchPlane(context, { "entity" : locations[0] });
+        var topPlane;
+
+        var hookVector = vector(1, 0); // by default pointing across in x
+
+        // if user has defined hook direction, work out the vector
+        if (definition.hookDirection != undefined)
+        {
+            const directionResult = try(evAxis(context, { "axis" : definition.hookDirection }));
+
+            if (directionResult != undefined)
+                hookVector = normalize(vector(directionResult.direction[0], directionResult.direction[1]));
+        }
+
+        if (definition.hookFlipDirection)
+            hookVector = hookVector * -1;
+
+        // get vector perpendicular to hook direction
+        var perpHookVector = vector(hookVector[1] * -1, hookVector[0]);
+
+        // define the plane for the top of the boss
+        if (definition.style == HookStyle.PLANE && definition.parallelFace != undefined)
+            topPlane = evPlane(context, { "face" : definition.parallelFace });
+        else
+            topPlane = plane(sketchPlane.origin + definition.height * sketchPlane.normal, sketchPlane.normal);
+
+        var nameId = 1;
+        var chamferPoints = [];
+        var frontFacePoints = [];
+        var backFacePoints = [];
+
+        const sketch1 = newSketchOnPlane(context, id + "sketch1", { "sketchPlane" : topPlane });
+        const sketch2 = newSketchOnPlane(context, id + "sketch2", { "sketchPlane" : topPlane });
+        const sketch3 = newSketchOnPlane(context, id + "sketch3", { "sketchPlane" : topPlane });
+
+        definition.depth = definition.hookDepth / tan(definition.deflectionAngle) + definition.flatHeight;
+
+        // Build 3 sketches each with a rectangle
+        for (var location in locations)
+        {
+            var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
+
+            skRectangle(sketch1, "rectangleHook" ~ nameId, {
+                        "firstCorner" : vector(point[0], point[1]) + (definition.hookWidth / 2) * hookVector,
+                        "secondCorner" : vector(point[0], point[1]) - (definition.hookWidth / 2) * hookVector - definition.hookDepth * perpHookVector
+                    });
+
+            skRectangle(sketch2, "rectangleThickness" ~ nameId, {
+                        "firstCorner" : vector(point[0], point[1]) - (definition.hookWidth / 2) * hookVector,
+                        "secondCorner" : vector(point[0], point[1]) + (definition.hookWidth / 2) * hookVector + definition.hookThickness * perpHookVector
+                    });
+
+            skRectangle(sketch3, "completeRectangle" ~ nameId, {
+                        "firstCorner" : vector(point[0], point[1]) - (definition.hookWidth / 2) * hookVector - definition.hookDepth * perpHookVector,
+                        "secondCorner" : vector(point[0], point[1]) + (definition.hookWidth / 2) * hookVector + definition.hookThickness * perpHookVector
+                    });
+
+            // Keep a list of the centerpoints of the edges where the chamfers may go
+            var chamferPoint2d = vector(point[0], point[1]) - definition.hookDepth * perpHookVector;
+            if (definition.hasDraft)
+            {
+                chamferPoint2d = vector(point[0], point[1]) - (definition.hookDepth - definition.depth * tan(definition.draftAngle)) * perpHookVector;
+            }
+            chamferPoints = append(chamferPoints, toWorld(planeToCSys(topPlane), vector(chamferPoint2d[0], chamferPoint2d[1], definition.depth)));
+
+            var backFacePoint2d = vector(point[0], point[1]) + definition.hookThickness * perpHookVector;
+            backFacePoints = append(backFacePoints, toWorld(planeToCSys(topPlane), vector(backFacePoint2d[0], backFacePoint2d[1], 0 * meter)));
+            frontFacePoints = append(frontFacePoints, toWorld(planeToCSys(topPlane), vector(point[0], point[1], 0 * meter)));
+
+            nameId += 1;
+        }
+        skSolve(sketch1);
+        skSolve(sketch2);
+        skSolve(sketch3);
+
+        extrude(context, id + ("extrude1"), {
+                    "entities" : qSketchRegion(id + "sketch2"),
+                    "endBound" : BoundingType.UP_TO_BODY,
+                    "depth" : definition.depth,
+                    "endBoundEntityBody" : definition.targetBody,
+                    "oppositeDirection" : true,
+                    "hasDraft" : definition.hasDraft,
+                    "draftAngle" : definition.draftAngle,
+                    "draftPullDirection" : false,
+                    "operationType" : NewBodyOperationType.ADD,
+                    "defaultScope" : false,
+                    "booleanScope" : definition.targetBody
+                });
+
+        extrude(context, id + ("extrude2"), {
+                    "entities" : qSketchRegion(id + "sketch3"),
+                    "endBound" : BoundingType.BLIND,
+                    "depth" : definition.depth,
+                    "endBoundEntityBody" : definition.targetBody,
+                    "oppositeDirection" : false,
+                    "hasDraft" : definition.hasDraft,
+                    "draftAngle" : definition.draftAngle,
+                    "draftPullDirection" : true,
+                    "operationType" : NewBodyOperationType.ADD,
+                    "defaultScope" : false,
+                    "booleanScope" : definition.targetBody
+                });
+
+        var chamferEdges = [];
+
+        for (var i = 0; i < size(chamferPoints); i += 1)
+        {
+            // Find the edges that intersect the points previously collected
+            chamferEdges = append(chamferEdges, qContainsPoint(qCreatedBy(id + "extrude2", EntityType.EDGE), chamferPoints[i]));
+        }
+
+        try(opChamfer(context, id + "chamfer1", {
+                        "entities" : qUnion(chamferEdges),
+                        "chamferType" : ChamferType.OFFSET_ANGLE,
+                        "width" : definition.depth - definition.flatHeight,
+                        "angle" : definition.deflectionAngle,
+                        "oppositeDirection" : true
+                    }));
+
+        if (definition.hasDraft)
+        {
+            var backFaces = [];
+            var frontFaces = [];
+
+            for (var i = 0; i < size(backFacePoints); i += 1)
+            {
+                // Find the edges that intersect the points previously collected
+                backFaces = append(backFaces, qContainsPoint(qCreatedBy(id + "extrude1", EntityType.FACE), backFacePoints[i]));
+                frontFaces = append(frontFaces, qContainsPoint(qCreatedBy(id + "extrude1", EntityType.FACE), frontFacePoints[i]));
+            }
+
+            opPlane(context, id + "plane1", {
+                        "plane" : topPlane,
+                        "size" : 0.1 * meter
+                    });
+
+            opDraft(context, id + "draft1", {
+                        "neutralPlane" : qCreatedBy(id + "plane1", EntityType.FACE),
+                        "pullVec" : topPlane.normal,
+                        "draftFaces" : qUnion(frontFaces),
+                        "angle" : 0 * degree
+                    });
+
+            opDraft(context, id + "draft2", {
+                        "neutralPlane" : qCreatedBy(id + "plane1", EntityType.FACE),
+                        "pullVec" : topPlane.normal,
+                        "draftFaces" : qUnion(backFaces),
+                        "angle" : definition.backDraftAngle + definition.draftAngle
+                    });
+        }
+
+        if (definition.hasCutout)
+        {
+            extrude(context, id + ("extrude3"), {
+                        "entities" : qSketchRegion(id + "sketch1"),
+                        "endBound" : BoundingType.THROUGH_ALL,
+                        "depth" : definition.depth,
+                        "endBoundEntityBody" : definition.targetBody,
+                        "oppositeDirection" : true,
+                        "hasDraft" : definition.hasDraft,
+                        "draftAngle" : definition.draftAngle,
+                        "draftPullDirection" : false,
+                        "operationType" : NewBodyOperationType.REMOVE,
+                        "defaultScope" : false,
+                        "booleanScope" : definition.targetBody
+                    });
+        }
+
+        // Remove sketch entities and plane - no longer required
+        var sketches = [qCreatedBy(id + "sketch1"), qCreatedBy(id + "sketch2"), qCreatedBy(id + "sketch3"), qCreatedBy(id + "plane1")];
+        opDeleteBodies(context, id + "delete", { "entities" : qUnion(sketches) });
+
+    }, {});
+
+const HOOK_ANGLE =
+{
+            "min" : -TOLERANCE.zeroAngle * radian,
+            "max" : (2 * PI + TOLERANCE.zeroAngle) * radian,
+            (degree) : [15, 30, 60]
+        } as AngleBoundSpec;
+
+const HOOK_HEIGHT =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.015, 500],
+            (centimeter) : 1.5,
+            (millimeter) : 15.0,
+            (inch) : 0.6
+        } as LengthBoundSpec;
+
+const HOOK_WIDTH =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.005, 500],
+            (centimeter) : 0.5,
+            (millimeter) : 5.0,
+            (inch) : 0.2
+        } as LengthBoundSpec;
+
+const HOOK_THK =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.002, 500],
+            (centimeter) : 0.2,
+            (millimeter) : 2.0,
+            (inch) : 0.08
+        } as LengthBoundSpec;
+
+const HOOK_LIP =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.001, 500],
+            (centimeter) : 0.1,
+            (millimeter) : 1.0,
+            (inch) : 0.04
+        } as LengthBoundSpec;
+
+export enum HookStyle
+{
+    annotation { "Name" : "Blind" }
+    BLIND,
+    annotation { "Name" : "Up to face" }
+    PLANE
+}
+</pre>
+
+<p>Fill Pattern FeatureScript 程式碼:</p>
+<pre class="brush: jscript">
+FeatureScript 336;
+import(path : "onshape/std/geometry.fs", version : "336.0");
+import(path : "onshape/std/transform.fs", version : "336.0");
+
+/**
+ * Performs a pattern of faces within a face. The instances are placed in a hexagonal pattern and no instances will be 
+ * created that cross the boundary of the face. If a border is set then no instances are created within a border of that size
+ * @param definition {{
+ *      @field entities A collection of faces that will be patterned
+ *      @field target A planar face that contains the 'entities' faces and that will contain the pattern
+ *      @field direction Specifies the alignment of the pattern in the face
+ *      @field distance The distance between the center of the instances
+ *      @field border The width of the "exclusion zone" at the edge of the target face     
+ * }}
+ */
+annotation { "Feature Type Name" : "Fill pattern", "Filter Selector" : "allparts" }
+export const fillPattern = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        annotation { "Name" : "Faces to pattern",
+                     "Filter" : EntityType.FACE && ConstructionObject.NO && SketchObject.NO }
+        definition.entities is Query;
+        annotation { "Name" : "Target face", "Filter" : GeometryType.PLANE, "MaxNumberOfPicks" : 1 }
+        definition.target is Query;
+        annotation { "Name" : "Direction", "Filter" : QueryFilterCompound.ALLOWS_AXIS, "MaxNumberOfPicks" : 1 }
+        definition.direction is Query;        
+        annotation { "Name" : "Distance" }
+        isLength(definition.distance, LENGTH_BOUNDS);
+        annotation { "Name" : "Border" }
+        isLength(definition.border, NONNEGATIVE_ZERO_DEFAULT_LENGTH_BOUNDS);
+    }
+    {
+        var transforms = [];
+        var instanceNames = [];
+
+        var direction = try(evAxis(context, { "axis" : definition.direction })).direction;
+        println(direction);
+        var normal = try(evPlane(context, {
+            "face" : definition.target
+        })).normal;
+
+        // For a hexagonal pattern we have two directions, with one being at an angle of 60 degrees from the other.
+        // If we pattern in both those directions then we get a hexagonal pattern with equal spacing
+        var vertical = cross(normal, direction);
+        var angled = (direction * cos(60 * degree)) + (vertical * sin(60 * degree));
+
+        // We want to get the edges of the target face so that we can get the distance from the face boundary
+        // However, because the tool faces ought to be "in" the target face we don't want to count those
+        // We can use booleans on the queries, which is pretty nice. We can also take the opportunity to ensure
+        // that at least some edges are shared
+        var allTargetEdges = qEdgeAdjacent(definition.target, EntityType.EDGE);
+        var toolEdges = qEdgeAdjacent(definition.entities, EntityType.EDGE);
+        var targetEdges = qSubtraction(allTargetEdges, toolEdges);
+        var edgesInFace = qIntersection([allTargetEdges, toolEdges]);
+        if (size(evaluateQuery(context, edgesInFace)) == 0) {
+            throw regenError("The entities must share edges with the target face");
+        }
+
+        // To prevent excessive calculation we do a quick exclusion of faces based on bounding boxes
+        // It doesn't need to be perfect. Get the box of the target face and of the shared edges
+        var faceBox = try(evBox3d(context, {
+            "topology" : definition.target
+        }));
+        var toolBox = try(evBox3d(context, {
+            "topology" : edgesInFace
+        }));
+
+        // Again, to prevent excessive computation we will estimate the maximum number of instances and
+        // fail early if we exceed some limit.
+        var diagonal = faceBox.maxCorner - faceBox.minCorner;    
+        var maximumIndex = round((norm(diagonal) - (definition.border * 2)) / definition.distance);
+        var toolSize = norm(toolBox.maxCorner - toolBox.minCorner);
+        var estimatedIndexCount = maximumIndex * maximumIndex;
+        if (estimatedIndexCount > 2500)
+        {
+            throw regenError("Too many instances in the pattern (estimate: " ~ 
+                estimatedIndexCount ~ " ). Try a larger spacing.");
+        }
+
+        // Now we loop and look to see if the instance should be included
+        for (var i = -maximumIndex; i <= maximumIndex; i += 1)
+        {
+            for (var j = -maximumIndex; j <= maximumIndex; j += 1)
+            {
+                if (abs(i) < 0.5 && abs(j) < 0.5)
+                {
+                    // Zero transform = initial position => Skip
+                    continue;
+                }
+                var translation = ((direction * i) + (angled * j)) * definition.distance;
+                var instanceTransform = transform(translation);
+                // Now that we have the transform we transform the tool box and see if it is within the face
+                // but not too close to the edges of the face
+                // Note: this isn't exact, it uses the center of the face and the size of the face box 
+                // rather than transforming the geometry every time.
+                var xformed = box3d(toolBox.minCorner + translation, toolBox.maxCorner + translation);
+                if (clash(xformed, faceBox))
+                {
+                    var minDistance = evDistance(context, {
+                            "side0" : targetEdges,
+                            "side1" : (xformed.minCorner + xformed.maxCorner) * 0.5
+                    });
+                    // Note: if border is zero this still results in a border that is half the size of the tool,
+                    // the border is additional on top of that
+                    if (minDistance.distance > (toolSize + definition.border))
+                    {
+                        transforms = append(transforms, instanceTransform);
+                        instanceNames = append(instanceNames, "" ~ i ~ "." ~ j);
+                    }
+                }                
+            }
+        }
+
+        // Now we set the data as needed by the applyPattern function before calling it.
+        definition.patternType = PatternType.FACE;
+        definition.transforms = transforms;
+        definition.instanceNames = instanceNames;
+        definition.seed = definition.entities;
+
+        var remainingTransform = getRemainderPatternTransform(context, { "references" : definition.entities });
+        applyPattern(context, id, definition, remainingTransform);
+    }, { });
+
+/**
+ * Utility function to do a quick clash of boxes
+ */
+function clash(box1 is Box3d, box2 is Box3d) returns boolean
+{
+    for (var index = 0; index < 3; index += 1)
+    {
+        var min1 = box1.minCorner[index];
+        var max1 = box1.maxCorner[index];
+        var min2 = box2.minCorner[index];
+        var max2 = box2.maxCorner[index];
+        // Comparisons to zero are never a good idea because values that are calculated separately are
+        // rarely the same to machine precision. FeatureScript provides tolerant equality methods
+        // but not tolerant inequalities. No matter, we can fashion one ourselves by checking the
+        // inequality and excluding approximate equality
+        if ((max1 < min2 && !tolerantEquals(max1, min2)) || (max2 < min1 && !tolerantEquals(max2, min1)))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+</pre>
+
+<p>Rib FeatureScript 程式碼:</p>
+<pre class="brush: jscript">
+FeatureScript 336;
+import(path : "onshape/std/geometry.fs", version : "336.0");
+
+const RIB_THICKEN_BOUNDS =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [0.0, 0.005, 500],
+            (centimeter) : 0.5,
+            (millimeter) : 5.0,
+            (inch) : 0.25,
+            (foot) : 0.025,
+            (yard) : 0.01
+        } as LengthBoundSpec;
+
+/**
+ * Specifies the direction of the rib extrusion starting from the profile
+ * going up to the part.
+ *
+ * @value NORMAL_TO_SKETCH_PLANE : The direction of the rib extrusion goes normal to the profile sketch plane.
+ * @value PARALLEL_TO_SKETCH_PLANE : The direction of the rib extrusion goes parallel to the profile sketch plane.
+ */
+export enum RibExtrusionDirection
+{
+    annotation { "Name" : "Normal to sketch plane" }
+    NORMAL_TO_SKETCH_PLANE,
+    annotation { "Name" : "Parallel to sketch plane" }
+    PARALLEL_TO_SKETCH_PLANE
+}
+
+function isClosed(context is Context, edge is Query) returns boolean
+{
+    return size(evaluateQuery(context, qVertexAdjacent(edge, EntityType.VERTEX))) < 2;
+}
+
+annotation { "Feature Type Name" : "Rib" }
+export const rib = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        annotation { "Name" : "Sketch profiles", "Filter" : EntityType.EDGE && SketchObject.YES && ConstructionObject.NO }
+        definition.profiles is Query;
+
+        annotation { "Name" : "Parts", "Filter" : EntityType.BODY }
+        definition.parts is Query;
+
+        annotation { "Name" : "Thickness" }
+        isLength(definition.thickness, RIB_THICKEN_BOUNDS);
+
+        annotation { "Name" : "Rib extrusion direction" }
+        definition.ribExtrusionDirection is RibExtrusionDirection;
+
+        annotation { "Name" : "Opposite direction", "UIHint" : "OPPOSITE_DIRECTION", "Default" : true }
+        definition.oppositeDirection is boolean;
+
+        annotation { "Name" : "Extend profiles up to part" }
+        definition.extendProfilesUpToPart is boolean;
+
+        annotation { "Name" : "Merge ribs", "Default" : true }
+        definition.mergeRibs is boolean;
+    }
+    {
+        const profiles = evaluateQuery(context, definition.profiles);
+        const numberOfRibs = size(profiles);
+        if (profiles == [])
+        {
+            throw regenError("Select sketch profiles for the rib contours");
+        }
+
+        if (evaluateQuery(context, definition.parts) == [])
+        {
+            throw regenError("Select parts where the rib will be fitted into");
+        }
+
+        // Create a transform for making the feature patternable via feature pattern.
+        var remainingTransform = getRemainderPatternTransform(context,
+                {"references" : qUnion([definition.profiles, definition.parts])});
+
+        // Before evaluating the profiles to create the ribs, we find out how big the parts are
+        // so if any extending is necessary for any rib end, we know how far we need to extend.
+        // To ensure the extended profile will always go past the part(s), we use the
+        // diagonal of the bounding box of the part(s) and profile(s) as the extend length.
+        const partBoundingBox = evBox3d(context, {
+                    "topology" : qUnion([definition.parts, definition.profiles])
+                });
+        const extendLength = norm(partBoundingBox.maxCorner - partBoundingBox.minCorner);
+
+        // Create each rib (one rib per profile) as its own body.
+
+        for (var i = 0; i < numberOfRibs; i += 1)
+        {
+            const profile = profiles[i];
+            const thickenId = id + (i ~ "thickenRib");
+
+            try
+            {
+                // Keep track of the entities we will extrude as a surface which will later
+                // be thickened to create the rib.  The profile and any
+                // profile extensions will need to be included in the extrude operation.
+                var entitiesToExtrude = [profile];
+
+                // Get the endpoints of the profile and the normal direction at those endpoints
+                // so we can determine what needs to be extended and what direction to extend.
+                const profileEndTangentLines = evEdgeTangentLines(context, {
+                            "edge" : profile,
+                            "parameters" : [0, 1],
+                            "arcLengthParameterization" : false
+                        });
+
+                // There  are 2 reasons we might need to extend the given profiles:
+                // 1.  If the profile touches the part(s), make an extension of the profile past the part to ensure
+                //     that there are no gaps when we thicken the profile (this can happen if the profile is not normal
+                //     to the part where they intersect).
+                // 2.  The extend profiles up to part checkbox has been selected.
+                const partsContainPoint = function(point is Vector) returns boolean
+                    {
+                        return evaluateQuery(context, qContainsPoint(definition.parts, remainingTransform * point)) != [];
+                    };
+
+                var extendProfiles = makeArray(2);
+                var extendedEndPoints = makeArray(2);
+                const extendDirections = [-profileEndTangentLines[0].direction, profileEndTangentLines[1].direction];
+
+                // If the profile is closed, then there is nothing to extend.
+                const isProfileClosed = isClosed(context, profile);
+
+                for (var end in [0, 1]) // Potentially extend both endpoints of the profile curve
+                {
+                    extendProfiles[end] = !isProfileClosed && definition.extendProfilesUpToPart || partsContainPoint(profileEndTangentLines[end].origin);
+                    if (extendProfiles[end])
+                    {
+                        extendedEndPoints[end] = profileEndTangentLines[end].origin + (extendDirections[end] * extendLength);
+                        // This is actually a quick way to create a line in 3D
+                        opFitSpline(context, id + (i ~ "extendProfile" ~ end), {
+                                    "points" : [
+                                            profileEndTangentLines[end].origin,
+                                            extendedEndPoints[end]
+                                        ]
+                                });
+                        entitiesToExtrude = append(entitiesToExtrude, qCreatedBy(id + (i ~ "extendProfile" ~ end), EntityType.EDGE));
+                    }
+                }
+
+                // Find the direction to extrude a surface that will later be thickened to produce the rib.
+                // First determine the normal or parallel direction, then, if specified,
+                // choose the opposite of the normal or parallel direction.
+                const profilePlane = evOwnerSketchPlane(context, { "entity" : profile });
+                var ribDirection;
+                if (definition.ribExtrusionDirection == RibExtrusionDirection.PARALLEL_TO_SKETCH_PLANE)
+                {
+                    // To get the parallel direction with the sketch plane, find the direction perpendicular
+                    // to the sketch plane normal and the line that connects the start and end point of the profile.
+                    const profileDirection = normalize(profileEndTangentLines[1].origin - profileEndTangentLines[0].origin);
+                    ribDirection = cross(profilePlane.normal, profileDirection);
+                }
+                else
+                {
+                    ribDirection = profilePlane.normal;
+                }
+
+                if (definition.oppositeDirection)
+                {
+                    ribDirection = ribDirection * -1;
+                }
+
+                // Extrude a surface from the extended profile into the part(s), using the extend length
+                // as the extrude depth to make sure the surface goes through the part(s).
+                opExtrude(context, id + (i ~ "surfaceExtrude"), {
+                            "entities" : qUnion(entitiesToExtrude),
+                            "direction" : ribDirection,
+                            "endDepth" : extendLength,
+                            "endBound" : BoundingType.BLIND
+                        });
+
+                // Transform the extruded surface if needed to support feature pattern.
+                transformResultIfNecessary(context, id + (i ~ "surfaceExtrude"), remainingTransform);
+
+                // Thicken the surface to make the rib plus some excess material around the part(s).
+                const halfThickness = definition.thickness / 2;
+                opThicken(context, thickenId, {
+                            "entities" : qCreatedBy(id + (i ~ "surfaceExtrude"), EntityType.FACE),
+                            "thickness1" : halfThickness,
+                            "thickness2" : halfThickness
+                        });
+
+                // Split the rib with the part(s) to separate the rib body from the thicken excess.
+                var ribPartsQuery = qCreatedBy(thickenId, EntityType.BODY);
+                opBoolean(context, id + (i ~ "splitOffRibExcess"), {
+                            "tools" : definition.parts,
+                            "targets" : ribPartsQuery,
+                            "operationType" : BooleanOperationType.SUBTRACTION,
+                            "keepTools" : true
+                        });
+
+                // Apply the remaining transform to the profile before doing collision testing.
+                patternTransform(context, id + (i ~ "tr1"), profile, remainingTransform);
+                // Do collision testing to help determine which parts of the thicken are excess.
+                var clashes = evCollision(context, {
+                        "tools" : ribPartsQuery,
+                        "targets" : profile
+                    });
+
+                // Since we don't want the profile to actually move
+                // move it back to it's original location after checking for collisions.
+                patternTransform(context, id + (i ~ "tr2"), profile, inverse(remainingTransform));
+                var clashBodies = mapArray(clashes, function(clash)
+                {
+                    return clash.toolBody;
+                });
+
+                // Specify a point at the end of the surface extrude.
+                // Any thicken body that intersects with this point is excess.
+                const surfaceExtrudeEndPoint = profileEndTangentLines[0].origin + (extendLength * ribDirection);
+
+                // Collect up all the thicken excess and any other entities we've created leading
+                // up to the thicken operation, because all of these need to be deleted.
+                var entitiesToDelete = [
+                    // Remove rib thicken excess sections that don't intersect the original profile.
+                    qSubtraction(ribPartsQuery, qUnion(clashBodies)),
+
+                    // Remove rib thicken excess sections that extend all the way to the end of
+                    // the surface extrude (which we deliberately had extend well past the part,
+                    // i.e. well past where a rib should be created).
+                    qContainsPoint(ribPartsQuery, remainingTransform * surfaceExtrudeEndPoint),
+
+                    // Remove the surface extrude, now that the thicken is completed and we don't need it anymore.
+                    qCreatedBy(id + (i ~ "surfaceExtrude"), EntityType.BODY)
+                ];
+
+                // Delete any profile extensions created now that we don't need them anymore.
+                // Also, any thicken section that intersects with the far end of an extension
+                // (i.e. not the end that intersects with the profile) is thicken excess and should be deleted.
+                for (var end in [0, 1])
+                {
+                    if (extendProfiles[end])
+                    {
+                        entitiesToDelete = append(entitiesToDelete, qCreatedBy(id + (i ~ "extendProfile" ~ end), EntityType.BODY));
+                        entitiesToDelete = append(entitiesToDelete, qContainsPoint(ribPartsQuery, extendedEndPoints[end]));
+                    }
+                }
+
+                opDeleteBodies(context, id + (i ~ "deleteRibExcess"), {
+                            "entities" : qUnion(entitiesToDelete)
+                        });
+            }
+            catch
+            {
+                throw regenError('Failed to create a rib from a selected profile.',
+                        profile);
+            }
+
+            // Fail early if the rib body can't be created.
+            if (evaluateQuery(context, qCreatedBy(thickenId, EntityType.BODY)) == [])
+            {
+                throw regenError('Selected profile did not produce a rib body.  Make sure the rib direction and alignment are correct.',
+                        profile);
+            }
+        }
+
+        // Optionally, merge the new ribs with the original parts.
+        if (definition.mergeRibs)
+        {
+            // The original parts are first in the tools query so that they
+            // will maintain their names.
+            var toMerge = [definition.parts];
+            for (var i = 0; i < numberOfRibs; i += 1)
+            {
+                toMerge = append(toMerge, qCreatedBy(id, EntityType.BODY));
+            }
+
+            try
+            {
+                opBoolean(context, id + "mergeRibsWithParts", {
+                            "tools" : qUnion(toMerge),
+                            "operationType" : BooleanOperationType.UNION
+                        });
+            }
+            catch
+            {
+                throw regenError('Failed to merge ribs into parts.');
+            }
+        }
+    },
+        {
+            oppositeDirection : true,
+            ribExtrusionDirection : RibExtrusionDirection.NORMAL_TO_SKETCH_PLANE,
+            extendProfilesUpToPart : false,
+            mergeRibs : true
+        });
+
+function patternTransform(context, id, query, transform)
+{
+    if (transform == identityTransform())
+        return;
+    opTransform(context, id, {
+            "bodies" : qOwnerBody(query),
+            "transform" : transform
+    });
+}
+</pre>
+            </div>
+            <!-- /.entry-content -->
+    <hr/>
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'cadlab'; // required: replace example with your forum shortname
+
+                    var disqus_identifier = 'onshape-featurescript-cheng-shi-yu-yan-yi';
+                var disqus_url = 'http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan-yi.html';
+
+            var disqus_config = function () {
+                this.language = "en";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
+                <ul class="list-group" id="recentposts">
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan-yi.html">
+                            Onshape FeatureScript 程式語言 (一)
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan.html">
+                            Onshape FeatureScript 程式語言
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/yun-duan-ping-tai-shang-de-dian-nao-fu-zhu-ji-jie-she-ji.html">
+                            雲端平台上的電腦輔助機械設計
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-de-dian-nao-kai-ji-ci-qu-she-zhi.html">
+                            電腦輔助設計室的電腦開機磁區設置
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/da-xue-jiao-yu-zheng-ce-bai-pi-shu-du-hou-xin-de-bao-gao.html">
+                            大學教育政策白皮書讀後心得報告
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="http://cadlab.mde.tw/post/categories.html"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4></a>
+                <ul class="list-group" id="categories">
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/category/can-kao.html">
+                            <i class="fa fa-folder-open fa-lg"></i> 參考
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/category/dao-yin.html">
+                            <i class="fa fa-folder-open fa-lg"></i> 導引
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/category/gui-hua.html">
+                            <i class="fa fa-folder-open fa-lg"></i> 規劃
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/category/misc.html">
+                            <i class="fa fa-folder-open fa-lg"></i> MISC
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/category/zi-yuan.html">
+                            <i class="fa fa-folder-open fa-lg"></i> 資源
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item"><a href="http://cadlab.mde.tw/post/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group list-inline tagcloud" id="tags">
+                </ul>
+            </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="https://github.com/DandyDev/pelican-bootstrap3/" target="_blank">
+                pelican-bootstrap3
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="https://github.com/getpelican/pelican-plugins" target="_blank">
+                pelican-plugins
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="https://github.com/Tipue/Tipue-Search" target="_blank">
+                Tipue search
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2016 kmol
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://cadlab.mde.tw/post/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://cadlab.mde.tw/post/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://cadlab.mde.tw/post/theme/js/respond.min.js"></script>
+
+    <!-- Disqus -->
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'cadlab'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <!-- End Disqus Code -->
+
+</body>
+</html>

@@ -127,6 +127,8 @@
 <v t="amd.20160521222238.1"><vh>@clean yen_20160521.md</vh></v>
 <v t="amd.20160527201408.1"><vh>@clean yen_20160527.md</vh></v>
 <v t="amd.20160527213220.1"><vh>@clean yen_20160527-1.md</vh></v>
+<v t="amd.20160529144234.1"><vh>@clean yen_20160529.md</vh></v>
+<v t="amd.20160529155022.1"><vh>@clean yen_20160529-1.md</vh></v>
 </v>
 </v>
 <v t="amd.20160106094754.1" a="E"><vh>@path ./../content/pages</vh>
@@ -3391,6 +3393,1507 @@ Author: kmol
 目前, SolidWorks 單機版約佔全球市場&lt;a href="http://blog.cnccookbook.com/2015/01/20/results-2015-cad-survey/"&gt;超過五分之一&lt;/a&gt;, 未來將與自家的 Xdesign 與 Onshape 免安裝全雲端產品, 競逐全球電腦輔助機械設計軟體市場. 
 
 因此, 2016 年可以說是電腦輔助機械設計的雲端元年, 正好比 2006 年推出的 &lt;a href="https://en.wikipedia.org/wiki/Google_Docs,_Sheets,_and_Slides"&gt;Google Doc&lt;/a&gt;, 晚了十年.</t>
+<t tx="amd.20160529144234.1">@language md
+Title: Onshape FeatureScript 程式語言
+Category: MISC
+Tags: CADLab, MCAD
+Author: kmol
+@others
+
+在 &lt;a href="https://embedwistia-a.akamaihd.net/deliveries/02d2dfd77d4c465c42fa30e66e3bb53f26467cbc/file.mp4"&gt;FeatureScript 簡介&lt;/a&gt;的影片中, 可以看到 Onshape 打造了一個客製化特徵功能的程式語言與社群分享機制, 任何人利用 FeatureScript 建立的延伸功能, 都能夠透過 Add custom features 指令與其他使用者分享.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+FeatureScript 是 Onshape 發明, 一種可用來定義客製化參數特徵用的程式語言, 具有下列特點:
+
+1. 各 Document 中用戶所建立的 FeatureScript 程式碼, 位於 Feature Studio (特徵工房) 分頁中.
+2. FeatureScript 的整合開發環境 (Integrated Development Environment) 內建於 Onshape 中.
+3. Onshape 原本系統中使用的特徵功能, 其對應的 FeatureScript 程式碼, 已經採&lt;a href="https://cad.onshape.com/documents/5749364ce4b0f60f1b7940fe/w/925a5467b6e725168eb9c993/e/ff3b765aacc32576f893ed23"&gt;開放源&lt;/a&gt; (Open Source) 模式釋出.
+4. Onshape 同時提供 &lt;a href="https://cad.onshape.com/FsDoc/"&gt;FeatureScript 參考手冊&lt;/a&gt; 與 &lt;a href="https://forum.onshape.com/categories/featurescript"&gt;FeatureScript 論壇&lt;/a&gt;
+
+登入 Onshape, 建立一個 Document 之後, 就可以透過左下角的 + 號中的 Create Feature Studio, 進入 FeatureScript 的整合開發環境, 開始編寫客製化的特徵程式碼, IDE 則提供下列相關功能:
+
+Parameter (參數)
+
+Length, Angle, Count, Query, Enum, Boolean and String
+
+Query (詢問)
+
+Everything, Nth element, Entity filter, Created by, Intersection, Subtraction, Symetric difference, Own by body, Own by body filter, Owner body, Entities adjacent to edge, Geometry type filter, Contains point, Intersects plane and Query evaluation
+
+Evaluation (評測)
+
+Tangent plane, Tangent line, Vertex point, Length measurement, Area measurement, Volume measurement, Query evaluation
+
+Sketch, Line segment, Circle, Arc, Ellipse, Rectangle, Line segment chain
+
+Cuboid, Cylinder, Extrude, Revolute, Fillet, Boolean, Transform, Import
+
+Import (導入)
+
+Format feature studio (格式化特徵工房)
+
+Commit (提交)
+
+FeatureScript 程式基本架構如下:
+
+&lt;pre class="brush: jscript"&gt;
+FeatureScript 355;
+import(path : "onshape/std/geometry.fs", version : "355.0");
+annotation { "Feature Type Name" : "My Feature" }
+export const myFeature = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        // Define the parameters of the feature type
+    }
+    {
+        // Define the function's action
+    });
+&lt;/pre&gt;
+
+上層宣告, 列舉值與指令敘述都可以加上 annotations (註解). FeatureScript 的註解使用格式類似 Python 的 Dictionary, 但是 annotation 的索引值型別必須為字串, 而且索引值為 "Feature Type Name" 的 annotation 為每一個特徵指令的必要註解.
+
+export 則可視為上述的程式碼中, 使用者所宣告的 myFeature 對應特徵物件會被優先置入 FeatureScript Template 中.
+
+此外 Onshape 任一頁面送出時, 都帶有以下標頭設置, 除了利用 X-Frame-Options:SAMEORIGIN, 不允許使用者將頁面納入 iframe 或 object 標註中外, 也避免遭受可能的網路攻擊:
+
+&lt;pre class="brush: jscript"&gt;
+Cache-Control:must-revalidate,no-cache,no-store
+Strict-Transport-Security:max-age=31536000; includeSubDomains
+X-Content-Type-Options:nosniff
+X-Frame-Options:SAMEORIGIN
+X-XSS-Protection:1; mode=block
+&lt;/pre&gt;
+
+以下則為目前 Onshape 官方釋出的參考應用範例:
+
+&lt;a href="https://cad.onshape.com/documents/57494220e4b04aa3f56f82c2/w/888534aeb52c4daa68bbfd05/e/4a55fd2861eaa83fae0221d9"&gt;Point Pattern FeatureScript 程式 Document&lt;/a&gt;
+
+&lt;a href="https://cad.onshape.com/documents/57494152e4b05f50e871a72c/w/a4a3f09939bf1f43a8e4f133/e/2b865798923d6f648f7196f9"&gt;Spur Gear FeatureScript 程式 Document&lt;/a&gt;
+
+&lt;a href="https://cad.onshape.com/documents/57494187e4b0f60f1b7941c8/w/b98b4de33c1d47713be20e7f/e/c1f8d65fc6196f728620b857"&gt;Wave Spring FeatureScript 程式 Document&lt;/a&gt;
+
+Port feature 程式碼 (建立 SAE J1926 螺孔):
+
+&lt;pre class="brush: jscript"&gt;
+FeatureScript 336;
+import(path : "onshape/std/geometry.fs", version : "336.0");
+
+export enum PortSize
+{
+    annotation { "Name" : "5/16-24" }
+    fiveSixteen,
+    annotation { "Name" : "3/8-24" }
+    threeEights,
+    annotation { "Name" : "7/16-20" }
+    sevenSixteen,
+    annotation { "Name" : "1/2-20" }
+    half,
+    annotation { "Name" : "9/16-18" }
+    nineSixteen,
+    annotation { "Name" : "3/4-16" }
+    threeFour,
+    annotation { "Name" : "7/8-14" }
+    sevenEights,
+    annotation { "Name" : "1 1/16-12" }
+    oneSixteen
+}
+
+annotation { "Feature Type Name" : "Port Feature" }
+export const portFeature = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        annotation { "Name" : "Port Size" }
+        definition.portSize is PortSize;
+
+        annotation { "Name" : "Points", "Filter" : EntityType.VERTEX }
+        definition.points is Query;
+
+        annotation { "Name" : "Depth" }
+        isLength(definition.depth, DEPTH_BOUNDS);
+    }
+    {
+        var ports;
+        var depth = definition.depth;
+        //here the vector points for each port are added to an array depending on size chosen
+        if (definition.portSize == PortSize.fiveSixteen)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .019 * inch, -.031 * inch),
+                    vector(-.631, -.031) * inch,
+                    vector(-.53, -.132) * inch,
+                    vector(-.167, -.132) * inch,
+                    vector(-.136, -.163) * inch,
+                    vector(-.062, -.179) * inch,
+                    vector(-.062, -.336) * inch,
+                    vector(0, -.336) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.threeEights)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .038 * inch, -.063 * inch),
+                    vector(-.629, -.063) * inch,
+                    vector(-.53, -.162) * inch,
+                    vector(-.169, -.162) * inch,
+                    vector(-.136, -.195) * inch,
+                    vector(-.062, -.211) * inch,
+                    vector(-.062, -.375) * inch,
+                    vector(0, -.375) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.sevenSixteen)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .052 * inch, -.086 * inch),
+                    vector(-.663, -.086) * inch,
+                    vector(-.547, -.202) * inch,
+                    vector(-.176, -.202) * inch,
+                    vector(-.155, -.224) * inch,
+                    vector(-.062, -.243) * inch,
+                    vector(-.062, -.414) * inch,
+                    vector(0, -.414) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.half)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .07 * inch, -.117 * inch),
+                    vector(-.71, -.117) * inch,
+                    vector(-.607, -.22) * inch,
+                    vector(-.188, -.22) * inch,
+                    vector(-.153, -.255) * inch,
+                    vector(-.062, -.275) * inch,
+                    vector(-.062, -.453) * inch,
+                    vector(0, -.453) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.nineSixteen)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .089 * inch, -.149 * inch),
+                    vector(-.773, -.149) * inch,
+                    vector(-.671, -.251) * inch,
+                    vector(-.195, -.251) * inch,
+                    vector(-.159, -.287) * inch,
+                    vector(-.062, -.308) * inch,
+                    vector(-.062, -.485) * inch,
+                    vector(0, -.485) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.threeFour)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .117 * inch, -.196 * inch),
+                    vector(-.928, -.196) * inch,
+                    vector(-.782, -.341) * inch,
+                    vector(-.237, -.341) * inch,
+                    vector(-.194, -.384) * inch,
+                    vector(-.094, -.406) * inch,
+                    vector(-.094, -.594) * inch,
+                    vector(0, -.594) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.sevenEights)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .145 * inch, -.242 * inch),
+                    vector(-1.032, -.242) * inch,
+                    vector(-.875, -.399) * inch,
+                    vector(-.245, -.399) * inch,
+                    vector(-.194, -.45) * inch,
+                    vector(-.094, -.471) * inch,
+                    vector(-.094, -.672) * inch,
+                    vector(0, -.672) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.oneSixteen)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .183 * inch, -.304 * inch),
+                    vector(-1.22, -.304) * inch,
+                    vector(-1, -.525) * inch,
+                    vector(-.246, -.525) * inch,
+                    vector(-.224, -.546) * inch,
+                    vector(-.094, -.574) * inch,
+                    vector(-.094, -.813) * inch,
+                    vector(0, -.813) * inch,
+                    vector(0, 0) * inch];
+        }
+        const checkLength = (ports[3] - ports[2]); 
+        if (checkLength[0] &lt; 0) // check the depth entered and throw error if depth causes feature to invert
+        {
+            throw regenError(ErrorStringEnum.SKETCH_DIMENSION_FAILED, ["depth"]);
+        }
+        var points = evaluateQuery(context, definition.points);
+        var numberOfPoints = size(points);
+        var sketchId = id + "sketch";
+        var portId = "port1";
+        for (var i = 0; i &lt; numberOfPoints; i += 1) //for each point selected create a sketch using port vertices and revolve cut
+        {
+            sketchId = sketchId + i;
+            var point = points[i];
+            var sketchPlane = evOwnerSketchPlane(context, { "entity" : point });
+            var cSys = planeToCSys(sketchPlane);
+            var pointVertex = evVertexPoint(context, { "vertex" : point });
+            var sketchPlane2 = plane(pointVertex, cSys.xAxis, cSys.zAxis);
+            var sketch = newSketchOnPlane(context, sketchId, { "sketchPlane" : sketchPlane2 });
+            skPolyline(sketch, portId, { "points" : ports, "constrained" : false });
+            skSolve(sketch);
+            var axisQuery = sketchEntityQuery(sketchId, EntityType.EDGE, portId ~ ".line0");
+            revolveCut(context, id, sketch, sketchId, axisQuery);
+        }
+        opDeleteBodies(context, id + "delete_sketch", { "entities" : qCreatedBy(id + "sketch", EntityType.BODY) });
+        // delete the sketch
+    }, { /* default parameters */ });
+
+function revolveCut(context is Context, id is Id, sketch is Sketch, sketchId is Id, axisQuery is Query)
+{
+    var sketchQuery = qSketchRegion(sketchId, false);
+    //revolve cut
+    revolve(context, sketchId + "revolve", {
+                "operationType" : NewBodyOperationType.REMOVE,
+                "entities" : qUnion([sketchQuery]),
+                "axis" : qUnion([axisQuery]),
+                "revolveType" : RevolveType.FULL,
+                "defaultScope" : true });
+}
+
+const DEPTH_BOUNDS =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.0381, 500],
+            (centimeter) : 3.81,
+            (millimeter) : 38.1,
+            (inch) : 1.5 // set the default depth to 1.5 inch
+        } as LengthBoundSpec;
+&lt;/pre&gt;
+
+Screw Boss FeatureScript 原始碼:
+
+&lt;pre class="brush: jscript"&gt;
+/*    
+    Screw Boss
+    
+    This custom feature creates a common fastening feature in plastic part design.
+    
+    The Screw Boss is just one version of this type of fastening feature 
+    and could be easily extended to include many other types. This was built
+    to show that you can create complex, compound features easily.
+
+    Version 1 - April 26, 2016 - Neil Cooke, Onshape Inc.
+*/ 
+
+FeatureScript 336;
+import(path : "onshape/std/geometry.fs", version : "336.0");
+
+annotation { "Feature Type Name" : "Screw Boss" }
+export const ScrewBoss = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        annotation { "Name" : "Sketch points to place bosses", "Filter" : EntityType.VERTEX &amp;&amp; SketchObject.YES &amp;&amp; ConstructionObject.NO }
+        definition.locations is Query;
+
+        annotation { "Name" : "Boss style" }
+        definition.style is BossStyle;
+
+        if (definition.style == BossStyle.BLIND)
+        {
+            annotation { "Name" : "Boss height", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isLength(definition.height, BOSS_HEIGHT);
+        }
+        else
+        {
+            annotation { "Name" : "Parallel face or plane", "Filter" : EntityType.FACE, "MaxNumberOfPicks" : 1 }
+            definition.parallelFace is Query;
+        }
+
+        annotation { "Name" : "Boss diameter", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.diameter, BOSS_DIA);
+
+        annotation { "Name" : "Ribs", "Default" : true, "UIHint" : "DISPLAY_SHORT" }
+        definition.hasRibs is boolean;
+
+        if (definition.hasRibs == true)
+        {
+            annotation { "Name" : "Number of ribs (max 6)", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"] }
+            isInteger(definition.ribCount, RIB_COUNT_BOUNDS);
+
+            annotation { "Name" : "Flip rib direction", "UIHint" : "OPPOSITE_DIRECTION" }
+            definition.ribFlipDirection is boolean;
+
+            annotation { "Name" : "Edge to define rib direction", "Filter" : EntityType.EDGE, "MaxNumberOfPicks" : 1 }
+            definition.ribDirection is Query;
+
+            annotation { "Name" : "Rib diameter at top", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isLength(definition.ribDiameter, RIB_DIA);
+
+            annotation { "Name" : "Rib distance from top", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isLength(definition.ribHeight, RIB_HEIGHT);
+
+            annotation { "Name" : "Rib thickness", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isLength(definition.ribThickness, RIB_THK);
+
+            annotation { "Name" : "Chamfer", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"], "Default" : true }
+            definition.hasChamfer is boolean;
+
+            if (definition.hasChamfer == true)
+            {
+                annotation { "Name" : "Chamfer size", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"] }
+                isLength(definition.chamferSize, CHAMFER_SIZE);
+            }
+        }
+
+        annotation { "Name" : "Hole diameter", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.holeDiam, HOLE_DIA);
+
+        annotation { "Name" : "Wall thickness", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.wallThickness, WALL_THK);
+
+        annotation { "Name" : "Draft", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"], "Default" : true }
+        definition.hasDraft is boolean;
+
+        if (definition.hasDraft == true)
+        {
+            annotation { "Name" : "Draft angle", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"] }
+            isAngle(definition.draftAngle, DRAFT_ANGLE);
+        }
+
+        annotation { "Name" : "Merge scope", "Filter" : EntityType.BODY &amp;&amp; BodyType.SOLID }
+        definition.booleanScope is Query;
+    }
+
+    {
+        // get all the user selected locations
+        const locations = evaluateQuery(context, definition.locations);
+
+        // if a solid body intersects the first point in the list, automatically use that in the merge scope
+        const targetBody = evaluateQuery(context, qContainsPoint(qBodyType(qEverything(EntityType.BODY), BodyType.SOLID), evVertexPoint(context, { "vertex" : locations[0] })));
+
+        if (size(targetBody) == 0 &amp;&amp; definition.booleanScope != undefined)
+            definition.targetBody = definition.booleanScope; // if not, get user to select merge scope
+        else
+            definition.targetBody = targetBody[0];
+
+        var sketchPlane is Plane = evOwnerSketchPlane(context, { "entity" : locations[0] });
+        var topPlane;
+        var ribPlane;
+
+        // define the plane for the top of the boss
+        if (definition.style == BossStyle.PLANE &amp;&amp; definition.parallelFace != undefined)
+            topPlane = evPlane(context, { "face" : definition.parallelFace });
+        else
+            topPlane = plane(sketchPlane.origin + definition.height * sketchPlane.normal, sketchPlane.normal);
+
+        var nameId = 1;
+
+        definition.sketch = newSketchOnPlane(context, id + "sketch1", { "sketchPlane" : topPlane });
+
+        // Build first feature - extruded circle
+        for (var location in locations)
+        {
+            var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
+
+            skCircle(definition.sketch, "circle" ~ nameId, {
+                        "center" : vector(point[0], point[1]),
+                        "radius" : definition.diameter / 2
+                    });
+            nameId += 1;
+        }
+        skSolve(definition.sketch);
+
+        extrude(context, id + ("extrude1"), {
+                    "entities" : qSketchRegion(id + "sketch1"),
+                    "endBound" : BoundingType.UP_TO_BODY,
+                    "endBoundEntityBody" : definition.targetBody,
+                    "oppositeDirection" : true,
+                    "hasDraft" : definition.hasDraft,
+                    "draftAngle" : definition.draftAngle,
+                    "draftPullDirection" : false,
+                    "operationType" : NewBodyOperationType.ADD,
+                    "defaultScope" : false,
+                    "booleanScope" : definition.targetBody
+                });
+
+        // Build second feature - extruded ribs
+        if (definition.hasRibs)
+        {
+            // define top of ribs
+            ribPlane = plane(topPlane.origin - definition.ribHeight * topPlane.normal, topPlane.normal);
+
+            var ribVector = vector(0, 1); // by default pointing up in Y
+
+            // if user has defined rib direction, work out the vector
+            if (definition.ribDirection != undefined)
+            {
+                const directionResult = try(evAxis(context, { "axis" : definition.ribDirection }));
+
+                if (directionResult != undefined)
+                    ribVector = normalize(vector(directionResult.direction[0], directionResult.direction[1]));
+            }
+
+            if (definition.ribFlipDirection)
+                ribVector = ribVector * -1;
+
+            definition.sketch = newSketchOnPlane(context, id + "sketch2", { "sketchPlane" : ribPlane });
+
+            const ribPlaneCSys = planeToCSys(ribPlane);
+            var chamferPoints = [];
+
+            nameId = 1;
+
+            for (var location in locations)
+            {
+                var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
+
+                const center = vector(point[0], point[1]);
+
+                // Build a closed "star" shaped sketch to represent the ribs
+                for (var j = 0; j &lt; definition.ribCount; j += 1)
+                {
+                    var angle = (360 / definition.ribCount) * j * degree;
+
+                    // The angle for each rib
+                    var angledRibVector = vector(ribVector[0] * cos(angle) - ribVector[1] * sin(angle),
+                        ribVector[0] * sin(angle) + ribVector[1] * cos(angle));
+
+                    var perpRibVector = vector(angledRibVector[1] * -1, angledRibVector[0]);
+
+                    var ribOffset = definition.ribThickness / 2 / tan(180 / definition.ribCount * degree);
+
+                    if (definition.ribCount == 1)
+                        ribOffset = 0 * meter;
+
+                    var points = [
+                        center - (definition.ribThickness / 2) * perpRibVector + (ribOffset) * angledRibVector,
+                        center - (definition.ribThickness / 2) * perpRibVector + (definition.ribDiameter / 2) * angledRibVector,
+                        center + (definition.ribThickness / 2) * perpRibVector + (definition.ribDiameter / 2) * angledRibVector,
+                        center + (definition.ribThickness / 2) * perpRibVector + (ribOffset) * angledRibVector];
+
+                    for (var i = 0; i &lt; size(points); i += 1)
+                    {
+                        skLineSegment(definition.sketch, "line" ~ nameId,
+                                { "start" : points[i],
+                                    "end" : points[(i + 1) % size(points)]
+                                });
+                        nameId += 1;
+                    }
+
+                    // Keep a list of the centerpoints of the edges where the chamfers may go
+                    var chamferPoint2d = center + (definition.ribDiameter / 2) * angledRibVector;
+                    chamferPoints = append(chamferPoints, toWorld(ribPlaneCSys, vector(chamferPoint2d[0], chamferPoint2d[1], 0 * meter)));
+                }
+                nameId += 1;
+            }
+            skSolve(definition.sketch);
+
+            extrude(context, id + ("extrude2"), {
+                        "entities" : qSketchRegion(id + "sketch2"),
+                        "endBound" : BoundingType.UP_TO_BODY,
+                        "endBoundEntityBody" : definition.targetBody,
+                        "oppositeDirection" : true,
+                        "hasDraft" : definition.hasDraft,
+                        "draftAngle" : definition.draftAngle,
+                        "draftPullDirection" : false,
+                        "operationType" : NewBodyOperationType.ADD,
+                        "defaultScope" : false,
+                        "booleanScope" : definition.targetBody
+                    });
+
+            // Build third feature - chamfers
+            if (definition.hasChamfer)
+            {
+                var chamferEdges = [];
+
+                for (var i = 0; i &lt; size(chamferPoints); i += 1)
+                {
+                    // Find the edges that intersect the points previously collected
+                    chamferEdges = append(chamferEdges, qContainsPoint(qCreatedBy(id + "extrude2", EntityType.EDGE), chamferPoints[i]));
+                }
+
+                try(opChamfer(context, id + "chamfer1", {
+                                "entities" : qUnion(chamferEdges),
+                                "chamferType" : ChamferType.EQUAL_OFFSETS,
+                                "width" : definition.chamferSize
+                            }));
+            }
+        }
+
+        nameId = 1;
+
+        // Build fourth feature - through hole to outside of part
+        var holePlane = plane(topPlane.origin - definition.wallThickness * topPlane.normal, topPlane.normal);
+
+        definition.sketch = newSketchOnPlane(context, id + "sketch3", { "sketchPlane" : holePlane });
+
+        for (var location in locations)
+        {
+            var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
+
+            skCircle(definition.sketch, "circle" ~ nameId, {
+                        "center" : vector(point[0], point[1]),
+                        "radius" : definition.diameter / 2 - definition.wallThickness
+                    });
+            nameId += 1;
+        }
+        skSolve(definition.sketch);
+
+        extrude(context, id + ("extrude3"), {
+                    "entities" : qSketchRegion(id + "sketch3"),
+                    "endBound" : BoundingType.UP_TO_BODY,
+                    "endBoundEntityBody" : definition.targetBody,
+                    "oppositeDirection" : true,
+                    "hasDraft" : definition.hasDraft,
+                    "draftAngle" : definition.draftAngle,
+                    "draftPullDirection" : false,
+                    "operationType" : NewBodyOperationType.REMOVE,
+                    "defaultScope" : false,
+                    "booleanScope" : definition.targetBody
+                });
+
+        nameId = 1;
+
+        // Build fifth feature - screw hole
+        definition.sketch = newSketchOnPlane(context, id + "sketch4", { "sketchPlane" : topPlane });
+
+        for (var location in locations)
+        {
+            var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
+
+            skCircle(definition.sketch, "circle" ~ nameId, {
+                        "center" : vector(point[0], point[1]),
+                        "radius" : definition.holeDiam / 2
+                    });
+            nameId += 1;
+        }
+        skSolve(definition.sketch);
+
+        extrude(context, id + ("extrude4"), {
+                    "entities" : qSketchRegion(id + "sketch4"),
+                    "endBound" : BoundingType.UP_TO_BODY,
+                    "endBoundEntityBody" : definition.targetBody,
+                    "oppositeDirection" : true,
+                    "hasDraft" : definition.hasDraft,
+                    "draftAngle" : definition.draftAngle,
+                    "draftPullDirection" : false,
+                    "operationType" : NewBodyOperationType.REMOVE,
+                    "defaultScope" : false,
+                    "booleanScope" : definition.targetBody
+                });
+
+        // Remove sketch entities - no longer required
+        var sketches = [qCreatedBy(id + "sketch1"), qCreatedBy(id + "sketch2"), qCreatedBy(id + "sketch3"), qCreatedBy(id + "sketch4")];
+        opDeleteBodies(context, id + "delete", { "entities" : qUnion(sketches) });
+
+    }, {});
+
+const BOSS_HEIGHT =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.02, 500],
+            (centimeter) : 2.0,
+            (millimeter) : 20.0,
+            (inch) : 0.8
+        } as LengthBoundSpec;
+
+const BOSS_DIA =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.008, 500],
+            (centimeter) : 0.8,
+            (millimeter) : 8.0,
+            (inch) : 0.3125
+        } as LengthBoundSpec;
+
+const RIB_COUNT_BOUNDS =
+{
+            "min" : 1,
+            "max" : 6,
+            (unitless) : [1, 4, 6]
+        } as IntegerBoundSpec;
+
+const RIB_DIA =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.015, 500],
+            (centimeter) : 1.5,
+            (millimeter) : 15.0,
+            (inch) : 0.6
+        } as LengthBoundSpec;
+
+const RIB_HEIGHT =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [0, 0.005, 500],
+            (centimeter) : 0.5,
+            (millimeter) : 5.0,
+            (inch) : 0.2
+        } as LengthBoundSpec;
+
+const RIB_THK =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.001, 500],
+            (centimeter) : 0.1,
+            (millimeter) : 1.0,
+            (inch) : 0.04
+        } as LengthBoundSpec;
+
+const CHAMFER_SIZE =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.002, 500],
+            (centimeter) : 0.2,
+            (millimeter) : 2.0,
+            (inch) : 0.08
+        } as LengthBoundSpec;
+
+const HOLE_DIA =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.003, 500],
+            (centimeter) : 0.3,
+            (millimeter) : 3.0,
+            (inch) : 0.12
+        } as LengthBoundSpec;
+
+const WALL_THK =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.0015, 500],
+            (centimeter) : 0.15,
+            (millimeter) : 1.5,
+            (inch) : 0.06
+        } as LengthBoundSpec;
+
+const DRAFT_ANGLE =
+{
+            "min" : -TOLERANCE.zeroAngle * radian,
+            "max" : (2 * PI + TOLERANCE.zeroAngle) * radian,
+            (degree) : [0, 2, 360],
+            (radian) : 0.035
+        } as AngleBoundSpec;
+
+export enum BossStyle
+{
+    annotation { "Name" : "Blind" }
+    BLIND,
+    annotation { "Name" : "Up to face" }
+    PLANE
+}
+&lt;/pre&gt;</t>
+<t tx="amd.20160529155022.1">@language md
+Title: Onshape FeatureScript 程式語言 (一)
+Category: MISC
+Tags: CADLab, MCAD
+Author: kmol
+@others
+
+接續上一篇文章, 整理目前 Onshape 已經釋出的 FeatureScript 相關應用範例.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+&lt;a href="https://cad.onshape.com/documents/574941a2e4b05f50e871a75a/w/1c096ba7cb6b4bb6d74f8ffa/e/8c83ef9b92095a980e185cf8"&gt;Curve Pattern FeatureScript 程式 Document&lt;/a&gt;
+
+&lt;a href="https://cad.onshape.com/documents/57494139e4b04aa3f56f8243/w/cad51c78bef702f93d689668/e/0cfa9d7c4606e1f2ae32be16"&gt;Helix in Fill FeatureScript 程式 Document&lt;/a&gt;
+
+&lt;a href="https://cad.onshape.com/documents/57494120e4b04aa3f56f8206/w/d17e3ff3f757fabdb9084368/e/ab4048d5790d64d16e68e02d"&gt;3D Spline Fill FeatureScript 程式 Document&lt;/a&gt;
+
+&lt;a href="https://cad.onshape.com/documents/57494101e4b04aa3f56f81ed/w/b2ffdc215aff14ea3817b535/e/1626934c31793c1d4d18eb6f"&gt;Brick FeatureScript 程式 Document&lt;/a&gt;
+
+&lt;a href="https://cad.onshape.com/documents/57494096e4b05f50e871a70e/w/165ebc7b4103e5b6c91e3f5b/e/bfd58761a0e39c157f11bd42"&gt;Measure Distance FeatureScript 程式 Document&lt;/a&gt;
+
+&lt;a href="https://cad.onshape.com/documents/5749420ae4b04aa3f56f8288/w/ed9f79b9809ffe7610f9c537/e/aa01cfec5e04037e7ca611b7"&gt;Lighten FeatureScript 程式 Document&lt;/a&gt;
+
+Snap Hook FeatureScript 原始碼:
+
+&lt;pre class="brush: jscript"&gt;
+/*    
+    Snap Hook
+    
+    This custom feature creates a common fastening feature in plastic part design.
+    
+    The Snap Hook is just one version of this type of fastening feature 
+    and could be easily extended to include many other types. This was built
+    to show that you can create complex, compound features easily.
+
+    Version 1 - April 26, 2016 - Neil Cooke, Onshape Inc.
+*/ 
+
+FeatureScript 336;
+import(path : "onshape/std/geometry.fs", version : "336.0");
+
+annotation { "Feature Type Name" : "Snap Hook" }
+export const SnapHook = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        annotation { "Name" : "Sketch point locations", "Filter" : EntityType.VERTEX &amp;&amp; SketchObject.YES &amp;&amp; ConstructionObject.NO }
+        definition.locations is Query;
+
+        annotation { "Name" : "Height type" }
+        definition.style is HookStyle;
+
+        if (definition.style == HookStyle.BLIND)
+        {
+            annotation { "Name" : "Height", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isLength(definition.height, HOOK_HEIGHT);
+        }
+        else
+        {
+            annotation { "Name" : "Parallel face or plane", "Filter" : EntityType.FACE, "MaxNumberOfPicks" : 1 }
+            definition.parallelFace is Query;
+        }
+
+        annotation { "Name" : "Width", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.hookWidth, HOOK_WIDTH);
+
+        annotation { "Name" : "Flip direction", "UIHint" : "OPPOSITE_DIRECTION" }
+        definition.hookFlipDirection is boolean;
+
+        annotation { "Name" : "Edge to define direction", "Filter" : EntityType.EDGE, "MaxNumberOfPicks" : 1 }
+        definition.hookDirection is Query;
+
+        annotation { "Name" : "Thickness", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.hookThickness, HOOK_THK);
+
+        annotation { "Name" : "Undercut depth", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.hookDepth, HOOK_THK);
+
+        annotation { "Name" : "Lip height", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.flatHeight, HOOK_LIP);
+
+        annotation { "Name" : "Insertion angle", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isAngle(definition.deflectionAngle, HOOK_ANGLE);
+
+        annotation { "Name" : "Draft", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"], "Default" : true }
+        definition.hasDraft is boolean;
+
+        if (definition.hasDraft == true)
+        {
+            annotation { "Name" : "Draft angle", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"] }
+            isAngle(definition.draftAngle, ANGLE_STRICT_90_BOUNDS);
+
+            annotation { "Name" : "Back face draft angle", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isAngle(definition.backDraftAngle, ANGLE_STRICT_90_BOUNDS);
+        }
+        annotation { "Name" : "Cutout", "Default" : true }
+        definition.hasCutout is boolean;
+
+        annotation { "Name" : "Merge scope", "Filter" : EntityType.BODY &amp;&amp; BodyType.SOLID }
+        definition.booleanScope is Query;
+    }
+
+    {
+        // get all the user selected locations
+        const locations = evaluateQuery(context, definition.locations);
+
+        // if a solid body intersects the first point in the list, automatically use that in the merge scope
+        const targetBody = evaluateQuery(context, qContainsPoint(qBodyType(qEverything(EntityType.BODY), BodyType.SOLID), evVertexPoint(context, { "vertex" : locations[0] })));
+
+        if (size(targetBody) == 0 &amp;&amp; definition.booleanScope != undefined)
+            definition.targetBody = definition.booleanScope; // if not, get user to select merge scope
+        else
+            definition.targetBody = targetBody[0];
+
+        var sketchPlane is Plane = evOwnerSketchPlane(context, { "entity" : locations[0] });
+        var topPlane;
+
+        var hookVector = vector(1, 0); // by default pointing across in x
+
+        // if user has defined hook direction, work out the vector
+        if (definition.hookDirection != undefined)
+        {
+            const directionResult = try(evAxis(context, { "axis" : definition.hookDirection }));
+
+            if (directionResult != undefined)
+                hookVector = normalize(vector(directionResult.direction[0], directionResult.direction[1]));
+        }
+
+        if (definition.hookFlipDirection)
+            hookVector = hookVector * -1;
+
+        // get vector perpendicular to hook direction
+        var perpHookVector = vector(hookVector[1] * -1, hookVector[0]);
+
+        // define the plane for the top of the boss
+        if (definition.style == HookStyle.PLANE &amp;&amp; definition.parallelFace != undefined)
+            topPlane = evPlane(context, { "face" : definition.parallelFace });
+        else
+            topPlane = plane(sketchPlane.origin + definition.height * sketchPlane.normal, sketchPlane.normal);
+
+        var nameId = 1;
+        var chamferPoints = [];
+        var frontFacePoints = [];
+        var backFacePoints = [];
+
+        const sketch1 = newSketchOnPlane(context, id + "sketch1", { "sketchPlane" : topPlane });
+        const sketch2 = newSketchOnPlane(context, id + "sketch2", { "sketchPlane" : topPlane });
+        const sketch3 = newSketchOnPlane(context, id + "sketch3", { "sketchPlane" : topPlane });
+
+        definition.depth = definition.hookDepth / tan(definition.deflectionAngle) + definition.flatHeight;
+
+        // Build 3 sketches each with a rectangle
+        for (var location in locations)
+        {
+            var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
+
+            skRectangle(sketch1, "rectangleHook" ~ nameId, {
+                        "firstCorner" : vector(point[0], point[1]) + (definition.hookWidth / 2) * hookVector,
+                        "secondCorner" : vector(point[0], point[1]) - (definition.hookWidth / 2) * hookVector - definition.hookDepth * perpHookVector
+                    });
+
+            skRectangle(sketch2, "rectangleThickness" ~ nameId, {
+                        "firstCorner" : vector(point[0], point[1]) - (definition.hookWidth / 2) * hookVector,
+                        "secondCorner" : vector(point[0], point[1]) + (definition.hookWidth / 2) * hookVector + definition.hookThickness * perpHookVector
+                    });
+
+            skRectangle(sketch3, "completeRectangle" ~ nameId, {
+                        "firstCorner" : vector(point[0], point[1]) - (definition.hookWidth / 2) * hookVector - definition.hookDepth * perpHookVector,
+                        "secondCorner" : vector(point[0], point[1]) + (definition.hookWidth / 2) * hookVector + definition.hookThickness * perpHookVector
+                    });
+
+            // Keep a list of the centerpoints of the edges where the chamfers may go
+            var chamferPoint2d = vector(point[0], point[1]) - definition.hookDepth * perpHookVector;
+            if (definition.hasDraft)
+            {
+                chamferPoint2d = vector(point[0], point[1]) - (definition.hookDepth - definition.depth * tan(definition.draftAngle)) * perpHookVector;
+            }
+            chamferPoints = append(chamferPoints, toWorld(planeToCSys(topPlane), vector(chamferPoint2d[0], chamferPoint2d[1], definition.depth)));
+
+            var backFacePoint2d = vector(point[0], point[1]) + definition.hookThickness * perpHookVector;
+            backFacePoints = append(backFacePoints, toWorld(planeToCSys(topPlane), vector(backFacePoint2d[0], backFacePoint2d[1], 0 * meter)));
+            frontFacePoints = append(frontFacePoints, toWorld(planeToCSys(topPlane), vector(point[0], point[1], 0 * meter)));
+
+            nameId += 1;
+        }
+        skSolve(sketch1);
+        skSolve(sketch2);
+        skSolve(sketch3);
+
+        extrude(context, id + ("extrude1"), {
+                    "entities" : qSketchRegion(id + "sketch2"),
+                    "endBound" : BoundingType.UP_TO_BODY,
+                    "depth" : definition.depth,
+                    "endBoundEntityBody" : definition.targetBody,
+                    "oppositeDirection" : true,
+                    "hasDraft" : definition.hasDraft,
+                    "draftAngle" : definition.draftAngle,
+                    "draftPullDirection" : false,
+                    "operationType" : NewBodyOperationType.ADD,
+                    "defaultScope" : false,
+                    "booleanScope" : definition.targetBody
+                });
+
+        extrude(context, id + ("extrude2"), {
+                    "entities" : qSketchRegion(id + "sketch3"),
+                    "endBound" : BoundingType.BLIND,
+                    "depth" : definition.depth,
+                    "endBoundEntityBody" : definition.targetBody,
+                    "oppositeDirection" : false,
+                    "hasDraft" : definition.hasDraft,
+                    "draftAngle" : definition.draftAngle,
+                    "draftPullDirection" : true,
+                    "operationType" : NewBodyOperationType.ADD,
+                    "defaultScope" : false,
+                    "booleanScope" : definition.targetBody
+                });
+
+        var chamferEdges = [];
+
+        for (var i = 0; i &lt; size(chamferPoints); i += 1)
+        {
+            // Find the edges that intersect the points previously collected
+            chamferEdges = append(chamferEdges, qContainsPoint(qCreatedBy(id + "extrude2", EntityType.EDGE), chamferPoints[i]));
+        }
+
+        try(opChamfer(context, id + "chamfer1", {
+                        "entities" : qUnion(chamferEdges),
+                        "chamferType" : ChamferType.OFFSET_ANGLE,
+                        "width" : definition.depth - definition.flatHeight,
+                        "angle" : definition.deflectionAngle,
+                        "oppositeDirection" : true
+                    }));
+
+        if (definition.hasDraft)
+        {
+            var backFaces = [];
+            var frontFaces = [];
+
+            for (var i = 0; i &lt; size(backFacePoints); i += 1)
+            {
+                // Find the edges that intersect the points previously collected
+                backFaces = append(backFaces, qContainsPoint(qCreatedBy(id + "extrude1", EntityType.FACE), backFacePoints[i]));
+                frontFaces = append(frontFaces, qContainsPoint(qCreatedBy(id + "extrude1", EntityType.FACE), frontFacePoints[i]));
+            }
+
+            opPlane(context, id + "plane1", {
+                        "plane" : topPlane,
+                        "size" : 0.1 * meter
+                    });
+
+            opDraft(context, id + "draft1", {
+                        "neutralPlane" : qCreatedBy(id + "plane1", EntityType.FACE),
+                        "pullVec" : topPlane.normal,
+                        "draftFaces" : qUnion(frontFaces),
+                        "angle" : 0 * degree
+                    });
+                    
+            opDraft(context, id + "draft2", {
+                        "neutralPlane" : qCreatedBy(id + "plane1", EntityType.FACE),
+                        "pullVec" : topPlane.normal,
+                        "draftFaces" : qUnion(backFaces),
+                        "angle" : definition.backDraftAngle + definition.draftAngle
+                    });
+        }
+
+        if (definition.hasCutout)
+        {
+            extrude(context, id + ("extrude3"), {
+                        "entities" : qSketchRegion(id + "sketch1"),
+                        "endBound" : BoundingType.THROUGH_ALL,
+                        "depth" : definition.depth,
+                        "endBoundEntityBody" : definition.targetBody,
+                        "oppositeDirection" : true,
+                        "hasDraft" : definition.hasDraft,
+                        "draftAngle" : definition.draftAngle,
+                        "draftPullDirection" : false,
+                        "operationType" : NewBodyOperationType.REMOVE,
+                        "defaultScope" : false,
+                        "booleanScope" : definition.targetBody
+                    });
+        }
+
+        // Remove sketch entities and plane - no longer required
+        var sketches = [qCreatedBy(id + "sketch1"), qCreatedBy(id + "sketch2"), qCreatedBy(id + "sketch3"), qCreatedBy(id + "plane1")];
+        opDeleteBodies(context, id + "delete", { "entities" : qUnion(sketches) });
+
+    }, {});
+
+const HOOK_ANGLE =
+{
+            "min" : -TOLERANCE.zeroAngle * radian,
+            "max" : (2 * PI + TOLERANCE.zeroAngle) * radian,
+            (degree) : [15, 30, 60]
+        } as AngleBoundSpec;
+
+const HOOK_HEIGHT =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.015, 500],
+            (centimeter) : 1.5,
+            (millimeter) : 15.0,
+            (inch) : 0.6
+        } as LengthBoundSpec;
+
+const HOOK_WIDTH =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.005, 500],
+            (centimeter) : 0.5,
+            (millimeter) : 5.0,
+            (inch) : 0.2
+        } as LengthBoundSpec;
+
+const HOOK_THK =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.002, 500],
+            (centimeter) : 0.2,
+            (millimeter) : 2.0,
+            (inch) : 0.08
+        } as LengthBoundSpec;
+
+const HOOK_LIP =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.001, 500],
+            (centimeter) : 0.1,
+            (millimeter) : 1.0,
+            (inch) : 0.04
+        } as LengthBoundSpec;
+
+export enum HookStyle
+{
+    annotation { "Name" : "Blind" }
+    BLIND,
+    annotation { "Name" : "Up to face" }
+    PLANE
+}
+&lt;/pre&gt;
+
+Fill Pattern FeatureScript 程式碼:
+
+&lt;pre class="brush: jscript"&gt;
+FeatureScript 336;
+import(path : "onshape/std/geometry.fs", version : "336.0");
+import(path : "onshape/std/transform.fs", version : "336.0");
+
+/**
+ * Performs a pattern of faces within a face. The instances are placed in a hexagonal pattern and no instances will be 
+ * created that cross the boundary of the face. If a border is set then no instances are created within a border of that size
+ * @param definition {{
+ *      @field entities A collection of faces that will be patterned
+ *      @field target A planar face that contains the 'entities' faces and that will contain the pattern
+ *      @field direction Specifies the alignment of the pattern in the face
+ *      @field distance The distance between the center of the instances
+ *      @field border The width of the "exclusion zone" at the edge of the target face     
+ * }}
+ */
+annotation { "Feature Type Name" : "Fill pattern", "Filter Selector" : "allparts" }
+export const fillPattern = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        annotation { "Name" : "Faces to pattern",
+                     "Filter" : EntityType.FACE &amp;&amp; ConstructionObject.NO &amp;&amp; SketchObject.NO }
+        definition.entities is Query;
+        annotation { "Name" : "Target face", "Filter" : GeometryType.PLANE, "MaxNumberOfPicks" : 1 }
+        definition.target is Query;
+        annotation { "Name" : "Direction", "Filter" : QueryFilterCompound.ALLOWS_AXIS, "MaxNumberOfPicks" : 1 }
+        definition.direction is Query;        
+        annotation { "Name" : "Distance" }
+        isLength(definition.distance, LENGTH_BOUNDS);
+        annotation { "Name" : "Border" }
+        isLength(definition.border, NONNEGATIVE_ZERO_DEFAULT_LENGTH_BOUNDS);
+    }
+    {
+        var transforms = [];
+        var instanceNames = [];
+
+        var direction = try(evAxis(context, { "axis" : definition.direction })).direction;
+        println(direction);
+        var normal = try(evPlane(context, {
+            "face" : definition.target
+        })).normal;
+        
+        // For a hexagonal pattern we have two directions, with one being at an angle of 60 degrees from the other.
+        // If we pattern in both those directions then we get a hexagonal pattern with equal spacing
+        var vertical = cross(normal, direction);
+        var angled = (direction * cos(60 * degree)) + (vertical * sin(60 * degree));
+                
+        // We want to get the edges of the target face so that we can get the distance from the face boundary
+        // However, because the tool faces ought to be "in" the target face we don't want to count those
+        // We can use booleans on the queries, which is pretty nice. We can also take the opportunity to ensure
+        // that at least some edges are shared
+        var allTargetEdges = qEdgeAdjacent(definition.target, EntityType.EDGE);
+        var toolEdges = qEdgeAdjacent(definition.entities, EntityType.EDGE);
+        var targetEdges = qSubtraction(allTargetEdges, toolEdges);
+        var edgesInFace = qIntersection([allTargetEdges, toolEdges]);
+        if (size(evaluateQuery(context, edgesInFace)) == 0) {
+            throw regenError("The entities must share edges with the target face");
+        }
+        
+        // To prevent excessive calculation we do a quick exclusion of faces based on bounding boxes
+        // It doesn't need to be perfect. Get the box of the target face and of the shared edges
+        var faceBox = try(evBox3d(context, {
+            "topology" : definition.target
+        }));
+        var toolBox = try(evBox3d(context, {
+            "topology" : edgesInFace
+        }));
+        
+        // Again, to prevent excessive computation we will estimate the maximum number of instances and
+        // fail early if we exceed some limit.
+        var diagonal = faceBox.maxCorner - faceBox.minCorner;    
+        var maximumIndex = round((norm(diagonal) - (definition.border * 2)) / definition.distance);
+        var toolSize = norm(toolBox.maxCorner - toolBox.minCorner);
+        var estimatedIndexCount = maximumIndex * maximumIndex;
+        if (estimatedIndexCount &gt; 2500)
+        {
+            throw regenError("Too many instances in the pattern (estimate: " ~ 
+                estimatedIndexCount ~ " ). Try a larger spacing.");
+        }
+        
+        // Now we loop and look to see if the instance should be included
+        for (var i = -maximumIndex; i &lt;= maximumIndex; i += 1)
+        {
+            for (var j = -maximumIndex; j &lt;= maximumIndex; j += 1)
+            {
+                if (abs(i) &lt; 0.5 &amp;&amp; abs(j) &lt; 0.5)
+                {
+                    // Zero transform = initial position =&gt; Skip
+                    continue;
+                }
+                var translation = ((direction * i) + (angled * j)) * definition.distance;
+                var instanceTransform = transform(translation);
+                // Now that we have the transform we transform the tool box and see if it is within the face
+                // but not too close to the edges of the face
+                // Note: this isn't exact, it uses the center of the face and the size of the face box 
+                // rather than transforming the geometry every time.
+                var xformed = box3d(toolBox.minCorner + translation, toolBox.maxCorner + translation);
+                if (clash(xformed, faceBox))
+                {
+                    var minDistance = evDistance(context, {
+                            "side0" : targetEdges,
+                            "side1" : (xformed.minCorner + xformed.maxCorner) * 0.5
+                    });
+                    // Note: if border is zero this still results in a border that is half the size of the tool,
+                    // the border is additional on top of that
+                    if (minDistance.distance &gt; (toolSize + definition.border))
+                    {
+                        transforms = append(transforms, instanceTransform);
+                        instanceNames = append(instanceNames, "" ~ i ~ "." ~ j);
+                    }
+                }                
+            }
+        }
+
+        // Now we set the data as needed by the applyPattern function before calling it.
+        definition.patternType = PatternType.FACE;
+        definition.transforms = transforms;
+        definition.instanceNames = instanceNames;
+        definition.seed = definition.entities;
+
+        var remainingTransform = getRemainderPatternTransform(context, { "references" : definition.entities });
+        applyPattern(context, id, definition, remainingTransform);
+    }, { });
+    
+/**
+ * Utility function to do a quick clash of boxes
+ */
+function clash(box1 is Box3d, box2 is Box3d) returns boolean
+{
+    for (var index = 0; index &lt; 3; index += 1)
+    {
+        var min1 = box1.minCorner[index];
+        var max1 = box1.maxCorner[index];
+        var min2 = box2.minCorner[index];
+        var max2 = box2.maxCorner[index];
+        // Comparisons to zero are never a good idea because values that are calculated separately are
+        // rarely the same to machine precision. FeatureScript provides tolerant equality methods
+        // but not tolerant inequalities. No matter, we can fashion one ourselves by checking the
+        // inequality and excluding approximate equality
+        if ((max1 &lt; min2 &amp;&amp; !tolerantEquals(max1, min2)) || (max2 &lt; min1 &amp;&amp; !tolerantEquals(max2, min1)))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+&lt;/pre&gt;
+
+Rib FeatureScript 程式碼:
+
+&lt;pre class="brush: jscript"&gt;
+FeatureScript 336;
+import(path : "onshape/std/geometry.fs", version : "336.0");
+
+const RIB_THICKEN_BOUNDS =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [0.0, 0.005, 500],
+            (centimeter) : 0.5,
+            (millimeter) : 5.0,
+            (inch) : 0.25,
+            (foot) : 0.025,
+            (yard) : 0.01
+        } as LengthBoundSpec;
+
+/**
+ * Specifies the direction of the rib extrusion starting from the profile
+ * going up to the part.
+ *
+ * @value NORMAL_TO_SKETCH_PLANE : The direction of the rib extrusion goes normal to the profile sketch plane.
+ * @value PARALLEL_TO_SKETCH_PLANE : The direction of the rib extrusion goes parallel to the profile sketch plane.
+ */
+export enum RibExtrusionDirection
+{
+    annotation { "Name" : "Normal to sketch plane" }
+    NORMAL_TO_SKETCH_PLANE,
+    annotation { "Name" : "Parallel to sketch plane" }
+    PARALLEL_TO_SKETCH_PLANE
+}
+
+function isClosed(context is Context, edge is Query) returns boolean
+{
+    return size(evaluateQuery(context, qVertexAdjacent(edge, EntityType.VERTEX))) &lt; 2;
+}
+
+annotation { "Feature Type Name" : "Rib" }
+export const rib = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        annotation { "Name" : "Sketch profiles", "Filter" : EntityType.EDGE &amp;&amp; SketchObject.YES &amp;&amp; ConstructionObject.NO }
+        definition.profiles is Query;
+
+        annotation { "Name" : "Parts", "Filter" : EntityType.BODY }
+        definition.parts is Query;
+
+        annotation { "Name" : "Thickness" }
+        isLength(definition.thickness, RIB_THICKEN_BOUNDS);
+
+        annotation { "Name" : "Rib extrusion direction" }
+        definition.ribExtrusionDirection is RibExtrusionDirection;
+
+        annotation { "Name" : "Opposite direction", "UIHint" : "OPPOSITE_DIRECTION", "Default" : true }
+        definition.oppositeDirection is boolean;
+
+        annotation { "Name" : "Extend profiles up to part" }
+        definition.extendProfilesUpToPart is boolean;
+
+        annotation { "Name" : "Merge ribs", "Default" : true }
+        definition.mergeRibs is boolean;
+    }
+    {
+        const profiles = evaluateQuery(context, definition.profiles);
+        const numberOfRibs = size(profiles);
+        if (profiles == [])
+        {
+            throw regenError("Select sketch profiles for the rib contours");
+        }
+
+        if (evaluateQuery(context, definition.parts) == [])
+        {
+            throw regenError("Select parts where the rib will be fitted into");
+        }
+        
+        // Create a transform for making the feature patternable via feature pattern.
+        var remainingTransform = getRemainderPatternTransform(context,
+                {"references" : qUnion([definition.profiles, definition.parts])});
+
+        // Before evaluating the profiles to create the ribs, we find out how big the parts are
+        // so if any extending is necessary for any rib end, we know how far we need to extend.
+        // To ensure the extended profile will always go past the part(s), we use the
+        // diagonal of the bounding box of the part(s) and profile(s) as the extend length.
+        const partBoundingBox = evBox3d(context, {
+                    "topology" : qUnion([definition.parts, definition.profiles])
+                });
+        const extendLength = norm(partBoundingBox.maxCorner - partBoundingBox.minCorner);
+
+        // Create each rib (one rib per profile) as its own body.
+
+        for (var i = 0; i &lt; numberOfRibs; i += 1)
+        {
+            const profile = profiles[i];
+            const thickenId = id + (i ~ "thickenRib");
+
+            try
+            {
+                // Keep track of the entities we will extrude as a surface which will later
+                // be thickened to create the rib.  The profile and any
+                // profile extensions will need to be included in the extrude operation.
+                var entitiesToExtrude = [profile];
+
+                // Get the endpoints of the profile and the normal direction at those endpoints
+                // so we can determine what needs to be extended and what direction to extend.
+                const profileEndTangentLines = evEdgeTangentLines(context, {
+                            "edge" : profile,
+                            "parameters" : [0, 1],
+                            "arcLengthParameterization" : false
+                        });
+
+                // There  are 2 reasons we might need to extend the given profiles:
+                // 1.  If the profile touches the part(s), make an extension of the profile past the part to ensure
+                //     that there are no gaps when we thicken the profile (this can happen if the profile is not normal
+                //     to the part where they intersect).
+                // 2.  The extend profiles up to part checkbox has been selected.
+                const partsContainPoint = function(point is Vector) returns boolean
+                    {
+                        return evaluateQuery(context, qContainsPoint(definition.parts, remainingTransform * point)) != [];
+                    };
+
+                var extendProfiles = makeArray(2);
+                var extendedEndPoints = makeArray(2);
+                const extendDirections = [-profileEndTangentLines[0].direction, profileEndTangentLines[1].direction];
+
+                // If the profile is closed, then there is nothing to extend.
+                const isProfileClosed = isClosed(context, profile);
+
+                for (var end in [0, 1]) // Potentially extend both endpoints of the profile curve
+                {
+                    extendProfiles[end] = !isProfileClosed &amp;&amp; definition.extendProfilesUpToPart || partsContainPoint(profileEndTangentLines[end].origin);
+                    if (extendProfiles[end])
+                    {
+                        extendedEndPoints[end] = profileEndTangentLines[end].origin + (extendDirections[end] * extendLength);
+                        // This is actually a quick way to create a line in 3D
+                        opFitSpline(context, id + (i ~ "extendProfile" ~ end), {
+                                    "points" : [
+                                            profileEndTangentLines[end].origin,
+                                            extendedEndPoints[end]
+                                        ]
+                                });
+                        entitiesToExtrude = append(entitiesToExtrude, qCreatedBy(id + (i ~ "extendProfile" ~ end), EntityType.EDGE));
+                    }
+                }
+
+                // Find the direction to extrude a surface that will later be thickened to produce the rib.
+                // First determine the normal or parallel direction, then, if specified,
+                // choose the opposite of the normal or parallel direction.
+                const profilePlane = evOwnerSketchPlane(context, { "entity" : profile });
+                var ribDirection;
+                if (definition.ribExtrusionDirection == RibExtrusionDirection.PARALLEL_TO_SKETCH_PLANE)
+                {
+                    // To get the parallel direction with the sketch plane, find the direction perpendicular
+                    // to the sketch plane normal and the line that connects the start and end point of the profile.
+                    const profileDirection = normalize(profileEndTangentLines[1].origin - profileEndTangentLines[0].origin);
+                    ribDirection = cross(profilePlane.normal, profileDirection);
+                }
+                else
+                {
+                    ribDirection = profilePlane.normal;
+                }
+
+                if (definition.oppositeDirection)
+                {
+                    ribDirection = ribDirection * -1;
+                }
+
+                // Extrude a surface from the extended profile into the part(s), using the extend length
+                // as the extrude depth to make sure the surface goes through the part(s).
+                opExtrude(context, id + (i ~ "surfaceExtrude"), {
+                            "entities" : qUnion(entitiesToExtrude),
+                            "direction" : ribDirection,
+                            "endDepth" : extendLength,
+                            "endBound" : BoundingType.BLIND
+                        });
+
+                // Transform the extruded surface if needed to support feature pattern.
+                transformResultIfNecessary(context, id + (i ~ "surfaceExtrude"), remainingTransform);
+
+                // Thicken the surface to make the rib plus some excess material around the part(s).
+                const halfThickness = definition.thickness / 2;
+                opThicken(context, thickenId, {
+                            "entities" : qCreatedBy(id + (i ~ "surfaceExtrude"), EntityType.FACE),
+                            "thickness1" : halfThickness,
+                            "thickness2" : halfThickness
+                        });
+
+                // Split the rib with the part(s) to separate the rib body from the thicken excess.
+                var ribPartsQuery = qCreatedBy(thickenId, EntityType.BODY);
+                opBoolean(context, id + (i ~ "splitOffRibExcess"), {
+                            "tools" : definition.parts,
+                            "targets" : ribPartsQuery,
+                            "operationType" : BooleanOperationType.SUBTRACTION,
+                            "keepTools" : true
+                        });
+
+                // Apply the remaining transform to the profile before doing collision testing.
+                patternTransform(context, id + (i ~ "tr1"), profile, remainingTransform);
+                // Do collision testing to help determine which parts of the thicken are excess.
+                var clashes = evCollision(context, {
+                        "tools" : ribPartsQuery,
+                        "targets" : profile
+                    });
+                    
+                // Since we don't want the profile to actually move
+                // move it back to it's original location after checking for collisions.
+                patternTransform(context, id + (i ~ "tr2"), profile, inverse(remainingTransform));
+                var clashBodies = mapArray(clashes, function(clash)
+                {
+                    return clash.toolBody;
+                });
+
+                // Specify a point at the end of the surface extrude.
+                // Any thicken body that intersects with this point is excess.
+                const surfaceExtrudeEndPoint = profileEndTangentLines[0].origin + (extendLength * ribDirection);
+
+                // Collect up all the thicken excess and any other entities we've created leading
+                // up to the thicken operation, because all of these need to be deleted.
+                var entitiesToDelete = [
+                    // Remove rib thicken excess sections that don't intersect the original profile.
+                    qSubtraction(ribPartsQuery, qUnion(clashBodies)),
+
+                    // Remove rib thicken excess sections that extend all the way to the end of
+                    // the surface extrude (which we deliberately had extend well past the part,
+                    // i.e. well past where a rib should be created).
+                    qContainsPoint(ribPartsQuery, remainingTransform * surfaceExtrudeEndPoint),
+
+                    // Remove the surface extrude, now that the thicken is completed and we don't need it anymore.
+                    qCreatedBy(id + (i ~ "surfaceExtrude"), EntityType.BODY)
+                ];
+
+                // Delete any profile extensions created now that we don't need them anymore.
+                // Also, any thicken section that intersects with the far end of an extension
+                // (i.e. not the end that intersects with the profile) is thicken excess and should be deleted.
+                for (var end in [0, 1])
+                {
+                    if (extendProfiles[end])
+                    {
+                        entitiesToDelete = append(entitiesToDelete, qCreatedBy(id + (i ~ "extendProfile" ~ end), EntityType.BODY));
+                        entitiesToDelete = append(entitiesToDelete, qContainsPoint(ribPartsQuery, extendedEndPoints[end]));
+                    }
+                }
+
+                opDeleteBodies(context, id + (i ~ "deleteRibExcess"), {
+                            "entities" : qUnion(entitiesToDelete)
+                        });
+            }
+            catch
+            {
+                throw regenError('Failed to create a rib from a selected profile.',
+                        profile);
+            }
+
+            // Fail early if the rib body can't be created.
+            if (evaluateQuery(context, qCreatedBy(thickenId, EntityType.BODY)) == [])
+            {
+                throw regenError('Selected profile did not produce a rib body.  Make sure the rib direction and alignment are correct.',
+                        profile);
+            }
+        }
+
+        // Optionally, merge the new ribs with the original parts.
+        if (definition.mergeRibs)
+        {
+            // The original parts are first in the tools query so that they
+            // will maintain their names.
+            var toMerge = [definition.parts];
+            for (var i = 0; i &lt; numberOfRibs; i += 1)
+            {
+                toMerge = append(toMerge, qCreatedBy(id, EntityType.BODY));
+            }
+
+            try
+            {
+                opBoolean(context, id + "mergeRibsWithParts", {
+                            "tools" : qUnion(toMerge),
+                            "operationType" : BooleanOperationType.UNION
+                        });
+            }
+            catch
+            {
+                throw regenError('Failed to merge ribs into parts.');
+            }
+        }
+    },
+        {
+            oppositeDirection : true,
+            ribExtrusionDirection : RibExtrusionDirection.NORMAL_TO_SKETCH_PLANE,
+            extendProfilesUpToPart : false,
+            mergeRibs : true
+        });
+        
+function patternTransform(context, id, query, transform)
+{
+    if (transform == identityTransform())
+        return;
+    opTransform(context, id, {
+            "bodies" : qOwnerBody(query),
+            "transform" : transform
+    });
+}
+&lt;/pre&gt;</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
