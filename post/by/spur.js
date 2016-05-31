@@ -13,7 +13,7 @@ creategeartooth = JSConstructor(window.createGearTooth)
 class Spur():
     def __init__(self, canvas_id):
         self.canvas_id = canvas_id
-        cgo = cango(self.canvas_id)
+        self.cgo = cango(self.canvas_id)
 
     def spur(self, cx, cy, m, n, pa, theta):
         self.cx = cx
@@ -49,9 +49,9 @@ class Spur():
         gear.appendPath(shaft) # retain the 'moveTo' command for shaft sub path
         gear.translate(self.cx, self.cy)
         # render 繪出靜態正齒輪輪廓
-        cgo.render(gear)
+        self.cgo.render(gear)
         # 接著繪製齒輪的基準線
         deg = math.pi/180
         Line = cobj(['M', self.cx, self.cy, 'L', self.cx+pr*math.cos(self.theta*deg), self.cy+pr*math.sin(self.theta*deg)], "PATH", {
               'strokeColor':'blue', 'lineWidth': 1})
-        cgo.render(Line)
+        self.cgo.render(Line)
