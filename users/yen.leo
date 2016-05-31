@@ -80,7 +80,7 @@
 <v t="amd.20151216001126.1"><vh>md 檔案範例</vh></v>
 <v t="amd.20151215170031.1" a="E"><vh>@path ./../content</vh>
 <v t="amd.20160531120758.1" a="E"><vh>@path by</vh>
-<v t="amd.20160531120808.1"><vh>@edit spur.py</vh></v>
+<v t="amd.20160531120808.1"><vh>@edit spur.js</vh></v>
 </v>
 <v t="amd.20160531094803.1"><vh>Brython 程式庫</vh></v>
 <v t="amd.20160106093454.1" a="E"><vh>yen 網誌文章</vh>
