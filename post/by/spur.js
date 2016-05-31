@@ -8,11 +8,12 @@ cango = JSConstructor(window.Cango)
 shapedefs = window.shapeDefs
 cobj = JSConstructor(window.Cobj)
 creategeartooth = JSConstructor(window.createGearTooth)
-cgo = cango("gear")
+#cgo = cango("gear")
 
 class Spur():
     def __init__(self, canvas_id):
         self.canvas_id = canvas_id
+        cgo = cango(self.cango_id)
 
     def spur(self, cx, cy, m, n, pa, theta):
         self.cx = cx
