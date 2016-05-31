@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/dao-yin.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-05-17T12:59:34+08:00</updated><entry><title>網際機械設計 2D 繪圖</title><link href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html" rel="alternate"></link><updated>2016-05-17T12:59:34+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-17:post/wang-ji-ji-jie-she-ji-2d-hui-tu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://2015fallhw.github.io/arcidau/Flintlock.html"&gt;http://2015fallhw.github.io/arcidau/Flintlock.html&lt;/a&gt; 是一個典型的網際機械設計 2D 繪圖範例, CADLab 希望能夠利用 Brython 重新建立一個直接以 Python3 在網頁中繪圖的類似應用.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/dao-yin.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-05-30T09:23:54+08:00</updated><entry><title>網際機械設計 2D 繪圖</title><link href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/wang-ji-ji-jie-she-ji-2d-hui-tu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://2015fallhw.github.io/arcidau/Flintlock.html"&gt;http://2015fallhw.github.io/arcidau/Flintlock.html&lt;/a&gt; 是一個典型的網際機械設計 2D 繪圖範例, CADLab 希望能夠利用 Brython 重新建立一個直接以 Python3 在網頁中繪圖的類似應用.&lt;/p&gt;
 
 
 &lt;style type="text/css" media="screen"&gt;
@@ -1464,7 +1464,7 @@ def armPathFn(time, opts):
 cgo.animate(armGrp, initArm, armPathFn, animData)
 cgo.playAnimation()
 &amp;lt;/script&amp;gt;
-&lt;/pre&gt;</summary><category term="MCAD"></category><category term="Web based"></category></entry><entry><title>電腦輔助機械設計流程中的分散式版本管理</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html" rel="alternate"></link><updated>2016-05-15T17:58:56+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-15:post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html</id><summary type="html">&lt;p&gt;&lt;a href="http://bazaar.canonical.com/en/"&gt;Bazaar&lt;/a&gt; (2004 年從 &lt;a href="https://www.gnu.org/software/gnu-arch/"&gt;Gnu arch&lt;/a&gt; 分出), &lt;a href="http://www.bitkeeper.com/"&gt;BitKeeper&lt;/a&gt;, &lt;a href="http://darcs.net/"&gt;darcs&lt;/a&gt;, &lt;a href="https://github.com/git"&gt;Git&lt;/a&gt;, &lt;a href="https://www.mercurial-scm.org/"&gt;Mercurial&lt;/a&gt; 是目前較為常見的分散式版本管理 (Distributed Version Control Systems, DVCS) 技術, 其中自 1998 年前後推出, 唯一商用閉源的 Bitkeeper, 也終於在 2016.05.09, 宣佈轉為開放原始碼套件: &lt;a href="https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93"&gt;https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93&lt;/a&gt;.&lt;/p&gt;
+&lt;/pre&gt;</summary><category term="MCAD"></category><category term="Web based"></category></entry><entry><title>電腦輔助機械設計流程中的分散式版本管理</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html</id><summary type="html">&lt;p&gt;&lt;a href="http://bazaar.canonical.com/en/"&gt;Bazaar&lt;/a&gt; (2004 年從 &lt;a href="https://www.gnu.org/software/gnu-arch/"&gt;Gnu arch&lt;/a&gt; 分出), &lt;a href="http://www.bitkeeper.com/"&gt;BitKeeper&lt;/a&gt;, &lt;a href="http://darcs.net/"&gt;darcs&lt;/a&gt;, &lt;a href="https://github.com/git"&gt;Git&lt;/a&gt;, &lt;a href="https://www.mercurial-scm.org/"&gt;Mercurial&lt;/a&gt; 是目前較為常見的分散式版本管理 (Distributed Version Control Systems, DVCS) 技術, 其中自 1998 年前後推出, 唯一商用閉源的 Bitkeeper, 也終於在 2016.05.09, 宣佈轉為開放原始碼套件: &lt;a href="https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93"&gt;https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93&lt;/a&gt;.&lt;/p&gt;
 
 
 &lt;p&gt;其實, 早在 1995 年左右的 &lt;a href="https://en.wikipedia.org/wiki/Sun_WorkShop_TeamWare"&gt;Sun WorkShop TeamWare&lt;/a&gt; 就已經擁有分散式版本的相關技術, 而且在許多與機械設計相關的 PDM/PLM 系統中, 也都提供各種分散式版本控管的功能, 只是大多與封閉的檔案系統格式搭配使用, 使得多人協同模式下的電腦輔助機械設計流程, 成本不斷推升, 而且造成導入新技術的步調緩慢.&lt;/p&gt;
@@ -1515,7 +1515,7 @@ cgo.playAnimation()
 &lt;p&gt;&lt;a href="https://www.drupal.org/node/803746"&gt;https://www.drupal.org/node/803746&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Jupyter and oauth2&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/jupyterhub/oauthenticator"&gt;https://github.com/jupyterhub/oauthenticator&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/ryanlovett/jh-google-oauthenticator"&gt;https://github.com/ryanlovett/jh-google-oauthenticator&lt;/a&gt;&lt;/p&gt;</summary><category term="MCAD"></category><category term="DVCS"></category></entry><entry><title>常用 Python3 程式模組</title><link href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html" rel="alternate"></link><updated>2016-05-15T16:51:44+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-15:post/chang-yong-python3-cheng-shi-mo-zu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/ryanlovett/jh-google-oauthenticator"&gt;https://github.com/ryanlovett/jh-google-oauthenticator&lt;/a&gt;&lt;/p&gt;</summary><category term="MCAD"></category><category term="DVCS"></category></entry><entry><title>常用 Python3 程式模組</title><link href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/chang-yong-python3-cheng-shi-mo-zu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.&lt;/p&gt;
 
 
 &lt;p&gt;其中的 &lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt; 與 &lt;a href="http://flask.pocoo.org/"&gt;Flask&lt;/a&gt; 位階相似, 但是
@@ -1628,34 +1628,7 @@ window.location="https://www.google.com/accounts/Logout?continue=https://appengi
 {% endif %}
 
 {% endblock body %}
-&lt;/pre&gt;</summary><category term="Python3"></category><category term="module"></category></entry><entry><title>Onshape 提供免費教育單位帳號</title><link href="http://cadlab.mde.tw/post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan"&gt;https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan&lt;/a&gt; 得知, Onshpae 除了提供各種身份的用戶有使用限度的免費帳號以外, 從 2016.04.07 開始更加碼, 讓教育單位可以免費, 且沒有使用限度的情況下, 來探索使用這個劃時代的雲端電腦輔助機械設計套件.&lt;/p&gt;
-
-
-&lt;h2&gt;穩定的網路連線是使用 Onshpae 的必要條件&lt;/h2&gt;
-&lt;p&gt;假如電腦教室網路連線穩定, 六十名學生可以同時利用 Firefox 或 Chrome,  登入到 &lt;a href="https://www.onshape.com"&gt;Onshape&lt;/a&gt; 執行協同產品設計, 登記免費的教育單位專用帳號後, 只要完成電子郵箱驗證, 就會自動登入系統.&lt;/p&gt;
-&lt;h2&gt;Onshape 的 Document 是專案容器&lt;/h2&gt;
-&lt;p&gt;登入後, 可以利用左側的 Tutorials &amp;amp; Samples 來了解 Onshpae 的用法:&lt;/p&gt;
-&lt;p&gt;Onshape 中的 Documents 為設計專案層次 (Project level) 的文件庫 (Container), 可以納入 3D 零件, 3D 組件, 工程圖, 以及從外部轉入的各式檔案.&lt;/p&gt;
-&lt;h2&gt;Onshape 操作無需存檔, 而且保有流程版本&lt;/h2&gt;
-&lt;p&gt;在 Onshpae 環境中操作零件繪圖, 使用者無需手動存檔, 只要完成任何操作, 都會自動儲存版本, 而且可以在各版本之間遊走.&lt;/p&gt;
-&lt;p&gt;登入 Onshape, 就可以利用左上角的 Create 按鈕建立 Document 專案文件, 然後再利用左下角的 + 號, 選擇要建立零件, 組件, 工程圖或者是從本地端上傳各式文件.&lt;/p&gt;
-&lt;p&gt;假如是建立零件, 與其他 MCAD 套件類似, 可以選擇 Sketch 再選擇作圖平面, 或者先選擇作圖平面, 再選擇 Sketch 繪製平面輪廓, 輪廓繪圖, 可以直接在 3D 環境畫圖, 或者利用滑鼠右鍵帶出 View normal to sketch plane 的功能, 以垂直繪圖面的平面上進行繪圖.&lt;/p&gt;
-&lt;h2&gt;Onshape 可以轉出各式檔案&lt;/h2&gt;
-&lt;p&gt;各種基本的平面繪圖與尺寸標定或約束條件設定, 都與其他傳統的單機 MCAD 大同小異, 雖然 Onshape 與 Solid Edge 採用相同的 PARASOLID kernel, 但是所有的零組件檔案, 可以直接以點選下方的零組件 Tab, 再以滑鼠右鍵帶出 Export 功能, 然後轉成 PARASOLID 或 ACIS 核心檔,甚至也能直接轉成 Solidworks 格式檔案, 當然也能轉成 IGES, STEP, RHINO, STL 等格式.&lt;/p&gt;
-&lt;h2&gt;Onshape 擁有直覺的組立約束&lt;/h2&gt;
-&lt;p&gt;當使用者在 Onshape 零件繪製模式下完成基本零件, 就可以利用左下方的 + 建立組立檔, 將各零件一一放入進行組裝.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-fastened.htm"&gt;Fastened mate&lt;/a&gt; 主要用於焊接式的組合, 約束條件置入後, 兩個零件間已經沒有任何自由度而結為一體.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-revolute.htm"&gt;Revolute mate&lt;/a&gt; 主要用於旋轉軸式的組合, 約束條件置入後, 兩個零件間只留下一個旋轉自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-slider.htm"&gt;Slider mate&lt;/a&gt; 主要用於滑塊式的組合, 約束條件置入後, 兩個零件間只留下一個平移自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-planar.htm"&gt;Planar mate&lt;/a&gt; 主要用於面接式組合, 約束條件置入後, 兩個零件面對面靠接, 只允許兩個方向的移動自由度, 以及垂直靠接面方向的一個旋轉自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-cylindrical.htm&gt;Cylindrical mate&lt;/a&gt; 主要用於圓柱螺栓式的組合, 約束條件置入後, 兩個零件將具有旋轉與前進或後退的兩個自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-pin_slot.htm"&gt;Pin slot mate&lt;/a&gt; 主要用於插銷式組合, 約束條件置入後, 兩個零件具有旋轉與側向平移等兩個自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Ball mate&lt;/a&gt; 主要用於球接頭式的組合, 約束條件置入後, 將保留3個方向的旋轉自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Tangent mate&lt;/a&gt; 則是比較特殊的相切組立, 約束條件置入後, 兩個零件將始終保持相切的關係.&lt;/p&gt;
-&lt;h2&gt;簡單的組立應用&lt;/h2&gt;
-&lt;p&gt;根據上述基本功能, 就可以完成下列腳踏車鏈條的基本組立:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/onshape_bike_chain_assembly.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;教育版對應帳號下所完成的 &lt;a href="https://cad.onshape.com/documents/29d1a262b055745e59be7c09/w/1f25948ad73282e2440ffdcf"&gt;Bike chain Document&lt;/a&gt;.&lt;/p&gt;</summary><category term="Onshape"></category><category term="MCAD"></category></entry><entry><title>Wordpress 網誌文章中的網際程式碼</title><link href="http://cadlab.mde.tw/post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.w3.org/Graphics/SVG/History"&gt;SVG 歷史&lt;/a&gt; 與 &lt;a href="https://en.wikipedia.org/wiki/WebGL#History"&gt;WebGL 歷史&lt;/a&gt;, 以及 &lt;a href="https://github.com/socketio/socket.io/blob/master/History.md"&gt; socket.io 歷史&lt;/a&gt;, 也許不難發現, 多人協同在瀏覽器為基礎的應用程式環境, 已然成型.&lt;/p&gt;
+&lt;/pre&gt;</summary><category term="Python3"></category><category term="module"></category></entry><entry><title>Wordpress 網誌文章中的網際程式碼</title><link href="http://cadlab.mde.tw/post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.w3.org/Graphics/SVG/History"&gt;SVG 歷史&lt;/a&gt; 與 &lt;a href="https://en.wikipedia.org/wiki/WebGL#History"&gt;WebGL 歷史&lt;/a&gt;, 以及 &lt;a href="https://github.com/socketio/socket.io/blob/master/History.md"&gt; socket.io 歷史&lt;/a&gt;, 也許不難發現, 多人協同在瀏覽器為基礎的應用程式環境, 已然成型.&lt;/p&gt;
 
 
 &lt;p&gt;儘管如此, 要將所有的工作全時在網路連線的環境中完成, 可能仍言之過早, 比較讓人確定的是, 多點觸控的平台伴隨著本地端的桌機或者是筆電, 還會繼續是主流的電腦輔助設計環境.&lt;/p&gt;
@@ -1801,12 +1774,39 @@ g4.appendTo( g3 )
 g4.animate( { 'transform' : 'r360,25,25' },4000)
 #--&amp;gt;
 &amp;lt;/script&amp;gt;
-&lt;/pre&gt;</summary><category term="Wordpress"></category><category term="MCAD"></category></entry><entry><title>Bezier 曲線導引</title><link href="http://cadlab.mde.tw/post/bezier-qu-xian-dao-yin.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/bezier-qu-xian-dao-yin.html</id><summary type="html">&lt;p&gt;A primer on Bezier curves&lt;/p&gt;
+&lt;/pre&gt;</summary><category term="Wordpress"></category><category term="MCAD"></category></entry><entry><title>Onshape 提供免費教育單位帳號</title><link href="http://cadlab.mde.tw/post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan"&gt;https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan&lt;/a&gt; 得知, Onshpae 除了提供各種身份的用戶有使用限度的免費帳號以外, 從 2016.04.07 開始更加碼, 讓教育單位可以免費, 且沒有使用限度的情況下, 來探索使用這個劃時代的雲端電腦輔助機械設計套件.&lt;/p&gt;
+
+
+&lt;h2&gt;穩定的網路連線是使用 Onshpae 的必要條件&lt;/h2&gt;
+&lt;p&gt;假如電腦教室網路連線穩定, 六十名學生可以同時利用 Firefox 或 Chrome,  登入到 &lt;a href="https://www.onshape.com"&gt;Onshape&lt;/a&gt; 執行協同產品設計, 登記免費的教育單位專用帳號後, 只要完成電子郵箱驗證, 就會自動登入系統.&lt;/p&gt;
+&lt;h2&gt;Onshape 的 Document 是專案容器&lt;/h2&gt;
+&lt;p&gt;登入後, 可以利用左側的 Tutorials &amp;amp; Samples 來了解 Onshpae 的用法:&lt;/p&gt;
+&lt;p&gt;Onshape 中的 Documents 為設計專案層次 (Project level) 的文件庫 (Container), 可以納入 3D 零件, 3D 組件, 工程圖, 以及從外部轉入的各式檔案.&lt;/p&gt;
+&lt;h2&gt;Onshape 操作無需存檔, 而且保有流程版本&lt;/h2&gt;
+&lt;p&gt;在 Onshpae 環境中操作零件繪圖, 使用者無需手動存檔, 只要完成任何操作, 都會自動儲存版本, 而且可以在各版本之間遊走.&lt;/p&gt;
+&lt;p&gt;登入 Onshape, 就可以利用左上角的 Create 按鈕建立 Document 專案文件, 然後再利用左下角的 + 號, 選擇要建立零件, 組件, 工程圖或者是從本地端上傳各式文件.&lt;/p&gt;
+&lt;p&gt;假如是建立零件, 與其他 MCAD 套件類似, 可以選擇 Sketch 再選擇作圖平面, 或者先選擇作圖平面, 再選擇 Sketch 繪製平面輪廓, 輪廓繪圖, 可以直接在 3D 環境畫圖, 或者利用滑鼠右鍵帶出 View normal to sketch plane 的功能, 以垂直繪圖面的平面上進行繪圖.&lt;/p&gt;
+&lt;h2&gt;Onshape 可以轉出各式檔案&lt;/h2&gt;
+&lt;p&gt;各種基本的平面繪圖與尺寸標定或約束條件設定, 都與其他傳統的單機 MCAD 大同小異, 雖然 Onshape 與 Solid Edge 採用相同的 PARASOLID kernel, 但是所有的零組件檔案, 可以直接以點選下方的零組件 Tab, 再以滑鼠右鍵帶出 Export 功能, 然後轉成 PARASOLID 或 ACIS 核心檔,甚至也能直接轉成 Solidworks 格式檔案, 當然也能轉成 IGES, STEP, RHINO, STL 等格式.&lt;/p&gt;
+&lt;h2&gt;Onshape 擁有直覺的組立約束&lt;/h2&gt;
+&lt;p&gt;當使用者在 Onshape 零件繪製模式下完成基本零件, 就可以利用左下方的 + 建立組立檔, 將各零件一一放入進行組裝.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-fastened.htm"&gt;Fastened mate&lt;/a&gt; 主要用於焊接式的組合, 約束條件置入後, 兩個零件間已經沒有任何自由度而結為一體.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-revolute.htm"&gt;Revolute mate&lt;/a&gt; 主要用於旋轉軸式的組合, 約束條件置入後, 兩個零件間只留下一個旋轉自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-slider.htm"&gt;Slider mate&lt;/a&gt; 主要用於滑塊式的組合, 約束條件置入後, 兩個零件間只留下一個平移自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-planar.htm"&gt;Planar mate&lt;/a&gt; 主要用於面接式組合, 約束條件置入後, 兩個零件面對面靠接, 只允許兩個方向的移動自由度, 以及垂直靠接面方向的一個旋轉自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-cylindrical.htm&gt;Cylindrical mate&lt;/a&gt; 主要用於圓柱螺栓式的組合, 約束條件置入後, 兩個零件將具有旋轉與前進或後退的兩個自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-pin_slot.htm"&gt;Pin slot mate&lt;/a&gt; 主要用於插銷式組合, 約束條件置入後, 兩個零件具有旋轉與側向平移等兩個自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Ball mate&lt;/a&gt; 主要用於球接頭式的組合, 約束條件置入後, 將保留3個方向的旋轉自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Tangent mate&lt;/a&gt; 則是比較特殊的相切組立, 約束條件置入後, 兩個零件將始終保持相切的關係.&lt;/p&gt;
+&lt;h2&gt;簡單的組立應用&lt;/h2&gt;
+&lt;p&gt;根據上述基本功能, 就可以完成下列腳踏車鏈條的基本組立:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/onshape_bike_chain_assembly.png" width="800" /&gt;&lt;/p&gt;
+&lt;p&gt;教育版對應帳號下所完成的 &lt;a href="https://cad.onshape.com/documents/29d1a262b055745e59be7c09/w/1f25948ad73282e2440ffdcf"&gt;Bike chain Document&lt;/a&gt;.&lt;/p&gt;</summary><category term="Onshape"></category><category term="MCAD"></category></entry><entry><title>Bezier 曲線導引</title><link href="http://cadlab.mde.tw/post/bezier-qu-xian-dao-yin.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/bezier-qu-xian-dao-yin.html</id><summary type="html">&lt;p&gt;A primer on Bezier curves&lt;/p&gt;
 
 
 &lt;p&gt;&lt;a href="http://pomax.github.io/bezierinfo/"&gt;http://pomax.github.io/bezierinfo/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://pomax.github.io/bezierjs/"&gt;http://pomax.github.io/bezierjs/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;嘗試將純 Javascript 的環境轉為 Brython based &lt;a href="https://github.com/brython-dev/brython"&gt;https://github.com/brython-dev/brython&lt;/a&gt;, 希望完成之後, 可以讓使用者編寫 Python3 程式碼來操控 Bezier 曲線 &lt;a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"&gt;https://en.wikipedia.org/wiki/B%C3%A9zier_curve&lt;/a&gt;.&lt;/p&gt;</summary><category term="Javascript"></category><category term="程式"></category></entry><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
+&lt;p&gt;嘗試將純 Javascript 的環境轉為 Brython based &lt;a href="https://github.com/brython-dev/brython"&gt;https://github.com/brython-dev/brython&lt;/a&gt;, 希望完成之後, 可以讓使用者編寫 Python3 程式碼來操控 Bezier 曲線 &lt;a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"&gt;https://en.wikipedia.org/wiki/B%C3%A9zier_curve&lt;/a&gt;.&lt;/p&gt;</summary><category term="Javascript"></category><category term="程式"></category></entry><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
 
 
 &lt;p&gt;自從 1995 年, 第1套能在 Windows 操作系統執行的電腦輔助機械設計繪圖軟體套件, SolidWorks, 出現, 並且逐步蔚為風潮之後,  MCAD (Mechanical Computer Aided Design) 中端套件, 幾乎都只能在 Windows 操作系統上運作. 許多機械設計工程系相關師生, 幾乎早已經忘記, 最早的 MCAD 系統可都是在泛 Unix based 的操作系統上運作.&lt;/p&gt;

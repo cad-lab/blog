@@ -3424,11 +3424,11 @@ Parameter (參數)
 
 Length, Angle, Count, Query, Enum, Boolean and String
 
-Query (訂詢)
+Query (查詢)
 
 Everything, Nth element, Entity filter, Created by, Intersection, Subtraction, Symetric difference, Own by body, Own by body filter, Owner body, Entities adjacent to edge, Geometry type filter, Contains point, Intersects plane and Query evaluation
 
-Evaluation (評測)
+Evaluation (評量)
 
 Tangent plane, Tangent line, Vertex point, Length measurement, Area measurement, Volume measurement, Query evaluation
 
@@ -3438,7 +3438,7 @@ Cuboid, Cylinder, Extrude, Revolute, Fillet, Boolean, Transform, Import
 
 Import (導入)
 
-Format feature studio (整理特徵工房編輯內容格式)
+Format feature studio (整理特徵工房編輯格式)
 
 Commit (提交)
 
@@ -4129,7 +4129,7 @@ Author: kmol
 
 &lt;a href="https://cad.onshape.com/documents/5749420ae4b04aa3f56f8288/w/ed9f79b9809ffe7610f9c537/e/aa01cfec5e04037e7ca611b7"&gt;Lighten FeatureScript 程式 Document&lt;/a&gt;
 
-Snap Hook FeatureScript 原始碼:
+Snap Hook FeatureScript 程式原始碼:
 
 &lt;pre class="brush: jscript"&gt;
 /*    

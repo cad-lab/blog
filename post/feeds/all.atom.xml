@@ -1,5 +1,680 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-05-30T01:36:25+08:00</updated><entry><title>Onshape FeatureScript 程式語言 (一)</title><link href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan-yi.html" rel="alternate"></link><updated>2016-05-30T01:36:25+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/onshape-featurescript-cheng-shi-yu-yan-yi.html</id><summary type="html">&lt;p&gt;接續上一篇文章, 整理目前 Onshape 已經釋出的 FeatureScript 相關應用範例.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-05-30T09:23:54+08:00</updated><entry><title>Onshape FeatureScript 程式語言</title><link href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/onshape-featurescript-cheng-shi-yu-yan.html</id><summary type="html">&lt;p&gt;在 &lt;a href="https://embedwistia-a.akamaihd.net/deliveries/02d2dfd77d4c465c42fa30e66e3bb53f26467cbc/file.mp4"&gt;FeatureScript 簡介&lt;/a&gt;的影片中, 可以看到 Onshape 打造了一個客製化特徵功能的程式語言與社群分享機制, 任何人利用 FeatureScript 建立的延伸功能, 都能夠透過 Add custom features 指令與其他使用者分享.&lt;/p&gt;
+
+
+&lt;p&gt;FeatureScript 是 Onshape 發明, 一種可用來定義客製化參數特徵用的程式語言, 具有下列特點:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;各 Document 中用戶所建立的 FeatureScript 程式碼, 位於 Feature Studio (特徵工房) 分頁中.&lt;/li&gt;
+&lt;li&gt;FeatureScript 的整合開發環境 (Integrated Development Environment) 內建於 Onshape 中.&lt;/li&gt;
+&lt;li&gt;Onshape 原本系統中使用的特徵功能, 其對應的 FeatureScript 程式碼, 已經採&lt;a href="https://cad.onshape.com/documents/5749364ce4b0f60f1b7940fe/w/925a5467b6e725168eb9c993/e/ff3b765aacc32576f893ed23"&gt;開放源&lt;/a&gt; (Open Source) 模式釋出.&lt;/li&gt;
+&lt;li&gt;Onshape 同時提供 &lt;a href="https://cad.onshape.com/FsDoc/"&gt;FeatureScript 參考手冊&lt;/a&gt; 與 &lt;a href="https://forum.onshape.com/categories/featurescript"&gt;FeatureScript 論壇&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;登入 Onshape, 建立一個 Document 之後, 就可以透過左下角的 + 號中的 Create Feature Studio, 進入 FeatureScript 的整合開發環境, 開始編寫客製化的特徵程式碼, IDE 則提供下列相關功能:&lt;/p&gt;
+&lt;p&gt;Parameter (參數)&lt;/p&gt;
+&lt;p&gt;Length, Angle, Count, Query, Enum, Boolean and String&lt;/p&gt;
+&lt;p&gt;Query (查詢)&lt;/p&gt;
+&lt;p&gt;Everything, Nth element, Entity filter, Created by, Intersection, Subtraction, Symetric difference, Own by body, Own by body filter, Owner body, Entities adjacent to edge, Geometry type filter, Contains point, Intersects plane and Query evaluation&lt;/p&gt;
+&lt;p&gt;Evaluation (評量)&lt;/p&gt;
+&lt;p&gt;Tangent plane, Tangent line, Vertex point, Length measurement, Area measurement, Volume measurement, Query evaluation&lt;/p&gt;
+&lt;p&gt;Sketch, Line segment, Circle, Arc, Ellipse, Rectangle, Line segment chain&lt;/p&gt;
+&lt;p&gt;Cuboid, Cylinder, Extrude, Revolute, Fillet, Boolean, Transform, Import&lt;/p&gt;
+&lt;p&gt;Import (導入)&lt;/p&gt;
+&lt;p&gt;Format feature studio (整理特徵工房編輯格式)&lt;/p&gt;
+&lt;p&gt;Commit (提交)&lt;/p&gt;
+&lt;p&gt;FeatureScript 程式基本架構如下:&lt;/p&gt;
+&lt;pre class="brush: jscript"&gt;
+FeatureScript 355;
+import(path : "onshape/std/geometry.fs", version : "355.0");
+annotation { "Feature Type Name" : "My Feature" }
+export const myFeature = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        // Define the parameters of the feature type
+    }
+    {
+        // Define the function's action
+    });
+&lt;/pre&gt;
+
+&lt;p&gt;上層宣告, 列舉值與指令敘述都可以加上 annotations (註解). FeatureScript 的註解使用格式類似 Python 的 Dictionary, 但是 annotation 的索引值型別必須為字串, 而且索引值為 "Feature Type Name" 的 annotation 為每一個特徵指令的必要註解.&lt;/p&gt;
+&lt;p&gt;export 則可視為上述的程式碼中, 使用者所宣告的 myFeature 對應特徵物件會被優先置入 FeatureScript Template 中.&lt;/p&gt;
+&lt;p&gt;此外 Onshape 任一頁面送出時, 都帶有以下標頭設置, 除了利用 X-Frame-Options:SAMEORIGIN, 不允許使用者將頁面納入 iframe 或 object 標註中外, 也避免遭受可能的網路攻擊:&lt;/p&gt;
+&lt;pre class="brush: jscript"&gt;
+Cache-Control:must-revalidate,no-cache,no-store
+Strict-Transport-Security:max-age=31536000; includeSubDomains
+X-Content-Type-Options:nosniff
+X-Frame-Options:SAMEORIGIN
+X-XSS-Protection:1; mode=block
+&lt;/pre&gt;
+
+&lt;p&gt;以下則為目前 Onshape 官方釋出的參考應用範例:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/documents/57494220e4b04aa3f56f82c2/w/888534aeb52c4daa68bbfd05/e/4a55fd2861eaa83fae0221d9"&gt;Point Pattern FeatureScript 程式 Document&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/documents/57494152e4b05f50e871a72c/w/a4a3f09939bf1f43a8e4f133/e/2b865798923d6f648f7196f9"&gt;Spur Gear FeatureScript 程式 Document&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/documents/57494187e4b0f60f1b7941c8/w/b98b4de33c1d47713be20e7f/e/c1f8d65fc6196f728620b857"&gt;Wave Spring FeatureScript 程式 Document&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Port feature 程式碼 (建立 SAE J1926 螺孔):&lt;/p&gt;
+&lt;pre class="brush: jscript"&gt;
+FeatureScript 336;
+import(path : "onshape/std/geometry.fs", version : "336.0");
+
+export enum PortSize
+{
+    annotation { "Name" : "5/16-24" }
+    fiveSixteen,
+    annotation { "Name" : "3/8-24" }
+    threeEights,
+    annotation { "Name" : "7/16-20" }
+    sevenSixteen,
+    annotation { "Name" : "1/2-20" }
+    half,
+    annotation { "Name" : "9/16-18" }
+    nineSixteen,
+    annotation { "Name" : "3/4-16" }
+    threeFour,
+    annotation { "Name" : "7/8-14" }
+    sevenEights,
+    annotation { "Name" : "1 1/16-12" }
+    oneSixteen
+}
+
+annotation { "Feature Type Name" : "Port Feature" }
+export const portFeature = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        annotation { "Name" : "Port Size" }
+        definition.portSize is PortSize;
+
+        annotation { "Name" : "Points", "Filter" : EntityType.VERTEX }
+        definition.points is Query;
+
+        annotation { "Name" : "Depth" }
+        isLength(definition.depth, DEPTH_BOUNDS);
+    }
+    {
+        var ports;
+        var depth = definition.depth;
+        //here the vector points for each port are added to an array depending on size chosen
+        if (definition.portSize == PortSize.fiveSixteen)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .019 * inch, -.031 * inch),
+                    vector(-.631, -.031) * inch,
+                    vector(-.53, -.132) * inch,
+                    vector(-.167, -.132) * inch,
+                    vector(-.136, -.163) * inch,
+                    vector(-.062, -.179) * inch,
+                    vector(-.062, -.336) * inch,
+                    vector(0, -.336) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.threeEights)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .038 * inch, -.063 * inch),
+                    vector(-.629, -.063) * inch,
+                    vector(-.53, -.162) * inch,
+                    vector(-.169, -.162) * inch,
+                    vector(-.136, -.195) * inch,
+                    vector(-.062, -.211) * inch,
+                    vector(-.062, -.375) * inch,
+                    vector(0, -.375) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.sevenSixteen)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .052 * inch, -.086 * inch),
+                    vector(-.663, -.086) * inch,
+                    vector(-.547, -.202) * inch,
+                    vector(-.176, -.202) * inch,
+                    vector(-.155, -.224) * inch,
+                    vector(-.062, -.243) * inch,
+                    vector(-.062, -.414) * inch,
+                    vector(0, -.414) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.half)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .07 * inch, -.117 * inch),
+                    vector(-.71, -.117) * inch,
+                    vector(-.607, -.22) * inch,
+                    vector(-.188, -.22) * inch,
+                    vector(-.153, -.255) * inch,
+                    vector(-.062, -.275) * inch,
+                    vector(-.062, -.453) * inch,
+                    vector(0, -.453) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.nineSixteen)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .089 * inch, -.149 * inch),
+                    vector(-.773, -.149) * inch,
+                    vector(-.671, -.251) * inch,
+                    vector(-.195, -.251) * inch,
+                    vector(-.159, -.287) * inch,
+                    vector(-.062, -.308) * inch,
+                    vector(-.062, -.485) * inch,
+                    vector(0, -.485) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.threeFour)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .117 * inch, -.196 * inch),
+                    vector(-.928, -.196) * inch,
+                    vector(-.782, -.341) * inch,
+                    vector(-.237, -.341) * inch,
+                    vector(-.194, -.384) * inch,
+                    vector(-.094, -.406) * inch,
+                    vector(-.094, -.594) * inch,
+                    vector(0, -.594) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.sevenEights)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .145 * inch, -.242 * inch),
+                    vector(-1.032, -.242) * inch,
+                    vector(-.875, -.399) * inch,
+                    vector(-.245, -.399) * inch,
+                    vector(-.194, -.45) * inch,
+                    vector(-.094, -.471) * inch,
+                    vector(-.094, -.672) * inch,
+                    vector(0, -.672) * inch,
+                    vector(0, 0) * inch];
+        }
+        if (definition.portSize == PortSize.oneSixteen)
+        {
+            ports = [vector(0, 0) * inch,
+                    vector(-depth, 0 * inch),
+                    vector(-depth + .183 * inch, -.304 * inch),
+                    vector(-1.22, -.304) * inch,
+                    vector(-1, -.525) * inch,
+                    vector(-.246, -.525) * inch,
+                    vector(-.224, -.546) * inch,
+                    vector(-.094, -.574) * inch,
+                    vector(-.094, -.813) * inch,
+                    vector(0, -.813) * inch,
+                    vector(0, 0) * inch];
+        }
+        const checkLength = (ports[3] - ports[2]); 
+        if (checkLength[0] &lt; 0) // check the depth entered and throw error if depth causes feature to invert
+        {
+            throw regenError(ErrorStringEnum.SKETCH_DIMENSION_FAILED, ["depth"]);
+        }
+        var points = evaluateQuery(context, definition.points);
+        var numberOfPoints = size(points);
+        var sketchId = id + "sketch";
+        var portId = "port1";
+        for (var i = 0; i &lt; numberOfPoints; i += 1) //for each point selected create a sketch using port vertices and revolve cut
+        {
+            sketchId = sketchId + i;
+            var point = points[i];
+            var sketchPlane = evOwnerSketchPlane(context, { "entity" : point });
+            var cSys = planeToCSys(sketchPlane);
+            var pointVertex = evVertexPoint(context, { "vertex" : point });
+            var sketchPlane2 = plane(pointVertex, cSys.xAxis, cSys.zAxis);
+            var sketch = newSketchOnPlane(context, sketchId, { "sketchPlane" : sketchPlane2 });
+            skPolyline(sketch, portId, { "points" : ports, "constrained" : false });
+            skSolve(sketch);
+            var axisQuery = sketchEntityQuery(sketchId, EntityType.EDGE, portId ~ ".line0");
+            revolveCut(context, id, sketch, sketchId, axisQuery);
+        }
+        opDeleteBodies(context, id + "delete_sketch", { "entities" : qCreatedBy(id + "sketch", EntityType.BODY) });
+        // delete the sketch
+    }, { /* default parameters */ });
+
+function revolveCut(context is Context, id is Id, sketch is Sketch, sketchId is Id, axisQuery is Query)
+{
+    var sketchQuery = qSketchRegion(sketchId, false);
+    //revolve cut
+    revolve(context, sketchId + "revolve", {
+                "operationType" : NewBodyOperationType.REMOVE,
+                "entities" : qUnion([sketchQuery]),
+                "axis" : qUnion([axisQuery]),
+                "revolveType" : RevolveType.FULL,
+                "defaultScope" : true });
+}
+
+const DEPTH_BOUNDS =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.0381, 500],
+            (centimeter) : 3.81,
+            (millimeter) : 38.1,
+            (inch) : 1.5 // set the default depth to 1.5 inch
+        } as LengthBoundSpec;
+&lt;/pre&gt;
+
+&lt;p&gt;Screw Boss FeatureScript 原始碼:&lt;/p&gt;
+&lt;pre class="brush: jscript"&gt;
+/*    
+    Screw Boss
+
+    This custom feature creates a common fastening feature in plastic part design.
+
+    The Screw Boss is just one version of this type of fastening feature 
+    and could be easily extended to include many other types. This was built
+    to show that you can create complex, compound features easily.
+
+    Version 1 - April 26, 2016 - Neil Cooke, Onshape Inc.
+*/ 
+
+FeatureScript 336;
+import(path : "onshape/std/geometry.fs", version : "336.0");
+
+annotation { "Feature Type Name" : "Screw Boss" }
+export const ScrewBoss = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        annotation { "Name" : "Sketch points to place bosses", "Filter" : EntityType.VERTEX &amp;&amp; SketchObject.YES &amp;&amp; ConstructionObject.NO }
+        definition.locations is Query;
+
+        annotation { "Name" : "Boss style" }
+        definition.style is BossStyle;
+
+        if (definition.style == BossStyle.BLIND)
+        {
+            annotation { "Name" : "Boss height", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isLength(definition.height, BOSS_HEIGHT);
+        }
+        else
+        {
+            annotation { "Name" : "Parallel face or plane", "Filter" : EntityType.FACE, "MaxNumberOfPicks" : 1 }
+            definition.parallelFace is Query;
+        }
+
+        annotation { "Name" : "Boss diameter", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.diameter, BOSS_DIA);
+
+        annotation { "Name" : "Ribs", "Default" : true, "UIHint" : "DISPLAY_SHORT" }
+        definition.hasRibs is boolean;
+
+        if (definition.hasRibs == true)
+        {
+            annotation { "Name" : "Number of ribs (max 6)", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"] }
+            isInteger(definition.ribCount, RIB_COUNT_BOUNDS);
+
+            annotation { "Name" : "Flip rib direction", "UIHint" : "OPPOSITE_DIRECTION" }
+            definition.ribFlipDirection is boolean;
+
+            annotation { "Name" : "Edge to define rib direction", "Filter" : EntityType.EDGE, "MaxNumberOfPicks" : 1 }
+            definition.ribDirection is Query;
+
+            annotation { "Name" : "Rib diameter at top", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isLength(definition.ribDiameter, RIB_DIA);
+
+            annotation { "Name" : "Rib distance from top", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isLength(definition.ribHeight, RIB_HEIGHT);
+
+            annotation { "Name" : "Rib thickness", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+            isLength(definition.ribThickness, RIB_THK);
+
+            annotation { "Name" : "Chamfer", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"], "Default" : true }
+            definition.hasChamfer is boolean;
+
+            if (definition.hasChamfer == true)
+            {
+                annotation { "Name" : "Chamfer size", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"] }
+                isLength(definition.chamferSize, CHAMFER_SIZE);
+            }
+        }
+
+        annotation { "Name" : "Hole diameter", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.holeDiam, HOLE_DIA);
+
+        annotation { "Name" : "Wall thickness", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
+        isLength(definition.wallThickness, WALL_THK);
+
+        annotation { "Name" : "Draft", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"], "Default" : true }
+        definition.hasDraft is boolean;
+
+        if (definition.hasDraft == true)
+        {
+            annotation { "Name" : "Draft angle", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"] }
+            isAngle(definition.draftAngle, DRAFT_ANGLE);
+        }
+
+        annotation { "Name" : "Merge scope", "Filter" : EntityType.BODY &amp;&amp; BodyType.SOLID }
+        definition.booleanScope is Query;
+    }
+
+    {
+        // get all the user selected locations
+        const locations = evaluateQuery(context, definition.locations);
+
+        // if a solid body intersects the first point in the list, automatically use that in the merge scope
+        const targetBody = evaluateQuery(context, qContainsPoint(qBodyType(qEverything(EntityType.BODY), BodyType.SOLID), evVertexPoint(context, { "vertex" : locations[0] })));
+
+        if (size(targetBody) == 0 &amp;&amp; definition.booleanScope != undefined)
+            definition.targetBody = definition.booleanScope; // if not, get user to select merge scope
+        else
+            definition.targetBody = targetBody[0];
+
+        var sketchPlane is Plane = evOwnerSketchPlane(context, { "entity" : locations[0] });
+        var topPlane;
+        var ribPlane;
+
+        // define the plane for the top of the boss
+        if (definition.style == BossStyle.PLANE &amp;&amp; definition.parallelFace != undefined)
+            topPlane = evPlane(context, { "face" : definition.parallelFace });
+        else
+            topPlane = plane(sketchPlane.origin + definition.height * sketchPlane.normal, sketchPlane.normal);
+
+        var nameId = 1;
+
+        definition.sketch = newSketchOnPlane(context, id + "sketch1", { "sketchPlane" : topPlane });
+
+        // Build first feature - extruded circle
+        for (var location in locations)
+        {
+            var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
+
+            skCircle(definition.sketch, "circle" ~ nameId, {
+                        "center" : vector(point[0], point[1]),
+                        "radius" : definition.diameter / 2
+                    });
+            nameId += 1;
+        }
+        skSolve(definition.sketch);
+
+        extrude(context, id + ("extrude1"), {
+                    "entities" : qSketchRegion(id + "sketch1"),
+                    "endBound" : BoundingType.UP_TO_BODY,
+                    "endBoundEntityBody" : definition.targetBody,
+                    "oppositeDirection" : true,
+                    "hasDraft" : definition.hasDraft,
+                    "draftAngle" : definition.draftAngle,
+                    "draftPullDirection" : false,
+                    "operationType" : NewBodyOperationType.ADD,
+                    "defaultScope" : false,
+                    "booleanScope" : definition.targetBody
+                });
+
+        // Build second feature - extruded ribs
+        if (definition.hasRibs)
+        {
+            // define top of ribs
+            ribPlane = plane(topPlane.origin - definition.ribHeight * topPlane.normal, topPlane.normal);
+
+            var ribVector = vector(0, 1); // by default pointing up in Y
+
+            // if user has defined rib direction, work out the vector
+            if (definition.ribDirection != undefined)
+            {
+                const directionResult = try(evAxis(context, { "axis" : definition.ribDirection }));
+
+                if (directionResult != undefined)
+                    ribVector = normalize(vector(directionResult.direction[0], directionResult.direction[1]));
+            }
+
+            if (definition.ribFlipDirection)
+                ribVector = ribVector * -1;
+
+            definition.sketch = newSketchOnPlane(context, id + "sketch2", { "sketchPlane" : ribPlane });
+
+            const ribPlaneCSys = planeToCSys(ribPlane);
+            var chamferPoints = [];
+
+            nameId = 1;
+
+            for (var location in locations)
+            {
+                var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
+
+                const center = vector(point[0], point[1]);
+
+                // Build a closed "star" shaped sketch to represent the ribs
+                for (var j = 0; j &lt; definition.ribCount; j += 1)
+                {
+                    var angle = (360 / definition.ribCount) * j * degree;
+
+                    // The angle for each rib
+                    var angledRibVector = vector(ribVector[0] * cos(angle) - ribVector[1] * sin(angle),
+                        ribVector[0] * sin(angle) + ribVector[1] * cos(angle));
+
+                    var perpRibVector = vector(angledRibVector[1] * -1, angledRibVector[0]);
+
+                    var ribOffset = definition.ribThickness / 2 / tan(180 / definition.ribCount * degree);
+
+                    if (definition.ribCount == 1)
+                        ribOffset = 0 * meter;
+
+                    var points = [
+                        center - (definition.ribThickness / 2) * perpRibVector + (ribOffset) * angledRibVector,
+                        center - (definition.ribThickness / 2) * perpRibVector + (definition.ribDiameter / 2) * angledRibVector,
+                        center + (definition.ribThickness / 2) * perpRibVector + (definition.ribDiameter / 2) * angledRibVector,
+                        center + (definition.ribThickness / 2) * perpRibVector + (ribOffset) * angledRibVector];
+
+                    for (var i = 0; i &lt; size(points); i += 1)
+                    {
+                        skLineSegment(definition.sketch, "line" ~ nameId,
+                                { "start" : points[i],
+                                    "end" : points[(i + 1) % size(points)]
+                                });
+                        nameId += 1;
+                    }
+
+                    // Keep a list of the centerpoints of the edges where the chamfers may go
+                    var chamferPoint2d = center + (definition.ribDiameter / 2) * angledRibVector;
+                    chamferPoints = append(chamferPoints, toWorld(ribPlaneCSys, vector(chamferPoint2d[0], chamferPoint2d[1], 0 * meter)));
+                }
+                nameId += 1;
+            }
+            skSolve(definition.sketch);
+
+            extrude(context, id + ("extrude2"), {
+                        "entities" : qSketchRegion(id + "sketch2"),
+                        "endBound" : BoundingType.UP_TO_BODY,
+                        "endBoundEntityBody" : definition.targetBody,
+                        "oppositeDirection" : true,
+                        "hasDraft" : definition.hasDraft,
+                        "draftAngle" : definition.draftAngle,
+                        "draftPullDirection" : false,
+                        "operationType" : NewBodyOperationType.ADD,
+                        "defaultScope" : false,
+                        "booleanScope" : definition.targetBody
+                    });
+
+            // Build third feature - chamfers
+            if (definition.hasChamfer)
+            {
+                var chamferEdges = [];
+
+                for (var i = 0; i &lt; size(chamferPoints); i += 1)
+                {
+                    // Find the edges that intersect the points previously collected
+                    chamferEdges = append(chamferEdges, qContainsPoint(qCreatedBy(id + "extrude2", EntityType.EDGE), chamferPoints[i]));
+                }
+
+                try(opChamfer(context, id + "chamfer1", {
+                                "entities" : qUnion(chamferEdges),
+                                "chamferType" : ChamferType.EQUAL_OFFSETS,
+                                "width" : definition.chamferSize
+                            }));
+            }
+        }
+
+        nameId = 1;
+
+        // Build fourth feature - through hole to outside of part
+        var holePlane = plane(topPlane.origin - definition.wallThickness * topPlane.normal, topPlane.normal);
+
+        definition.sketch = newSketchOnPlane(context, id + "sketch3", { "sketchPlane" : holePlane });
+
+        for (var location in locations)
+        {
+            var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
+
+            skCircle(definition.sketch, "circle" ~ nameId, {
+                        "center" : vector(point[0], point[1]),
+                        "radius" : definition.diameter / 2 - definition.wallThickness
+                    });
+            nameId += 1;
+        }
+        skSolve(definition.sketch);
+
+        extrude(context, id + ("extrude3"), {
+                    "entities" : qSketchRegion(id + "sketch3"),
+                    "endBound" : BoundingType.UP_TO_BODY,
+                    "endBoundEntityBody" : definition.targetBody,
+                    "oppositeDirection" : true,
+                    "hasDraft" : definition.hasDraft,
+                    "draftAngle" : definition.draftAngle,
+                    "draftPullDirection" : false,
+                    "operationType" : NewBodyOperationType.REMOVE,
+                    "defaultScope" : false,
+                    "booleanScope" : definition.targetBody
+                });
+
+        nameId = 1;
+
+        // Build fifth feature - screw hole
+        definition.sketch = newSketchOnPlane(context, id + "sketch4", { "sketchPlane" : topPlane });
+
+        for (var location in locations)
+        {
+            var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
+
+            skCircle(definition.sketch, "circle" ~ nameId, {
+                        "center" : vector(point[0], point[1]),
+                        "radius" : definition.holeDiam / 2
+                    });
+            nameId += 1;
+        }
+        skSolve(definition.sketch);
+
+        extrude(context, id + ("extrude4"), {
+                    "entities" : qSketchRegion(id + "sketch4"),
+                    "endBound" : BoundingType.UP_TO_BODY,
+                    "endBoundEntityBody" : definition.targetBody,
+                    "oppositeDirection" : true,
+                    "hasDraft" : definition.hasDraft,
+                    "draftAngle" : definition.draftAngle,
+                    "draftPullDirection" : false,
+                    "operationType" : NewBodyOperationType.REMOVE,
+                    "defaultScope" : false,
+                    "booleanScope" : definition.targetBody
+                });
+
+        // Remove sketch entities - no longer required
+        var sketches = [qCreatedBy(id + "sketch1"), qCreatedBy(id + "sketch2"), qCreatedBy(id + "sketch3"), qCreatedBy(id + "sketch4")];
+        opDeleteBodies(context, id + "delete", { "entities" : qUnion(sketches) });
+
+    }, {});
+
+const BOSS_HEIGHT =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.02, 500],
+            (centimeter) : 2.0,
+            (millimeter) : 20.0,
+            (inch) : 0.8
+        } as LengthBoundSpec;
+
+const BOSS_DIA =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.008, 500],
+            (centimeter) : 0.8,
+            (millimeter) : 8.0,
+            (inch) : 0.3125
+        } as LengthBoundSpec;
+
+const RIB_COUNT_BOUNDS =
+{
+            "min" : 1,
+            "max" : 6,
+            (unitless) : [1, 4, 6]
+        } as IntegerBoundSpec;
+
+const RIB_DIA =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.015, 500],
+            (centimeter) : 1.5,
+            (millimeter) : 15.0,
+            (inch) : 0.6
+        } as LengthBoundSpec;
+
+const RIB_HEIGHT =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [0, 0.005, 500],
+            (centimeter) : 0.5,
+            (millimeter) : 5.0,
+            (inch) : 0.2
+        } as LengthBoundSpec;
+
+const RIB_THK =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.001, 500],
+            (centimeter) : 0.1,
+            (millimeter) : 1.0,
+            (inch) : 0.04
+        } as LengthBoundSpec;
+
+const CHAMFER_SIZE =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.002, 500],
+            (centimeter) : 0.2,
+            (millimeter) : 2.0,
+            (inch) : 0.08
+        } as LengthBoundSpec;
+
+const HOLE_DIA =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.003, 500],
+            (centimeter) : 0.3,
+            (millimeter) : 3.0,
+            (inch) : 0.12
+        } as LengthBoundSpec;
+
+const WALL_THK =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.0015, 500],
+            (centimeter) : 0.15,
+            (millimeter) : 1.5,
+            (inch) : 0.06
+        } as LengthBoundSpec;
+
+const DRAFT_ANGLE =
+{
+            "min" : -TOLERANCE.zeroAngle * radian,
+            "max" : (2 * PI + TOLERANCE.zeroAngle) * radian,
+            (degree) : [0, 2, 360],
+            (radian) : 0.035
+        } as AngleBoundSpec;
+
+export enum BossStyle
+{
+    annotation { "Name" : "Blind" }
+    BLIND,
+    annotation { "Name" : "Up to face" }
+    PLANE
+}
+&lt;/pre&gt;</summary><category term="CADLab"></category><category term="MCAD"></category></entry><entry><title>Onshape FeatureScript 程式語言 (一)</title><link href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan-yi.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/onshape-featurescript-cheng-shi-yu-yan-yi.html</id><summary type="html">&lt;p&gt;接續上一篇文章, 整理目前 Onshape 已經釋出的 FeatureScript 相關應用範例.&lt;/p&gt;
 
 
 &lt;p&gt;&lt;a href="https://cad.onshape.com/documents/574941a2e4b05f50e871a75a/w/1c096ba7cb6b4bb6d74f8ffa/e/8c83ef9b92095a980e185cf8"&gt;Curve Pattern FeatureScript 程式 Document&lt;/a&gt;&lt;/p&gt;
@@ -8,7 +683,7 @@
 &lt;p&gt;&lt;a href="https://cad.onshape.com/documents/57494101e4b04aa3f56f81ed/w/b2ffdc215aff14ea3817b535/e/1626934c31793c1d4d18eb6f"&gt;Brick FeatureScript 程式 Document&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://cad.onshape.com/documents/57494096e4b05f50e871a70e/w/165ebc7b4103e5b6c91e3f5b/e/bfd58761a0e39c157f11bd42"&gt;Measure Distance FeatureScript 程式 Document&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://cad.onshape.com/documents/5749420ae4b04aa3f56f8288/w/ed9f79b9809ffe7610f9c537/e/aa01cfec5e04037e7ca611b7"&gt;Lighten FeatureScript 程式 Document&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Snap Hook FeatureScript 原始碼:&lt;/p&gt;
+&lt;p&gt;Snap Hook FeatureScript 程式原始碼:&lt;/p&gt;
 &lt;pre class="brush: jscript"&gt;
 /*    
     Snap Hook
@@ -776,704 +1451,29 @@ function patternTransform(context, id, query, transform)
             "transform" : transform
     });
 }
-&lt;/pre&gt;</summary><category term="CADLab"></category><category term="MCAD"></category></entry><entry><title>Onshape FeatureScript 程式語言</title><link href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan.html" rel="alternate"></link><updated>2016-05-30T00:16:57+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/onshape-featurescript-cheng-shi-yu-yan.html</id><summary type="html">&lt;p&gt;在 &lt;a href="https://embedwistia-a.akamaihd.net/deliveries/02d2dfd77d4c465c42fa30e66e3bb53f26467cbc/file.mp4"&gt;FeatureScript 簡介&lt;/a&gt;的影片中, 可以看到 Onshape 打造了一個客製化特徵功能的程式語言與社群分享機制, 任何人利用 FeatureScript 建立的延伸功能, 都能夠透過 Add custom features 指令與其他使用者分享.&lt;/p&gt;
-
-
-&lt;p&gt;FeatureScript 是 Onshape 發明, 一種可用來定義客製化參數特徵用的程式語言, 具有下列特點:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;各 Document 中用戶所建立的 FeatureScript 程式碼, 位於 Feature Studio (特徵工房) 分頁中.&lt;/li&gt;
-&lt;li&gt;FeatureScript 的整合開發環境 (Integrated Development Environment) 內建於 Onshape 中.&lt;/li&gt;
-&lt;li&gt;Onshape 原本系統中使用的特徵功能, 其對應的 FeatureScript 程式碼, 已經採&lt;a href="https://cad.onshape.com/documents/5749364ce4b0f60f1b7940fe/w/925a5467b6e725168eb9c993/e/ff3b765aacc32576f893ed23"&gt;開放源&lt;/a&gt; (Open Source) 模式釋出.&lt;/li&gt;
-&lt;li&gt;Onshape 同時提供 &lt;a href="https://cad.onshape.com/FsDoc/"&gt;FeatureScript 參考手冊&lt;/a&gt; 與 &lt;a href="https://forum.onshape.com/categories/featurescript"&gt;FeatureScript 論壇&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;登入 Onshape, 建立一個 Document 之後, 就可以透過左下角的 + 號中的 Create Feature Studio, 進入 FeatureScript 的整合開發環境, 開始編寫客製化的特徵程式碼, IDE 則提供下列相關功能:&lt;/p&gt;
-&lt;p&gt;Parameter (參數)&lt;/p&gt;
-&lt;p&gt;Length, Angle, Count, Query, Enum, Boolean and String&lt;/p&gt;
-&lt;p&gt;Query (訂詢)&lt;/p&gt;
-&lt;p&gt;Everything, Nth element, Entity filter, Created by, Intersection, Subtraction, Symetric difference, Own by body, Own by body filter, Owner body, Entities adjacent to edge, Geometry type filter, Contains point, Intersects plane and Query evaluation&lt;/p&gt;
-&lt;p&gt;Evaluation (評測)&lt;/p&gt;
-&lt;p&gt;Tangent plane, Tangent line, Vertex point, Length measurement, Area measurement, Volume measurement, Query evaluation&lt;/p&gt;
-&lt;p&gt;Sketch, Line segment, Circle, Arc, Ellipse, Rectangle, Line segment chain&lt;/p&gt;
-&lt;p&gt;Cuboid, Cylinder, Extrude, Revolute, Fillet, Boolean, Transform, Import&lt;/p&gt;
-&lt;p&gt;Import (導入)&lt;/p&gt;
-&lt;p&gt;Format feature studio (整理特徵工房編輯內容格式)&lt;/p&gt;
-&lt;p&gt;Commit (提交)&lt;/p&gt;
-&lt;p&gt;FeatureScript 程式基本架構如下:&lt;/p&gt;
-&lt;pre class="brush: jscript"&gt;
-FeatureScript 355;
-import(path : "onshape/std/geometry.fs", version : "355.0");
-annotation { "Feature Type Name" : "My Feature" }
-export const myFeature = defineFeature(function(context is Context, id is Id, definition is map)
-    precondition
-    {
-        // Define the parameters of the feature type
-    }
-    {
-        // Define the function's action
-    });
-&lt;/pre&gt;
-
-&lt;p&gt;上層宣告, 列舉值與指令敘述都可以加上 annotations (註解). FeatureScript 的註解使用格式類似 Python 的 Dictionary, 但是 annotation 的索引值型別必須為字串, 而且索引值為 "Feature Type Name" 的 annotation 為每一個特徵指令的必要註解.&lt;/p&gt;
-&lt;p&gt;export 則可視為上述的程式碼中, 使用者所宣告的 myFeature 對應特徵物件會被優先置入 FeatureScript Template 中.&lt;/p&gt;
-&lt;p&gt;此外 Onshape 任一頁面送出時, 都帶有以下標頭設置, 除了利用 X-Frame-Options:SAMEORIGIN, 不允許使用者將頁面納入 iframe 或 object 標註中外, 也避免遭受可能的網路攻擊:&lt;/p&gt;
-&lt;pre class="brush: jscript"&gt;
-Cache-Control:must-revalidate,no-cache,no-store
-Strict-Transport-Security:max-age=31536000; includeSubDomains
-X-Content-Type-Options:nosniff
-X-Frame-Options:SAMEORIGIN
-X-XSS-Protection:1; mode=block
-&lt;/pre&gt;
-
-&lt;p&gt;以下則為目前 Onshape 官方釋出的參考應用範例:&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/documents/57494220e4b04aa3f56f82c2/w/888534aeb52c4daa68bbfd05/e/4a55fd2861eaa83fae0221d9"&gt;Point Pattern FeatureScript 程式 Document&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/documents/57494152e4b05f50e871a72c/w/a4a3f09939bf1f43a8e4f133/e/2b865798923d6f648f7196f9"&gt;Spur Gear FeatureScript 程式 Document&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/documents/57494187e4b0f60f1b7941c8/w/b98b4de33c1d47713be20e7f/e/c1f8d65fc6196f728620b857"&gt;Wave Spring FeatureScript 程式 Document&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Port feature 程式碼 (建立 SAE J1926 螺孔):&lt;/p&gt;
-&lt;pre class="brush: jscript"&gt;
-FeatureScript 336;
-import(path : "onshape/std/geometry.fs", version : "336.0");
-
-export enum PortSize
-{
-    annotation { "Name" : "5/16-24" }
-    fiveSixteen,
-    annotation { "Name" : "3/8-24" }
-    threeEights,
-    annotation { "Name" : "7/16-20" }
-    sevenSixteen,
-    annotation { "Name" : "1/2-20" }
-    half,
-    annotation { "Name" : "9/16-18" }
-    nineSixteen,
-    annotation { "Name" : "3/4-16" }
-    threeFour,
-    annotation { "Name" : "7/8-14" }
-    sevenEights,
-    annotation { "Name" : "1 1/16-12" }
-    oneSixteen
-}
-
-annotation { "Feature Type Name" : "Port Feature" }
-export const portFeature = defineFeature(function(context is Context, id is Id, definition is map)
-    precondition
-    {
-        annotation { "Name" : "Port Size" }
-        definition.portSize is PortSize;
-
-        annotation { "Name" : "Points", "Filter" : EntityType.VERTEX }
-        definition.points is Query;
-
-        annotation { "Name" : "Depth" }
-        isLength(definition.depth, DEPTH_BOUNDS);
-    }
-    {
-        var ports;
-        var depth = definition.depth;
-        //here the vector points for each port are added to an array depending on size chosen
-        if (definition.portSize == PortSize.fiveSixteen)
-        {
-            ports = [vector(0, 0) * inch,
-                    vector(-depth, 0 * inch),
-                    vector(-depth + .019 * inch, -.031 * inch),
-                    vector(-.631, -.031) * inch,
-                    vector(-.53, -.132) * inch,
-                    vector(-.167, -.132) * inch,
-                    vector(-.136, -.163) * inch,
-                    vector(-.062, -.179) * inch,
-                    vector(-.062, -.336) * inch,
-                    vector(0, -.336) * inch,
-                    vector(0, 0) * inch];
-        }
-        if (definition.portSize == PortSize.threeEights)
-        {
-            ports = [vector(0, 0) * inch,
-                    vector(-depth, 0 * inch),
-                    vector(-depth + .038 * inch, -.063 * inch),
-                    vector(-.629, -.063) * inch,
-                    vector(-.53, -.162) * inch,
-                    vector(-.169, -.162) * inch,
-                    vector(-.136, -.195) * inch,
-                    vector(-.062, -.211) * inch,
-                    vector(-.062, -.375) * inch,
-                    vector(0, -.375) * inch,
-                    vector(0, 0) * inch];
-        }
-        if (definition.portSize == PortSize.sevenSixteen)
-        {
-            ports = [vector(0, 0) * inch,
-                    vector(-depth, 0 * inch),
-                    vector(-depth + .052 * inch, -.086 * inch),
-                    vector(-.663, -.086) * inch,
-                    vector(-.547, -.202) * inch,
-                    vector(-.176, -.202) * inch,
-                    vector(-.155, -.224) * inch,
-                    vector(-.062, -.243) * inch,
-                    vector(-.062, -.414) * inch,
-                    vector(0, -.414) * inch,
-                    vector(0, 0) * inch];
-        }
-        if (definition.portSize == PortSize.half)
-        {
-            ports = [vector(0, 0) * inch,
-                    vector(-depth, 0 * inch),
-                    vector(-depth + .07 * inch, -.117 * inch),
-                    vector(-.71, -.117) * inch,
-                    vector(-.607, -.22) * inch,
-                    vector(-.188, -.22) * inch,
-                    vector(-.153, -.255) * inch,
-                    vector(-.062, -.275) * inch,
-                    vector(-.062, -.453) * inch,
-                    vector(0, -.453) * inch,
-                    vector(0, 0) * inch];
-        }
-        if (definition.portSize == PortSize.nineSixteen)
-        {
-            ports = [vector(0, 0) * inch,
-                    vector(-depth, 0 * inch),
-                    vector(-depth + .089 * inch, -.149 * inch),
-                    vector(-.773, -.149) * inch,
-                    vector(-.671, -.251) * inch,
-                    vector(-.195, -.251) * inch,
-                    vector(-.159, -.287) * inch,
-                    vector(-.062, -.308) * inch,
-                    vector(-.062, -.485) * inch,
-                    vector(0, -.485) * inch,
-                    vector(0, 0) * inch];
-        }
-        if (definition.portSize == PortSize.threeFour)
-        {
-            ports = [vector(0, 0) * inch,
-                    vector(-depth, 0 * inch),
-                    vector(-depth + .117 * inch, -.196 * inch),
-                    vector(-.928, -.196) * inch,
-                    vector(-.782, -.341) * inch,
-                    vector(-.237, -.341) * inch,
-                    vector(-.194, -.384) * inch,
-                    vector(-.094, -.406) * inch,
-                    vector(-.094, -.594) * inch,
-                    vector(0, -.594) * inch,
-                    vector(0, 0) * inch];
-        }
-        if (definition.portSize == PortSize.sevenEights)
-        {
-            ports = [vector(0, 0) * inch,
-                    vector(-depth, 0 * inch),
-                    vector(-depth + .145 * inch, -.242 * inch),
-                    vector(-1.032, -.242) * inch,
-                    vector(-.875, -.399) * inch,
-                    vector(-.245, -.399) * inch,
-                    vector(-.194, -.45) * inch,
-                    vector(-.094, -.471) * inch,
-                    vector(-.094, -.672) * inch,
-                    vector(0, -.672) * inch,
-                    vector(0, 0) * inch];
-        }
-        if (definition.portSize == PortSize.oneSixteen)
-        {
-            ports = [vector(0, 0) * inch,
-                    vector(-depth, 0 * inch),
-                    vector(-depth + .183 * inch, -.304 * inch),
-                    vector(-1.22, -.304) * inch,
-                    vector(-1, -.525) * inch,
-                    vector(-.246, -.525) * inch,
-                    vector(-.224, -.546) * inch,
-                    vector(-.094, -.574) * inch,
-                    vector(-.094, -.813) * inch,
-                    vector(0, -.813) * inch,
-                    vector(0, 0) * inch];
-        }
-        const checkLength = (ports[3] - ports[2]); 
-        if (checkLength[0] &lt; 0) // check the depth entered and throw error if depth causes feature to invert
-        {
-            throw regenError(ErrorStringEnum.SKETCH_DIMENSION_FAILED, ["depth"]);
-        }
-        var points = evaluateQuery(context, definition.points);
-        var numberOfPoints = size(points);
-        var sketchId = id + "sketch";
-        var portId = "port1";
-        for (var i = 0; i &lt; numberOfPoints; i += 1) //for each point selected create a sketch using port vertices and revolve cut
-        {
-            sketchId = sketchId + i;
-            var point = points[i];
-            var sketchPlane = evOwnerSketchPlane(context, { "entity" : point });
-            var cSys = planeToCSys(sketchPlane);
-            var pointVertex = evVertexPoint(context, { "vertex" : point });
-            var sketchPlane2 = plane(pointVertex, cSys.xAxis, cSys.zAxis);
-            var sketch = newSketchOnPlane(context, sketchId, { "sketchPlane" : sketchPlane2 });
-            skPolyline(sketch, portId, { "points" : ports, "constrained" : false });
-            skSolve(sketch);
-            var axisQuery = sketchEntityQuery(sketchId, EntityType.EDGE, portId ~ ".line0");
-            revolveCut(context, id, sketch, sketchId, axisQuery);
-        }
-        opDeleteBodies(context, id + "delete_sketch", { "entities" : qCreatedBy(id + "sketch", EntityType.BODY) });
-        // delete the sketch
-    }, { /* default parameters */ });
-
-function revolveCut(context is Context, id is Id, sketch is Sketch, sketchId is Id, axisQuery is Query)
-{
-    var sketchQuery = qSketchRegion(sketchId, false);
-    //revolve cut
-    revolve(context, sketchId + "revolve", {
-                "operationType" : NewBodyOperationType.REMOVE,
-                "entities" : qUnion([sketchQuery]),
-                "axis" : qUnion([axisQuery]),
-                "revolveType" : RevolveType.FULL,
-                "defaultScope" : true });
-}
-
-const DEPTH_BOUNDS =
-{
-            "min" : -TOLERANCE.zeroLength * meter,
-            "max" : 500 * meter,
-            (meter) : [1e-5, 0.0381, 500],
-            (centimeter) : 3.81,
-            (millimeter) : 38.1,
-            (inch) : 1.5 // set the default depth to 1.5 inch
-        } as LengthBoundSpec;
-&lt;/pre&gt;
-
-&lt;p&gt;Screw Boss FeatureScript 原始碼:&lt;/p&gt;
-&lt;pre class="brush: jscript"&gt;
-/*    
-    Screw Boss
-
-    This custom feature creates a common fastening feature in plastic part design.
-
-    The Screw Boss is just one version of this type of fastening feature 
-    and could be easily extended to include many other types. This was built
-    to show that you can create complex, compound features easily.
-
-    Version 1 - April 26, 2016 - Neil Cooke, Onshape Inc.
-*/ 
-
-FeatureScript 336;
-import(path : "onshape/std/geometry.fs", version : "336.0");
-
-annotation { "Feature Type Name" : "Screw Boss" }
-export const ScrewBoss = defineFeature(function(context is Context, id is Id, definition is map)
-    precondition
-    {
-        annotation { "Name" : "Sketch points to place bosses", "Filter" : EntityType.VERTEX &amp;&amp; SketchObject.YES &amp;&amp; ConstructionObject.NO }
-        definition.locations is Query;
-
-        annotation { "Name" : "Boss style" }
-        definition.style is BossStyle;
-
-        if (definition.style == BossStyle.BLIND)
-        {
-            annotation { "Name" : "Boss height", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
-            isLength(definition.height, BOSS_HEIGHT);
-        }
-        else
-        {
-            annotation { "Name" : "Parallel face or plane", "Filter" : EntityType.FACE, "MaxNumberOfPicks" : 1 }
-            definition.parallelFace is Query;
-        }
-
-        annotation { "Name" : "Boss diameter", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
-        isLength(definition.diameter, BOSS_DIA);
-
-        annotation { "Name" : "Ribs", "Default" : true, "UIHint" : "DISPLAY_SHORT" }
-        definition.hasRibs is boolean;
-
-        if (definition.hasRibs == true)
-        {
-            annotation { "Name" : "Number of ribs (max 6)", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"] }
-            isInteger(definition.ribCount, RIB_COUNT_BOUNDS);
-
-            annotation { "Name" : "Flip rib direction", "UIHint" : "OPPOSITE_DIRECTION" }
-            definition.ribFlipDirection is boolean;
-
-            annotation { "Name" : "Edge to define rib direction", "Filter" : EntityType.EDGE, "MaxNumberOfPicks" : 1 }
-            definition.ribDirection is Query;
-
-            annotation { "Name" : "Rib diameter at top", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
-            isLength(definition.ribDiameter, RIB_DIA);
-
-            annotation { "Name" : "Rib distance from top", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
-            isLength(definition.ribHeight, RIB_HEIGHT);
-
-            annotation { "Name" : "Rib thickness", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
-            isLength(definition.ribThickness, RIB_THK);
-
-            annotation { "Name" : "Chamfer", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"], "Default" : true }
-            definition.hasChamfer is boolean;
-
-            if (definition.hasChamfer == true)
-            {
-                annotation { "Name" : "Chamfer size", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"] }
-                isLength(definition.chamferSize, CHAMFER_SIZE);
-            }
-        }
-
-        annotation { "Name" : "Hole diameter", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
-        isLength(definition.holeDiam, HOLE_DIA);
-
-        annotation { "Name" : "Wall thickness", "UIHint" : "REMEMBER_PREVIOUS_VALUE" }
-        isLength(definition.wallThickness, WALL_THK);
-
-        annotation { "Name" : "Draft", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"], "Default" : true }
-        definition.hasDraft is boolean;
-
-        if (definition.hasDraft == true)
-        {
-            annotation { "Name" : "Draft angle", "UIHint" : ["DISPLAY_SHORT", "REMEMBER_PREVIOUS_VALUE"] }
-            isAngle(definition.draftAngle, DRAFT_ANGLE);
-        }
-
-        annotation { "Name" : "Merge scope", "Filter" : EntityType.BODY &amp;&amp; BodyType.SOLID }
-        definition.booleanScope is Query;
-    }
-
-    {
-        // get all the user selected locations
-        const locations = evaluateQuery(context, definition.locations);
-
-        // if a solid body intersects the first point in the list, automatically use that in the merge scope
-        const targetBody = evaluateQuery(context, qContainsPoint(qBodyType(qEverything(EntityType.BODY), BodyType.SOLID), evVertexPoint(context, { "vertex" : locations[0] })));
-
-        if (size(targetBody) == 0 &amp;&amp; definition.booleanScope != undefined)
-            definition.targetBody = definition.booleanScope; // if not, get user to select merge scope
-        else
-            definition.targetBody = targetBody[0];
-
-        var sketchPlane is Plane = evOwnerSketchPlane(context, { "entity" : locations[0] });
-        var topPlane;
-        var ribPlane;
-
-        // define the plane for the top of the boss
-        if (definition.style == BossStyle.PLANE &amp;&amp; definition.parallelFace != undefined)
-            topPlane = evPlane(context, { "face" : definition.parallelFace });
-        else
-            topPlane = plane(sketchPlane.origin + definition.height * sketchPlane.normal, sketchPlane.normal);
-
-        var nameId = 1;
-
-        definition.sketch = newSketchOnPlane(context, id + "sketch1", { "sketchPlane" : topPlane });
-
-        // Build first feature - extruded circle
-        for (var location in locations)
-        {
-            var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
-
-            skCircle(definition.sketch, "circle" ~ nameId, {
-                        "center" : vector(point[0], point[1]),
-                        "radius" : definition.diameter / 2
-                    });
-            nameId += 1;
-        }
-        skSolve(definition.sketch);
-
-        extrude(context, id + ("extrude1"), {
-                    "entities" : qSketchRegion(id + "sketch1"),
-                    "endBound" : BoundingType.UP_TO_BODY,
-                    "endBoundEntityBody" : definition.targetBody,
-                    "oppositeDirection" : true,
-                    "hasDraft" : definition.hasDraft,
-                    "draftAngle" : definition.draftAngle,
-                    "draftPullDirection" : false,
-                    "operationType" : NewBodyOperationType.ADD,
-                    "defaultScope" : false,
-                    "booleanScope" : definition.targetBody
-                });
-
-        // Build second feature - extruded ribs
-        if (definition.hasRibs)
-        {
-            // define top of ribs
-            ribPlane = plane(topPlane.origin - definition.ribHeight * topPlane.normal, topPlane.normal);
-
-            var ribVector = vector(0, 1); // by default pointing up in Y
-
-            // if user has defined rib direction, work out the vector
-            if (definition.ribDirection != undefined)
-            {
-                const directionResult = try(evAxis(context, { "axis" : definition.ribDirection }));
-
-                if (directionResult != undefined)
-                    ribVector = normalize(vector(directionResult.direction[0], directionResult.direction[1]));
-            }
-
-            if (definition.ribFlipDirection)
-                ribVector = ribVector * -1;
-
-            definition.sketch = newSketchOnPlane(context, id + "sketch2", { "sketchPlane" : ribPlane });
-
-            const ribPlaneCSys = planeToCSys(ribPlane);
-            var chamferPoints = [];
-
-            nameId = 1;
-
-            for (var location in locations)
-            {
-                var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
-
-                const center = vector(point[0], point[1]);
-
-                // Build a closed "star" shaped sketch to represent the ribs
-                for (var j = 0; j &lt; definition.ribCount; j += 1)
-                {
-                    var angle = (360 / definition.ribCount) * j * degree;
-
-                    // The angle for each rib
-                    var angledRibVector = vector(ribVector[0] * cos(angle) - ribVector[1] * sin(angle),
-                        ribVector[0] * sin(angle) + ribVector[1] * cos(angle));
-
-                    var perpRibVector = vector(angledRibVector[1] * -1, angledRibVector[0]);
-
-                    var ribOffset = definition.ribThickness / 2 / tan(180 / definition.ribCount * degree);
-
-                    if (definition.ribCount == 1)
-                        ribOffset = 0 * meter;
-
-                    var points = [
-                        center - (definition.ribThickness / 2) * perpRibVector + (ribOffset) * angledRibVector,
-                        center - (definition.ribThickness / 2) * perpRibVector + (definition.ribDiameter / 2) * angledRibVector,
-                        center + (definition.ribThickness / 2) * perpRibVector + (definition.ribDiameter / 2) * angledRibVector,
-                        center + (definition.ribThickness / 2) * perpRibVector + (ribOffset) * angledRibVector];
-
-                    for (var i = 0; i &lt; size(points); i += 1)
-                    {
-                        skLineSegment(definition.sketch, "line" ~ nameId,
-                                { "start" : points[i],
-                                    "end" : points[(i + 1) % size(points)]
-                                });
-                        nameId += 1;
-                    }
-
-                    // Keep a list of the centerpoints of the edges where the chamfers may go
-                    var chamferPoint2d = center + (definition.ribDiameter / 2) * angledRibVector;
-                    chamferPoints = append(chamferPoints, toWorld(ribPlaneCSys, vector(chamferPoint2d[0], chamferPoint2d[1], 0 * meter)));
-                }
-                nameId += 1;
-            }
-            skSolve(definition.sketch);
-
-            extrude(context, id + ("extrude2"), {
-                        "entities" : qSketchRegion(id + "sketch2"),
-                        "endBound" : BoundingType.UP_TO_BODY,
-                        "endBoundEntityBody" : definition.targetBody,
-                        "oppositeDirection" : true,
-                        "hasDraft" : definition.hasDraft,
-                        "draftAngle" : definition.draftAngle,
-                        "draftPullDirection" : false,
-                        "operationType" : NewBodyOperationType.ADD,
-                        "defaultScope" : false,
-                        "booleanScope" : definition.targetBody
-                    });
-
-            // Build third feature - chamfers
-            if (definition.hasChamfer)
-            {
-                var chamferEdges = [];
-
-                for (var i = 0; i &lt; size(chamferPoints); i += 1)
-                {
-                    // Find the edges that intersect the points previously collected
-                    chamferEdges = append(chamferEdges, qContainsPoint(qCreatedBy(id + "extrude2", EntityType.EDGE), chamferPoints[i]));
-                }
-
-                try(opChamfer(context, id + "chamfer1", {
-                                "entities" : qUnion(chamferEdges),
-                                "chamferType" : ChamferType.EQUAL_OFFSETS,
-                                "width" : definition.chamferSize
-                            }));
-            }
-        }
-
-        nameId = 1;
-
-        // Build fourth feature - through hole to outside of part
-        var holePlane = plane(topPlane.origin - definition.wallThickness * topPlane.normal, topPlane.normal);
-
-        definition.sketch = newSketchOnPlane(context, id + "sketch3", { "sketchPlane" : holePlane });
-
-        for (var location in locations)
-        {
-            var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
-
-            skCircle(definition.sketch, "circle" ~ nameId, {
-                        "center" : vector(point[0], point[1]),
-                        "radius" : definition.diameter / 2 - definition.wallThickness
-                    });
-            nameId += 1;
-        }
-        skSolve(definition.sketch);
-
-        extrude(context, id + ("extrude3"), {
-                    "entities" : qSketchRegion(id + "sketch3"),
-                    "endBound" : BoundingType.UP_TO_BODY,
-                    "endBoundEntityBody" : definition.targetBody,
-                    "oppositeDirection" : true,
-                    "hasDraft" : definition.hasDraft,
-                    "draftAngle" : definition.draftAngle,
-                    "draftPullDirection" : false,
-                    "operationType" : NewBodyOperationType.REMOVE,
-                    "defaultScope" : false,
-                    "booleanScope" : definition.targetBody
-                });
-
-        nameId = 1;
-
-        // Build fifth feature - screw hole
-        definition.sketch = newSketchOnPlane(context, id + "sketch4", { "sketchPlane" : topPlane });
-
-        for (var location in locations)
-        {
-            var point is Vector = worldToPlane(topPlane, evVertexPoint(context, { "vertex" : location }));
-
-            skCircle(definition.sketch, "circle" ~ nameId, {
-                        "center" : vector(point[0], point[1]),
-                        "radius" : definition.holeDiam / 2
-                    });
-            nameId += 1;
-        }
-        skSolve(definition.sketch);
-
-        extrude(context, id + ("extrude4"), {
-                    "entities" : qSketchRegion(id + "sketch4"),
-                    "endBound" : BoundingType.UP_TO_BODY,
-                    "endBoundEntityBody" : definition.targetBody,
-                    "oppositeDirection" : true,
-                    "hasDraft" : definition.hasDraft,
-                    "draftAngle" : definition.draftAngle,
-                    "draftPullDirection" : false,
-                    "operationType" : NewBodyOperationType.REMOVE,
-                    "defaultScope" : false,
-                    "booleanScope" : definition.targetBody
-                });
-
-        // Remove sketch entities - no longer required
-        var sketches = [qCreatedBy(id + "sketch1"), qCreatedBy(id + "sketch2"), qCreatedBy(id + "sketch3"), qCreatedBy(id + "sketch4")];
-        opDeleteBodies(context, id + "delete", { "entities" : qUnion(sketches) });
-
-    }, {});
-
-const BOSS_HEIGHT =
-{
-            "min" : -TOLERANCE.zeroLength * meter,
-            "max" : 500 * meter,
-            (meter) : [1e-5, 0.02, 500],
-            (centimeter) : 2.0,
-            (millimeter) : 20.0,
-            (inch) : 0.8
-        } as LengthBoundSpec;
-
-const BOSS_DIA =
-{
-            "min" : -TOLERANCE.zeroLength * meter,
-            "max" : 500 * meter,
-            (meter) : [1e-5, 0.008, 500],
-            (centimeter) : 0.8,
-            (millimeter) : 8.0,
-            (inch) : 0.3125
-        } as LengthBoundSpec;
-
-const RIB_COUNT_BOUNDS =
-{
-            "min" : 1,
-            "max" : 6,
-            (unitless) : [1, 4, 6]
-        } as IntegerBoundSpec;
-
-const RIB_DIA =
-{
-            "min" : -TOLERANCE.zeroLength * meter,
-            "max" : 500 * meter,
-            (meter) : [1e-5, 0.015, 500],
-            (centimeter) : 1.5,
-            (millimeter) : 15.0,
-            (inch) : 0.6
-        } as LengthBoundSpec;
-
-const RIB_HEIGHT =
-{
-            "min" : -TOLERANCE.zeroLength * meter,
-            "max" : 500 * meter,
-            (meter) : [0, 0.005, 500],
-            (centimeter) : 0.5,
-            (millimeter) : 5.0,
-            (inch) : 0.2
-        } as LengthBoundSpec;
-
-const RIB_THK =
-{
-            "min" : -TOLERANCE.zeroLength * meter,
-            "max" : 500 * meter,
-            (meter) : [1e-5, 0.001, 500],
-            (centimeter) : 0.1,
-            (millimeter) : 1.0,
-            (inch) : 0.04
-        } as LengthBoundSpec;
-
-const CHAMFER_SIZE =
-{
-            "min" : -TOLERANCE.zeroLength * meter,
-            "max" : 500 * meter,
-            (meter) : [1e-5, 0.002, 500],
-            (centimeter) : 0.2,
-            (millimeter) : 2.0,
-            (inch) : 0.08
-        } as LengthBoundSpec;
-
-const HOLE_DIA =
-{
-            "min" : -TOLERANCE.zeroLength * meter,
-            "max" : 500 * meter,
-            (meter) : [1e-5, 0.003, 500],
-            (centimeter) : 0.3,
-            (millimeter) : 3.0,
-            (inch) : 0.12
-        } as LengthBoundSpec;
-
-const WALL_THK =
-{
-            "min" : -TOLERANCE.zeroLength * meter,
-            "max" : 500 * meter,
-            (meter) : [1e-5, 0.0015, 500],
-            (centimeter) : 0.15,
-            (millimeter) : 1.5,
-            (inch) : 0.06
-        } as LengthBoundSpec;
-
-const DRAFT_ANGLE =
-{
-            "min" : -TOLERANCE.zeroAngle * radian,
-            "max" : (2 * PI + TOLERANCE.zeroAngle) * radian,
-            (degree) : [0, 2, 360],
-            (radian) : 0.035
-        } as AngleBoundSpec;
-
-export enum BossStyle
-{
-    annotation { "Name" : "Blind" }
-    BLIND,
-    annotation { "Name" : "Up to face" }
-    PLANE
-}
-&lt;/pre&gt;</summary><category term="CADLab"></category><category term="MCAD"></category></entry><entry><title>雲端平台上的電腦輔助機械設計</title><link href="http://cadlab.mde.tw/post/yun-duan-ping-tai-shang-de-dian-nao-fu-zhu-ji-jie-she-ji.html" rel="alternate"></link><updated>2016-05-28T07:05:43+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-28:post/yun-duan-ping-tai-shang-de-dian-nao-fu-zhu-ji-jie-she-ji.html</id><summary type="html">&lt;p&gt;&lt;a href="https://www.onshape.com/"&gt;Onshape&lt;/a&gt; 在 &lt;a href="http://wordpress-2015course.rhcloud.com/?p=4514"&gt;2015年12月&lt;/a&gt;正式全面對外公開之後, 已經啟動電腦輔助機械設計的雲端世代, 為了追求高效能的全球協同產品設計流程, 利用跨硬體裝置, 免安裝, 具備設計特徵版次管理, 而且提供類似 &lt;a href="https://cad.onshape.com/FsDoc/"&gt;Featurescript&lt;/a&gt; 客製化功能建構環境 (i.e. Feature Studio) 的全雲端電腦輔助機械設計工具, 將會日漸完備.&lt;/p&gt;
-
-
-&lt;p&gt;面對 Onshape 的破壞性創新產品挑戰, SolidWorks 也以採用 &lt;a href="http://www.3ds.com/about-3ds/3dexperience-platform/"&gt;3dexperience platform&lt;/a&gt; 核心技術為主體, 推出全新的全雲端產品: &lt;a href="http://xdesign.solidworks.com/"&gt;Xdesign&lt;/a&gt; 回應.&lt;/p&gt;
-&lt;p&gt;目前, SolidWorks 單機版約佔全球市場&lt;a href="http://blog.cnccookbook.com/2015/01/20/results-2015-cad-survey/"&gt;超過五分之一&lt;/a&gt;, 未來將與自家的 Xdesign 與 Onshape 免安裝全雲端產品, 競逐全球電腦輔助機械設計軟體市場. &lt;/p&gt;
-&lt;p&gt;因此, 2016 年可以說是電腦輔助機械設計的雲端元年, 正好比 2006 年推出的 &lt;a href="https://en.wikipedia.org/wiki/Google_Docs,_Sheets,_and_Slides"&gt;Google Doc&lt;/a&gt;, 晚了十年.&lt;/p&gt;</summary><category term="CADLab"></category><category term="MCAD"></category></entry><entry><title>電腦輔助設計室的電腦開機磁區設置</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-de-dian-nao-kai-ji-ci-qu-she-zhi.html" rel="alternate"></link><updated>2016-05-27T21:00:27+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-27:post/dian-nao-fu-zhu-she-ji-shi-de-dian-nao-kai-ji-ci-qu-she-zhi.html</id><summary type="html">&lt;p&gt;第1磁區: Windows 10 Pro + &lt;a href="https://msdn.microsoft.com/zh-tw/virtualization/hyperv_on_windows/quick_start/walkthrough_install"&gt;Hyper-V&lt;/a&gt; 安裝 Windows 7 Professional&lt;/p&gt;
+&lt;/pre&gt;</summary><category term="CADLab"></category><category term="MCAD"></category></entry><entry><title>電腦輔助設計室的電腦開機磁區設置</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-de-dian-nao-kai-ji-ci-qu-she-zhi.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/dian-nao-fu-zhu-she-ji-shi-de-dian-nao-kai-ji-ci-qu-she-zhi.html</id><summary type="html">&lt;p&gt;第1磁區: Windows 10 Pro + &lt;a href="https://msdn.microsoft.com/zh-tw/virtualization/hyperv_on_windows/quick_start/walkthrough_install"&gt;Hyper-V&lt;/a&gt; 安裝 Windows 7 Professional&lt;/p&gt;
 &lt;p&gt;第2磁區: Windows 10 Pro + 可攜免安裝程式套件&lt;/p&gt;
 &lt;p&gt;第3磁區: &lt;a href="http://releases.ubuntu.com/16.04/"&gt;Ubuntu 16.04&lt;/a&gt; Server + ubuntu-desktop&lt;/p&gt;
 
 
 &lt;p&gt;第1磁區擬舀採 Windows 10 Pro 開機, 並安裝常用的 CAD/CAE/CAM 相關軟體套件的安裝為主, 針對無法在 Windows 10 Pro 執行的套件, 則建議安裝在 Hyper-V 模式下的 Windows 7 Professional 開機磁區中.&lt;/p&gt;
 &lt;p&gt;第1磁區的網路設置以純 IPV4 為主, 並將最後一排的 9 台電腦, 以 IPV4/IPV6 雙支援的固定 IP 啟動 Ubuntu + &lt;a href="http://www.squid-cache.org/"&gt;Squid&lt;/a&gt; (選擇第3磁區開機), 讓上課師生自行選擇開機後透過 &lt;a href="https://en.wikipedia.org/wiki/Round-robin_DNS"&gt;Round Robin DNS&lt;/a&gt; 配置域名的代理主機增速上網.&lt;/p&gt;
-&lt;p&gt;第2磁區擬採 Windows 10 Pro 開機, 並全數使用無需安裝的程式套件, 以提升套件使用效能, 網路配置則彈性配置純 IPV4 或純 IPV6 位址上網, 當採用純 IPV6 上網時, 必須啟動電腦輔助設計室中的 9 台 IPV4/IPV6 雙支援代理主機 (以 Ubuntu 磁區開機).&lt;/p&gt;</summary><category term="CADLab"></category><category term="Windows 10"></category></entry><entry><title>大學教育政策白皮書讀後心得報告</title><link href="http://cadlab.mde.tw/post/da-xue-jiao-yu-zheng-ce-bai-pi-shu-du-hou-xin-de-bao-gao.html" rel="alternate"></link><updated>2016-05-21T23:52:49+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-21:post/da-xue-jiao-yu-zheng-ce-bai-pi-shu-du-hou-xin-de-bao-gao.html</id><summary type="html">&lt;p&gt;15 年前寫的&lt;a href="http://cad-lab.github.io/cadlab_data/files/90.07_taiwan_univ_white_paperpdf"&gt;大學教育政策白皮書&lt;/a&gt;讀後心得報告&lt;/p&gt;
+&lt;p&gt;第2磁區擬採 Windows 10 Pro 開機, 並全數使用無需安裝的程式套件, 以提升套件使用效能, 網路配置則彈性配置純 IPV4 或純 IPV6 位址上網, 當採用純 IPV6 上網時, 必須啟動電腦輔助設計室中的 9 台 IPV4/IPV6 雙支援代理主機 (以 Ubuntu 磁區開機).&lt;/p&gt;</summary><category term="CADLab"></category><category term="Windows 10"></category></entry><entry><title>雲端平台上的電腦輔助機械設計</title><link href="http://cadlab.mde.tw/post/yun-duan-ping-tai-shang-de-dian-nao-fu-zhu-ji-jie-she-ji.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/yun-duan-ping-tai-shang-de-dian-nao-fu-zhu-ji-jie-she-ji.html</id><summary type="html">&lt;p&gt;&lt;a href="https://www.onshape.com/"&gt;Onshape&lt;/a&gt; 在 &lt;a href="http://wordpress-2015course.rhcloud.com/?p=4514"&gt;2015年12月&lt;/a&gt;正式全面對外公開之後, 已經啟動電腦輔助機械設計的雲端世代, 為了追求高效能的全球協同產品設計流程, 利用跨硬體裝置, 免安裝, 具備設計特徵版次管理, 而且提供類似 &lt;a href="https://cad.onshape.com/FsDoc/"&gt;Featurescript&lt;/a&gt; 客製化功能建構環境 (i.e. Feature Studio) 的全雲端電腦輔助機械設計工具, 將會日漸完備.&lt;/p&gt;
+
+
+&lt;p&gt;面對 Onshape 的破壞性創新產品挑戰, SolidWorks 也以採用 &lt;a href="http://www.3ds.com/about-3ds/3dexperience-platform/"&gt;3dexperience platform&lt;/a&gt; 核心技術為主體, 推出全新的全雲端產品: &lt;a href="http://xdesign.solidworks.com/"&gt;Xdesign&lt;/a&gt; 回應.&lt;/p&gt;
+&lt;p&gt;目前, SolidWorks 單機版約佔全球市場&lt;a href="http://blog.cnccookbook.com/2015/01/20/results-2015-cad-survey/"&gt;超過五分之一&lt;/a&gt;, 未來將與自家的 Xdesign 與 Onshape 免安裝全雲端產品, 競逐全球電腦輔助機械設計軟體市場. &lt;/p&gt;
+&lt;p&gt;因此, 2016 年可以說是電腦輔助機械設計的雲端元年, 正好比 2006 年推出的 &lt;a href="https://en.wikipedia.org/wiki/Google_Docs,_Sheets,_and_Slides"&gt;Google Doc&lt;/a&gt;, 晚了十年.&lt;/p&gt;</summary><category term="CADLab"></category><category term="MCAD"></category></entry><entry><title>大學教育政策白皮書讀後心得報告</title><link href="http://cadlab.mde.tw/post/da-xue-jiao-yu-zheng-ce-bai-pi-shu-du-hou-xin-de-bao-gao.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/da-xue-jiao-yu-zheng-ce-bai-pi-shu-du-hou-xin-de-bao-gao.html</id><summary type="html">&lt;p&gt;15 年前寫的&lt;a href="http://cad-lab.github.io/cadlab_data/files/90.07_taiwan_univ_white_paperpdf"&gt;大學教育政策白皮書&lt;/a&gt;讀後心得報告&lt;/p&gt;
 
 
 &lt;p&gt;科技大學的本質在教導學生獲得知識的能力，二十一世紀知識經濟最大的特色，在於必須將知識迅速化為商品，由於市場全球化的影響，未能即時將本身所擁有的知識，快速轉化為商品，並被市場接受的企業，終將難逃被時代淘汰的命運，企業如此，教育界也正面臨同樣的挑戰。&lt;/p&gt;
 &lt;p&gt;教育部將大學的競爭力，視為國家競爭力的重要指標，全國各大學面對社會多元化的需求與全民終身學習的發展趨勢，如何在「大學教育政策白皮書」的基本方針下，強化各校的競爭力，建立各校的重點特色，便成為各大學今後所賴以生存的重要關鍵。&lt;/p&gt;
 &lt;p&gt;事實上，「大學教育政策白皮書」中所提到的觀點，或許是台灣一般大學與科技大學所共同面臨的問題，但，就基本體制上，仍然要有所區分，方能貫徹彼此的教育目標，為社會的現在與未來，提供充足的人力資源。吾人以為，一般大學的最高目標在追求學術的卓越，而科技大學則必須掌握技術的領先，學術強調的是其具備未來的主導性，卓越的學術指的是高瞻遠矚，是未來有用的技術；而技術的領先是要培養能馬上為企業所用的科技尖兵，是能馬上將知識轉化為商品的創新發明家。也許，隨著科技進化的速度日益增快，學術與技術的區隔，也就變得越來越小，但一般大學與科技大學應有的角色與定位，仍不失為各大學爭取重點特色時，所應強調的重點。&lt;/p&gt;
-&lt;p&gt;最後，談到本校在通過改名為科技大學後，如何在「大學教育政策白皮書」的指導方針下，爭取市場定位，並積極發展出屬於自己的特色，吾人以為，必須要先從小處做起，慢慢往大處做；必須要先由內做起，然後再漸漸往外落實。小處在哪裡，必須先用科學化與合理化來管理學校的每一個角落，然後才能談替企業診斷，為財團解憂。必須要先在校內建立起知識經濟的體系，然後才有可能與社會上全民學習的脈動相結合。未來，全球化經濟發展的趨勢或許很難臆測，但本校單類多科的包袱，如何逐步轉化為本校的重點特色，將是一項嚴酷的考驗，成敗的關鍵，就看現在。&lt;/p&gt;</summary><category term="大學教育"></category></entry><entry><title>Onshape 即將釋出 Featurescript 程式語言</title><link href="http://cadlab.mde.tw/post/onshape-ji-jiang-shi-chu-featurescript-cheng-shi-yu-yan.html" rel="alternate"></link><updated>2016-05-18T22:07:03+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-18:post/onshape-ji-jiang-shi-chu-featurescript-cheng-shi-yu-yan.html</id><summary type="html">&lt;p&gt;今天早上參加 Onshape 在台灣所舉行的首次實體論壇，除了持續感受到 Onshape 團隊滿滿的誠意外，最大的收穫就是得知 Featurescript 特徵程式語言，即將開放各界使用。&lt;/p&gt;
+&lt;p&gt;最後，談到本校在通過改名為科技大學後，如何在「大學教育政策白皮書」的指導方針下，爭取市場定位，並積極發展出屬於自己的特色，吾人以為，必須要先從小處做起，慢慢往大處做；必須要先由內做起，然後再漸漸往外落實。小處在哪裡，必須先用科學化與合理化來管理學校的每一個角落，然後才能談替企業診斷，為財團解憂。必須要先在校內建立起知識經濟的體系，然後才有可能與社會上全民學習的脈動相結合。未來，全球化經濟發展的趨勢或許很難臆測，但本校單類多科的包袱，如何逐步轉化為本校的重點特色，將是一項嚴酷的考驗，成敗的關鍵，就看現在。&lt;/p&gt;</summary><category term="大學教育"></category></entry><entry><title>Onshape 即將釋出 Featurescript 程式語言</title><link href="http://cadlab.mde.tw/post/onshape-ji-jiang-shi-chu-featurescript-cheng-shi-yu-yan.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/onshape-ji-jiang-shi-chu-featurescript-cheng-shi-yu-yan.html</id><summary type="html">&lt;p&gt;今天早上參加 Onshape 在台灣所舉行的首次實體論壇，除了持續感受到 Onshape 團隊滿滿的誠意外，最大的收穫就是得知 Featurescript 特徵程式語言，即將開放各界使用。&lt;/p&gt;
 
 
 &lt;p&gt;所謂的 Featurescript， 根據了解，是一種可以透過 Feature Studio， 讓使用者修改或延伸 Onshape 特徵指令的新程式語言，據悉，目前 Onshape 所指供的特徵指令功能，也是透過 Featurescript 打造。&lt;/p&gt;
-&lt;p&gt;並且，未來使用者所打造的各式客製化 Featurescript 程式，可以在 Onshape App store 中免費公開或販售。&lt;/p&gt;</summary><category term="Onshape"></category><category term="Featurescript"></category></entry><entry><title>網際機械設計 2D 繪圖</title><link href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html" rel="alternate"></link><updated>2016-05-17T12:59:34+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-17:post/wang-ji-ji-jie-she-ji-2d-hui-tu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://2015fallhw.github.io/arcidau/Flintlock.html"&gt;http://2015fallhw.github.io/arcidau/Flintlock.html&lt;/a&gt; 是一個典型的網際機械設計 2D 繪圖範例, CADLab 希望能夠利用 Brython 重新建立一個直接以 Python3 在網頁中繪圖的類似應用.&lt;/p&gt;
+&lt;p&gt;並且，未來使用者所打造的各式客製化 Featurescript 程式，可以在 Onshape App store 中免費公開或販售。&lt;/p&gt;</summary><category term="Onshape"></category><category term="Featurescript"></category></entry><entry><title>網際機械設計 2D 繪圖</title><link href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/wang-ji-ji-jie-she-ji-2d-hui-tu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://2015fallhw.github.io/arcidau/Flintlock.html"&gt;http://2015fallhw.github.io/arcidau/Flintlock.html&lt;/a&gt; 是一個典型的網際機械設計 2D 繪圖範例, CADLab 希望能夠利用 Brython 重新建立一個直接以 Python3 在網頁中繪圖的類似應用.&lt;/p&gt;
 
 
 &lt;style type="text/css" media="screen"&gt;
@@ -2938,7 +2938,7 @@ def armPathFn(time, opts):
 cgo.animate(armGrp, initArm, armPathFn, animData)
 cgo.playAnimation()
 &amp;lt;/script&amp;gt;
-&lt;/pre&gt;</summary><category term="MCAD"></category><category term="Web based"></category></entry><entry><title>電腦輔助機械設計流程中的分散式版本管理</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html" rel="alternate"></link><updated>2016-05-15T17:58:56+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-15:post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html</id><summary type="html">&lt;p&gt;&lt;a href="http://bazaar.canonical.com/en/"&gt;Bazaar&lt;/a&gt; (2004 年從 &lt;a href="https://www.gnu.org/software/gnu-arch/"&gt;Gnu arch&lt;/a&gt; 分出), &lt;a href="http://www.bitkeeper.com/"&gt;BitKeeper&lt;/a&gt;, &lt;a href="http://darcs.net/"&gt;darcs&lt;/a&gt;, &lt;a href="https://github.com/git"&gt;Git&lt;/a&gt;, &lt;a href="https://www.mercurial-scm.org/"&gt;Mercurial&lt;/a&gt; 是目前較為常見的分散式版本管理 (Distributed Version Control Systems, DVCS) 技術, 其中自 1998 年前後推出, 唯一商用閉源的 Bitkeeper, 也終於在 2016.05.09, 宣佈轉為開放原始碼套件: &lt;a href="https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93"&gt;https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93&lt;/a&gt;.&lt;/p&gt;
+&lt;/pre&gt;</summary><category term="MCAD"></category><category term="Web based"></category></entry><entry><title>電腦輔助機械設計流程中的分散式版本管理</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html</id><summary type="html">&lt;p&gt;&lt;a href="http://bazaar.canonical.com/en/"&gt;Bazaar&lt;/a&gt; (2004 年從 &lt;a href="https://www.gnu.org/software/gnu-arch/"&gt;Gnu arch&lt;/a&gt; 分出), &lt;a href="http://www.bitkeeper.com/"&gt;BitKeeper&lt;/a&gt;, &lt;a href="http://darcs.net/"&gt;darcs&lt;/a&gt;, &lt;a href="https://github.com/git"&gt;Git&lt;/a&gt;, &lt;a href="https://www.mercurial-scm.org/"&gt;Mercurial&lt;/a&gt; 是目前較為常見的分散式版本管理 (Distributed Version Control Systems, DVCS) 技術, 其中自 1998 年前後推出, 唯一商用閉源的 Bitkeeper, 也終於在 2016.05.09, 宣佈轉為開放原始碼套件: &lt;a href="https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93"&gt;https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93&lt;/a&gt;.&lt;/p&gt;
 
 
 &lt;p&gt;其實, 早在 1995 年左右的 &lt;a href="https://en.wikipedia.org/wiki/Sun_WorkShop_TeamWare"&gt;Sun WorkShop TeamWare&lt;/a&gt; 就已經擁有分散式版本的相關技術, 而且在許多與機械設計相關的 PDM/PLM 系統中, 也都提供各種分散式版本控管的功能, 只是大多與封閉的檔案系統格式搭配使用, 使得多人協同模式下的電腦輔助機械設計流程, 成本不斷推升, 而且造成導入新技術的步調緩慢.&lt;/p&gt;
@@ -2989,7 +2989,7 @@ cgo.playAnimation()
 &lt;p&gt;&lt;a href="https://www.drupal.org/node/803746"&gt;https://www.drupal.org/node/803746&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Jupyter and oauth2&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/jupyterhub/oauthenticator"&gt;https://github.com/jupyterhub/oauthenticator&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/ryanlovett/jh-google-oauthenticator"&gt;https://github.com/ryanlovett/jh-google-oauthenticator&lt;/a&gt;&lt;/p&gt;</summary><category term="MCAD"></category><category term="DVCS"></category></entry><entry><title>常用 Python3 程式模組</title><link href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html" rel="alternate"></link><updated>2016-05-15T16:51:44+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-15:post/chang-yong-python3-cheng-shi-mo-zu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/ryanlovett/jh-google-oauthenticator"&gt;https://github.com/ryanlovett/jh-google-oauthenticator&lt;/a&gt;&lt;/p&gt;</summary><category term="MCAD"></category><category term="DVCS"></category></entry><entry><title>常用 Python3 程式模組</title><link href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/chang-yong-python3-cheng-shi-mo-zu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.&lt;/p&gt;
 
 
 &lt;p&gt;其中的 &lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt; 與 &lt;a href="http://flask.pocoo.org/"&gt;Flask&lt;/a&gt; 位階相似, 但是
@@ -3102,78 +3102,7 @@ window.location="https://www.google.com/accounts/Logout?continue=https://appengi
 {% endif %}
 
 {% endblock body %}
-&lt;/pre&gt;</summary><category term="Python3"></category><category term="module"></category></entry><entry><title>電腦輔助設計室網誌開通</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-05-11T16:53:14+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃.&lt;/p&gt;
-
-
-&lt;p&gt;CADLab 是國立虎尾科技大學機械設計工程系, 綜一館八樓, 共配置 64 台 (9x7 加上老師一台) 個人電腦的教學實驗室.&lt;/p&gt;
-&lt;h2&gt;網誌文章分類&lt;/h2&gt;
-&lt;p&gt;本網站的文章分類暫定為:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;規劃 (Planning) - 規劃中的專案, 但是尚未完成之前的相關配置與架構設計紀錄&lt;/li&gt;
-&lt;li&gt;導引 (Tutorial) - 已經完成的流程紀錄與心得感想&lt;/li&gt;
-&lt;li&gt;資源 (Resources) - 配合上課需求所提供的各項內容服務&lt;/li&gt;
-&lt;li&gt;參考 (References) - 紀錄其他相關類似教學實驗室的管理方法與現況了解&lt;/li&gt;
-&lt;li&gt;其他 (Misc) - 未能納入上述其他分類的文章&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;磁區規劃&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;第1開機磁區為 &lt;a href="http://wincom.blob.core.windows.net/documents/Win10CompareTable.pdf"&gt;Windows 10 Pro 或 Education 64 位元版&lt;/a&gt;, 存放必須安裝才能啟動的應用程式&lt;/li&gt;
-&lt;li&gt;第2開機磁區為 &lt;a href="http://wincom.blob.core.windows.net/documents/Win10CompareTable.pdf"&gt;Windows 10 Pro 或 Education 64 位元版&lt;/a&gt;, 存放無需安裝的綠色應用程式&lt;/li&gt;
-&lt;li&gt;第3開機磁區為 &lt;a href="http://releases.ubuntu.com/16.04/"&gt;Ubuntu 16.04 LTS Server 版&lt;/a&gt;加裝 ubuntu-desktop&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;第1開機磁區&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;網路連線以 IPV4 設定為主&lt;/li&gt;
-&lt;li&gt;若有部份教學程式無法在 &lt;a href="http://wincom.blob.core.windows.net/documents/Win10CompareTable.pdf"&gt;Windows 10 Pro 或 Education 64 位元版&lt;/a&gt;操作系統中啟動, 將建議在 &lt;a href="https://www.virtualbox.org/"&gt;Virtualbox&lt;/a&gt; 中, 安裝 &lt;a href="http://windows.microsoft.com/zh-tw/windows/lifecycle"&gt;Windows 7 Professional&lt;/a&gt; 環境中使用&lt;/li&gt;
-&lt;li&gt;由於仍需透過 NAT 轉址, 64 台電腦將共用一個對外 IP, 為提升連線速度, 將在系主幹建立四台代理主機, 由上課老師選擇使用&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;第2開機磁區&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;網路連線以 IPV4 設定為主, 並以 IPV6 為輔&lt;/li&gt;
-&lt;li&gt;當網路連線採 IPV6 上網後, 每一排特定電腦將以第3磁區開機 (共需要 9 個固定 IPV4  IP 位址), 並預先設定為 IPV4/IPV6 雙支援協定, 並啟動 &lt;a href="https://help.ubuntu.com/lts/serverguide/squid.html#squid-installation"&gt;Proxy Server&lt;/a&gt;, 其餘 55 台電腦將透過代理主機連線上網&lt;/li&gt;
-&lt;li&gt;本磁區中的所有應用程式將以可攜方式配置, 無需安裝, 並同時提供支援 Ubuntu 或其他 Linux 操作系統中的對應版本&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;第3開機磁區&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;網路連線將以 IPV6 為主, 其中 9 台電腦將額外設置同時支援 IPV4/IPV6, 以便當作 &lt;a href="https://help.ubuntu.com/lts/serverguide/squid.html#squid-installation"&gt;Proxy Server&lt;/a&gt;, 讓其他純 IPV6 連線電腦可以連接純 IPV4 協定主機&lt;/li&gt;
-&lt;li&gt;由於本磁區無法受還原卡保護, 因此開機後僅提供一般用戶權限, 使用預先安裝的應用套件&lt;/li&gt;
-&lt;li&gt;本磁區所安裝的應用程式套件, 將與第2磁區對應, 專門提供跨平台應用程式教學使用&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;CADLab 使用與維護&lt;/h2&gt;
-&lt;p&gt;各班上課時, 每排推派一名輪值生, 負責事項:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;敦促同學不要在電腦桌上用餐&lt;/li&gt;
-&lt;li&gt;上課前後, 負責到 CADLab 日誌, 登記或勾選學員電腦使用情形, 填寫維修單或建議表&lt;/li&gt;
-&lt;li&gt;負責在課後, 確實檢查各電腦是否正常關機, 是否遺留個人物品&lt;/li&gt;
-&lt;li&gt;負責在課後清潔各排座位地板與桌面, 與班上幹部配合全員離開 CADLab 前確實關閉所有照明與空調系統&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry><entry><title>Onshape 提供免費教育單位帳號</title><link href="http://cadlab.mde.tw/post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan"&gt;https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan&lt;/a&gt; 得知, Onshpae 除了提供各種身份的用戶有使用限度的免費帳號以外, 從 2016.04.07 開始更加碼, 讓教育單位可以免費, 且沒有使用限度的情況下, 來探索使用這個劃時代的雲端電腦輔助機械設計套件.&lt;/p&gt;
-
-
-&lt;h2&gt;穩定的網路連線是使用 Onshpae 的必要條件&lt;/h2&gt;
-&lt;p&gt;假如電腦教室網路連線穩定, 六十名學生可以同時利用 Firefox 或 Chrome,  登入到 &lt;a href="https://www.onshape.com"&gt;Onshape&lt;/a&gt; 執行協同產品設計, 登記免費的教育單位專用帳號後, 只要完成電子郵箱驗證, 就會自動登入系統.&lt;/p&gt;
-&lt;h2&gt;Onshape 的 Document 是專案容器&lt;/h2&gt;
-&lt;p&gt;登入後, 可以利用左側的 Tutorials &amp;amp; Samples 來了解 Onshpae 的用法:&lt;/p&gt;
-&lt;p&gt;Onshape 中的 Documents 為設計專案層次 (Project level) 的文件庫 (Container), 可以納入 3D 零件, 3D 組件, 工程圖, 以及從外部轉入的各式檔案.&lt;/p&gt;
-&lt;h2&gt;Onshape 操作無需存檔, 而且保有流程版本&lt;/h2&gt;
-&lt;p&gt;在 Onshpae 環境中操作零件繪圖, 使用者無需手動存檔, 只要完成任何操作, 都會自動儲存版本, 而且可以在各版本之間遊走.&lt;/p&gt;
-&lt;p&gt;登入 Onshape, 就可以利用左上角的 Create 按鈕建立 Document 專案文件, 然後再利用左下角的 + 號, 選擇要建立零件, 組件, 工程圖或者是從本地端上傳各式文件.&lt;/p&gt;
-&lt;p&gt;假如是建立零件, 與其他 MCAD 套件類似, 可以選擇 Sketch 再選擇作圖平面, 或者先選擇作圖平面, 再選擇 Sketch 繪製平面輪廓, 輪廓繪圖, 可以直接在 3D 環境畫圖, 或者利用滑鼠右鍵帶出 View normal to sketch plane 的功能, 以垂直繪圖面的平面上進行繪圖.&lt;/p&gt;
-&lt;h2&gt;Onshape 可以轉出各式檔案&lt;/h2&gt;
-&lt;p&gt;各種基本的平面繪圖與尺寸標定或約束條件設定, 都與其他傳統的單機 MCAD 大同小異, 雖然 Onshape 與 Solid Edge 採用相同的 PARASOLID kernel, 但是所有的零組件檔案, 可以直接以點選下方的零組件 Tab, 再以滑鼠右鍵帶出 Export 功能, 然後轉成 PARASOLID 或 ACIS 核心檔,甚至也能直接轉成 Solidworks 格式檔案, 當然也能轉成 IGES, STEP, RHINO, STL 等格式.&lt;/p&gt;
-&lt;h2&gt;Onshape 擁有直覺的組立約束&lt;/h2&gt;
-&lt;p&gt;當使用者在 Onshape 零件繪製模式下完成基本零件, 就可以利用左下方的 + 建立組立檔, 將各零件一一放入進行組裝.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-fastened.htm"&gt;Fastened mate&lt;/a&gt; 主要用於焊接式的組合, 約束條件置入後, 兩個零件間已經沒有任何自由度而結為一體.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-revolute.htm"&gt;Revolute mate&lt;/a&gt; 主要用於旋轉軸式的組合, 約束條件置入後, 兩個零件間只留下一個旋轉自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-slider.htm"&gt;Slider mate&lt;/a&gt; 主要用於滑塊式的組合, 約束條件置入後, 兩個零件間只留下一個平移自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-planar.htm"&gt;Planar mate&lt;/a&gt; 主要用於面接式組合, 約束條件置入後, 兩個零件面對面靠接, 只允許兩個方向的移動自由度, 以及垂直靠接面方向的一個旋轉自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-cylindrical.htm&gt;Cylindrical mate&lt;/a&gt; 主要用於圓柱螺栓式的組合, 約束條件置入後, 兩個零件將具有旋轉與前進或後退的兩個自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-pin_slot.htm"&gt;Pin slot mate&lt;/a&gt; 主要用於插銷式組合, 約束條件置入後, 兩個零件具有旋轉與側向平移等兩個自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Ball mate&lt;/a&gt; 主要用於球接頭式的組合, 約束條件置入後, 將保留3個方向的旋轉自由度.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Tangent mate&lt;/a&gt; 則是比較特殊的相切組立, 約束條件置入後, 兩個零件將始終保持相切的關係.&lt;/p&gt;
-&lt;h2&gt;簡單的組立應用&lt;/h2&gt;
-&lt;p&gt;根據上述基本功能, 就可以完成下列腳踏車鏈條的基本組立:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/onshape_bike_chain_assembly.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;教育版對應帳號下所完成的 &lt;a href="https://cad.onshape.com/documents/29d1a262b055745e59be7c09/w/1f25948ad73282e2440ffdcf"&gt;Bike chain Document&lt;/a&gt;.&lt;/p&gt;</summary><category term="Onshape"></category><category term="MCAD"></category></entry><entry><title>Wordpress 網誌文章中的網際程式碼</title><link href="http://cadlab.mde.tw/post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.w3.org/Graphics/SVG/History"&gt;SVG 歷史&lt;/a&gt; 與 &lt;a href="https://en.wikipedia.org/wiki/WebGL#History"&gt;WebGL 歷史&lt;/a&gt;, 以及 &lt;a href="https://github.com/socketio/socket.io/blob/master/History.md"&gt; socket.io 歷史&lt;/a&gt;, 也許不難發現, 多人協同在瀏覽器為基礎的應用程式環境, 已然成型.&lt;/p&gt;
+&lt;/pre&gt;</summary><category term="Python3"></category><category term="module"></category></entry><entry><title>Wordpress 網誌文章中的網際程式碼</title><link href="http://cadlab.mde.tw/post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.w3.org/Graphics/SVG/History"&gt;SVG 歷史&lt;/a&gt; 與 &lt;a href="https://en.wikipedia.org/wiki/WebGL#History"&gt;WebGL 歷史&lt;/a&gt;, 以及 &lt;a href="https://github.com/socketio/socket.io/blob/master/History.md"&gt; socket.io 歷史&lt;/a&gt;, 也許不難發現, 多人協同在瀏覽器為基礎的應用程式環境, 已然成型.&lt;/p&gt;
 
 
 &lt;p&gt;儘管如此, 要將所有的工作全時在網路連線的環境中完成, 可能仍言之過早, 比較讓人確定的是, 多點觸控的平台伴隨著本地端的桌機或者是筆電, 還會繼續是主流的電腦輔助設計環境.&lt;/p&gt;
@@ -3319,148 +3248,34 @@ g4.appendTo( g3 )
 g4.animate( { 'transform' : 'r360,25,25' },4000)
 #--&amp;gt;
 &amp;lt;/script&amp;gt;
-&lt;/pre&gt;</summary><category term="Wordpress"></category><category term="MCAD"></category></entry><entry><title>Bezier 曲線導引</title><link href="http://cadlab.mde.tw/post/bezier-qu-xian-dao-yin.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/bezier-qu-xian-dao-yin.html</id><summary type="html">&lt;p&gt;A primer on Bezier curves&lt;/p&gt;
+&lt;/pre&gt;</summary><category term="Wordpress"></category><category term="MCAD"></category></entry><entry><title>Onshape 提供免費教育單位帳號</title><link href="http://cadlab.mde.tw/post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan"&gt;https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan&lt;/a&gt; 得知, Onshpae 除了提供各種身份的用戶有使用限度的免費帳號以外, 從 2016.04.07 開始更加碼, 讓教育單位可以免費, 且沒有使用限度的情況下, 來探索使用這個劃時代的雲端電腦輔助機械設計套件.&lt;/p&gt;
 
 
-&lt;p&gt;&lt;a href="http://pomax.github.io/bezierinfo/"&gt;http://pomax.github.io/bezierinfo/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pomax.github.io/bezierjs/"&gt;http://pomax.github.io/bezierjs/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;嘗試將純 Javascript 的環境轉為 Brython based &lt;a href="https://github.com/brython-dev/brython"&gt;https://github.com/brython-dev/brython&lt;/a&gt;, 希望完成之後, 可以讓使用者編寫 Python3 程式碼來操控 Bezier 曲線 &lt;a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"&gt;https://en.wikipedia.org/wiki/B%C3%A9zier_curve&lt;/a&gt;.&lt;/p&gt;</summary><category term="Javascript"></category><category term="程式"></category></entry><entry><title>CADLab CAD/E 軟體套件使用建議</title><link href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html</id><summary type="html">&lt;p&gt;電腦輔助設計與工程分析是機械設計工程師進行 2D/3D 繪圖與理論分析表達的重要工具, 這裡是我們建議學員使用的 CAD/CAE 軟體套件.&lt;/p&gt;
-
-
-&lt;h2&gt;CAD:&lt;/h2&gt;
-&lt;p&gt;商用封閉單機套件:&lt;/p&gt;
-&lt;p&gt;SolidWorks 與 PTC Creo&lt;/p&gt;
-&lt;p&gt;雲端封閉套件(提供免費使用方案):&lt;/p&gt;
-&lt;p&gt;Onshape: &lt;a href="http://onshape.com"&gt;http://onshape.com&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;自由開源套件:&lt;/p&gt;
-&lt;p&gt;Solvespace: &lt;a href="http://solvespace.com/"&gt;http://solvespace.com/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;FreeCAD: &lt;a href="http://www.freecadweb.org/"&gt;http://www.freecadweb.org/&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;CAE:&lt;/h2&gt;
-&lt;p&gt;商用封閉套件:&lt;/p&gt;
-&lt;p&gt;ansys 與 comsol&lt;/p&gt;
-&lt;p&gt;自由開源套件:&lt;/p&gt;
-&lt;p&gt;Elmer: &lt;a href="https://www.csc.fi/web/elmer"&gt;https://www.csc.fi/web/elmer&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Kratos: &lt;a href="http://www.cimne.com/kratos"&gt;http://www.cimne.com/kratos&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;數值運算:&lt;/h2&gt;
-&lt;p&gt;商用封閉套件:&lt;/p&gt;
-&lt;p&gt;Matlab 與 Mathematica&lt;/p&gt;
-&lt;p&gt;自由開源套件:&lt;/p&gt;
-&lt;p&gt;Jupyter: &lt;a href="http://jupyter.org/"&gt;http://jupyter.org/&lt;/a&gt;&lt;/p&gt;</summary><category term="CADLAB"></category><category term="CAX"></category></entry><entry><title>Cadlab 的理想設置</title><link href="http://cadlab.mde.tw/post/cadlab-de-li-xiang-she-zhi.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/cadlab-de-li-xiang-she-zhi.html</id><summary type="html">&lt;p&gt;一個符合二十一世紀工學院實際需求的電腦輔助設計室, 應該如何規劃配置?&lt;/p&gt;
-
-
-&lt;p&gt;Cadlab 是個熱門的名詞, 代表 Computer Aided Design Laboratory, 也就是電腦輔助設計實驗室, 或簡稱電腦輔助設計室.&lt;/p&gt;
-&lt;p&gt;過去的電腦輔助設計室, 充滿各種讓使用者進行電腦輔助設計的公用電腦, 加上部份伺服器提供相關設計運算或資料儲存之用, 而現在, 這樣的配置可能不再恰當, 尤其是一間配置著 60 幾台最新硬體的桌上型電腦, 但卻採用所謂的防寫卡進行硬碟保護的電腦, 倘若無法隨時配合著經常性的操作系統或應用軟體更新, 這樣的 Cadlab 配置, 更是錯上加錯.&lt;/p&gt;
-&lt;p&gt;其實, 二十一世紀的工學院, 所有課程都應該在數位網路環境中進行, 因此所有這些所謂未來的工程師, 就應該在入學的第1天就被配予一台 17 寸的筆記型電腦, 而且裝載著各種未來幾年甚至離開學校之後, 都還能夠合法使用的相關專業用軟硬體套件.&lt;/p&gt;
-&lt;p&gt;過去, 由於全球協同的步調較慢, 各種產品的生命週期時間較長, 因此允許學校與產業界的差異性容忍度較大, 但是, 近幾年在在各種資訊與通訊軟硬體的快速發展衝擊下, 不僅全球協同的步調加速, 各種產品的生命週期愈來愈短, 促使學校教育單位與產業界必須在某些層面上攜手同步, 否則終將無法培育出適才、適所與適任的未來工程師.&lt;/p&gt;
-&lt;p&gt;而且, 隨著可攜裝置與自造軟硬體的逐步普及, Cadlab 配置中的所謂電腦, 除了包括讓工程師可以隨身攜帶的筆記型電腦以外, 還必須包括各類微控制器與 3D 印表機, 讓 Cadlab 實驗室中的各種系統模擬, 可以透過初步的硬體原型測試基本的可行性.&lt;/p&gt;</summary><category term="CADLAB"></category></entry><entry><title>CADLab 機械設計系網路配置圖</title><link href="http://cadlab.mde.tw/post/cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu.html</id><summary type="html">&lt;p&gt;我們正在使用 Python3 與 &lt;a href="http://blockdiag.com/en/"&gt;http://blockdiag.com/en/&lt;/a&gt; 中的 nwdiag 工具繪製機械設計工程系的網路配置圖.&lt;/p&gt;
-
-
-&lt;p&gt;從 &lt;a href="http://project.mde.tw/blog/yen-ji-jie-she-ji-zhuan-ti-de-biao-da-ji-shu-ling-yu-yu-kao-liang-ceng-mian.html"&gt;機械設計專題的表達、技術領域與考量層面&lt;/a&gt; 範例, 可以了解利用文字描述轉成 2D 流程圖, 具有容易修改維護的優點, 這裡運用相同的概念, 嘗試利用類似的 nwdiag 工具, 畫出整個系的網路配置圖.&lt;/p&gt;
-&lt;p&gt;blockdiag 與 nwdiag 若能夠搭配全球資訊網路上的 Python3 wsgi 程式, 採用資料庫系統來管理機械設計工程系的網路資源配置, 將可以實際納為&lt;a href="http://chiamingyen.github.io/kmolab/blog/tag/wang-ji-nei-rong-guan-li.html"&gt;網際內容管理&lt;/a&gt;課程的教材.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/mde_network_diag.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;上述 CADLab 網路配置圖對應的 nwdiag 描述文件:&lt;/p&gt;
-&lt;pre class="brush: bash;"&gt;
-nwdiag {
-    default_fontsize = 15;
-    校主幹 [shape = cloud];
-    校主幹 -- 系路由器;
-
-    network 系主幹{
-        address = "140.130.17.0/24";
-        系路由器 [address="140.130.17.254"];
-        雲端點名網路;
-        八樓集線器 [address="140.130.17.82"];
-        七樓集線器;
-        六樓集線器;
-        系伺服器群;
-    }
-
-    network 八樓主幹{
-        address="17.10-82"
-        八樓集線器 [address="140.130.17.82"];
-        老師1伺服器群 [address="140.130.17.10-15"];
-        老師2伺服器群 [address="140.130.17.16-25"];
-        老師3伺服器群 [address="140.130.17.26-60"];
-    }
-
-    network CAD_CAE{
-        address="17.83";
-        八樓集線器 [address="140.130.17.82"];
-        CAD_NAT [address="140.130.17.82"];
-        CAE_NAT [address="140.130.17.83"];
-    }
-
-    network 電腦輔助設計室{
-        address="192.168.1.0/24";
-        CAD_NAT [address="192.168.1.1"];
-        CAD1 [address=".2"];
-        CAD2;
-        CAD64 [address=".100"];
-    }
-
-    network 電腦輔助繪圖室{
-        address="192.168.1.0/24";
-        CAE_NAT [address="192.168.1.1"];
-        CAE1 [address=".2"];
-        CAE2;
-        CAE64 [address=".100"];
-    }
-
-    network 七樓主幹{
-        address="140.130.17.83-90"
-        七樓集線器;
-        老師4伺服器群 [address="140.130.17.61-63"];
-        老師5伺服器群 [address="140.130.17.64-70"];
-        老師6伺服器群 [address="140.130.17.71-75"];
-    }
-
-    network 六樓主幹{
-        address="140.130.17.91-100"
-        六樓集線器;
-        老師7伺服器群 [address="140.130.17.76-78"];
-        老師8伺服器群 [address="140.130.17.79-80"];
-        老師9伺服器群 [address="140.130.17.81-95"];
-    }
-}
-&lt;/pre&gt;</summary><category term="CADLAB"></category><category term="Network Diagram"></category></entry><entry><title>CADLab 網路配線繪圖</title><link href="http://cadlab.mde.tw/post/cadlab-wang-lu-pei-xian-hui-tu.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/cadlab-wang-lu-pei-xian-hui-tu.html</id><summary type="html">&lt;p&gt;利用程式方法執行網路配線繪圖&lt;/p&gt;
-
-
-&lt;p&gt;CADLab 中的網路配線圖, 就如同 &lt;a href="http://blockdiag.com/en/"&gt;http://blockdiag.com/en/&lt;/a&gt; 專案所示, 可以利用語法描述參數與配置之後, 透過程式方法轉出結果.&lt;/p&gt;
-&lt;p&gt;以 nwdiag &lt;a href="https://bitbucket.org/blockdiag/nwdiag"&gt;https://bitbucket.org/blockdiag/nwdiag&lt;/a&gt; 為例, 在只有 Python3 的 Windows 環境中安裝:&lt;/p&gt;
-&lt;p&gt;pip install nwdiag&lt;/p&gt;
-&lt;p&gt;之後就可以利用 nwdiag 命令解讀 .diag network diagram 描述檔, 並且轉為 png 或 svg 格式.&lt;/p&gt;
-&lt;p&gt;假如是在同時裝有 Python2 與 Python3 的 Ubuntu 環境中安裝 nwdiag:&lt;/p&gt;
-&lt;p&gt;pip3 install nwdiag&lt;/p&gt;
-&lt;p&gt;之後的應用與 Windows 環境相同.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://blockdiag.com/en/"&gt;http://blockdiag.com/en/&lt;/a&gt; 專案還有方塊圖 blockdiag, 序列圖 seqdiag 以及活動圖 actdiag 等相關繪圖的應用.&lt;/p&gt;
-&lt;p&gt;最後假如 CADLab 希望利用 Sphinx 來整理電腦輔助設計室的文件, 則可以套用 &lt;a href="https://github.com/blockdiag"&gt;https://github.com/blockdiag&lt;/a&gt; 中的 extensions 工具.&lt;/p&gt;</summary><category term="CADLAB"></category><category term="network"></category></entry><entry><title>CADLab 學員卡片電腦規格與應用</title><link href="http://cadlab.mde.tw/post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html</id><summary type="html">&lt;p&gt;卡片電腦 (credit-card sized computer) 的盛行, 除了在操作系統上有機會讓 CADLab 的學員, 得以學習 Windows 10 以外的應用, 最大的功用, 是讓機械設計工程專長的學員能夠實際動手, 理解網路的整合, 並且迎接自造 (self-manufacturing) 時代的蒞臨.&lt;/p&gt;
-
-
-&lt;h2&gt;Raspberry Pi 3 電腦&lt;/h2&gt;
-&lt;p&gt;當一間嚴格管理, 軟硬體配置僵化的 CADLab 電腦輔助設計室已經無法滿足現代機械設計科技人才的培育使用時, 導入以 &lt;a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/"&gt;Raspberry Pi 3 Model B&lt;/a&gt; 為基礎的個人隨身卡片電腦, 應該是個不錯的選擇.&lt;/p&gt;
-&lt;p&gt;2016 年 2 月份推出的這一片採用 1.2GHz 64-bit quad-core ARMv8 CPU 的小卡片電腦, 不僅能夠用來控制 &lt;a href="http://delta.firepick.org/"&gt;http://delta.firepick.org/&lt;/a&gt;, 可以安裝執行 &lt;a href="https://github.com/jupyter/jupyterhub"&gt;Jupyter hub&lt;/a&gt;, 而且在 &lt;a href="https://www.raspberrypi.org/downloads/noobs/"&gt;Noobs&lt;/a&gt; 操作系統套件中, 還&lt;a href="https://www.raspberrypi.org/blog/mathematica-10/"&gt;內建&lt;/a&gt;免費的非營利版 Mathematica.&lt;/p&gt;
-&lt;p&gt;以下是我們建議學員自備的 Raspberry Pi 3 Model B 卡片電腦規格:&lt;/p&gt;
-&lt;p&gt;處理器:&lt;/p&gt;
-&lt;p&gt;Broadcom BCM2387 晶片組，1.2GHz 四核心 ARM Cortex-A53.802.11 b/g/n 無線 LAN 和藍牙 4.1&lt;/p&gt;
-&lt;p&gt;GPU:&lt;/p&gt;
-&lt;p&gt;雙核心 VideoCore IVR 多媒體協同處理器。提供 Open GL ES 2.0、硬體加速 OpenVG，以及 1080p30 H.264 高型解碼。支援 1Gpixel/s、1.5Gtexel/s 或 24GFLOPs，並具備材質過濾功能與 DMA 基礎架構&lt;/p&gt;
-&lt;p&gt;記憶體:&lt;/p&gt;
-&lt;p&gt;1GB LPDDR2&lt;/p&gt;
-&lt;p&gt;作業系統:&lt;/p&gt;
-&lt;p&gt;由 Micro SD 記憶卡(建議使用 32 GB 以上) 啟動，建議安裝 Raspbian 操作系統&lt;/p&gt;
-&lt;p&gt;尺寸:&lt;/p&gt;
-&lt;p&gt;85 x 56 x 17mm&lt;/p&gt;
-&lt;p&gt;電源:&lt;/p&gt;
-&lt;p&gt;Micro USB 插槽 5V1，2.5A&lt;/p&gt;
-&lt;h2&gt;Raspbian 安裝配置&lt;/h2&gt;
-&lt;p&gt;當學員拿到 Raspberry Pi 3 卡片電腦之後, 首次配置時, 建議使用 CADLab 教室中的 HDMI 線連接到支援 HDMI 的電腦螢幕後, 進行 &lt;a href="https://www.raspberrypi.org/downloads/raspbian/"&gt;Raspbian&lt;/a&gt; 操作系統的安裝, 安裝後則必須開啟 SSH 的連線, 並且編輯 /etc/lightdm/lightdm.conf 設定檔, 將 [XDMCPServer] 項下的 enabled 設為 true.&lt;/p&gt;
-&lt;h2&gt;CADLab 卡片電腦使用情境&lt;/h2&gt;
-&lt;p&gt;完成 Raspbin 系統安裝後, Raspberry Pi 3 電腦在 CADLab 教室使用, 共有兩種基本情境:&lt;/p&gt;
-&lt;h3&gt;連接滑鼠鍵盤螢幕開機&lt;/h3&gt;
-&lt;p&gt;目前的 CADLab 電腦配置, USB 鍵盤與滑鼠的接頭是採隱藏式保護, 因此學員無法直接以公用的滑鼠與鍵盤連接 Raspberry Pi 3 卡片電腦, 但是若新配置的新電腦設備允許學員使用公用的 USB 鍵盤與滑鼠, 並且提供支援 HDMI 格式的電腦螢幕, 用戶就可以很單純直接用自行攜入的 Raspberry Pi 3 開機使用. 開機後, 可以透過 CADLab 中的 Wifi 連線 (Raspberry Pi 3 Model B 內建 802.11n Wireless LAN) 或實體線 (每桌必須提供 4 或 8 port hub) 上網, 使用較為簡單.&lt;/p&gt;
-&lt;h3&gt;無滑鼠鍵盤螢幕開機&lt;/h3&gt;
-&lt;p&gt;若新配置的 CADLab  電腦設備並不允許學員使用公用的滑鼠與鍵盤, 且桌上並無 hub 可用, 則建議 Raspberry Pi 3 使用者, 可以自帶一條網路跳線, 利用桌上型電腦的多 NIC 連線, 以 &lt;a href="https://sourceforge.net/projects/dhcpserver/"&gt;https://sourceforge.net/projects/dhcpserver/&lt;/a&gt; 發給 Raspberry Pi 3 電腦臨時的內部網路 IP, 然後再利用 &lt;a href="https://sourceforge.net/projects/xming/"&gt;https://sourceforge.net/projects/xming/&lt;/a&gt;, 以 XDMCP 協定 (只建議在內部網路使用, 廣域網路上, 建議採較安全的 SSH 連線), 登入 Raspberry Pi 3, 並且以 Wifi 連線到 CADLab 的 Access Point 後, 確定連線的 IP 位址後, 就可以移除與桌上型電腦的網路跳線, 改採與桌上型電腦同位階的內部網路上網, 然後透過桌上型電腦的 Putty, 以 SSH 連線到 Raspberry Pi 3 進行操控, 或者再透過 xming, 以 XDMCP 協定登入.&lt;/p&gt;
-&lt;p&gt;另外, 假如 Raspberry Pi 3 電腦並無與電腦教室其他電腦設備連線的要求, 用戶希望利用網路跳線與桌機相連後上網, 則建議在桌機上使用代理程式 &lt;a href="http://www.youngzsoft.net/ccproxy/"&gt;http://www.youngzsoft.net/ccproxy/&lt;/a&gt; 的免費版 (可以3個用戶使用), 讓 Raspberry pi 3 電腦以桌機的 proxy server 上網, 或者設法將桌上型電腦 Windows 7 或 10 操作系統上的第2片網路卡橋接到第1片已經上網的網卡上, Raspberry Pi 3 就可以藉此設定直接上網.&lt;/p&gt;</summary><category term="CADLAB"></category><category term="raspberrypi"></category></entry><entry><title>CADLab 學員網誌系統</title><link href="http://cadlab.mde.tw/post/cadlab-xue-yuan-wang-zhi-xi-tong.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/cadlab-xue-yuan-wang-zhi-xi-tong.html</id><summary type="html">&lt;p&gt;我們希望每一位 CADLab 電腦輔助設計室的學員都能夠充份利用現階段各種全球資訊網上的工具, 有效管理自己與團隊間的協同產品開發或學習過程的各種資訊.&lt;/p&gt;
+&lt;h2&gt;穩定的網路連線是使用 Onshpae 的必要條件&lt;/h2&gt;
+&lt;p&gt;假如電腦教室網路連線穩定, 六十名學生可以同時利用 Firefox 或 Chrome,  登入到 &lt;a href="https://www.onshape.com"&gt;Onshape&lt;/a&gt; 執行協同產品設計, 登記免費的教育單位專用帳號後, 只要完成電子郵箱驗證, 就會自動登入系統.&lt;/p&gt;
+&lt;h2&gt;Onshape 的 Document 是專案容器&lt;/h2&gt;
+&lt;p&gt;登入後, 可以利用左側的 Tutorials &amp;amp; Samples 來了解 Onshpae 的用法:&lt;/p&gt;
+&lt;p&gt;Onshape 中的 Documents 為設計專案層次 (Project level) 的文件庫 (Container), 可以納入 3D 零件, 3D 組件, 工程圖, 以及從外部轉入的各式檔案.&lt;/p&gt;
+&lt;h2&gt;Onshape 操作無需存檔, 而且保有流程版本&lt;/h2&gt;
+&lt;p&gt;在 Onshpae 環境中操作零件繪圖, 使用者無需手動存檔, 只要完成任何操作, 都會自動儲存版本, 而且可以在各版本之間遊走.&lt;/p&gt;
+&lt;p&gt;登入 Onshape, 就可以利用左上角的 Create 按鈕建立 Document 專案文件, 然後再利用左下角的 + 號, 選擇要建立零件, 組件, 工程圖或者是從本地端上傳各式文件.&lt;/p&gt;
+&lt;p&gt;假如是建立零件, 與其他 MCAD 套件類似, 可以選擇 Sketch 再選擇作圖平面, 或者先選擇作圖平面, 再選擇 Sketch 繪製平面輪廓, 輪廓繪圖, 可以直接在 3D 環境畫圖, 或者利用滑鼠右鍵帶出 View normal to sketch plane 的功能, 以垂直繪圖面的平面上進行繪圖.&lt;/p&gt;
+&lt;h2&gt;Onshape 可以轉出各式檔案&lt;/h2&gt;
+&lt;p&gt;各種基本的平面繪圖與尺寸標定或約束條件設定, 都與其他傳統的單機 MCAD 大同小異, 雖然 Onshape 與 Solid Edge 採用相同的 PARASOLID kernel, 但是所有的零組件檔案, 可以直接以點選下方的零組件 Tab, 再以滑鼠右鍵帶出 Export 功能, 然後轉成 PARASOLID 或 ACIS 核心檔,甚至也能直接轉成 Solidworks 格式檔案, 當然也能轉成 IGES, STEP, RHINO, STL 等格式.&lt;/p&gt;
+&lt;h2&gt;Onshape 擁有直覺的組立約束&lt;/h2&gt;
+&lt;p&gt;當使用者在 Onshape 零件繪製模式下完成基本零件, 就可以利用左下方的 + 建立組立檔, 將各零件一一放入進行組裝.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-fastened.htm"&gt;Fastened mate&lt;/a&gt; 主要用於焊接式的組合, 約束條件置入後, 兩個零件間已經沒有任何自由度而結為一體.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-revolute.htm"&gt;Revolute mate&lt;/a&gt; 主要用於旋轉軸式的組合, 約束條件置入後, 兩個零件間只留下一個旋轉自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-slider.htm"&gt;Slider mate&lt;/a&gt; 主要用於滑塊式的組合, 約束條件置入後, 兩個零件間只留下一個平移自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-planar.htm"&gt;Planar mate&lt;/a&gt; 主要用於面接式組合, 約束條件置入後, 兩個零件面對面靠接, 只允許兩個方向的移動自由度, 以及垂直靠接面方向的一個旋轉自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-cylindrical.htm&gt;Cylindrical mate&lt;/a&gt; 主要用於圓柱螺栓式的組合, 約束條件置入後, 兩個零件將具有旋轉與前進或後退的兩個自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-pin_slot.htm"&gt;Pin slot mate&lt;/a&gt; 主要用於插銷式組合, 約束條件置入後, 兩個零件具有旋轉與側向平移等兩個自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Ball mate&lt;/a&gt; 主要用於球接頭式的組合, 約束條件置入後, 將保留3個方向的旋轉自由度.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://cad.onshape.com/help/Content/mate-ball.htm"&gt;Tangent mate&lt;/a&gt; 則是比較特殊的相切組立, 約束條件置入後, 兩個零件將始終保持相切的關係.&lt;/p&gt;
+&lt;h2&gt;簡單的組立應用&lt;/h2&gt;
+&lt;p&gt;根據上述基本功能, 就可以完成下列腳踏車鏈條的基本組立:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/onshape_bike_chain_assembly.png" width="800" /&gt;&lt;/p&gt;
+&lt;p&gt;教育版對應帳號下所完成的 &lt;a href="https://cad.onshape.com/documents/29d1a262b055745e59be7c09/w/1f25948ad73282e2440ffdcf"&gt;Bike chain Document&lt;/a&gt;.&lt;/p&gt;</summary><category term="Onshape"></category><category term="MCAD"></category></entry><entry><title>CADLab 學員網誌系統</title><link href="http://cadlab.mde.tw/post/cadlab-xue-yuan-wang-zhi-xi-tong.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/cadlab-xue-yuan-wang-zhi-xi-tong.html</id><summary type="html">&lt;p&gt;我們希望每一位 CADLab 電腦輔助設計室的學員都能夠充份利用現階段各種全球資訊網上的工具, 有效管理自己與團隊間的協同產品開發或學習過程的各種資訊.&lt;/p&gt;
 
 
 &lt;p&gt;這裡所謂的資訊包括:&lt;/p&gt;
@@ -3715,7 +3530,178 @@ p.b = line1 + line2 + line3 + line4 + line5 + post_content + "\n"
 # 因為節點資料更新, commander 必須 redraw
 c.redraw() 
 g.es("資料已經取回")
-&lt;/pre&gt;</summary><category term="CADLAB"></category><category term="Pelican"></category><category term="Leo Editor"></category></entry><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
+&lt;/pre&gt;</summary><category term="CADLAB"></category><category term="Pelican"></category><category term="Leo Editor"></category></entry><entry><title>CADLab 機械設計系網路配置圖</title><link href="http://cadlab.mde.tw/post/cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu.html</id><summary type="html">&lt;p&gt;我們正在使用 Python3 與 &lt;a href="http://blockdiag.com/en/"&gt;http://blockdiag.com/en/&lt;/a&gt; 中的 nwdiag 工具繪製機械設計工程系的網路配置圖.&lt;/p&gt;
+
+
+&lt;p&gt;從 &lt;a href="http://project.mde.tw/blog/yen-ji-jie-she-ji-zhuan-ti-de-biao-da-ji-shu-ling-yu-yu-kao-liang-ceng-mian.html"&gt;機械設計專題的表達、技術領域與考量層面&lt;/a&gt; 範例, 可以了解利用文字描述轉成 2D 流程圖, 具有容易修改維護的優點, 這裡運用相同的概念, 嘗試利用類似的 nwdiag 工具, 畫出整個系的網路配置圖.&lt;/p&gt;
+&lt;p&gt;blockdiag 與 nwdiag 若能夠搭配全球資訊網路上的 Python3 wsgi 程式, 採用資料庫系統來管理機械設計工程系的網路資源配置, 將可以實際納為&lt;a href="http://chiamingyen.github.io/kmolab/blog/tag/wang-ji-nei-rong-guan-li.html"&gt;網際內容管理&lt;/a&gt;課程的教材.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/mde_network_diag.png" width="800" /&gt;&lt;/p&gt;
+&lt;p&gt;上述 CADLab 網路配置圖對應的 nwdiag 描述文件:&lt;/p&gt;
+&lt;pre class="brush: bash;"&gt;
+nwdiag {
+    default_fontsize = 15;
+    校主幹 [shape = cloud];
+    校主幹 -- 系路由器;
+
+    network 系主幹{
+        address = "140.130.17.0/24";
+        系路由器 [address="140.130.17.254"];
+        雲端點名網路;
+        八樓集線器 [address="140.130.17.82"];
+        七樓集線器;
+        六樓集線器;
+        系伺服器群;
+    }
+
+    network 八樓主幹{
+        address="17.10-82"
+        八樓集線器 [address="140.130.17.82"];
+        老師1伺服器群 [address="140.130.17.10-15"];
+        老師2伺服器群 [address="140.130.17.16-25"];
+        老師3伺服器群 [address="140.130.17.26-60"];
+    }
+
+    network CAD_CAE{
+        address="17.83";
+        八樓集線器 [address="140.130.17.82"];
+        CAD_NAT [address="140.130.17.82"];
+        CAE_NAT [address="140.130.17.83"];
+    }
+
+    network 電腦輔助設計室{
+        address="192.168.1.0/24";
+        CAD_NAT [address="192.168.1.1"];
+        CAD1 [address=".2"];
+        CAD2;
+        CAD64 [address=".100"];
+    }
+
+    network 電腦輔助繪圖室{
+        address="192.168.1.0/24";
+        CAE_NAT [address="192.168.1.1"];
+        CAE1 [address=".2"];
+        CAE2;
+        CAE64 [address=".100"];
+    }
+
+    network 七樓主幹{
+        address="140.130.17.83-90"
+        七樓集線器;
+        老師4伺服器群 [address="140.130.17.61-63"];
+        老師5伺服器群 [address="140.130.17.64-70"];
+        老師6伺服器群 [address="140.130.17.71-75"];
+    }
+
+    network 六樓主幹{
+        address="140.130.17.91-100"
+        六樓集線器;
+        老師7伺服器群 [address="140.130.17.76-78"];
+        老師8伺服器群 [address="140.130.17.79-80"];
+        老師9伺服器群 [address="140.130.17.81-95"];
+    }
+}
+&lt;/pre&gt;</summary><category term="CADLAB"></category><category term="Network Diagram"></category></entry><entry><title>Gigabit 乙太網路線</title><link href="http://cadlab.mde.tw/post/gigabit-yi-tai-wang-lu-xian.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/gigabit-yi-tai-wang-lu-xian.html</id><summary type="html">&lt;p&gt;目前在 CADLab 中使用的網路線為傳輸速率每秒十億 bit (10**9 bit/sec) 的 Category 6 Gigabit Ethernet. 採 1000BASE‑T 無遮蔽雙絞線, 以 EIA/TIA 568B 連接 RJ45 接頭. 其接線方式為接頭向前, 耳朵朝下, 混白線在前, 緊接著色線, 以橘藍綠棕排列後,  再將藍白與綠白對調, 就是 568B 的接法.&lt;/p&gt;
+
+
+&lt;p&gt;至於 568B 的網路跳線則再將一邊的橘白與橘線, 跟綠白與綠線對調. 因為橘白線的 pin 1 為 Transmit Data+, 橘線 pin2 則是 Transmit Data-, 綠白線 pin3 則為 Receive Data+, 綠線 pin 6 為 Receive Data-. 藍線 pin 4 與棕白 pin 7 同為 Bi-directional+, 而藍白線 pin5 與棕線 pin 8 則同為 Bi-directional-. 為了達到規格中的 Gigabit 傳輸速度, 8 條線都要確實連接, 假如只有 pin 1, 2, 3, 6 接線, 則傳輸速度將會降為 100 Mega bit/sec. 另外, 1000BASE‑T 的無遮蔽雙絞銅線, 建議每段最長為 100 m.&lt;/p&gt;
+&lt;p&gt;EIA/TIA 568B 的標準雙絞線 (兩端採相同色線排列)
+腳位: 接頭朝前, 耳朵朝下 (橘藍綠棕, 白線在前, 排好後, 藍白與綠白對調)
+顏色: 橘白-橘-綠白-藍-藍白-綠-棕白-棕&lt;/p&gt;
+&lt;p&gt;Cross Over (EIA/TIA 568B) 線 (一端採標準 EIA/TIA 568B 色線排列, 另一端則將綠線與橘線對調)
+腳位: 接頭朝前, 耳朵朝下
+顏色: 綠白-綠-橘白-藍-藍白-橘-棕白-棕 (即將上面正常線的橘線與綠線對調)&lt;/p&gt;
+&lt;p&gt;最後, 假如要利用 Raspberry Pi 3 打造成為 Wifi 的 Access Point, 可以參考 &lt;a href="http://blog.itist.tw/2016/03/using-raspberry-pi-3-as-wifi-ap-with-raspbian-jessie.html"&gt;http://blog.itist.tw/2016/03/using-raspberry-pi-3-as-wifi-ap-with-raspbian-jessie.html&lt;/a&gt; 與 &lt;a href="http://raspberry-at-home.com/hotspot-wifi-access-point/"&gt;http://raspberry-at-home.com/hotspot-wifi-access-point/&lt;/a&gt; 與 &lt;a href="https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/"&gt;https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/&lt;/a&gt;&lt;/p&gt;</summary><category term="CADLAB"></category></entry><entry><title>電腦輔助設計室網路連線管理</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-lu-lian-xian-guan-li.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/dian-nao-fu-zhu-she-ji-shi-wang-lu-lian-xian-guan-li.html</id><summary type="html">&lt;p&gt;電腦輔助設計室長期以來都是在 IPV4 的架構下, 透過 NAT, 以共用一個網路位址上網, 若以整間教室 63 台電腦為例, 只需要設法利用 9 個固定的 IPV4 網路位址, 讓其中的 9 台電腦同時支援 IPV4 與 IPV6 協定, 並且透過 Squid 代理伺服器的設定, 就可以利用網路負載平衡, 大幅提升用戶的連網速度.&lt;/p&gt;
+
+
+&lt;p&gt;自 2012 年起校園主幹就已經全面支援 IPV6 的網路協定, 但是由於台灣大部份的網站仍然只提供 IPV4 網址與協定連線, 因此即使在 IPV6 網址無虞的情況下, 讓每一台電腦輔助設計室的電腦都透過 IPV6 協定取得網址, 仍然需要 IPV4/IPV6 雙支援的代理主機, 才能連結使用所有的網站.&lt;/p&gt;
+&lt;p&gt;因此目前的規劃是, 讓 63 台電腦全部透過 IPV6 協定取得 IP 位址上網, 但是其中的 9 台電腦則以其中規劃好的第3磁區 Ubuntu Server 開機 (其他兩個開機磁區分別為 Windows 7 與 Windows 10), 而且這 9 台電腦是在預先綁定 MAC 位址到雙支援 IPV4/IPV6 的固定 IP 情況下, 自行透過 DNS 設定, 以 Round Robin 的簡單負載平衡, 來服務其他僅設定 IPV6 DHCP Client 連線的電腦.&lt;/p&gt;
+&lt;p&gt;其次, 學員自行攜入 CADLab 使用的 Raspberry Pi 3 隨身卡片電腦, 也可以利用 IEEE 802.11n 的協定取得 IPV6 位址, 然後也是透過雙支援的代理伺服器連線上網. 而使用 git 相關指令之前, 必須確定已經設定&lt;/p&gt;
+&lt;p&gt;git config --global http.proxy http://myproxy.server:port&lt;/p&gt;
+&lt;p&gt;git config --global https.proxy https://myproxy.server:port&lt;/p&gt;</summary><category term="CADLAB"></category><category term="Ｎetwork"></category><category term="IPV6"></category></entry><entry><title>該如何編寫一份電腦輔助機械設計使用手冊</title><link href="http://cadlab.mde.tw/post/gai-ru-he-bian-xie-yi-fen-dian-nao-fu-zhu-ji-jie-she-ji-shi-yong-shou-ce.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/gai-ru-he-bian-xie-yi-fen-dian-nao-fu-zhu-ji-jie-she-ji-shi-yong-shou-ce.html</id><summary type="html">&lt;p&gt;我們正在極力推廣使用的電腦輔助機械設計(Mechanical Computer Aided Design)相關套件, 包括 OnShape, Solvespace, FreeCAD, Elmer, V-rep 以及 Jupyter, 該如何用最"好"的方式來編寫使用手冊?&lt;/p&gt;
+
+
+&lt;p&gt;假如您已經在使用 OnShape, 一定已經看過 &lt;a href="https://cad.onshape.com/help/"&gt;https://cad.onshape.com/help/&lt;/a&gt;. 對應的 Solvespce 導引 &lt;a href="http://solvespace.com/tutorial.pl"&gt;http://solvespace.com/tutorial.pl&lt;/a&gt; 也是很不錯, 其他的幾個套件, 也都已經有了不錯的英文導引資料, 只是從教導學員協力完成某件電腦輔助設計流程工作的同時, 我們想要試試在 Github 的版次管理模式下, 我們能夠怎樣協同編寫一份電腦輔助設計相關的網頁式手冊.&lt;/p&gt;
+&lt;p&gt;啟動:&lt;/p&gt;
+&lt;p&gt;在 Github cad-lab 帳號下新增一個倉儲, 命名為 manual, 然後 git clone 到本地端, 準備置入能夠協同編輯的 Leo Editor 與 Pelican 架構.&lt;/p&gt;
+&lt;p&gt;git clone https://github.com/cad-lab/manual.git cadlabmanual 之後, 進入 cadlabmanual 目錄, 利用 git branch gh-pages 建立 Github Pages 對應分支, 然後以 git checkout gh-pages 指令將本地端倉儲的工作目錄定位在 gh-pages 分支.&lt;/p&gt;
+&lt;p&gt;接下來就是放入 Pelican 靜態網頁系統, 就可以開始建立電腦輔助機械設計使用手冊了: &lt;a href="http://cad-lab.github.io/manual/"&gt;http://cad-lab.github.io/manual/&lt;/a&gt;&lt;/p&gt;</summary><category term="CADLAB"></category><category term="Ｍanual"></category><category term="MCAD"></category></entry><entry><title>CADLab CAD/E 軟體套件使用建議</title><link href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html</id><summary type="html">&lt;p&gt;電腦輔助設計與工程分析是機械設計工程師進行 2D/3D 繪圖與理論分析表達的重要工具, 這裡是我們建議學員使用的 CAD/CAE 軟體套件.&lt;/p&gt;
+
+
+&lt;h2&gt;CAD:&lt;/h2&gt;
+&lt;p&gt;商用封閉單機套件:&lt;/p&gt;
+&lt;p&gt;SolidWorks 與 PTC Creo&lt;/p&gt;
+&lt;p&gt;雲端封閉套件(提供免費使用方案):&lt;/p&gt;
+&lt;p&gt;Onshape: &lt;a href="http://onshape.com"&gt;http://onshape.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;自由開源套件:&lt;/p&gt;
+&lt;p&gt;Solvespace: &lt;a href="http://solvespace.com/"&gt;http://solvespace.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;FreeCAD: &lt;a href="http://www.freecadweb.org/"&gt;http://www.freecadweb.org/&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;CAE:&lt;/h2&gt;
+&lt;p&gt;商用封閉套件:&lt;/p&gt;
+&lt;p&gt;ansys 與 comsol&lt;/p&gt;
+&lt;p&gt;自由開源套件:&lt;/p&gt;
+&lt;p&gt;Elmer: &lt;a href="https://www.csc.fi/web/elmer"&gt;https://www.csc.fi/web/elmer&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Kratos: &lt;a href="http://www.cimne.com/kratos"&gt;http://www.cimne.com/kratos&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;數值運算:&lt;/h2&gt;
+&lt;p&gt;商用封閉套件:&lt;/p&gt;
+&lt;p&gt;Matlab 與 Mathematica&lt;/p&gt;
+&lt;p&gt;自由開源套件:&lt;/p&gt;
+&lt;p&gt;Jupyter: &lt;a href="http://jupyter.org/"&gt;http://jupyter.org/&lt;/a&gt;&lt;/p&gt;</summary><category term="CADLAB"></category><category term="CAX"></category></entry><entry><title>CADLab 學員卡片電腦規格與應用</title><link href="http://cadlab.mde.tw/post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/cadlab-xue-yuan-qia-pian-dian-nao-gui-ge-yu-ying-yong.html</id><summary type="html">&lt;p&gt;卡片電腦 (credit-card sized computer) 的盛行, 除了在操作系統上有機會讓 CADLab 的學員, 得以學習 Windows 10 以外的應用, 最大的功用, 是讓機械設計工程專長的學員能夠實際動手, 理解網路的整合, 並且迎接自造 (self-manufacturing) 時代的蒞臨.&lt;/p&gt;
+
+
+&lt;h2&gt;Raspberry Pi 3 電腦&lt;/h2&gt;
+&lt;p&gt;當一間嚴格管理, 軟硬體配置僵化的 CADLab 電腦輔助設計室已經無法滿足現代機械設計科技人才的培育使用時, 導入以 &lt;a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/"&gt;Raspberry Pi 3 Model B&lt;/a&gt; 為基礎的個人隨身卡片電腦, 應該是個不錯的選擇.&lt;/p&gt;
+&lt;p&gt;2016 年 2 月份推出的這一片採用 1.2GHz 64-bit quad-core ARMv8 CPU 的小卡片電腦, 不僅能夠用來控制 &lt;a href="http://delta.firepick.org/"&gt;http://delta.firepick.org/&lt;/a&gt;, 可以安裝執行 &lt;a href="https://github.com/jupyter/jupyterhub"&gt;Jupyter hub&lt;/a&gt;, 而且在 &lt;a href="https://www.raspberrypi.org/downloads/noobs/"&gt;Noobs&lt;/a&gt; 操作系統套件中, 還&lt;a href="https://www.raspberrypi.org/blog/mathematica-10/"&gt;內建&lt;/a&gt;免費的非營利版 Mathematica.&lt;/p&gt;
+&lt;p&gt;以下是我們建議學員自備的 Raspberry Pi 3 Model B 卡片電腦規格:&lt;/p&gt;
+&lt;p&gt;處理器:&lt;/p&gt;
+&lt;p&gt;Broadcom BCM2387 晶片組，1.2GHz 四核心 ARM Cortex-A53.802.11 b/g/n 無線 LAN 和藍牙 4.1&lt;/p&gt;
+&lt;p&gt;GPU:&lt;/p&gt;
+&lt;p&gt;雙核心 VideoCore IVR 多媒體協同處理器。提供 Open GL ES 2.0、硬體加速 OpenVG，以及 1080p30 H.264 高型解碼。支援 1Gpixel/s、1.5Gtexel/s 或 24GFLOPs，並具備材質過濾功能與 DMA 基礎架構&lt;/p&gt;
+&lt;p&gt;記憶體:&lt;/p&gt;
+&lt;p&gt;1GB LPDDR2&lt;/p&gt;
+&lt;p&gt;作業系統:&lt;/p&gt;
+&lt;p&gt;由 Micro SD 記憶卡(建議使用 32 GB 以上) 啟動，建議安裝 Raspbian 操作系統&lt;/p&gt;
+&lt;p&gt;尺寸:&lt;/p&gt;
+&lt;p&gt;85 x 56 x 17mm&lt;/p&gt;
+&lt;p&gt;電源:&lt;/p&gt;
+&lt;p&gt;Micro USB 插槽 5V1，2.5A&lt;/p&gt;
+&lt;h2&gt;Raspbian 安裝配置&lt;/h2&gt;
+&lt;p&gt;當學員拿到 Raspberry Pi 3 卡片電腦之後, 首次配置時, 建議使用 CADLab 教室中的 HDMI 線連接到支援 HDMI 的電腦螢幕後, 進行 &lt;a href="https://www.raspberrypi.org/downloads/raspbian/"&gt;Raspbian&lt;/a&gt; 操作系統的安裝, 安裝後則必須開啟 SSH 的連線, 並且編輯 /etc/lightdm/lightdm.conf 設定檔, 將 [XDMCPServer] 項下的 enabled 設為 true.&lt;/p&gt;
+&lt;h2&gt;CADLab 卡片電腦使用情境&lt;/h2&gt;
+&lt;p&gt;完成 Raspbin 系統安裝後, Raspberry Pi 3 電腦在 CADLab 教室使用, 共有兩種基本情境:&lt;/p&gt;
+&lt;h3&gt;連接滑鼠鍵盤螢幕開機&lt;/h3&gt;
+&lt;p&gt;目前的 CADLab 電腦配置, USB 鍵盤與滑鼠的接頭是採隱藏式保護, 因此學員無法直接以公用的滑鼠與鍵盤連接 Raspberry Pi 3 卡片電腦, 但是若新配置的新電腦設備允許學員使用公用的 USB 鍵盤與滑鼠, 並且提供支援 HDMI 格式的電腦螢幕, 用戶就可以很單純直接用自行攜入的 Raspberry Pi 3 開機使用. 開機後, 可以透過 CADLab 中的 Wifi 連線 (Raspberry Pi 3 Model B 內建 802.11n Wireless LAN) 或實體線 (每桌必須提供 4 或 8 port hub) 上網, 使用較為簡單.&lt;/p&gt;
+&lt;h3&gt;無滑鼠鍵盤螢幕開機&lt;/h3&gt;
+&lt;p&gt;若新配置的 CADLab  電腦設備並不允許學員使用公用的滑鼠與鍵盤, 且桌上並無 hub 可用, 則建議 Raspberry Pi 3 使用者, 可以自帶一條網路跳線, 利用桌上型電腦的多 NIC 連線, 以 &lt;a href="https://sourceforge.net/projects/dhcpserver/"&gt;https://sourceforge.net/projects/dhcpserver/&lt;/a&gt; 發給 Raspberry Pi 3 電腦臨時的內部網路 IP, 然後再利用 &lt;a href="https://sourceforge.net/projects/xming/"&gt;https://sourceforge.net/projects/xming/&lt;/a&gt;, 以 XDMCP 協定 (只建議在內部網路使用, 廣域網路上, 建議採較安全的 SSH 連線), 登入 Raspberry Pi 3, 並且以 Wifi 連線到 CADLab 的 Access Point 後, 確定連線的 IP 位址後, 就可以移除與桌上型電腦的網路跳線, 改採與桌上型電腦同位階的內部網路上網, 然後透過桌上型電腦的 Putty, 以 SSH 連線到 Raspberry Pi 3 進行操控, 或者再透過 xming, 以 XDMCP 協定登入.&lt;/p&gt;
+&lt;p&gt;另外, 假如 Raspberry Pi 3 電腦並無與電腦教室其他電腦設備連線的要求, 用戶希望利用網路跳線與桌機相連後上網, 則建議在桌機上使用代理程式 &lt;a href="http://www.youngzsoft.net/ccproxy/"&gt;http://www.youngzsoft.net/ccproxy/&lt;/a&gt; 的免費版 (可以3個用戶使用), 讓 Raspberry pi 3 電腦以桌機的 proxy server 上網, 或者設法將桌上型電腦 Windows 7 或 10 操作系統上的第2片網路卡橋接到第1片已經上網的網卡上, Raspberry Pi 3 就可以藉此設定直接上網.&lt;/p&gt;</summary><category term="CADLAB"></category><category term="raspberrypi"></category></entry><entry><title>CADLab 網路配線繪圖</title><link href="http://cadlab.mde.tw/post/cadlab-wang-lu-pei-xian-hui-tu.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/cadlab-wang-lu-pei-xian-hui-tu.html</id><summary type="html">&lt;p&gt;利用程式方法執行網路配線繪圖&lt;/p&gt;
+
+
+&lt;p&gt;CADLab 中的網路配線圖, 就如同 &lt;a href="http://blockdiag.com/en/"&gt;http://blockdiag.com/en/&lt;/a&gt; 專案所示, 可以利用語法描述參數與配置之後, 透過程式方法轉出結果.&lt;/p&gt;
+&lt;p&gt;以 nwdiag &lt;a href="https://bitbucket.org/blockdiag/nwdiag"&gt;https://bitbucket.org/blockdiag/nwdiag&lt;/a&gt; 為例, 在只有 Python3 的 Windows 環境中安裝:&lt;/p&gt;
+&lt;p&gt;pip install nwdiag&lt;/p&gt;
+&lt;p&gt;之後就可以利用 nwdiag 命令解讀 .diag network diagram 描述檔, 並且轉為 png 或 svg 格式.&lt;/p&gt;
+&lt;p&gt;假如是在同時裝有 Python2 與 Python3 的 Ubuntu 環境中安裝 nwdiag:&lt;/p&gt;
+&lt;p&gt;pip3 install nwdiag&lt;/p&gt;
+&lt;p&gt;之後的應用與 Windows 環境相同.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blockdiag.com/en/"&gt;http://blockdiag.com/en/&lt;/a&gt; 專案還有方塊圖 blockdiag, 序列圖 seqdiag 以及活動圖 actdiag 等相關繪圖的應用.&lt;/p&gt;
+&lt;p&gt;最後假如 CADLab 希望利用 Sphinx 來整理電腦輔助設計室的文件, 則可以套用 &lt;a href="https://github.com/blockdiag"&gt;https://github.com/blockdiag&lt;/a&gt; 中的 extensions 工具.&lt;/p&gt;</summary><category term="CADLAB"></category><category term="network"></category></entry><entry><title>Cadlab 的理想設置</title><link href="http://cadlab.mde.tw/post/cadlab-de-li-xiang-she-zhi.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/cadlab-de-li-xiang-she-zhi.html</id><summary type="html">&lt;p&gt;一個符合二十一世紀工學院實際需求的電腦輔助設計室, 應該如何規劃配置?&lt;/p&gt;
+
+
+&lt;p&gt;Cadlab 是個熱門的名詞, 代表 Computer Aided Design Laboratory, 也就是電腦輔助設計實驗室, 或簡稱電腦輔助設計室.&lt;/p&gt;
+&lt;p&gt;過去的電腦輔助設計室, 充滿各種讓使用者進行電腦輔助設計的公用電腦, 加上部份伺服器提供相關設計運算或資料儲存之用, 而現在, 這樣的配置可能不再恰當, 尤其是一間配置著 60 幾台最新硬體的桌上型電腦, 但卻採用所謂的防寫卡進行硬碟保護的電腦, 倘若無法隨時配合著經常性的操作系統或應用軟體更新, 這樣的 Cadlab 配置, 更是錯上加錯.&lt;/p&gt;
+&lt;p&gt;其實, 二十一世紀的工學院, 所有課程都應該在數位網路環境中進行, 因此所有這些所謂未來的工程師, 就應該在入學的第1天就被配予一台 17 寸的筆記型電腦, 而且裝載著各種未來幾年甚至離開學校之後, 都還能夠合法使用的相關專業用軟硬體套件.&lt;/p&gt;
+&lt;p&gt;過去, 由於全球協同的步調較慢, 各種產品的生命週期時間較長, 因此允許學校與產業界的差異性容忍度較大, 但是, 近幾年在在各種資訊與通訊軟硬體的快速發展衝擊下, 不僅全球協同的步調加速, 各種產品的生命週期愈來愈短, 促使學校教育單位與產業界必須在某些層面上攜手同步, 否則終將無法培育出適才、適所與適任的未來工程師.&lt;/p&gt;
+&lt;p&gt;而且, 隨著可攜裝置與自造軟硬體的逐步普及, Cadlab 配置中的所謂電腦, 除了包括讓工程師可以隨身攜帶的筆記型電腦以外, 還必須包括各類微控制器與 3D 印表機, 讓 Cadlab 實驗室中的各種系統模擬, 可以透過初步的硬體原型測試基本的可行性.&lt;/p&gt;</summary><category term="CADLAB"></category></entry><entry><title>KMOL 2016 Spring Portable Tool</title><link href="http://cadlab.mde.tw/post/kmol-2016-spring-portable-tool.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/kmol-2016-spring-portable-tool.html</id><summary type="html">&lt;p&gt;針對 cadlab 上計算機程式、網際內容管理、電腦輔助設計實習與協同產品設計實習等課程, 採用 Python 3.4 打造的 Windows 版可攜程式套件&lt;/p&gt;
+
+
+&lt;p&gt;可攜套件倉儲:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/chiamingyen/kmol2016"&gt;https://github.com/chiamingyen/kmol2016&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;kmol2016 下載:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX"&gt;https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX&lt;/a&gt;&lt;/p&gt;</summary><category term="可攜套件"></category><category term="2016Spring"></category></entry><entry><title>Bezier 曲線導引</title><link href="http://cadlab.mde.tw/post/bezier-qu-xian-dao-yin.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/bezier-qu-xian-dao-yin.html</id><summary type="html">&lt;p&gt;A primer on Bezier curves&lt;/p&gt;
+
+
+&lt;p&gt;&lt;a href="http://pomax.github.io/bezierinfo/"&gt;http://pomax.github.io/bezierinfo/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://pomax.github.io/bezierjs/"&gt;http://pomax.github.io/bezierjs/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;嘗試將純 Javascript 的環境轉為 Brython based &lt;a href="https://github.com/brython-dev/brython"&gt;https://github.com/brython-dev/brython&lt;/a&gt;, 希望完成之後, 可以讓使用者編寫 Python3 程式碼來操控 Bezier 曲線 &lt;a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"&gt;https://en.wikipedia.org/wiki/B%C3%A9zier_curve&lt;/a&gt;.&lt;/p&gt;</summary><category term="Javascript"></category><category term="程式"></category></entry><entry><title>導入 Ubuntu 操作系統</title><link href="http://cadlab.mde.tw/post/dao-ru-ubuntu-cao-zuo-xi-tong.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/dao-ru-ubuntu-cao-zuo-xi-tong.html</id><summary type="html">&lt;p&gt;身為一位機械設計工程系的學生, 有機會在 Ubuntu 操作系統上工作嗎?&lt;/p&gt;
 
 
 &lt;p&gt;自從 1995 年, 第1套能在 Windows 操作系統執行的電腦輔助機械設計繪圖軟體套件, SolidWorks, 出現, 並且逐步蔚為風潮之後,  MCAD (Mechanical Computer Aided Design) 中端套件, 幾乎都只能在 Windows 操作系統上運作. 許多機械設計工程系相關師生, 幾乎早已經忘記, 最早的 MCAD 系統可都是在泛 Unix based 的操作系統上運作.&lt;/p&gt;
@@ -3805,37 +3791,54 @@ sudo apt-get install kazam
 &lt;li&gt;&lt;a href="http://ecourts.nic.in/2/mannual/admin_manual.pdf"&gt;http://ecourts.nic.in/2/mannual/admin_manual.pdf&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf"&gt;http://wiki.lib.sun.ac.za/images/7/7b/Ubuntu-desktop.pdf&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop"&gt;http://askubuntu.com/questions/154121/why-wont-remmina-connect-to-windows-7-remote-desktop&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry><entry><title>電腦輔助設計室網路連線管理</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-lu-lian-xian-guan-li.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/dian-nao-fu-zhu-she-ji-shi-wang-lu-lian-xian-guan-li.html</id><summary type="html">&lt;p&gt;電腦輔助設計室長期以來都是在 IPV4 的架構下, 透過 NAT, 以共用一個網路位址上網, 若以整間教室 63 台電腦為例, 只需要設法利用 9 個固定的 IPV4 網路位址, 讓其中的 9 台電腦同時支援 IPV4 與 IPV6 協定, 並且透過 Squid 代理伺服器的設定, 就可以利用網路負載平衡, 大幅提升用戶的連網速度.&lt;/p&gt;
+&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Mechanical Design"></category></entry><entry><title>電腦輔助設計室網誌開通</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html</id><summary type="html">&lt;p&gt;機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃.&lt;/p&gt;
 
 
-&lt;p&gt;自 2012 年起校園主幹就已經全面支援 IPV6 的網路協定, 但是由於台灣大部份的網站仍然只提供 IPV4 網址與協定連線, 因此即使在 IPV6 網址無虞的情況下, 讓每一台電腦輔助設計室的電腦都透過 IPV6 協定取得網址, 仍然需要 IPV4/IPV6 雙支援的代理主機, 才能連結使用所有的網站.&lt;/p&gt;
-&lt;p&gt;因此目前的規劃是, 讓 63 台電腦全部透過 IPV6 協定取得 IP 位址上網, 但是其中的 9 台電腦則以其中規劃好的第3磁區 Ubuntu Server 開機 (其他兩個開機磁區分別為 Windows 7 與 Windows 10), 而且這 9 台電腦是在預先綁定 MAC 位址到雙支援 IPV4/IPV6 的固定 IP 情況下, 自行透過 DNS 設定, 以 Round Robin 的簡單負載平衡, 來服務其他僅設定 IPV6 DHCP Client 連線的電腦.&lt;/p&gt;
-&lt;p&gt;其次, 學員自行攜入 CADLab 使用的 Raspberry Pi 3 隨身卡片電腦, 也可以利用 IEEE 802.11n 的協定取得 IPV6 位址, 然後也是透過雙支援的代理伺服器連線上網. 而使用 git 相關指令之前, 必須確定已經設定&lt;/p&gt;
-&lt;p&gt;git config --global http.proxy http://myproxy.server:port&lt;/p&gt;
-&lt;p&gt;git config --global https.proxy https://myproxy.server:port&lt;/p&gt;</summary><category term="CADLAB"></category><category term="Ｎetwork"></category><category term="IPV6"></category></entry><entry><title>該如何編寫一份電腦輔助機械設計使用手冊</title><link href="http://cadlab.mde.tw/post/gai-ru-he-bian-xie-yi-fen-dian-nao-fu-zhu-ji-jie-she-ji-shi-yong-shou-ce.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/gai-ru-he-bian-xie-yi-fen-dian-nao-fu-zhu-ji-jie-she-ji-shi-yong-shou-ce.html</id><summary type="html">&lt;p&gt;我們正在極力推廣使用的電腦輔助機械設計(Mechanical Computer Aided Design)相關套件, 包括 OnShape, Solvespace, FreeCAD, Elmer, V-rep 以及 Jupyter, 該如何用最"好"的方式來編寫使用手冊?&lt;/p&gt;
+&lt;p&gt;CADLab 是國立虎尾科技大學機械設計工程系, 綜一館八樓, 共配置 64 台 (9x7 加上老師一台) 個人電腦的教學實驗室.&lt;/p&gt;
+&lt;h2&gt;網誌文章分類&lt;/h2&gt;
+&lt;p&gt;本網站的文章分類暫定為:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;規劃 (Planning) - 規劃中的專案, 但是尚未完成之前的相關配置與架構設計紀錄&lt;/li&gt;
+&lt;li&gt;導引 (Tutorial) - 已經完成的流程紀錄與心得感想&lt;/li&gt;
+&lt;li&gt;資源 (Resources) - 配合上課需求所提供的各項內容服務&lt;/li&gt;
+&lt;li&gt;參考 (References) - 紀錄其他相關類似教學實驗室的管理方法與現況了解&lt;/li&gt;
+&lt;li&gt;其他 (Misc) - 未能納入上述其他分類的文章&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;磁區規劃&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;第1開機磁區為 &lt;a href="http://wincom.blob.core.windows.net/documents/Win10CompareTable.pdf"&gt;Windows 10 Pro 或 Education 64 位元版&lt;/a&gt;, 存放必須安裝才能啟動的應用程式&lt;/li&gt;
+&lt;li&gt;第2開機磁區為 &lt;a href="http://wincom.blob.core.windows.net/documents/Win10CompareTable.pdf"&gt;Windows 10 Pro 或 Education 64 位元版&lt;/a&gt;, 存放無需安裝的綠色應用程式&lt;/li&gt;
+&lt;li&gt;第3開機磁區為 &lt;a href="http://releases.ubuntu.com/16.04/"&gt;Ubuntu 16.04 LTS Server 版&lt;/a&gt;加裝 ubuntu-desktop&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;第1開機磁區&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;網路連線以 IPV4 設定為主&lt;/li&gt;
+&lt;li&gt;若有部份教學程式無法在 &lt;a href="http://wincom.blob.core.windows.net/documents/Win10CompareTable.pdf"&gt;Windows 10 Pro 或 Education 64 位元版&lt;/a&gt;操作系統中啟動, 將建議在 &lt;a href="https://www.virtualbox.org/"&gt;Virtualbox&lt;/a&gt; 中, 安裝 &lt;a href="http://windows.microsoft.com/zh-tw/windows/lifecycle"&gt;Windows 7 Professional&lt;/a&gt; 環境中使用&lt;/li&gt;
+&lt;li&gt;由於仍需透過 NAT 轉址, 64 台電腦將共用一個對外 IP, 為提升連線速度, 將在系主幹建立四台代理主機, 由上課老師選擇使用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;第2開機磁區&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;網路連線以 IPV4 設定為主, 並以 IPV6 為輔&lt;/li&gt;
+&lt;li&gt;當網路連線採 IPV6 上網後, 每一排特定電腦將以第3磁區開機 (共需要 9 個固定 IPV4  IP 位址), 並預先設定為 IPV4/IPV6 雙支援協定, 並啟動 &lt;a href="https://help.ubuntu.com/lts/serverguide/squid.html#squid-installation"&gt;Proxy Server&lt;/a&gt;, 其餘 55 台電腦將透過代理主機連線上網&lt;/li&gt;
+&lt;li&gt;本磁區中的所有應用程式將以可攜方式配置, 無需安裝, 並同時提供支援 Ubuntu 或其他 Linux 操作系統中的對應版本&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;第3開機磁區&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;網路連線將以 IPV6 為主, 其中 9 台電腦將額外設置同時支援 IPV4/IPV6, 以便當作 &lt;a href="https://help.ubuntu.com/lts/serverguide/squid.html#squid-installation"&gt;Proxy Server&lt;/a&gt;, 讓其他純 IPV6 連線電腦可以連接純 IPV4 協定主機&lt;/li&gt;
+&lt;li&gt;由於本磁區無法受還原卡保護, 因此開機後僅提供一般用戶權限, 使用預先安裝的應用套件&lt;/li&gt;
+&lt;li&gt;本磁區所安裝的應用程式套件, 將與第2磁區對應, 專門提供跨平台應用程式教學使用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;CADLab 使用與維護&lt;/h2&gt;
+&lt;p&gt;各班上課時, 每排推派一名輪值生, 負責事項:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;敦促同學不要在電腦桌上用餐&lt;/li&gt;
+&lt;li&gt;上課前後, 負責到 CADLab 日誌, 登記或勾選學員電腦使用情形, 填寫維修單或建議表&lt;/li&gt;
+&lt;li&gt;負責在課後, 確實檢查各電腦是否正常關機, 是否遺留個人物品&lt;/li&gt;
+&lt;li&gt;負責在課後清潔各排座位地板與桌面, 與班上幹部配合全員離開 CADLab 前確實關閉所有照明與空調系統&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="CAD"></category><category term="綜一館8F"></category></entry><entry><title>使用者貢獻文章標題(參考)</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti-can-kao.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti-can-kao.html</id><summary type="html">&lt;p&gt;使用者貢獻文章的參考 Leo Editor 檔案&lt;/p&gt;
 
 
-&lt;p&gt;假如您已經在使用 OnShape, 一定已經看過 &lt;a href="https://cad.onshape.com/help/"&gt;https://cad.onshape.com/help/&lt;/a&gt;. 對應的 Solvespce 導引 &lt;a href="http://solvespace.com/tutorial.pl"&gt;http://solvespace.com/tutorial.pl&lt;/a&gt; 也是很不錯, 其他的幾個套件, 也都已經有了不錯的英文導引資料, 只是從教導學員協力完成某件電腦輔助設計流程工作的同時, 我們想要試試在 Github 的版次管理模式下, 我們能夠怎樣協同編寫一份電腦輔助設計相關的網頁式手冊.&lt;/p&gt;
-&lt;p&gt;啟動:&lt;/p&gt;
-&lt;p&gt;在 Github cad-lab 帳號下新增一個倉儲, 命名為 manual, 然後 git clone 到本地端, 準備置入能夠協同編輯的 Leo Editor 與 Pelican 架構.&lt;/p&gt;
-&lt;p&gt;git clone https://github.com/cad-lab/manual.git cadlabmanual 之後, 進入 cadlabmanual 目錄, 利用 git branch gh-pages 建立 Github Pages 對應分支, 然後以 git checkout gh-pages 指令將本地端倉儲的工作目錄定位在 gh-pages 分支.&lt;/p&gt;
-&lt;p&gt;接下來就是放入 Pelican 靜態網頁系統, 就可以開始建立電腦輔助機械設計使用手冊了: &lt;a href="http://cad-lab.github.io/manual/"&gt;http://cad-lab.github.io/manual/&lt;/a&gt;&lt;/p&gt;</summary><category term="CADLAB"></category><category term="Ｍanual"></category><category term="MCAD"></category></entry><entry><title>Gigabit 乙太網路線</title><link href="http://cadlab.mde.tw/post/gigabit-yi-tai-wang-lu-xian.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/gigabit-yi-tai-wang-lu-xian.html</id><summary type="html">&lt;p&gt;目前在 CADLab 中使用的網路線為傳輸速率每秒十億 bit (10**9 bit/sec) 的 Category 6 Gigabit Ethernet. 採 1000BASE‑T 無遮蔽雙絞線, 以 EIA/TIA 568B 連接 RJ45 接頭. 其接線方式為接頭向前, 耳朵朝下, 混白線在前, 緊接著色線, 以橘藍綠棕排列後,  再將藍白與綠白對調, 就是 568B 的接法.&lt;/p&gt;
-
-
-&lt;p&gt;至於 568B 的網路跳線則再將一邊的橘白與橘線, 跟綠白與綠線對調. 因為橘白線的 pin 1 為 Transmit Data+, 橘線 pin2 則是 Transmit Data-, 綠白線 pin3 則為 Receive Data+, 綠線 pin 6 為 Receive Data-. 藍線 pin 4 與棕白 pin 7 同為 Bi-directional+, 而藍白線 pin5 與棕線 pin 8 則同為 Bi-directional-. 為了達到規格中的 Gigabit 傳輸速度, 8 條線都要確實連接, 假如只有 pin 1, 2, 3, 6 接線, 則傳輸速度將會降為 100 Mega bit/sec. 另外, 1000BASE‑T 的無遮蔽雙絞銅線, 建議每段最長為 100 m.&lt;/p&gt;
-&lt;p&gt;EIA/TIA 568B 的標準雙絞線 (兩端採相同色線排列)
-腳位: 接頭朝前, 耳朵朝下 (橘藍綠棕, 白線在前, 排好後, 藍白與綠白對調)
-顏色: 橘白-橘-綠白-藍-藍白-綠-棕白-棕&lt;/p&gt;
-&lt;p&gt;Cross Over (EIA/TIA 568B) 線 (一端採標準 EIA/TIA 568B 色線排列, 另一端則將綠線與橘線對調)
-腳位: 接頭朝前, 耳朵朝下
-顏色: 綠白-綠-橘白-藍-藍白-橘-棕白-棕 (即將上面正常線的橘線與綠線對調)&lt;/p&gt;
-&lt;p&gt;最後, 假如要利用 Raspberry Pi 3 打造成為 Wifi 的 Access Point, 可以參考 &lt;a href="http://blog.itist.tw/2016/03/using-raspberry-pi-3-as-wifi-ap-with-raspbian-jessie.html"&gt;http://blog.itist.tw/2016/03/using-raspberry-pi-3-as-wifi-ap-with-raspbian-jessie.html&lt;/a&gt; 與 &lt;a href="http://raspberry-at-home.com/hotspot-wifi-access-point/"&gt;http://raspberry-at-home.com/hotspot-wifi-access-point/&lt;/a&gt; 與 &lt;a href="https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/"&gt;https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/&lt;/a&gt;&lt;/p&gt;</summary><category term="CADLAB"></category></entry><entry><title>KMOL 2016 Spring Portable Tool</title><link href="http://cadlab.mde.tw/post/kmol-2016-spring-portable-tool.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/kmol-2016-spring-portable-tool.html</id><summary type="html">&lt;p&gt;針對 cadlab 上計算機程式、網際內容管理、電腦輔助設計實習與協同產品設計實習等課程, 採用 Python 3.4 打造的 Windows 版可攜程式套件&lt;/p&gt;
-
-
-&lt;p&gt;可攜套件倉儲:&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/chiamingyen/kmol2016"&gt;https://github.com/chiamingyen/kmol2016&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;kmol2016 下載:&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX"&gt;https://my.pcloud.com/publink/show?code=XZH5J4ZOj9C9aomi5F1DtnuQNIHYLDO7EjX&lt;/a&gt;&lt;/p&gt;</summary><category term="可攜套件"></category><category term="2016Spring"></category></entry><entry><title>使用者貢獻文章標題</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章的參考 Leo Editor 檔案&lt;/p&gt;
+&lt;p&gt;使用者貢獻文章的內容&lt;/p&gt;</summary><category term="Reference"></category><category term="user template"></category></entry><entry><title>使用者貢獻文章標題</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html" rel="alternate"></link><updated>2016-05-30T09:23:54+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-05-30:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti.html</id><summary type="html">&lt;p&gt;使用者貢獻文章的參考 Leo Editor 檔案&lt;/p&gt;
 
 
 &lt;p&gt;本網誌的系統與靜態資料為一個 Github 倉儲 &lt;a href="https://github.com/cad-lab/blog"&gt;https://github.com/cad-lab/blog&lt;/a&gt;, 只要符合 GNU AFFERO GENERAL PUBLIC LICENSE 授權規範, 任何人都可以取用.&lt;/p&gt;
@@ -3843,7 +3846,4 @@ sudo apt-get install kazam
 &lt;p&gt;各用戶若需要協同著作, 共同維護一篇 content 目錄中的某一個 .md 檔案, 那麼各用戶在 gh-pages 倉儲分支版本提交與推送過程, 就必須設法處理版本內容的衝突, 但各 .md 檔案建議是在 Leo Editor @edit 或@clean 節點下進行協同編輯並處理內容衝突.&lt;/p&gt;
 &lt;p&gt;下圖為機械設計工程系即時網路連線:&lt;/p&gt;
 &lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=5" alt="mde realtime network graph" /&gt; &lt;/p&gt;
-&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=2" alt="mde realtime network graph" /&gt;&lt;/p&gt;</summary><category term="Reference"></category><category term="user template"></category></entry><entry><title>使用者貢獻文章標題(參考)</title><link href="http://cadlab.mde.tw/post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti-can-kao.html" rel="alternate"></link><updated>2016-05-11T11:12:54+08:00</updated><author><name>user</name></author><id>tag:cadlab.mde.tw,2016-05-11:post/shi-yong-zhe-gong-xian-wen-zhang-biao-ti-can-kao.html</id><summary type="html">&lt;p&gt;使用者貢獻文章的參考 Leo Editor 檔案&lt;/p&gt;
-
-
-&lt;p&gt;使用者貢獻文章的內容&lt;/p&gt;</summary><category term="Reference"></category><category term="user template"></category></entry></feed>
+&lt;p&gt;&lt;img src="http://140.130.1.199/graph_image.php?action=view&amp;amp;local_graph_id=120&amp;amp;rra_id=2" alt="mde realtime network graph" /&gt;&lt;/p&gt;</summary><category term="Reference"></category><category term="user template"></category></entry></feed>
