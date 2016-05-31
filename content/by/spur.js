@@ -13,7 +13,7 @@ creategeartooth = JSConstructor(window.createGearTooth)
 class Spur():
     def __init__(self, canvas_id):
         self.canvas_id = canvas_id
-        cgo = cango(self.cango_id)
+        cgo = cango(self.canvas_id)
 
     def spur(self, cx, cy, m, n, pa, theta):
         self.cx = cx
