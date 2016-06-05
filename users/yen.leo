@@ -23,7 +23,7 @@
 </v>
 <v t="ibm.20160115125316.1"><vh>管理者在產生遠端資料前, 定期清理 post 目錄</vh></v>
 <v t="ibm.20160115125101.1"><vh>@button git rm -fr post</vh></v>
-<v t="amd.20151215180106.1" a="E"><vh>設定與開發</vh>
+<v t="amd.20151215180106.1"><vh>設定與開發</vh>
 <v t="amd.20151216151325.1"><vh>@edit index.html</vh></v>
 <v t="amd.20151216152209.1"><vh>@edit README.md</vh></v>
 <v t="amd.20160118111604.1"><vh>@edit LICENSE</vh></v>
@@ -72,18 +72,19 @@
 <v t="amd.20160410195347.4"><vh>@button nwdiag</vh></v>
 <v t="amd.20160410195347.5"><vh>nwdiag</vh></v>
 </v>
-<v t="amd.20160531095449.1" a="E"><vh>Brython 程式開發</vh>
+<v t="amd.20160531095449.1"><vh>Brython 程式開發</vh>
 <v t="amd.20160531095458.1"><vh>參考用</vh></v>
 </v>
 <v t="amd.20151215170350.1"><vh>以下為 content 目錄中的 md 檔案</vh></v>
 <v t="amd.20160106093610.1"><vh>協同網誌編寫規範</vh></v>
 <v t="amd.20151216001126.1"><vh>md 檔案範例</vh></v>
 <v t="amd.20151215170031.1" a="E"><vh>@path ./../content</vh>
-<v t="amd.20160531120758.1" a="E"><vh>@path by</vh>
+<v t="amd.20160531120758.1"><vh>@path by</vh>
 <v t="amd.20160531120808.1"><vh>@edit spur.js</vh></v>
 </v>
 <v t="amd.20160531094803.1"><vh>Brython 程式庫</vh></v>
 <v t="amd.20160106093454.1" a="E"><vh>yen 網誌文章</vh>
+<v t="amd.20160605111320.1"><vh>before 201606</vh>
 <v t="amd.20160106093510.1"><vh>201601</vh>
 <v t="ibm.20160115121941.1"><vh>@clean yen_20160115.md</vh></v>
 <v t="amd.20160117143423.1"><vh>@clean yen_20160117.md</vh>
@@ -137,8 +138,18 @@
 <v t="amd.20160529144234.1"><vh>@clean yen_20160529.md</vh></v>
 <v t="amd.20160529155022.1"><vh>@clean yen_20160529-1.md</vh></v>
 </v>
+<v t="amd.20160605111404.1" a="E"><vh>201606</vh>
+<v t="amd.20160603225335.1"><vh>@clean yen_20160603.md</vh></v>
+<v t="amd.20160605104719.1"><vh>@clean yen_20160605.md</vh>
+<v t="amd.20160605104725.1"><vh>68</vh></v>
 </v>
-<v t="amd.20160106094754.1" a="E"><vh>@path ./../content/pages</vh>
+<v t="amd.20160605104803.1"><vh>@clean yen_20160605-1.md</vh>
+<v t="amd.20160605104803.2"><vh>85</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="amd.20160106094754.1"><vh>@path ./../content/pages</vh>
 <v t="amd.20160106094829.1" a="E"><vh>yen pages 文章</vh>
 <v t="amd.20160106094844.1"><vh>@edit yen_pages_1.md</vh></v>
 </v>
@@ -5359,6 +5370,132 @@ outersize = innersize+2*borderwidth
 
 setupgame(None)</t>
 <t tx="amd.20160531120758.1"></t>
+<t tx="amd.20160603225335.1">@language md
+Title: Virtualbox 的應用與網路設定
+Category: MISC
+Tags: CADLab, 虛擬機器
+Author: kmol
+@others
+
+&lt;a href="https://www.virtualbox.org/"&gt;Virtualbox&lt;/a&gt; 是一套能在 Windows, Linux, Mac 與 Solaris 操作系統上使用的虛擬器 (Virtualizer).
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+##Virtualbox 功能
+
+虛擬器的功能有下列幾點:
+
+1. 在任一操作系統開機後, 可以同時啟動多種虛擬的操作系統平台, 並且透過虛擬硬體的配置與設定, 執行各種老舊的操作系統應用程式 , 畢竟老應用程式不死, 只是慢慢凋零!
+
+2. 以檔案的架構保留各種電腦軟硬體的配置, 可提升軟體開發效能外, 並可在軟體推銷過程避開多次煩雜的設定 (當然 Docker based 的虛擬技術, 已經逐漸超越這種整套操作系統虛擬的應用).
+
+3. 程式開發者可以在虛擬機器中廣泛透過虛擬的硬體配置, 大膽進行各項操作與測試, 無需擔心損毀電腦週邊實體.
+
+4. 在開機的一台電腦實體中, 可同時模擬多台電腦的運作, 省下操作可能消耗的電力, 降低實體運作與硬體維護成本.
+
+Virtualbox 的參考手冊: &lt;a href="https://www.virtualbox.org/manual/"&gt;https://www.virtualbox.org/manual/&lt;/a&gt;
+
+以下將針對 Virtualbox 的網路設定與應用加以說明:
+
+Virtualbox 的網路設定模式分為 NAT, Bridged, Internal, Host-only, UDP tunnel 與 VDE 等.
+
+NAT 使用情境為啟動虛擬機器後, 當作一般客戶端電腦使用, 虛擬機的連網是透過 NAT 轉址, 以 Host 電腦的網路 IP 對外抓取資料.
+
+Bridged 使用情境為啟動虛擬機器後, 當作一般伺服器電腦使用, 在 Host 操作系統中模擬出的虛擬網卡, 可以與 Host 電腦的實體網路卡進行橋接與設定外部 IP 後, 視為網路幹線上的一台伺服器.
+
+Interal 使用情境主要關注在虛擬機器之間的網路彼此相連, 但卻自外於與 Host 連接的區域或廣域網路, Internal networking 的特性通常用來當作資料庫伺服器, 可以透過 internal 網路, 提供對外連線的全球資訊網伺服器資料, 但是外部電腦無法跨越 internal 網路架構直接連線.
+
+Host-only 使用情境則將網路服務的範圍界定在 Host 主機範圍內, 在虛擬機器所啟動的各種服務, 可以讓 Host 連線, 但是因為沒有像 Bridged 網路設置, 與 Host 的實體網路卡進行橋接, 因此 Host-only 的網路環境通常讓操作 Host 的程式設計師將 Host-only 的電腦當作跨網路的虛擬伺服器使用.
+
+UDP tunnel 網路用來串接位於不同 Hosts 的虛擬機器, 而 VDE 則是 Virtual Distributed Ethernet 則是一種虛擬網路基礎架構.
+
+以機械設計的電腦輔助設計應用而言, Virtualbox 網路中的 NAT 與 Host-only 模式最為常用, 而 NAT 網路的設定非常直覺, 只要在所新增的虛擬機器中的網路設定, 選擇 NAT, 然後開機之後, 就可以直接在虛擬機器中使用轉址的網路服務.
+
+##Host-only 虛擬網路設定
+
+Host-only 的網路設置則稍微複雜, 其中牽涉到 Virtualbox 應用程式的網路偏好設定, 以及虛擬機器本身的網路設定搭配, 才能讓 Host 中的應用程式透過 Host 操作系統中的 Host-only 虛擬網路卡, 與位於同一網段的虛擬機器設置連線.
+
+###Virtualbox 網路偏好設定
+
+Virtualbox 的網路相關設定分為兩個層次, 有關整個 Virtualbox 的設定位於 File-&gt;Preferences-&gt;Network, 而第二個層次為各虛擬機器的個別設定. 若以 File-&gt;Preferences-&gt;Network 中, 有關 Host-only 網路設定的目的, 在讓 Virtualbox 的 Host 本體, 可以透過虛擬的網路卡與 Virtualbox 中的虛擬機器網路卡處於同一個區域網路中.
+
+換言之, 如 Host-only 這個名稱本身的所謂 Host only, 就是虛擬機器的網路能見度, 僅止於 Host only, 外部電腦無法與這些虛擬機器連線, 甚至若虛擬機器沒有透過 Host 電腦中的代理主機, 虛擬機器中的瀏覽器也無法連線上網.
+
+至於 File-&gt;Preferences-&gt;Network 中的 Host-only 設定, 總共決定兩件虛擬功能, 其一為位於 Host 中的虛擬網路卡, 要採用的網路協定與網址, 所謂的網路協定就是可以使用 IPV4 或 IPV6 網路協定, 至於虛擬網卡的網址, 就會決定這個所謂的 Host-only 網路, 位於那一個內部網段, 例如, 可以使用 IPV4 協定, 並將虛擬網路卡的網址設為 192.168.56.1, 也就是將 Host-only 的網段設為 192.168.56.0.
+
+File-&gt;Preferences-&gt;Network 中的 Host-only 第 2 個設定, 就是在這個上述設定的虛擬網段中, 是否要再虛擬出一台 DHCP 伺服器, 例如, 選擇要在這個虛擬 Host-only 網段中啟用虛擬的 DHCP 伺服器, 就可以決定這個虛擬的 DHCP 伺服器的 IP (當然要與第 1 項設定的網段相同, 也就是必須位於 192.168.56.0 網段中), 例如, 將虛擬的 DHCP server IP 設為 192.168.56.100, 並且將 DHCP IP 範圍設為 192.168.56.101-200.
+
+儘管 Virtualbox 中的 File-&gt;Preferences-&gt;Network 中的 Host-only 第 2 個設定, 可以啟用 DHCP, 但是通常使用 Host-only 虛擬網路模式的目的, 大多要在 Host 中連接虛擬機器中的伺服器, 使用特定的服務內容, 因此一般都停用 Host-only 網路設定中的虛擬 DHCP server 服務, 而採手動設定虛擬機器中的 IP 與 Gateway.
+
+###虛擬機器的網路設定
+
+例如, 可以將其中第一台使用 Host-only 網路模式的虛擬機器網路 IP 設為 192.168.56.101, 並將 Gateway 設為 192.168.56.1 (也就是 Host 中對應虛擬網卡的 IP 位址), 第 2 台則設可為 192.168.56.102, 依此類推採用固定的 IP 位址來界定虛擬機器所提供的不同服務.
+
+Host-only 虛擬網路相關設定的參考畫面如下:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_1.png" width="800" /&gt;
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_2.png" width="800" /&gt;
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_3.png" width="800" /&gt;
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_4.png" width="800" /&gt;
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_5.png" width="800" /&gt;
+</t>
+<t tx="amd.20160605104719.1">@language md
+Title: CADLab 新電腦系統
+Category: MISC
+Tags: 
+Author: Cad Lab
+@others
+CPU 選擇: &lt;span style="background-color: #ffff00;"&gt;Intel i7-6700&lt;/span&gt;
+
+Ram  選擇: &lt;span style="background-color: #ffff00;"&gt;16GB (8GBx2) DDR4-3000 (至少還可再升級 8GBx2)&lt;/span&gt;
+
+HD: &lt;span style="background-color: #ffff00;"&gt;2TB (64MB) SATA III&lt;/span&gt;
+
+Video Card: &lt;span style="background-color: #ffff00;"&gt;NVIDIA GEFORCE GTX950 2GB GDDR5&lt;/span&gt;
+
+NIC: &lt;span style="background-color: #ffff00;"&gt;1Gbits/s*5 (除了主機板上的兩片網路卡之外 ,再加上 3 片外接式網路卡, 以便與各開機磁區中的虛擬機橋接出虛擬的多台連外伺服器)&lt;/span&gt;
+
+參考:
+
+i7: &lt;a href="https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors"&gt;https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors&lt;/a&gt;
+
+i7-6700: &lt;a href="http://ark.intel.com/products/88196"&gt;http://ark.intel.com/products/88196&lt;/a&gt;
+</t>
+<t tx="amd.20160605104725.1"></t>
+<t tx="amd.20160605104803.1">@language md
+Title: 電腦輔助設計室電腦磁區規劃
+Category: MISC
+Tags: 
+Author: Cad Lab
+@others
+&lt;div&gt;希望能根據不同性質課程, 將軟體分為 3 個開機磁區:&lt;/div&gt;
+ 
+&lt;ol&gt;
+ 	&lt;li&gt;安裝所有老師提出的上課套件, 集中在第 1 磁區, 其中包括 CAD, CAE, CAM, 數值分析與自動控制相關所有套件.&lt;/li&gt;
+ 	&lt;li&gt;只安裝 Solidworks, PTC Creo, AutoDesk Inventor, AutoCAD, A360, Ansys, Comsol, Matlab 與 Mathematica, 等 CAD, CAE 與數值分析相關套件.&lt;/li&gt;
+ 	&lt;li&gt;只安裝操作系統, 加上無需安裝的綠色套件 (PTC, Creo, Comsol, Matlab 等).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div&gt;
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+&lt;/div&gt;
+&lt;div&gt;至於以上 3 個開機磁區則傾向將新購買的 Windows 10 Pro 操作系統降為 Windows 7 Pro, 以提升使用效能. 但是仍然在第 2 磁區利用 Virtualbox 建立安裝 Windows 10 Pro 的兩台虛擬機器, 其中一台虛擬機配合安裝 Solidworks, PTC Creo, AutoDesk Inventor 與 Matlab , 而另一台虛擬機也採用 Windows 10 Pro 開機, 但只配置各軟體的原始 DVD, 可以讓老師教導學生執行各套件安裝與設定的教學.&lt;/div&gt;
+ 
+&lt;div&gt;至於第 3 磁區則將利用 Virtualbox 建立一台配置&lt;a href="http://www.squid-cache.org/"&gt;網路代理功能&lt;/a&gt; (IPV4/IPV6 雙支援) 的 Ubuntu Server 虛擬伺服器, 以及一台空白的 Windows 10 Pro 虛擬機, 以便在純 IPV6 環境下進行課程教學.&lt;/div&gt;
+ 
+&lt;div&gt;註解:&lt;/div&gt;
+根據 &lt;a href="https://en.wikipedia.org/wiki/X86_virtualization#Intel-VT-x"&gt;https://en.wikipedia.org/wiki/X86_virtualization#Intel-VT-x&lt;/a&gt; 與 &lt;a href="https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors"&gt;https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors&lt;/a&gt; 的說明, 幾乎所有的 Intel CPU 都已經支援 VT-x 虛擬技術, 只要電腦的其他軟硬體配合啟動 VT-x, 就可以在 64 位元的操作系統主體, 模擬 64 位元的虛擬機, 假如再配合 Oracle 的新聞稿: &lt;a href="http://www.oracle.com/us/corporate/press/1842885"&gt;http://www.oracle.com/us/corporate/press/1842885&lt;/a&gt; 說明, Virtualbox 中的一台虛擬機 (Virtual Machine) 最多可以啟用 36 片虛擬網路卡, 因此只要電腦主體的硬體支援許可, 利用虛擬機就能有效模擬出相當複雜的網路伺服器架構.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox5_upto_36_NIC.png" width="800" /&gt;
+</t>
+<t tx="amd.20160605104803.2"></t>
+<t tx="amd.20160605111320.1"></t>
+<t tx="amd.20160605111404.1"></t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
