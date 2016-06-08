@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>CADLab (虎尾科大MDE)</title>
+    <title>Onshape Featurescript Tutorial 導引 - CADLab (虎尾科大MDE)</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -166,15 +166,19 @@ init_mathjax = function() {
 init_mathjax();
 </script>
 
-<link rel="canonical" href="http://cadlab.mde.tw/post">
-        <meta name="author" content="kmol" />
+<link rel="canonical" href="http://cadlab.mde.tw/post/onshape-featurescript-tutorial-dao-yin.html">
 
-    <!-- Open Graph tags -->
+        <meta name="author" content="Cad Lab" />
+        <meta name="description" content="Onshape 配合公開 FeatureScript 特徵程式語言的過程, 特別製作了一個詳細的教學導引:https://cad.onshape.com/FsDoc/tutorials/create-a-slot-feature.html, 從這個導引中, 可以一窺 FeatureScript 的基本用法." />
+
         <meta property="og:site_name" content="CADLab (虎尾科大MDE)" />
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="CADLab (虎尾科大MDE)"/>
-        <meta property="og:url" content="http://cadlab.mde.tw/post"/>
-        <meta property="og:description" content="CADLab (虎尾科大MDE)"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Onshape Featurescript Tutorial 導引"/>
+        <meta property="og:url" content="http://cadlab.mde.tw/post/onshape-featurescript-tutorial-dao-yin.html"/>
+        <meta property="og:description" content="Onshape 配合公開 FeatureScript 特徵程式語言的過程, 特別製作了一個詳細的教學導引:https://cad.onshape.com/FsDoc/tutorials/create-a-slot-feature.html, 從這個導引中, 可以一窺 FeatureScript 的基本用法."/>
+        <meta property="article:published_time" content="2016-06-08" />
+            <meta property="article:section" content="MISC" />
+            <meta property="article:author" content="Cad Lab" />
 
 
     <!-- Bootstrap -->
@@ -264,7 +268,7 @@ CADLab (虎尾科大MDE)            </a>
                         <li >
                             <a href="http://cadlab.mde.tw/post/category/gui-hua.html">規劃</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="http://cadlab.mde.tw/post/category/misc.html">Misc</a>
                         </li>
                         <li >
@@ -289,99 +293,224 @@ CADLab (虎尾科大MDE)            </a>
     <div class="row">
         <div class="col-sm-9">
 
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html">網際機械設計 2D 繪圖</a></h2>
-                <div class="summary"><p><a href="http://2015fallhw.github.io/arcidau/Flintlock.html">http://2015fallhw.github.io/arcidau/Flintlock.html</a> 是一個典型的網際機械設計 2D 繪圖範例, CADLab 希望能夠利用 Brython 重新建立一個直接以 Python3 在網頁中繪圖的類似應用.</p>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://cadlab.mde.tw/post/onshape-featurescript-tutorial-dao-yin.html"
+                       rel="bookmark"
+                       title="Permalink to Onshape Featurescript Tutorial 導引">
+                        Onshape Featurescript Tutorial 導引
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-06-08T21:00:16.358691+08:00"> 三 08 六月 2016</time>
+    </span>
+            <span class="label label-default">By</span>
+            <a href="http://cadlab.mde.tw/post/author/cad-lab.html"><i class="fa fa-user"></i> Cad Lab</a>
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html">more ...</a>
+
+
+    
+</footer><!-- /.post-info -->                    </div>
                 </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html">電腦輔助機械設計流程中的分散式版本管理</a></h2>
-                <div class="summary"><p><a href="http://bazaar.canonical.com/en/">Bazaar</a> (2004 年從 <a href="https://www.gnu.org/software/gnu-arch/">Gnu arch</a> 分出), <a href="http://www.bitkeeper.com/">BitKeeper</a>, <a href="http://darcs.net/">darcs</a>, <a href="https://github.com/git">Git</a>, <a href="https://www.mercurial-scm.org/">Mercurial</a> 是目前較為常見的分散式版本管理 (Distributed Version Control Systems, DVCS) 技術, 其中自 1998 年前後推出, 唯一商用閉源的 Bitkeeper, 也終於在 2016.05.09, 宣佈轉為開放原始碼套件: <a href="https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93">https://users.bitkeeper.org/t/bk-7-2ce-released-2016-05-09/93</a>.</p>
+                <p>Onshape 配合公開 FeatureScript 特徵程式語言的過程, 特別製作了一個詳細的教學導引:<a href="https://cad.onshape.com/FsDoc/tutorials/create-a-slot-feature.html">https://cad.onshape.com/FsDoc/tutorials/create-a-slot-feature.html</a>, 從這個導引中, 可以一窺 FeatureScript 的基本用法.</p>
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-ji-jie-she-ji-liu-cheng-zhong-de-fen-san-shi-ban-ben-guan-li.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html">常用 Python3 程式模組</a></h2>
-                <div class="summary"><p><a href="http://www.cherrypy.org/">CherryPy</a>, <a href="http://pytz.sourceforge.net/">pytz</a>, <a href="http://www.makotemplates.org/">mako</a>, <a href="https://www.crummy.com/software/BeautifulSoup/">beautifulsoup4</a>, <a href="https://github.com/PyMySQL/PyMySQL">pymysql</a>, <a href="https://github.com/coleifer/peewee">peewee</a>, <a href="https://github.com/sigmavirus24/github3.py">github3.py</a>, <a href="http://peterhudec.github.io/authomatic/">authomatic</a> 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.</p>
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html">電腦輔助設計室網誌開通</a></h2>
-                <div class="summary"><p>機械設計工程系電腦輔助設計室 2016 Fall 電腦系統規劃.</p>
+<p>左下角所謂的頁面創建功能 (也就是 + 號所在), 增加了創建 Feature Studio (特徵工房) 的選項, 可以讓使用者利用特徵工房中的 IDE (Integrated Development Environment) 環境, 開發獨特的客製化特徵程式.</p>
+<p>所以 Feature Studio 是 Onshape 的一種特殊頁面 (Tab), 其中提供編修 FeatureScript 程式的各種工具.</p>
+<p>進入 Feature Studio 後, 通常第一件事就是按下 New Feature 按鈕, 可以在特徵程式編輯區 (採用 <a href="https://github.com/ajaxorg/ace">Ace.js</a>) 中帶出 FeatureScript 程式的 Template codes (程式模版). 程式模版中包含所導入的 FeatureScript 程式庫版本, 以及即將讓使用者定義的客製化特徵函式區, 模版程式如下:</p>
+<pre class="brush: jscript">
+// 宣告所使用的 FeatureScript 版次
+FeatureScript 355;
+// 配合所使用的 FeatureScript 版次, 導入 geometry 標準程式庫
+import(path : "onshape/std/geometry.fs", version : "355.0");
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-wang-zhi-kai-tong.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html">Onshape 提供免費教育單位帳號</a></h2>
-                <div class="summary"><p>從 <a href="https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan">https://www.onshape.com/cad-blog/introducing-the-onshape-education-plan</a> 得知, Onshpae 除了提供各種身份的用戶有使用限度的免費帳號以外, 從 2016.04.07 開始更加碼, 讓教育單位可以免費, 且沒有使用限度的情況下, 來探索使用這個劃時代的雲端電腦輔助機械設計套件.</p>
+// 利用 New Feature 所產生的程式模版, 包含 annotation 與 myFeature 常數的 export
+// 其中使用了匿名函式的立即實例化, 使用者負責填入此一匿名函式的 precondition 與函式內容
+// precondition 區主要在設定 FeatureScript 的 GUI 介面, 而函式內容則可實際產生各式特徵操作
+annotation { "Feature Type Name" : "My Feature" }
+export const myFeature = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        // 特徵程式的使用者介面對話設計, 包括輸入表單, 各式選單以及使用者動態選擇的各種幾何特徵
+    }
+    {
+        // 定義函式的幾何操作內容
+    });
+</pre>
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/onshape-ti-gong-mian-fei-jiao-yu-dan-wei-zhang-hao.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html">Wordpress 網誌文章中的網際程式碼</a></h2>
-                <div class="summary"><p>從 <a href="https://www.w3.org/Graphics/SVG/History">SVG 歷史</a> 與 <a href="https://en.wikipedia.org/wiki/WebGL#History">WebGL 歷史</a>, 以及 <a href="https://github.com/socketio/socket.io/blob/master/History.md"> socket.io 歷史</a>, 也許不難發現, 多人協同在瀏覽器為基礎的應用程式環境, 已然成型.</p>
+<p>在 precondition 的大括號中間, 以鍵盤輸入 qu, FeatureScript Studio 就會啟動 Autocompletion 功能, 列出可以選用的 Query 設定, 並且列出詳細的使用說明, 其中的 Query parameter 是 snippet 小程式段外, 其餘都是查詢函式.</p>
+<p>Query parameter 的程式段如下:</p>
+<pre class="brush: jscript">
+annotation { "Name" : "My Query", "Filter" : EntityType.FACE, "MaxNumberOfPicks" : 1 }
+definition.myQuery is Query;
+</pre>
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/bezier-qu-xian-dao-yin.html">Bezier 曲線導引</a></h2>
-                <div class="summary"><p>A primer on Bezier curves</p>
+<p>當使用者在 precondition 對話區建立兩個查詢變數後, 就可以提交 (commit) 所增加的 FeatureScript 程式, 提交程式的目的在讓其他的頁面 (Tabs) 可以使用此一特徵程式. 另外假如 Feature Studio 中有新增資料尚未提交, 頁面上的特徵程式名稱前面會多一個 * 號, 一旦提交後, 此一 * 符號就會消失, 表示所有新增或編修的 FeatureScript 程式都已經提交到 Document 的模型本體.</p>
+<p>FeatureScript 語法中的 annotation 資料型別為 map, 類似 Python 的 Dictionary 資料型別, 且 map 的 key 一律為字串, 以 slot 程式範例而言, annotation { "Feature Type Name" : "Slot" } 中的 "Feature Type Name" 為每一個特徵函式的必要字串鍵值, 這裡的對應名稱為 "slot".</p>
+<p>從導引影片的操作, 也可以看到當使用者利用某一個平面草圖執行擠出後, 原先的草圖將會內定隱藏, 但隨後將需要選擇此一草圖上的其他線段, 因此必須在特徵瀏覽視窗中, 將此草圖顯示出來.</p>
+<p>另外, 當使用者在設計 FeatureScript 程式的 Query 對話區表單時, 可以透過 "Filter" 字串鍵進行控制可選的幾何元素, 例如, "Slot path" 對應的 "Filter" 為 EntityType.EDGE, 表示只能選擇 EDGE 幾何元件, 且透過 "MaxNumberOfPicks", 限定只能選擇一個 EDGE.
+"Part to cut" 的 Query 則以 EntityType.BODY &amp;&amp; BodyType.SOLID 界定, 表示只能選擇 SOLID BODY.</p>
+<p>其次, FeatureScript 的所有尺寸, 角度與重量變數, 都隨使用者所選擇的單位而自動換算, 而且支援不同單位的<a href="https://cad.onshape.com/FsDoc/intro.html">混合運算</a>, 因此除了在互動區設定的 definition.variable_name 會根據 Onshape Document 中的單位為準外, 其他在函式定義過程中新增的其他變數, 必須自行加註單位, 否則會產生具單位尺寸與無單位設定的變數運算的錯誤.</p>
+<p>接下來, 當使用者開始進入函式內容的幾何模型操作時, 就必須對 id 型別有些認識. 模型主體 (Context) 中的所有特徵, 子特徵與操作, 都配置獨特的 id 加以辨識. 獨特的 id 可以在查詢, 錯誤回報或者取用特徵或操作時有所依據. id 的標示依照模型本體中各特徵與操作的關係, 以從屬架構表示. 也就是說 ,每一個操作項目的 id 都有其上層對應項目的 id. 過程中可以利用 newId() 函式來產生根項目 id, 隨後的子 id 則利用 + 運算子進行附加.</p>
+<p>在 Onshape FeatureScript 手冊中舉例, id + "foo" 中的 "foo" 就是子項目的 id 名稱, 而其父項目就是 id 變數. 依此類推, id + "foo" + "bar" 的就是以 "bar" 作為子項目的 id, 而其父項目的 id 就是 id + "foo". 而且在 FeatureScript 中 id 的資料型別為陣列, 其算元素為字串, 可以經過陣列元素表示各項目的路徑. </p>
+<p>例如, newId() + "foo" + "bar" 等同 id 值為 ["foo", "bar"], 但是實際操作仍以前面的用法為主.</p>
+<p>slot 教學導引的後段操作, 接續在互動介面區所設定的兩個 Query 與一個 Parameter 輸入, Query1 是選擇 "Slot path", 並將選擇與 definition.slotPath 變數對應, Query2 則選擇 "Part to cut", 以 definition.partToCut 表示, 而切槽的寬度則由使用者在欄位中輸入, 以 definition.width 變數表示.</p>
+<p>接下來, 則以 definition.slotPath 透過 opExtrude 操作長出橫貫 "Part to cut" 本體的平面, 接著利用 opThicken 操作, 對用來切槽的平面增加厚度, 而且一旦平面加厚成為實體之後, 就利用 opDeleteBodies 操作, 將此平面刪除, 最後的操作則是利用 opBoolean 操作, 以增厚的平面實體對 "Part to cut" 進行除料, 就完成 slot 客製 FeatureScript 程式的製作.</p>
+<p>slot FeatureScript 程式碼如下:</p>
+<pre class="brush: jscript">
+FeatureScript 355;
+import(path : "onshape/std/geometry.fs", version : "355.0");
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/bezier-qu-xian-dao-yin.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html">CADLab CAD/E 軟體套件使用建議</a></h2>
-                <div class="summary"><p>電腦輔助設計與工程分析是機械設計工程師進行 2D/3D 繪圖與理論分析表達的重要工具, 這裡是我們建議學員使用的 CAD/CAE 軟體套件.</p>
+annotation { "Feature Type Name" : "Slot" }
+export const slot = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        // Query for EDGE entity
+        annotation { "Name" : "Slot path", "Filter" : EntityType.EDGE, "MaxNumberOfPicks" : 1 }
+        definition.slotPath is Query;
+        // Query for Body entity
+        annotation { "Name" : "Part to cut", "Filter" : EntityType.BODY && BodyType.SOLID, "MaxNumberOfPicks" : 1 }
+        definition.partToCut is Query;
+        // parameter input field for width
+        annotation { "Name" : "Width" }
+        isLength(definition.width, LENGTH_BOUNDS);
+    }
+    {
+        // Extrude operation, id is extrude1
+        opExtrude(context, id + "extrude1", {
+               "entities" : definition.slotPath,
+               "direction" : evOwnerSketchPlane(context, {"entity" : definition.slotPath}).normal,
+               "endBound" : BoundingType.THROUGH_ALL,
+               "startBound" : BoundingType.THROUGH_ALL
+        });
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/cadlab-cade-ruan-ti-tao-jian-shi-yong-jian-yi.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/cadlab-de-li-xiang-she-zhi.html">Cadlab 的理想設置</a></h2>
-                <div class="summary"><p>一個符合二十一世紀工學院實際需求的電腦輔助設計室, 應該如何規劃配置?</p>
+        // Thicken operation for extrude1 entity
+        opThicken(context, id + "thicken1", {
+               "entities" : qCreatedBy(id + "extrude1", EntityType.BODY),
+               "thickness1" : definition.width / 2,
+               "thickness2" : definition.width / 2
+        });
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/cadlab-de-li-xiang-she-zhi.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu.html">CADLab 機械設計系網路配置圖</a></h2>
-                <div class="summary"><p>我們正在使用 Python3 與 <a href="http://blockdiag.com/en/">http://blockdiag.com/en/</a> 中的 nwdiag 工具繪製機械設計工程系的網路配置圖.</p>
+        // DeleteBodies operation to delete extrude1
+        opDeleteBodies(context, id + "delete1", {
+               "entities" : qCreatedBy(id + "extrude1", EntityType.BODY)
+        });
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/cadlab-ji-jie-she-ji-xi-wang-lu-pei-zhi-tu.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
+        // Boolean operation to subtract the thicken1 from partToCut part
+        opBoolean(context, id + "boolean1", {
+               "tools" : qCreatedBy(id + "thicken1", EntityType.BODY),
+               "targets" : definition.partToCut,
+               "operationType" : BooleanOperationType.SUBTRACTION
+        });
 
-        <ul class="pagination">
-                <li class="prev"><a href="http://cadlab.mde.tw/post/index.html">&laquo;</a>
-                </li>
-                    <li class=""><a
-                            href="http://cadlab.mde.tw/post/index.html">1</a></li>
-                    <li class="active"><a
-                            href="http://cadlab.mde.tw/post/index2.html">2</a></li>
-                    <li class=""><a
-                            href="http://cadlab.mde.tw/post/index3.html">3</a></li>
-                <li class="next"><a
-                        href="http://cadlab.mde.tw/post/index3.html">&raquo;</a></li>
-        </ul>
+    });
+</pre>
+
+<p>有了 slot 操作基礎後, 就可以進一步完成繪製齒輪與鏈輪輪廓的程式模版:</p>
+<pre class="brush: jscript">
+FeatureScript 355;
+import(path : "onshape/std/geometry.fs", version : "355.0");
+
+annotation { "Feature Type Name" : "Gear test" }
+export const gearTest = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        // 圓半徑直接輸入表單為 radius 的欄位中
+        annotation { "Name" : "radius" }
+        isLength(definition.radius, LENGTH_BOUNDS);
+        // 在 Select a point 輸入區為查詢, 只能選擇既有的 VERTEX, 且只選一個點
+        annotation { "Name" : "Select a point", "Filter" : EntityType.VERTEX, "MaxNumberOfPicks" : 1 }
+        definition.point is Query;
+    }
+    {
+        // Precondition 中的查詢, 需要 evalue 才能傳回對應的 entity
+        var location = evaluateQuery(context, definition.point)[0];
+        // location 變數為點座標對應的 entity, 必須透過 evVetexPoint 的評量才能傳回對應的點座標
+        var center3D = evVertexPoint(context, {
+                "vertex" : location
+        });
+
+        // 作圖面利用 evOwnerSketch 評量, 與 location entity 同一個平面
+        var sketchPlane = evOwnerSketchPlane(context, {
+                "entity" : location
+        });
+        // 利用 worldToPlane, 將 center3D 轉換為 sketchPlane 上的平面點座標
+        const center2D = worldToPlane(sketchPlane, center3D);
+        // 接下來利用 sketchPlane 建立一個草圖畫布元件
+        const gearSketch = newSketchOnPlane(context, id + "gearSketch", {
+                "sketchPlane" : sketchPlane
+        });
+
+        // 有了草圖畫布元件, 就可以在其上進行各式平面繪圖, 這裡利用 center2D 點作為圓心, definition.radius 作為半徑畫圓
+        skCircle(gearSketch, "circle1", {
+                "center" : center2D,
+                "radius" : definition.radius
+        });
+
+        // 接著從圓心, 沿 x 軸方向畫一條長度為半徑的直線
+        skLineSegment(gearSketch, "line1", {
+                "start" : center2D,
+                "end" : center2D + vector(1, 0) * definition.radius
+        });
+
+        // 這裡使用固定點在畫布上繪製平滑曲線, 之後可以直接用來繪製各種齒輪或鏈輪輪廓
+        skFitSpline(gearSketch, "spline1", {
+                "points" : [
+                    vector( 0,  0) * inch,
+                    vector( 0, -1) * inch,
+                    vector( 1,  1) * inch,
+                    vector(-1,  0) * inch,
+                    vector( 0,  0) * inch
+                ]
+        });
+
+        // 利用 skSolve 解出畫布上的所有繪圖內容, 並顯示出來
+        skSolve(gearSketch);
+    });
+</pre>
+            </div>
+            <!-- /.entry-content -->
+    <hr/>
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'cadlab'; // required: replace example with your forum shortname
+
+                    var disqus_identifier = 'onshape-featurescript-tutorial-dao-yin';
+                var disqus_url = 'http://cadlab.mde.tw/post/onshape-featurescript-tutorial-dao-yin.html';
+
+            var disqus_config = function () {
+                this.language = "en";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
         </div>
         <div class="col-sm-3" id="sidebar">
             <aside>

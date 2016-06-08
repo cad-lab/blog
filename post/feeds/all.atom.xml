@@ -1,5 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-06-05T12:03:55+08:00</updated><entry><title>Virtualbox 的應用與網路設定</title><link href="http://cadlab.mde.tw/post/virtualbox-de-ying-yong-yu-wang-lu-she-ding.html" rel="alternate"></link><updated>2016-06-05T12:03:55+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-06-05:post/virtualbox-de-ying-yong-yu-wang-lu-she-ding.html</id><summary type="html">&lt;p&gt;&lt;a href="https://www.virtualbox.org/"&gt;Virtualbox&lt;/a&gt; 是一套能在 Windows, Linux, Mac 與 Solaris 操作系統上使用的虛擬器 (Virtualizer).&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-06-08T21:00:16+08:00</updated><entry><title>Onshape Featurescript Tutorial 導引</title><link href="http://cadlab.mde.tw/post/onshape-featurescript-tutorial-dao-yin.html" rel="alternate"></link><updated>2016-06-08T21:00:16+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-08:post/onshape-featurescript-tutorial-dao-yin.html</id><summary type="html">&lt;p&gt;Onshape 配合公開 FeatureScript 特徵程式語言的過程, 特別製作了一個詳細的教學導引:&lt;a href="https://cad.onshape.com/FsDoc/tutorials/create-a-slot-feature.html"&gt;https://cad.onshape.com/FsDoc/tutorials/create-a-slot-feature.html&lt;/a&gt;, 從這個導引中, 可以一窺 FeatureScript 的基本用法.&lt;/p&gt;
+
+
+&lt;p&gt;左下角所謂的頁面創建功能 (也就是 + 號所在), 增加了創建 Feature Studio (特徵工房) 的選項, 可以讓使用者利用特徵工房中的 IDE (Integrated Development Environment) 環境, 開發獨特的客製化特徵程式.&lt;/p&gt;
+&lt;p&gt;所以 Feature Studio 是 Onshape 的一種特殊頁面 (Tab), 其中提供編修 FeatureScript 程式的各種工具.&lt;/p&gt;
+&lt;p&gt;進入 Feature Studio 後, 通常第一件事就是按下 New Feature 按鈕, 可以在特徵程式編輯區 (採用 &lt;a href="https://github.com/ajaxorg/ace"&gt;Ace.js&lt;/a&gt;) 中帶出 FeatureScript 程式的 Template codes (程式模版). 程式模版中包含所導入的 FeatureScript 程式庫版本, 以及即將讓使用者定義的客製化特徵函式區, 模版程式如下:&lt;/p&gt;
+&lt;pre class="brush: jscript"&gt;
+// 宣告所使用的 FeatureScript 版次
+FeatureScript 355;
+// 配合所使用的 FeatureScript 版次, 導入 geometry 標準程式庫
+import(path : "onshape/std/geometry.fs", version : "355.0");
+
+// 利用 New Feature 所產生的程式模版, 包含 annotation 與 myFeature 常數的 export
+// 其中使用了匿名函式的立即實例化, 使用者負責填入此一匿名函式的 precondition 與函式內容
+// precondition 區主要在設定 FeatureScript 的 GUI 介面, 而函式內容則可實際產生各式特徵操作
+annotation { "Feature Type Name" : "My Feature" }
+export const myFeature = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        // 特徵程式的使用者介面對話設計, 包括輸入表單, 各式選單以及使用者動態選擇的各種幾何特徵
+    }
+    {
+        // 定義函式的幾何操作內容
+    });
+&lt;/pre&gt;
+
+&lt;p&gt;在 precondition 的大括號中間, 以鍵盤輸入 qu, FeatureScript Studio 就會啟動 Autocompletion 功能, 列出可以選用的 Query 設定, 並且列出詳細的使用說明, 其中的 Query parameter 是 snippet 小程式段外, 其餘都是查詢函式.&lt;/p&gt;
+&lt;p&gt;Query parameter 的程式段如下:&lt;/p&gt;
+&lt;pre class="brush: jscript"&gt;
+annotation { "Name" : "My Query", "Filter" : EntityType.FACE, "MaxNumberOfPicks" : 1 }
+definition.myQuery is Query;
+&lt;/pre&gt;
+
+&lt;p&gt;當使用者在 precondition 對話區建立兩個查詢變數後, 就可以提交 (commit) 所增加的 FeatureScript 程式, 提交程式的目的在讓其他的頁面 (Tabs) 可以使用此一特徵程式. 另外假如 Feature Studio 中有新增資料尚未提交, 頁面上的特徵程式名稱前面會多一個 * 號, 一旦提交後, 此一 * 符號就會消失, 表示所有新增或編修的 FeatureScript 程式都已經提交到 Document 的模型本體.&lt;/p&gt;
+&lt;p&gt;FeatureScript 語法中的 annotation 資料型別為 map, 類似 Python 的 Dictionary 資料型別, 且 map 的 key 一律為字串, 以 slot 程式範例而言, annotation { "Feature Type Name" : "Slot" } 中的 "Feature Type Name" 為每一個特徵函式的必要字串鍵值, 這裡的對應名稱為 "slot".&lt;/p&gt;
+&lt;p&gt;從導引影片的操作, 也可以看到當使用者利用某一個平面草圖執行擠出後, 原先的草圖將會內定隱藏, 但隨後將需要選擇此一草圖上的其他線段, 因此必須在特徵瀏覽視窗中, 將此草圖顯示出來.&lt;/p&gt;
+&lt;p&gt;另外, 當使用者在設計 FeatureScript 程式的 Query 對話區表單時, 可以透過 "Filter" 字串鍵進行控制可選的幾何元素, 例如, "Slot path" 對應的 "Filter" 為 EntityType.EDGE, 表示只能選擇 EDGE 幾何元件, 且透過 "MaxNumberOfPicks", 限定只能選擇一個 EDGE.
+"Part to cut" 的 Query 則以 EntityType.BODY &amp;amp;&amp;amp; BodyType.SOLID 界定, 表示只能選擇 SOLID BODY.&lt;/p&gt;
+&lt;p&gt;其次, FeatureScript 的所有尺寸, 角度與重量變數, 都隨使用者所選擇的單位而自動換算, 而且支援不同單位的&lt;a href="https://cad.onshape.com/FsDoc/intro.html"&gt;混合運算&lt;/a&gt;, 因此除了在互動區設定的 definition.variable_name 會根據 Onshape Document 中的單位為準外, 其他在函式定義過程中新增的其他變數, 必須自行加註單位, 否則會產生具單位尺寸與無單位設定的變數運算的錯誤.&lt;/p&gt;
+&lt;p&gt;接下來, 當使用者開始進入函式內容的幾何模型操作時, 就必須對 id 型別有些認識. 模型主體 (Context) 中的所有特徵, 子特徵與操作, 都配置獨特的 id 加以辨識. 獨特的 id 可以在查詢, 錯誤回報或者取用特徵或操作時有所依據. id 的標示依照模型本體中各特徵與操作的關係, 以從屬架構表示. 也就是說 ,每一個操作項目的 id 都有其上層對應項目的 id. 過程中可以利用 newId() 函式來產生根項目 id, 隨後的子 id 則利用 + 運算子進行附加.&lt;/p&gt;
+&lt;p&gt;在 Onshape FeatureScript 手冊中舉例, id + "foo" 中的 "foo" 就是子項目的 id 名稱, 而其父項目就是 id 變數. 依此類推, id + "foo" + "bar" 的就是以 "bar" 作為子項目的 id, 而其父項目的 id 就是 id + "foo". 而且在 FeatureScript 中 id 的資料型別為陣列, 其算元素為字串, 可以經過陣列元素表示各項目的路徑. &lt;/p&gt;
+&lt;p&gt;例如, newId() + "foo" + "bar" 等同 id 值為 ["foo", "bar"], 但是實際操作仍以前面的用法為主.&lt;/p&gt;
+&lt;p&gt;slot 教學導引的後段操作, 接續在互動介面區所設定的兩個 Query 與一個 Parameter 輸入, Query1 是選擇 "Slot path", 並將選擇與 definition.slotPath 變數對應, Query2 則選擇 "Part to cut", 以 definition.partToCut 表示, 而切槽的寬度則由使用者在欄位中輸入, 以 definition.width 變數表示.&lt;/p&gt;
+&lt;p&gt;接下來, 則以 definition.slotPath 透過 opExtrude 操作長出橫貫 "Part to cut" 本體的平面, 接著利用 opThicken 操作, 對用來切槽的平面增加厚度, 而且一旦平面加厚成為實體之後, 就利用 opDeleteBodies 操作, 將此平面刪除, 最後的操作則是利用 opBoolean 操作, 以增厚的平面實體對 "Part to cut" 進行除料, 就完成 slot 客製 FeatureScript 程式的製作.&lt;/p&gt;
+&lt;p&gt;slot FeatureScript 程式碼如下:&lt;/p&gt;
+&lt;pre class="brush: jscript"&gt;
+FeatureScript 355;
+import(path : "onshape/std/geometry.fs", version : "355.0");
+
+annotation { "Feature Type Name" : "Slot" }
+export const slot = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        // Query for EDGE entity
+        annotation { "Name" : "Slot path", "Filter" : EntityType.EDGE, "MaxNumberOfPicks" : 1 }
+        definition.slotPath is Query;
+        // Query for Body entity
+        annotation { "Name" : "Part to cut", "Filter" : EntityType.BODY &amp;&amp; BodyType.SOLID, "MaxNumberOfPicks" : 1 }
+        definition.partToCut is Query;
+        // parameter input field for width
+        annotation { "Name" : "Width" }
+        isLength(definition.width, LENGTH_BOUNDS);
+    }
+    {
+        // Extrude operation, id is extrude1
+        opExtrude(context, id + "extrude1", {
+               "entities" : definition.slotPath,
+               "direction" : evOwnerSketchPlane(context, {"entity" : definition.slotPath}).normal,
+               "endBound" : BoundingType.THROUGH_ALL,
+               "startBound" : BoundingType.THROUGH_ALL
+        });
+
+        // Thicken operation for extrude1 entity
+        opThicken(context, id + "thicken1", {
+               "entities" : qCreatedBy(id + "extrude1", EntityType.BODY),
+               "thickness1" : definition.width / 2,
+               "thickness2" : definition.width / 2
+        });
+
+        // DeleteBodies operation to delete extrude1
+        opDeleteBodies(context, id + "delete1", {
+               "entities" : qCreatedBy(id + "extrude1", EntityType.BODY)
+        });
+
+        // Boolean operation to subtract the thicken1 from partToCut part
+        opBoolean(context, id + "boolean1", {
+               "tools" : qCreatedBy(id + "thicken1", EntityType.BODY),
+               "targets" : definition.partToCut,
+               "operationType" : BooleanOperationType.SUBTRACTION
+        });
+
+    });
+&lt;/pre&gt;
+
+&lt;p&gt;有了 slot 操作基礎後, 就可以進一步完成繪製齒輪與鏈輪輪廓的程式模版:&lt;/p&gt;
+&lt;pre class="brush: jscript"&gt;
+FeatureScript 355;
+import(path : "onshape/std/geometry.fs", version : "355.0");
+
+annotation { "Feature Type Name" : "Gear test" }
+export const gearTest = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        // 圓半徑直接輸入表單為 radius 的欄位中
+        annotation { "Name" : "radius" }
+        isLength(definition.radius, LENGTH_BOUNDS);
+        // 在 Select a point 輸入區為查詢, 只能選擇既有的 VERTEX, 且只選一個點
+        annotation { "Name" : "Select a point", "Filter" : EntityType.VERTEX, "MaxNumberOfPicks" : 1 }
+        definition.point is Query;
+    }
+    {
+        // Precondition 中的查詢, 需要 evalue 才能傳回對應的 entity
+        var location = evaluateQuery(context, definition.point)[0];
+        // location 變數為點座標對應的 entity, 必須透過 evVetexPoint 的評量才能傳回對應的點座標
+        var center3D = evVertexPoint(context, {
+                "vertex" : location
+        });
+
+        // 作圖面利用 evOwnerSketch 評量, 與 location entity 同一個平面
+        var sketchPlane = evOwnerSketchPlane(context, {
+                "entity" : location
+        });
+        // 利用 worldToPlane, 將 center3D 轉換為 sketchPlane 上的平面點座標
+        const center2D = worldToPlane(sketchPlane, center3D);
+        // 接下來利用 sketchPlane 建立一個草圖畫布元件
+        const gearSketch = newSketchOnPlane(context, id + "gearSketch", {
+                "sketchPlane" : sketchPlane
+        });
+
+        // 有了草圖畫布元件, 就可以在其上進行各式平面繪圖, 這裡利用 center2D 點作為圓心, definition.radius 作為半徑畫圓
+        skCircle(gearSketch, "circle1", {
+                "center" : center2D,
+                "radius" : definition.radius
+        });
+
+        // 接著從圓心, 沿 x 軸方向畫一條長度為半徑的直線
+        skLineSegment(gearSketch, "line1", {
+                "start" : center2D,
+                "end" : center2D + vector(1, 0) * definition.radius
+        });
+
+        // 這裡使用固定點在畫布上繪製平滑曲線, 之後可以直接用來繪製各種齒輪或鏈輪輪廓
+        skFitSpline(gearSketch, "spline1", {
+                "points" : [
+                    vector( 0,  0) * inch,
+                    vector( 0, -1) * inch,
+                    vector( 1,  1) * inch,
+                    vector(-1,  0) * inch,
+                    vector( 0,  0) * inch
+                ]
+        });
+
+        // 利用 skSolve 解出畫布上的所有繪圖內容, 並顯示出來
+        skSolve(gearSketch);
+    });
+&lt;/pre&gt;</summary></entry><entry><title>Virtualbox 的應用與網路設定</title><link href="http://cadlab.mde.tw/post/virtualbox-de-ying-yong-yu-wang-lu-she-ding.html" rel="alternate"></link><updated>2016-06-05T12:03:55+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-06-05:post/virtualbox-de-ying-yong-yu-wang-lu-she-ding.html</id><summary type="html">&lt;p&gt;&lt;a href="https://www.virtualbox.org/"&gt;Virtualbox&lt;/a&gt; 是一套能在 Windows, Linux, Mac 與 Solaris 操作系統上使用的虛擬器 (Virtualizer).&lt;/p&gt;
 
 
 &lt;h2&gt;Virtualbox 功能&lt;/h2&gt;
