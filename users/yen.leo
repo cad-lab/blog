@@ -84,7 +84,7 @@
 </v>
 <v t="amd.20160531094803.1"><vh>Brython 程式庫</vh></v>
 <v t="amd.20160106093454.1" a="E"><vh>yen 網誌文章</vh>
-<v t="amd.20160605111320.1"><vh>before 201606</vh>
+<v t="amd.20160605111320.1" a="E"><vh>before 201606</vh>
 <v t="amd.20160106093510.1"><vh>201601</vh>
 <v t="ibm.20160115121941.1"><vh>@clean yen_20160115.md</vh></v>
 <v t="amd.20160117143423.1"><vh>@clean yen_20160117.md</vh>
@@ -149,6 +149,8 @@
 <v t="amd.20160608105837.1"><vh>@clean yen_20160608.md</vh></v>
 <v t="amd.20160612181343.1"><vh>@@clean yen_20160611.md</vh></v>
 <v t="amd.20160614093804.1"><vh>@clean yen_20160614.md</vh></v>
+<v t="amd.20160614165453.1"><vh>@@clean yen_20160614-1.md</vh></v>
+<v t="amd.20160614172648.1"><vh>@clean yen_20160614-2.md</vh></v>
 </v>
 </v>
 </v>
@@ -3417,7 +3419,7 @@ Author: kmol
 <t tx="amd.20160529144234.1">@language md
 Title: Onshape FeatureScript 程式語言
 Category: MISC
-Tags: CADLab, MCAD
+Tags: CADLab, MCAD, Onshape, FeatureScript
 Author: kmol
 @others
 
@@ -4124,7 +4126,7 @@ export enum BossStyle
 <t tx="amd.20160529155022.1">@language md
 Title: Onshape FeatureScript 程式語言 (一)
 Category: MISC
-Tags: CADLab, MCAD
+Tags: CADLab, MCAD, Onshape, FeatureScript
 Author: kmol
 @others
 
@@ -5449,7 +5451,7 @@ Host-only 虛擬網路相關設定的參考畫面如下:
 <t tx="amd.20160605104719.1">@language md
 Title: CADLab 新電腦系統
 Category: MISC
-Tags: 
+Tags: 電腦輔助設計室, 電腦硬體
 Author: Cad Lab
 @others
 CPU 選擇: &lt;span style="background-color: #ffff00;"&gt;Intel i7-6700&lt;/span&gt;
@@ -5472,11 +5474,11 @@ i7-6700: &lt;a href="http://ark.intel.com/products/88196"&gt;http://ark.intel.co
 <t tx="amd.20160605104803.1">@language md
 Title: 電腦輔助設計室電腦磁區規劃
 Category: MISC
-Tags: 
+Tags: 電腦輔助設計室, 電腦硬體
 Author: Cad Lab
 @others
 &lt;div&gt;希望能根據不同性質課程, 將軟體分為 3 個開機磁區:&lt;/div&gt;
- 
+ 
 &lt;ol&gt;
  	&lt;li&gt;安裝所有老師提出的上課套件, 集中在第 1 磁區, 其中包括 CAD, CAE, CAM, 數值分析與自動控制相關所有套件.&lt;/li&gt;
  	&lt;li&gt;只安裝 Solidworks, PTC Creo, AutoDesk Inventor, AutoCAD, A360, Ansys, Comsol, Matlab 與 Mathematica, 等 CAD, CAE 與數值分析相關套件.&lt;/li&gt;
@@ -5488,11 +5490,11 @@ Author: Cad Lab
 
 &lt;/div&gt;
 &lt;div&gt;至於以上 3 個開機磁區則傾向將新購買的 Windows 10 Pro 操作系統降為 Windows 7 Pro, 以提升使用效能. 但是仍然在第 2 磁區利用 Virtualbox 建立安裝 Windows 10 Pro 的兩台虛擬機器, 其中一台虛擬機配合安裝 Solidworks, PTC Creo, AutoDesk Inventor 與 Matlab , 而另一台虛擬機也採用 Windows 10 Pro 開機, 但只配置各軟體的原始 DVD, 可以讓老師教導學生執行各套件安裝與設定的教學.&lt;/div&gt;
- 
-&lt;div&gt;至於第 3 磁區則將利用 Virtualbox 建立一台配置&lt;a href="http://www.squid-cache.org/"&gt;網路代理功能&lt;/a&gt; (IPV4/IPV6 雙支援) 的 Ubuntu Server 虛擬伺服器, 以及一台空白的 Windows 10 Pro 虛擬機, 以便在純 IPV6 環境下進行課程教學.&lt;/div&gt;
- 
+ 
+&lt;div&gt;至於第 3 磁區則將利用 Virtualbox 建立一台配置&lt;a href="http://www.squid-cache.org/"&gt;網路代理功能&lt;/a&gt; (IPV4/IPV6 雙支援) 的 Ubuntu Server 虛擬伺服器, 以及一台空白的 Windows 10 Pro 虛擬機, 以便在純 IPV6 環境下進行課程教學.&lt;/div&gt;
+ 
 &lt;div&gt;註解:&lt;/div&gt;
-根據 &lt;a href="https://en.wikipedia.org/wiki/X86_virtualization#Intel-VT-x"&gt;https://en.wikipedia.org/wiki/X86_virtualization#Intel-VT-x&lt;/a&gt; 與 &lt;a href="https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors"&gt;https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors&lt;/a&gt; 的說明, 幾乎所有的 Intel CPU 都已經支援 VT-x 虛擬技術, 只要電腦的其他軟硬體配合啟動 VT-x, 就可以在 64 位元的操作系統主體, 模擬 64 位元的虛擬機, 假如再配合 Oracle 的新聞稿: &lt;a href="http://www.oracle.com/us/corporate/press/1842885"&gt;http://www.oracle.com/us/corporate/press/1842885&lt;/a&gt; 說明, Virtualbox 中的一台虛擬機 (Virtual Machine) 最多可以啟用 36 片虛擬網路卡, 因此只要電腦主體的硬體支援許可, 利用虛擬機就能有效模擬出相當複雜的網路伺服器架構.
+根據 &lt;a href="https://en.wikipedia.org/wiki/X86_virtualization#Intel-VT-x"&gt;https://en.wikipedia.org/wiki/X86_virtualization#Intel-VT-x&lt;/a&gt; 與 &lt;a href="https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors"&gt;https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors&lt;/a&gt; 的說明, 幾乎所有的 Intel CPU 都已經支援 VT-x 虛擬技術, 只要電腦的其他軟硬體配合啟動 VT-x, 就可以在 64 位元的操作系統主體, 模擬 64 位元的虛擬機, 假如再配合 Oracle 的新聞稿: &lt;a href="http://www.oracle.com/us/corporate/press/1842885"&gt;http://www.oracle.com/us/corporate/press/1842885&lt;/a&gt; 說明, Virtualbox 中的一台虛擬機 (Virtual Machine) 最多可以啟用 36 片虛擬網路卡, 因此只要電腦主體的硬體支援許可, 利用虛擬機就能有效模擬出相當複雜的網路伺服器架構.
 
 &lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox5_upto_36_NIC.png" width="800" /&gt;
 </t>
@@ -5502,7 +5504,7 @@ Author: Cad Lab
 <t tx="amd.20160608105837.1">@language md
 Title: Onshape Featurescript Tutorial 導引
 Category: MISC
-Tags: 
+Tags: Onshape, FeatureScript
 Author: Cad Lab
 @others
 Onshape 配合公開 FeatureScript 特徵程式語言的過程, 特別製作了一個詳細的教學導引:&lt;a href="https://cad.onshape.com/FsDoc/tutorials/create-a-slot-feature.html"&gt;https://cad.onshape.com/FsDoc/tutorials/create-a-slot-feature.html&lt;/a&gt;, 從這個導引中, 可以一窺 FeatureScript 的基本用法.
@@ -5886,7 +5888,7 @@ export const spur = defineFeature(function(context is Context, id is Id, definit
 <t tx="amd.20160614093804.1">@language md
 Title: 電腦輔助設計室相關區域網路設定
 Category: MISC
-Tags: 
+Tags: 電腦輔助設計室, IPV6, IPV4
 Author: Cad Lab
 @others
 今天早上發現一台 Asus 電腦, 裝了 IIS 8 的伺服器佔用了 17.9 的 IPV4 網路位址, 導致原先配置的 Ubuntu 16.04 代理主機無法正常連線.
@@ -5910,6 +5912,338 @@ Author: Cad Lab
 從 IPV6 的網路定址格式, 機械設計工程系可用網段為 2001:288:6004:17:0000:0000:0000:0000 ~ 2001:288:6004:17:FFFF:FFFF:FFFF:FFFF, 總共可配置 IPV6 總數為 16^16 = 1.8446744e+19, 可以透過教師編號 (例如為 3001), 將則其所屬的學生與實習研究室 IPV6 分配網段為 2001:288:6004:17:3001:0000:0000:0000 ~ 2001:288:6004:17:3001:FFFF:FFFF:FFFF (可配置位址總數為 16^12 = 2.8147498e+14), 且將 2001:288:6004:17:0000:0000:0000:0000 ~ 2001:288:6004:17:0000:0000:0000:FFFF 保留給電腦輔助設計室與工作站室相關主機使用 (可配置 IPV6 位址總數為 16^4 = 65536), 而行政管理相關的 IPV6 網段則使用 2001:288:6004:17:168:0000:0000:0000 ~ 2001:288:6004:17:168:FFFF:FFFF:FFFF (可配置位址總數為 16^12 = 2.8147498e+14).
 
 之後, 將要利用回收的 20 個 IPV4 網址來配置同時支援 IPV4/IPV6 的 Proxy Server, 並且利用雙協定支援的 DNS 來配置這些伺服器, 遙望 IPV6 的世界, 應該再沒有 IPV6 網址短缺的機會了!
+
+</t>
+<t tx="amd.20160614165453.1">@language md
+Title: Onshape FeatureScript 正齒輪繪圖
+Category: MISC
+Tags: Onshape, FeatureScript
+Author: Cad Lab
+@others
+
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+BC = rb = rp*cos(pa)
+PC = rp
+AC = ra = rp+m
+d = 2.5*rp/n
+HC = rd = rp-d
+
+BE弧 = PE = rb*delta
+
+BF弧 = AF = rb*theta
+
+PCE 三角形
+
+PC**2 = PE**2+EC**2
+
+rp**2 = (rb*delta)**2+rb**2
+
+delta = sqrt(rp**2-rb**2)/ rb
+
+ACF 三角形
+
+AC**2 = AF**2 +FC**2
+
+ra**2 = (rb*theta)**2+rb**2
+
+alpha = atan(PE/EC)=atan(rb*delta/rb)=atan(delta)
+beta = atan((AF/FC)=atan(rb*theta/rb)=atan(theta)
+
+rot = (2*pi/2*n)/2=pi/(2*n)
+
+inv = alpha-delta=atan(delta)-delta=atan(sqrt(rp**2-rb**2)/ rb)-(sqrt(rp**2-rb**2)/ rb)
+左側 spline
+function(r) = inv(r) = atan(sqrt(r**2-rb**2)/ rb)-(sqrt(r**2-rb**2)/ rb)
+r from rb to ra
+xp = xc - r*sin(inv+rot)
+yp = yc +r*cos(inv+rot)
+右側 spine
+r from rb to ra
+xp = xc+r*sin(inv+rot)
+yp = yc+r*cos(inv+rot)
+
+</t>
+<t tx="amd.20160614172648.1">@language md
+Title: Onshape Featurescript Spur Gear 輪廓繪圖
+Category: MISC
+Tags: Onshape, FeatureScript
+Author: Cad Lab
+@others
+學習 Onshape 可以從 614 頁的 pdf 格式導引手冊: &lt;a href="https://cad.onshape.com/help/PDF/Onshape.pdf"&gt;https://cad.onshape.com/help/PDF/Onshape.pdf&lt;/a&gt; 下手, 在手動操作逐漸熟悉之後, 就可以透過下列的 FeatureScript 程式客製化理想中的各種零件, 這裡先來看看漸開線正齒輪輪廓繪圖, 有關齒輪的參考資料, 請參閱 &lt;a href="http://khkgears.net/gear-knowledge/"&gt;http://khkgears.net/gear-knowledge/&lt;/a&gt;.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+從 &lt;a href="http://chiamingyen.github.io/kmolab/blog/ji-jie-she-ji-gong-cheng-shi-de-she-ji-mo-ni-yu-shi-zuo.html"&gt;機械設計工程師的設計模擬與實作&lt;/a&gt; 文章中, 可以看到利用 Brython 直接在網際畫布上以小段直線繪製漸開線正齒輪輪廓的程式原始碼. 類似的正齒輪繪圖可以參考 &lt;a href="http://web.mit.edu/harishm/www/papers/involuteEWC.pdf"&gt;Approximation of Involute Curves for CAD-System Processing&lt;/a&gt; 論文中的說明, 完成 &lt;a href="http://www.arc.id.au/GearDrawing.html"&gt;靜態與動態的漸開線正齒輪繪圖與模擬&lt;/a&gt; .
+
+以下主要以教導 FeatureScript 為目的, 依據下列圖示作為參考:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/spur_gear_dimension_4.png" width="800" /&gt;
+
+假設齒數為 n, 模數為 m, 壓力角為 pa, 則正齒輪的節圓半徑為 $rp = m*n/2$, 且基圓半徑 $rb = rp*cos(pa)$, 假設齒根 $d = 2.5*rp/n$, 齒頂圓半徑 $ra = rp + m$, 齒根圓半徑 $rd = rp - d$, 接著當齒數 n 小於 $2.5/(1-cos(pa))$ 時就能夠從基圓開始繪製漸開線到齒頂圓, 若 n 大於 $2.5/(1-cos(pa))$, 則漸開線必須從齒根圓畫起, 而不是從基圓畫起 (因為基圓半徑已經小於齒根圓半徑). 有關這一點, Onshape 官方釋出的漸開線&lt;a href="https://cad.onshape.com/documents/57494152e4b05f50e871a72c/w/a4a3f09939bf1f43a8e4f133/e/2b865798923d6f648f7196f9"&gt;正齒輪繪圖 FeatureScript 程式第1版&lt;/a&gt;也未能納入考量, 因此當選擇壓力角 20 度時, 若齒數超過 43 齒, 或者選擇壓力角 15.5 度, 當齒數超過 70 齒, 正齒輪的輪廓就會出錯. 之後當以下的練習完成後, 就可以將漸開線納入 spline 中, 並且加上齒輪底部的導倒圓角後, 就能夠修正上述的錯誤.
+
+以下為 17 齒, 模數 20 mm, 壓力角 20 度的漸開線正齒輪輪廓繪圖:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/onshape_spur_gear1.png" width="800" /&gt;
+
+以下為 170 齒, 模數 20 mm, 壓力角 20 度的漸開線正齒輪輪廓繪圖:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/onshape_spur_gear2.png" width="800" /&gt;
+
+以下為對應的 FeatureScript 正齒輪輪廓繪圖程式碼:
+
+&lt;pre class="brush: jscript"&gt;
+FeatureScript 355;
+import(path : "onshape/std/geometry.fs", version : "355.0");
+
+annotation { "Feature Type Name" : "Spur2" }
+export const spur = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        // 正齒輪齒數, 由使用者輸入, 型別為整數
+        annotation { "Name" : "Number of Gear Tooth" }
+        isInteger(definition.n, POSITIVE_COUNT_BOUNDS);
+        // 正齒輪模數, 由使用者輸入, 型別為長度, 為內建尺寸單位
+        annotation { "Name" : "Module" }
+        isLength(definition.module, LENGTH_BOUNDS);
+        // 正齒輪壓力角, 由使用者輸入, 型別為角度, 為內建角度單位
+        annotation { "Name" : "Pressure Angle" }
+        isAngle(definition.pa, ANGLE_360_BOUNDS);
+        // 正齒輪圓心座標點, 由使用者選擇
+        annotation { "Name" : "Select a point", "Filter" : EntityType.VERTEX, "MaxNumberOfPicks" : 1 }
+        definition.point is Query;
+    }
+    {
+        // Precondition 中的查詢, 需要 evalue 才能傳回對應的 entity
+        var location = evaluateQuery(context, definition.point)[0];
+        // location 變數為點座標對應的 entity, 必須透過 evVetexPoint 的評量才能傳回對應的點座標
+        var center3D = evVertexPoint(context, {
+                "vertex" : location
+        });
+ 
+        // 作圖平面利用 evOwnerSketch 評量, 與 location entity 同一個平面
+        var sketchPlane = evOwnerSketchPlane(context, {
+                "entity" : location
+        });
+        // 作圖畫
+        const gearSketch = newSketchOnPlane(context, id + "gearSketch", {
+                "sketchPlane" : sketchPlane
+        });
+        // 利用 worldToPlane, 將 center3D 轉換為 sketchPlane 上的平面點座標
+        const center2D = worldToPlane(sketchPlane, center3D);
+        //print(center2D);
+        // 漸開線近似點數
+        var imax = 5;
+        // 使用者所選的齒輪圓心 x 座標
+        var midx = center2D[0];
+        // 使用者所選的齒輪圓心 y 座標
+        var midy = center2D[1];
+        // 齒數
+        var n = definition.n;
+        // 模數
+        var m = definition.module;
+        // 壓力角, 單位為角度
+        var pa = definition.pa;
+        // 齒輪的節圓半徑
+        var rp = m*n/2;
+        skLineSegment(gearSketch, "line", {
+        "start" : vector(midx,midy),
+        "end" : vector(midx,midy+rp)
+        });
+        // 齒根
+        var d = 2.5*rp/n;
+        // 齒頂圓半徑
+        var ra = rp + m;
+        // 基圓半徑
+        var rb = rp*cos(pa);
+        //print(rb);
+        // 齒根圓半徑
+        var rd = rp - d;
+        // 分段後齒頂與齒根半徑差增量
+        var dr = 0*meter;
+        // 若 rb &amp;gt; rd 時從基圓開始繪製漸開線, 但是若 rd &amp;gt; rb, 則漸開線從 rd 畫到齒頂圓
+        if (rd &amp;gt; rb)
+        {
+            // 半徑差的分段, 由齒根圓到齒頂圓
+            dr = (ra-rd)/imax;
+        }
+        else
+        {
+            // 半徑差的分段, 由基圓到齒頂圓
+            dr = (ra-rb)/imax;
+        }
+        // PI 為實數值沒有單位, tan(pa)也沒有單位, pa 已經設定單位為 degree, 這裡為了與 radian 運算
+        // 系統會自動轉為 radian
+        var rot = PI/(2*n)*radian;
+        //print(sigma);
+        // 分別用來設定 entity id 用的增量變數
+        var nameId = 1;
+        var nameId2 = 1;
+        var r = 0*meter;
+        // theta 為浮點數字
+        var theta = 0;
+        var inv = 0*radian;
+        var inc = 0*radian;
+        // 當 r=rp 時 ,計算 inv_rp 用來旋轉漸開線用
+        // theta 為沒有單位的實數
+        theta = sqrt((rp*rp)/(rb*rb)-1);
+        // atan(theta) 為 radian
+        var inv_rp = theta*radian-atan(theta);
+        // 漸開線上點的 x 座標
+        var xpt = 0*meter;
+        // 漸開線上點的 y 座標
+        var ypt = 0*meter;
+        // 左側漸開線第1點座標 left first x and y
+        var lfx = 0*meter;
+        var lfy = 0*meter;
+        // 右側漸開線第1點座標 right first x and y
+        var rfx = 0*meter;
+        var rfy = 0*meter;
+        // 左側齒根圓上點座標 left x of dedendum point
+        var lxd = 0*meter;
+        var lyd = 0*meter;
+        // 右側齒根圓上點座標 right x of dedendum point
+        var rxd = 0*meter;
+        var ryd = 0*meter;
+        // 左側齒根圓上點座標 right x of dedendum point (advanced)
+        var lxd_ad = 0*meter;
+        var lyd_ad = 0*meter;
+        var inc_ad = 0*radian;
+        for (var j=0;j&amp;lt;n;j+=1)
+        {
+            // 當 j 增量時, 按照齒數輪廓繞行旋轉增量角度
+            inc = (2.*j*PI/n)*radian;
+            inc_ad = (2.*(j+1)*PI/n)*radian;
+            if (rd&amp;gt;rb)
+            {
+                // 當齒根半徑因為齒數增多後大於基圓半徑時, 漸開線從齒根圓長起
+                theta = sqrt((rd*rd)/(rb*rb)-1.);
+                inv = theta*radian-atan(theta);
+                // 左側漸開線第1點座標
+                // 左側輪廓線配合逆時針旋轉 inc 角度
+                lfx = midx+rd*sin(inv-rot-inv_rp+inc);
+                lfy = midy+rd*cos(inv-rot-inv_rp+inc);
+                lxd = lfx;
+                lyd = lfy;
+                lxd_ad = midx+rd*sin(inv-rot-inv_rp+inc_ad);
+                lyd_ad = midy+rd*cos(inv-rot-inv_rp+inc_ad);
+                // 右側漸開線第1點座標
+                // 右側輪廓線配合順時針旋轉 inc 角度
+                rfx = midx-rd*sin(inv-rot-inv_rp-inc);
+                rfy = midy+rd*cos(inv-rot-inv_rp-inc);
+                rxd = rfx;
+                ryd = rfy;
+                // 齒根圓上的直線 on dedendum points
+                skLineSegment(gearSketch, "line_dd" ~ nameId, {
+                "start" : vector(rxd,ryd),
+                "end" : vector((lxd_ad),(lyd_ad))
+                });
+            }
+            else
+            {
+                // 當基圓半徑大於齒根圓時, 漸開線從基圓長起
+                theta = sqrt((rb*rb)/(rb*rb)-1.);
+                inv = theta*radian-atan(theta);
+                // 左側漸開線第1點座標
+                lfx = midx+rb*sin(inv-rot-inv_rp+inc);
+                lfy = midy+rb*cos(inv-rot-inv_rp+inc);
+                lxd = midx+rd*sin(inv-rot-inv_rp+inc);
+                lyd = midy+rd*cos(inv-rot-inv_rp+inc);
+                lxd_ad = midx+rd*sin(inv-rot-inv_rp+inc_ad);
+                lyd_ad = midy+rd*cos(inv-rot-inv_rp+inc_ad);
+                // 從基圓點到齒根圓點, 畫直線 left from base point to dedendum point
+                skLineSegment(gearSketch, "line_lbd" ~ nameId, {
+                "start" : vector(lfx,lfy),
+                "end" : vector((lxd),(lyd))
+                });
+                // 右側漸開線第1點座標
+                rfx = midx-rb*sin(inv-rot-inv_rp-inc);
+                rfy = midy+rb*cos(inv-rot-inv_rp-inc);
+                rxd = midx-rd*sin(inv-rot-inv_rp-inc);
+                ryd = midy+rd*cos(inv-rot-inv_rp-inc);
+                // 從基圓點到齒根圓點, 畫直線 right from base point to dedendum point
+                skLineSegment(gearSketch, "line_rbd" ~ nameId, {
+                "start" : vector(rfx,rfy),
+                "end" : vector((rxd),(ryd))
+                });
+                // 齒根圓上的直線 on dedendum points
+                skLineSegment(gearSketch, "line_dd" ~ nameId, {
+                "start" : vector(rxd,ryd),
+                "end" : vector((lxd_ad),(lyd_ad))
+                });
+            }
+
+            for (var i=1; i&amp;lt;imax+1; i+= 1)
+            {
+                // 先處理中線左側的漸開線
+                // 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if (rd&amp;gt;rb)
+                {
+                    r = rd+i*dr;
+                }
+                else
+                {
+                    r = rb+i*dr;
+                }
+                theta = sqrt((r*r)/(rb*rb)-1);
+                var inv = theta*radian-atan(theta);
+                // 漸開線上的點座標
+                xpt = midx+r*sin(inv-rot-inv_rp+inc);
+                ypt = midy+r*cos(inv-rot-inv_rp+inc);
+                // lxd, lyd 為漸開線上的繪線起點座標
+                skLineSegment(gearSketch, "lineb" ~ nameId, {
+                "start" : vector(lfx,lfy),
+                "end" : vector((xpt),(ypt))
+                });
+                // 更新漸開線點座標
+                lfx = xpt;
+                lfy = ypt;
+                nameId += 1;
+            }
+            // 紀錄左側漸開線的最後一點, 也就是齒頂圓上的點座標
+            var lastlx = xpt;
+            var lastly = ypt;
+            // another side
+            for (var i=1; i&amp;lt;imax+1; i+= 1)
+            {
+                if (rd&amp;gt;rb)
+                {
+                    r = rd+i*dr;
+                }
+                else
+                {
+                    r = rb+i*dr;
+                }
+                theta = sqrt((r*r)/(rb*rb)-1);
+                var inv = theta*radian-atan(theta);
+                // 漸開線上的點座標
+                xpt = midx-r*sin(inv-rot-inv_rp-inc);
+                ypt = midy+r*cos(inv-rot-inv_rp-inc);
+                // rxd, ryd 為漸開線上的繪線起點座標
+                skLineSegment(gearSketch, "linec" ~ nameId, {
+                "start" : vector(rfx,rfy),
+                "end" : vector((xpt),(ypt))
+                });
+                // 更新漸開線點座標
+                rfx = xpt;
+                rfy = ypt;
+                nameId += 1;
+            }
+            var lastrx = xpt;
+            var lastry = ypt;
+            // 齒頂連線
+            skLineSegment(gearSketch, "lined" ~ nameId2, {
+            "start" : vector(lastlx,lastly),
+            "end" : vector(lastrx,lastry)
+            });
+            nameId2 += 1;
+        }
+    skSolve(gearSketch);
+    });
+&lt;/pre&gt;
+
+
 
 </t>
 <t tx="ibm.20160115121941.1">@language md
