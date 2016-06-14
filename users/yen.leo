@@ -147,6 +147,8 @@
 <v t="amd.20160605104803.2"><vh>85</vh></v>
 </v>
 <v t="amd.20160608105837.1"><vh>@clean yen_20160608.md</vh></v>
+<v t="amd.20160612181343.1"><vh>@@clean yen_20160611.md</vh></v>
+<v t="amd.20160614093804.1"><vh>@clean yen_20160614.md</vh></v>
 </v>
 </v>
 </v>
@@ -5679,6 +5681,235 @@ export const gearTest = defineFeature(function(context is Context, id is Id, def
 &lt;/pre&gt;
 
 
+
+</t>
+<t tx="amd.20160612181343.1">FeatureScript 355;
+import(path : "onshape/std/geometry.fs", version : "355.0");
+
+annotation { "Feature Type Name" : "Spur" }
+export const spur = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        // 正齒輪齒數, 由使用者輸入, 型別為整數
+        annotation { "Name" : "Number of Gear Tooth" }
+        isInteger(definition.n, POSITIVE_COUNT_BOUNDS);
+        // 正齒輪模數, 由使用者輸入, 型別為長度, 為內建尺寸單位
+        annotation { "Name" : "Module" }
+        isLength(definition.module, LENGTH_BOUNDS);
+        // 正齒輪壓力角, 由使用者輸入, 型別為角度, 為內建角度單位
+        annotation { "Name" : "Pressure Angle" }
+        isAngle(definition.pa, ANGLE_360_BOUNDS);
+        // 正齒輪圓心座標點, 由使用者選擇
+        annotation { "Name" : "Select a point", "Filter" : EntityType.VERTEX, "MaxNumberOfPicks" : 1 }
+        definition.point is Query;
+    }
+    {
+        // Precondition 中的查詢, 需要 evalue 才能傳回對應的 entity
+        var location = evaluateQuery(context, definition.point)[0];
+        // location 變數為點座標對應的 entity, 必須透過 evVetexPoint 的評量才能傳回對應的點座標
+        var center3D = evVertexPoint(context, {
+                "vertex" : location
+        });
+ 
+        // 作圖所在平面利用 evOwnerSketch 求取, 與 location entity 位於同一個平面
+        var sketchPlane = evOwnerSketchPlane(context, {
+                "entity" : location
+        });
+        // 作圖畫布, 建立在 sketchPlane 平面上
+        const gearSketch = newSketchOnPlane(context, id + "gearSketch", {
+                "sketchPlane" : sketchPlane
+        });
+        // 利用 worldToPlane, 將 center3D 轉換為 sketchPlane 上的平面點座標
+        const center2D = worldToPlane(sketchPlane, center3D);
+        //print(center2D);
+        // 漸開線近似點數
+        var imax = 5;
+        // 使用者所選的齒輪圓心 x 座標
+        var midx = center2D[0];
+        // 使用者所選的齒輪圓心 y 座標
+        var midy = center2D[1];
+        // 齒數
+        var n = definition.n;
+        // 模數
+        var m = definition.module;
+        // 壓力角, 單位為角度
+        var pa = definition.pa;
+        // 齒輪的節圓半徑, 在公制單位為模數乘與齒數/2
+        var rp = m*n/2;
+        // 利用 skLineSegment, 在 gearSketch 作圖平面建立 id 為 line, 由圓心到 y 座標方向節圓上的直線
+        skLineSegment(gearSketch, "line", {
+        "start" : vector(midx,midy),
+        "end" : vector(midx,midy+rp)
+        });
+        // 齒根
+        var d = 2.5*rp/n;
+        // 齒頂圓半徑為節圓半徑加上模數
+        var ra = rp + m;
+        // 基圓半徑
+        var rb = rp*cos(pa);
+        //print(rb);
+        // 齒根圓半徑
+        var rd = rp - d;
+        // 分段後齒頂與齒根半徑差增量, 起始值為 0 但必須標上長度單位
+        var dr = 0*meter;
+        // 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        if (rd &gt; rb)
+        {
+            dr = (ra-rd)/imax;
+        }
+        else
+        {
+            dr = (ra-rb)/imax;
+        }
+        // PI 為實數值沒有單位, tan(pa)也沒有單位, pa 已經設定單位為 degree, 這裡為了與 radian 運算
+        // 系統會自動轉為 radian
+        // tan(pa)*radian-pa 為漸開線函數
+        var sigma = PI/(2*n)*radian + tan(pa)*radian-pa;
+        //print(sigma);
+        // 分別用來設定 entity id 用的增量變數
+        var nameId = 1;
+        var nameId2 = 1;
+
+        var r = 0*meter;
+        // theta 為浮點數字
+        var theta = 0;
+        var last_x = 0*meter;
+        var last_y = 0*meter;
+        var lfx = 0*meter;
+        var lfy = 0*meter;
+        var rfx = 0*meter;
+        var rfy = 0*meter;
+        for (var j=0;j&lt;n;j+=1)
+        {
+            var ang = (-2.*j*PI/n)*radian + sigma;
+            var ang2 = (2.*j*PI/n)*radian + sigma;
+            // 左側 xd, yd
+            var lxd = midx+rd*sin(ang2-(2.*PI/n)*radian);
+            var lyd = midy+rd*cos(ang2-(2.*PI/n)*radian);
+            //print(lyd);
+            for (var i=0; i&lt;imax+1; i+= 1)
+            {
+                // 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if (rd&gt;rb)
+                {
+                    r = rd+i*dr;
+                }
+                else
+                {
+                    r = rb+i*dr;
+                }
+                theta = sqrt((r*r)/(rb*rb)-1.);
+                // atan(number)
+                var alpha = theta*radian-atan(theta);
+                var xpt = r*sin(alpha-ang);
+                var ypt = r*cos(alpha-ang);
+                var xd = rd*sin(-ang);
+                var yd = rd*cos(-ang);
+                // i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0)
+                {
+                    last_x = midx + xd;
+                    last_y = midy + yd;
+                }
+                // vector( 0,  0) * inch
+                // 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                skLineSegment(gearSketch, "linea" ~ nameId, {
+                "start" : vector((midx+xpt),(midy+ypt)),
+                "end" : vector((last_x),(last_y))
+                });
+                // 最後一點, 則為齒頂圓
+                if(i==imax)
+                {
+                    lfx = midx+xpt;
+                    lfy = midy+ypt;
+                }
+                last_x = midx + xpt;
+                last_y = midy + ypt;
+                // lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
+                // 下列為齒根圓上用來近似圓弧的直線
+                skLineSegment(gearSketch, "lineb" ~ nameId, {
+                "start" : vector(lxd,lyd),
+                "end" : vector((midx+xd),(midy+yd))
+                });
+                nameId += 1;
+            }
+            // another side
+            for (var i=0; i&lt;imax+1; i+= 1)
+            {
+                if (rd&gt;rb)
+                {
+                    r= rd+i*dr;
+                }
+                else
+                {
+                    r = rb+i*dr;
+                }
+                theta = sqrt((r*r)/(rb*rb)-1.);
+                // atan(number)
+                var alpha = theta*radian-atan(theta);
+                var xpt = r*sin(ang2-alpha);
+                var ypt = r*cos(ang2-alpha);
+                var xd = rd*sin(ang2);
+                var yd = rd*cos(ang2);
+                // i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0)
+                {
+                    last_x = midx + xd;
+                    last_y = midy + yd;
+                }
+                // vector( 0,  0) * inch
+                // 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                skLineSegment(gearSketch, "linec" ~ nameId, {
+                "start" : vector((midx+xpt),(midy+ypt)),
+                "end" : vector((last_x),(last_y))
+                });
+                // 最後一點, 則為齒頂圓
+                if(i==imax)
+                {
+                    rfx = midx + xpt;
+                    rfy = midy + ypt;
+                }
+                last_x = midx + xpt;
+                last_y = midy + ypt;
+                nameId += 1;
+            }
+            // 齒頂連線
+            skLineSegment(gearSketch, "lined" ~ nameId2, {
+            "start" : vector(lfx,lfy),
+            "end" : vector(rfx,rfy)
+            });
+            nameId2 += 1;
+        }
+    skSolve(gearSketch);
+    });
+</t>
+<t tx="amd.20160614093804.1">@language md
+Title: 電腦輔助設計室相關區域網路設定
+Category: MISC
+Tags: 
+Author: Cad Lab
+@others
+今天早上發現一台 Asus 電腦, 裝了 IIS 8 的伺服器佔用了 17.9 的 IPV4 網路位址, 導致原先配置的 Ubuntu 16.04 代理主機無法正常連線.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+其實自從 2012 年起台灣就已經逐步完善 IPV6 的網路環境, 而且各種最新的操作系統也都已經提供 IPV6 相關協定的支援, 但是許多用戶仍然只用 IPV4 協定, 而且無論是客戶端或伺服器端, 一律搶佔已經不敷分配的 IPV4 網路位址.
+
+當然, 電腦輔助設計室周遭相關的區域網路, 目前只有兩種伺服器非採用 IPV4 協定不可, 一種是各式 CAD/CAE/CAM/PLM 軟體的網路認証主機, 一種則是同時支援 IPV4/IPV6 的 Proxy Servers.
+
+各式 CAD/CAE/CAM/PLM 軟體的網路認証主機, 早就已經支援 IPV6, 因此採用 IPV6 協定設置的認証主機, 可以服務純 IPV6 的客戶端, 但是仍然有許多的客戶端仍然使用純 IPV4 協定上網, 因此這些客戶端除非採用內部虛擬主機的自我認証, 否則仍然必須採用 IPV4 協定, 連接到區域或廣域網路上的認証伺服器.
+
+在台灣教育界有一個非常有趣的現象, 假如用戶堅持要使用合法購買的各式 CAD/CAE/CAM/PLM 軟體, 負責管理的團隊就必須花錢買罪受, 肩負多元合法軟體的認証伺服器的管理, 而且大部份負責代理這些軟體套件的公司, 都希望將網路認証授權綁在特定的封閉區域網路上, 一來, 可以多賣些套數, 二來也能避開紛擾較多的廣域網路認証主機的管理工作.
+
+上面提到佔用合法 IP 位址的電腦, 網卡的硬體位址以 9c:5c:8e 開頭, 這個網卡從 &lt;a href="http://aruljohn.com/mac/9C5C8E"&gt;http://aruljohn.com/mac/9C5C8E&lt;/a&gt; 就可以得知來自 Asus, 因此合理的推論, 是一台 Asus 的伺服器, 並且從 http 連線可以看到 IIS 8, 因此應該是安裝 MS 2012 Server 以上的伺服操作系統. 並且從已經開啟的 3389 埠號, 也可以確定 Remote Desktop 已經啟用, 並且允許廣域網路上的任何主機連線. 比較特殊的是沒有任何的 https 埠號啟用, 因此假如這台伺服器提供任何需要使用者輸入帳號密碼的應用, 這些帳號密碼已經透過明碼傳遞曝露在區域網路的封包中.
+
+其實, 上述合法 IPV4 位址被搶佔的問題, 早就可以透過 MAC 綁定 IPV4 的方案解決, 但是因為電腦輔助設計室中的伺服器數量超過 30 台, 許多伺服器的任務多元, 且經常更換, 因此自 2015 年秋季開始, 已經透過校方建置的雲端虛擬主機逐步取代實體主機, 而且部份上課的網路連線也將採純 IPV6 設定上網, 一旦各 Proxy Server 的任務確定, 就可以將伺服器 MAC 位址與 IPV4 位址綁定, 上述的網址佔用問題就不會存在.
+
+接下來, 看一下有關電腦輔助設計室相關區域網路的 IPV6 網路設定, 虎尾科技大學機械設計工程系的 IPV6 網址區段為 2001:288:6004:17, 路由器的通道為 2001:288:6004:17::254, 而校方的 DNS 為 2001:288:6004:1::2, 中華電信的 DNS 則為 2001:b000:168::1, 因此使用者要設定 IPV6 網路連線, 只需要知道自己電腦所配置的網段即可.
+
+從 IPV6 的網路定址格式, 機械設計工程系可用網段為 2001:288:6004:17:0000:0000:0000:0000 ~ 2001:288:6004:17:FFFF:FFFF:FFFF:FFFF, 總共可配置 IPV6 總數為 16^16 = 1.8446744e+19, 可以透過教師編號 (例如為 3001), 將則其所屬的學生與實習研究室 IPV6 分配網段為 2001:288:6004:17:3001:0000:0000:0000 ~ 2001:288:6004:17:3001:FFFF:FFFF:FFFF (可配置位址總數為 16^12 = 2.8147498e+14), 且將 2001:288:6004:17:0000:0000:0000:0000 ~ 2001:288:6004:17:0000:0000:0000:FFFF 保留給電腦輔助設計室與工作站室相關主機使用 (可配置 IPV6 位址總數為 16^4 = 65536), 而行政管理相關的 IPV6 網段則使用 2001:288:6004:17:168:0000:0000:0000 ~ 2001:288:6004:17:168:FFFF:FFFF:FFFF (可配置位址總數為 16^12 = 2.8147498e+14).
+
+之後, 將要利用回收的 20 個 IPV4 網址來配置同時支援 IPV4/IPV6 的 Proxy Server, 並且利用雙協定支援的 DNS 來配置這些伺服器, 遙望 IPV6 的世界, 應該再沒有 IPV6 網址短缺的機會了!
 
 </t>
 <t tx="ibm.20160115121941.1">@language md
