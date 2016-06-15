@@ -119,7 +119,7 @@
 <v t="amd.20160401230037.1"><vh>@clean yen_20160401-1.md</vh></v>
 <v t="amd.20160402103950.1"><vh>@@clean yen_20160402.md</vh></v>
 </v>
-<v t="amd.20160412201150.1" a="E"><vh>201604</vh>
+<v t="amd.20160412201150.1"><vh>201604</vh>
 <v t="amd.20160412201156.1"><vh>@clean yen_20160412.md</vh></v>
 </v>
 <v t="amd.20160506230749.1"><vh>201605</vh></v>
@@ -147,10 +147,9 @@
 <v t="amd.20160605104803.2"><vh>85</vh></v>
 </v>
 <v t="amd.20160608105837.1"><vh>@clean yen_20160608.md</vh></v>
-<v t="amd.20160612181343.1"><vh>@@clean yen_20160611.md</vh></v>
 <v t="amd.20160614093804.1"><vh>@clean yen_20160614.md</vh></v>
-<v t="amd.20160614165453.1"><vh>@@clean yen_20160614-1.md</vh></v>
 <v t="amd.20160614172648.1"><vh>@clean yen_20160614-2.md</vh></v>
+<v t="amd.20160615082003.1"><vh>@clean yen_20160615.md</vh></v>
 </v>
 </v>
 </v>
@@ -5685,206 +5684,6 @@ export const gearTest = defineFeature(function(context is Context, id is Id, def
 
 
 </t>
-<t tx="amd.20160612181343.1">FeatureScript 355;
-import(path : "onshape/std/geometry.fs", version : "355.0");
-
-annotation { "Feature Type Name" : "Spur" }
-export const spur = defineFeature(function(context is Context, id is Id, definition is map)
-    precondition
-    {
-        // 正齒輪齒數, 由使用者輸入, 型別為整數
-        annotation { "Name" : "Number of Gear Tooth" }
-        isInteger(definition.n, POSITIVE_COUNT_BOUNDS);
-        // 正齒輪模數, 由使用者輸入, 型別為長度, 為內建尺寸單位
-        annotation { "Name" : "Module" }
-        isLength(definition.module, LENGTH_BOUNDS);
-        // 正齒輪壓力角, 由使用者輸入, 型別為角度, 為內建角度單位
-        annotation { "Name" : "Pressure Angle" }
-        isAngle(definition.pa, ANGLE_360_BOUNDS);
-        // 正齒輪圓心座標點, 由使用者選擇
-        annotation { "Name" : "Select a point", "Filter" : EntityType.VERTEX, "MaxNumberOfPicks" : 1 }
-        definition.point is Query;
-    }
-    {
-        // Precondition 中的查詢, 需要 evalue 才能傳回對應的 entity
-        var location = evaluateQuery(context, definition.point)[0];
-        // location 變數為點座標對應的 entity, 必須透過 evVetexPoint 的評量才能傳回對應的點座標
-        var center3D = evVertexPoint(context, {
-                "vertex" : location
-        });
- 
-        // 作圖所在平面利用 evOwnerSketch 求取, 與 location entity 位於同一個平面
-        var sketchPlane = evOwnerSketchPlane(context, {
-                "entity" : location
-        });
-        // 作圖畫布, 建立在 sketchPlane 平面上
-        const gearSketch = newSketchOnPlane(context, id + "gearSketch", {
-                "sketchPlane" : sketchPlane
-        });
-        // 利用 worldToPlane, 將 center3D 轉換為 sketchPlane 上的平面點座標
-        const center2D = worldToPlane(sketchPlane, center3D);
-        //print(center2D);
-        // 漸開線近似點數
-        var imax = 5;
-        // 使用者所選的齒輪圓心 x 座標
-        var midx = center2D[0];
-        // 使用者所選的齒輪圓心 y 座標
-        var midy = center2D[1];
-        // 齒數
-        var n = definition.n;
-        // 模數
-        var m = definition.module;
-        // 壓力角, 單位為角度
-        var pa = definition.pa;
-        // 齒輪的節圓半徑, 在公制單位為模數乘與齒數/2
-        var rp = m*n/2;
-        // 利用 skLineSegment, 在 gearSketch 作圖平面建立 id 為 line, 由圓心到 y 座標方向節圓上的直線
-        skLineSegment(gearSketch, "line", {
-        "start" : vector(midx,midy),
-        "end" : vector(midx,midy+rp)
-        });
-        // 齒根
-        var d = 2.5*rp/n;
-        // 齒頂圓半徑為節圓半徑加上模數
-        var ra = rp + m;
-        // 基圓半徑
-        var rb = rp*cos(pa);
-        //print(rb);
-        // 齒根圓半徑
-        var rd = rp - d;
-        // 分段後齒頂與齒根半徑差增量, 起始值為 0 但必須標上長度單位
-        var dr = 0*meter;
-        // 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-        if (rd &gt; rb)
-        {
-            dr = (ra-rd)/imax;
-        }
-        else
-        {
-            dr = (ra-rb)/imax;
-        }
-        // PI 為實數值沒有單位, tan(pa)也沒有單位, pa 已經設定單位為 degree, 這裡為了與 radian 運算
-        // 系統會自動轉為 radian
-        // tan(pa)*radian-pa 為漸開線函數
-        var sigma = PI/(2*n)*radian + tan(pa)*radian-pa;
-        //print(sigma);
-        // 分別用來設定 entity id 用的增量變數
-        var nameId = 1;
-        var nameId2 = 1;
-
-        var r = 0*meter;
-        // theta 為浮點數字
-        var theta = 0;
-        var last_x = 0*meter;
-        var last_y = 0*meter;
-        var lfx = 0*meter;
-        var lfy = 0*meter;
-        var rfx = 0*meter;
-        var rfy = 0*meter;
-        for (var j=0;j&lt;n;j+=1)
-        {
-            var ang = (-2.*j*PI/n)*radian + sigma;
-            var ang2 = (2.*j*PI/n)*radian + sigma;
-            // 左側 xd, yd
-            var lxd = midx+rd*sin(ang2-(2.*PI/n)*radian);
-            var lyd = midy+rd*cos(ang2-(2.*PI/n)*radian);
-            //print(lyd);
-            for (var i=0; i&lt;imax+1; i+= 1)
-            {
-                // 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-                if (rd&gt;rb)
-                {
-                    r = rd+i*dr;
-                }
-                else
-                {
-                    r = rb+i*dr;
-                }
-                theta = sqrt((r*r)/(rb*rb)-1.);
-                // atan(number)
-                var alpha = theta*radian-atan(theta);
-                var xpt = r*sin(alpha-ang);
-                var ypt = r*cos(alpha-ang);
-                var xd = rd*sin(-ang);
-                var yd = rd*cos(-ang);
-                // i=0 時, 繪線起點由齒根圓上的點, 作為起點
-                if(i==0)
-                {
-                    last_x = midx + xd;
-                    last_y = midy + yd;
-                }
-                // vector( 0,  0) * inch
-                // 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
-                skLineSegment(gearSketch, "linea" ~ nameId, {
-                "start" : vector((midx+xpt),(midy+ypt)),
-                "end" : vector((last_x),(last_y))
-                });
-                // 最後一點, 則為齒頂圓
-                if(i==imax)
-                {
-                    lfx = midx+xpt;
-                    lfy = midy+ypt;
-                }
-                last_x = midx + xpt;
-                last_y = midy + ypt;
-                // lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
-                // 下列為齒根圓上用來近似圓弧的直線
-                skLineSegment(gearSketch, "lineb" ~ nameId, {
-                "start" : vector(lxd,lyd),
-                "end" : vector((midx+xd),(midy+yd))
-                });
-                nameId += 1;
-            }
-            // another side
-            for (var i=0; i&lt;imax+1; i+= 1)
-            {
-                if (rd&gt;rb)
-                {
-                    r= rd+i*dr;
-                }
-                else
-                {
-                    r = rb+i*dr;
-                }
-                theta = sqrt((r*r)/(rb*rb)-1.);
-                // atan(number)
-                var alpha = theta*radian-atan(theta);
-                var xpt = r*sin(ang2-alpha);
-                var ypt = r*cos(ang2-alpha);
-                var xd = rd*sin(ang2);
-                var yd = rd*cos(ang2);
-                // i=0 時, 繪線起點由齒根圓上的點, 作為起點
-                if(i==0)
-                {
-                    last_x = midx + xd;
-                    last_y = midy + yd;
-                }
-                // vector( 0,  0) * inch
-                // 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
-                skLineSegment(gearSketch, "linec" ~ nameId, {
-                "start" : vector((midx+xpt),(midy+ypt)),
-                "end" : vector((last_x),(last_y))
-                });
-                // 最後一點, 則為齒頂圓
-                if(i==imax)
-                {
-                    rfx = midx + xpt;
-                    rfy = midy + ypt;
-                }
-                last_x = midx + xpt;
-                last_y = midy + ypt;
-                nameId += 1;
-            }
-            // 齒頂連線
-            skLineSegment(gearSketch, "lined" ~ nameId2, {
-            "start" : vector(lfx,lfy),
-            "end" : vector(rfx,rfy)
-            });
-            nameId2 += 1;
-        }
-    skSolve(gearSketch);
-    });
-</t>
 <t tx="amd.20160614093804.1">@language md
 Title: 電腦輔助設計室相關區域網路設定
 Category: MISC
@@ -5912,57 +5711,6 @@ Author: Cad Lab
 從 IPV6 的網路定址格式, 機械設計工程系可用網段為 2001:288:6004:17:0000:0000:0000:0000 ~ 2001:288:6004:17:FFFF:FFFF:FFFF:FFFF, 總共可配置 IPV6 總數為 16^16 = 1.8446744e+19, 可以透過教師編號 (例如為 3001), 將則其所屬的學生與實習研究室 IPV6 分配網段為 2001:288:6004:17:3001:0000:0000:0000 ~ 2001:288:6004:17:3001:FFFF:FFFF:FFFF (可配置位址總數為 16^12 = 2.8147498e+14), 且將 2001:288:6004:17:0000:0000:0000:0000 ~ 2001:288:6004:17:0000:0000:0000:FFFF 保留給電腦輔助設計室與工作站室相關主機使用 (可配置 IPV6 位址總數為 16^4 = 65536), 而行政管理相關的 IPV6 網段則使用 2001:288:6004:17:168:0000:0000:0000 ~ 2001:288:6004:17:168:FFFF:FFFF:FFFF (可配置位址總數為 16^12 = 2.8147498e+14).
 
 之後, 將要利用回收的 20 個 IPV4 網址來配置同時支援 IPV4/IPV6 的 Proxy Server, 並且利用雙協定支援的 DNS 來配置這些伺服器, 遙望 IPV6 的世界, 應該再沒有 IPV6 網址短缺的機會了!
-
-</t>
-<t tx="amd.20160614165453.1">@language md
-Title: Onshape FeatureScript 正齒輪繪圖
-Category: MISC
-Tags: Onshape, FeatureScript
-Author: Cad Lab
-@others
-
-
-&lt;!-- PELICAN_END_SUMMARY --&gt;
-
-BC = rb = rp*cos(pa)
-PC = rp
-AC = ra = rp+m
-d = 2.5*rp/n
-HC = rd = rp-d
-
-BE弧 = PE = rb*delta
-
-BF弧 = AF = rb*theta
-
-PCE 三角形
-
-PC**2 = PE**2+EC**2
-
-rp**2 = (rb*delta)**2+rb**2
-
-delta = sqrt(rp**2-rb**2)/ rb
-
-ACF 三角形
-
-AC**2 = AF**2 +FC**2
-
-ra**2 = (rb*theta)**2+rb**2
-
-alpha = atan(PE/EC)=atan(rb*delta/rb)=atan(delta)
-beta = atan((AF/FC)=atan(rb*theta/rb)=atan(theta)
-
-rot = (2*pi/2*n)/2=pi/(2*n)
-
-inv = alpha-delta=atan(delta)-delta=atan(sqrt(rp**2-rb**2)/ rb)-(sqrt(rp**2-rb**2)/ rb)
-左側 spline
-function(r) = inv(r) = atan(sqrt(r**2-rb**2)/ rb)-(sqrt(r**2-rb**2)/ rb)
-r from rb to ra
-xp = xc - r*sin(inv+rot)
-yp = yc +r*cos(inv+rot)
-右側 spine
-r from rb to ra
-xp = xc+r*sin(inv+rot)
-yp = yc+r*cos(inv+rot)
 
 </t>
 <t tx="amd.20160614172648.1">@language md
@@ -6246,6 +5994,620 @@ export const spur = defineFeature(function(context is Context, id is Id, definit
 
 
 </t>
+<t tx="amd.20160615082003.1">@language md
+Title: Onshape Featurescript Spur Gear 零件
+Category: MISC
+Tags: Onshape, FeatureScript
+Author: Cad Lab
+@others
+從 &lt;a href="https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch"&gt;https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch&lt;/a&gt; 的討論, 我們得知, 目前無法利用 FeatureScript 在繪圖平面中利用 opFillet, 對特定平面圖元進行倒角運算, 因此延續&lt;a href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-lun-kuo-hui-tu.html"&gt;上一篇利用漸開線正齒輪輪廓&lt;/a&gt;轉換為正齒輪零件, 就必須在實體模型中進行倒角運算.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+這裡的 FeatureScript 程式碼, 基本架構引用 &lt;a href="https://cad.onshape.com/documents/57494152e4b05f50e871a72c/w/a4a3f09939bf1f43a8e4f133/e/2b865798923d6f648f7196f9"&gt;Onshape 官方正齒輪繪圖 FeatureScript 程式第1版&lt;/a&gt; 的內容, 只將推導的漸開線點座標, 透過 skFitSpline 轉為平滑曲線, 但是原版的 offset 參數, 目前只導入 offsetAngle, 以便產生的正齒輪, 可以在組立件中進行囓合.
+
+17 齒漸開線正齒輪 FeatureScript 程式繪圖:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/summer_featurescript_spur_17t.png" width="800" /&gt;
+
+170 齒漸開線正齒輪 FeatureScript 程式繪圖:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/summer_featurescript_spur_170t.png" width="800" /&gt;
+
+2016 Spring 的協同產品設計實習課程, 就要在這個 Onshape FeatureScript 正齒輪零件程式的練習中劃下句點, 下學期的電腦輔助設計實習課程仍將採用 Onshape 與 FreeCAD, 當然 PTC Creo Parametric 年久失修的 Pro/Web.Link 仍可列入參考, 只是 Onshape 加上 FeatureScript 的魅力, 至今沒有其他 MCAD 套件可以比擬, 假如您是隸屬於特定團隊的電腦輔助機械設計工程師, 一定要試試 Onshape, 並且利用 FeatureScript 程式客製化產品開發流程中特定的重要零件. 一旦領略雲端電腦輔助機械設計套件的威力之後, 應該就再也回不去了.
+
+我們當然也知道台灣有許多創新產品開發公司, 至今仍然使用著多年前的 MACD 套件, 忍受著系統更新維護與版本老舊的諸多問題, 假如以購買一套桌上版的商用中端 MCAD 套件, 等於可以連續付月費使用 Onshape 5 年來說, 在日新月異的當下, 5 年前的任何一套 MCAD, 即便功能再強, 也早就應該要更迭換新了, 何況, 檢查一下過去 5 年來工程師為了應付機電整合與製程規劃, 儲存在特定電腦硬碟中的紛亂版本, 將設計研發重心逐步轉換到 Onshape 應該才是解決之道.
+
+以下為上述漸開線正齒輪零件繪圖的 FeatureScript 原始碼:
+
+&lt;pre class="brush: jscript"&gt;
+FeatureScript 355;
+import(path : "onshape/std/geometry.fs", version : "355.0");
+ 
+annotation { "Feature Type Name" : "Summer Spur Gear", "Feature Name Template" : "Spur Gear (#teeth teeth)", "Filter Selector" : "fs", "Editing Logic Function" : "editGearLogic" }
+export const SpurGear = defineFeature(function(context is Context, id is Id, definition is map)
+    precondition
+    {
+        annotation { "Name" : "teeth", "UIHint" : "ALWAYS_HIDDEN" }
+        definition.teeth is string; //used to name the feature only
+        
+        annotation { "Name" : "Number of teeth" }
+        isInteger(definition.numTeeth, TEETH_BOUNDS);
+
+        annotation { "Name" : "Input type" }
+        definition.GearInputType is GearInputType;
+
+        if (definition.GearInputType == GearInputType.module)
+        {
+            annotation { "Name" : "Module" }
+            isLength(definition.module, MODULE_BOUNDS);
+        }
+
+        if (definition.GearInputType == GearInputType.diametralPitch)
+        {
+            annotation { "Name" : "Diametral pitch" }
+            isReal(definition.diametralPitch, POSITIVE_REAL_BOUNDS);
+        }
+
+        if (definition.GearInputType == GearInputType.circularPitch)
+        {
+            annotation { "Name" : "Circular pitch" }
+            isLength(definition.circularPitch, LENGTH_BOUNDS);
+        }
+
+        annotation { "Name" : "Pitch circle diameter" }
+        isLength(definition.pitchCircleDiameter, LENGTH_BOUNDS);
+
+        annotation { "Name" : "Pressure angle" }
+        isAngle(definition.pressureAngle, PRESSURE_ANGLE_BOUNDS);
+
+        annotation { "Name" : "Center hole" }
+        definition.centerHole is boolean;
+
+        if (definition.centerHole)
+        {
+            annotation { "Name" : "Hole diameter" }
+            isLength(definition.centerHoleDia, CENTERHOLE_BOUNDS);
+
+            annotation { "Name" : "Keyway" }
+            definition.key is boolean;
+
+            if (definition.key)
+            {
+                annotation { "Name" : "Key width" }
+                isLength(definition.keyWidth, KEY_BOUNDS);
+
+                annotation { "Name" : "Key height" }
+                isLength(definition.keyHeight, KEY_BOUNDS);
+            }
+        }
+
+        annotation { "Name" : "Select origin position" }
+        definition.centerPoint is boolean;
+
+        if (definition.centerPoint)
+        {
+            annotation { "Name" : "Sketch vertex for center", "Filter" : EntityType.VERTEX &amp;amp;&amp;amp; SketchObject.YES, "MaxNumberOfPicks" : 1 }
+            definition.center is Query;
+        }
+        
+        annotation { "Name" : "Extrude depth" }
+        isLength(definition.gearDepth, BLEND_BOUNDS);
+
+        annotation { "Name" : "Extrude direction", "UIHint" : "OPPOSITE_DIRECTION" }
+        definition.flipGear is boolean;
+
+        annotation { "Name" : "Offset" }
+        definition.offset is boolean;
+
+        if (definition.offset)
+        {
+            annotation { "Name" : "Root diameter" }
+            isLength(definition.offsetClearance, ZERO_DEFAULT_LENGTH_BOUNDS);
+
+            annotation { "Name" : "Outside diameter" }
+            isLength(definition.offsetDiameter, ZERO_DEFAULT_LENGTH_BOUNDS);
+
+            annotation { "Name" : "Tooth angle" }
+            isAngle(definition.offsetAngle, ANGLE_360_ZERO_DEFAULT_BOUNDS);
+        }
+    }
+    {
+        var offsetDiameter = 0 * meter;
+        var offsetClearance = 0 * meter;
+        var offsetAngle = 0 * degree;
+
+        if (definition.offset)
+        {
+            offsetDiameter = definition.offsetDiameter;
+            offsetClearance = definition.offsetClearance;
+            offsetAngle = definition.offsetAngle;
+        }
+
+        if (definition.centerHole &amp;amp;&amp;amp; definition.centerHoleDia &amp;gt;= definition.pitchCircleDiameter - 4 * definition.module)
+        {
+            throw regenError("Center hole diameter must be less than the root diameter", ["centerHoleDia"]);
+        }
+        
+        if (definition.key &amp;amp;&amp;amp; definition.keyHeight / 2 + definition.centerHoleDia &amp;gt;= definition.pitchCircleDiameter - 4 * definition.module)
+        {
+            throw regenError("Center hole diameter plus Key height must be less than the root diameter", ["keyHeight"]);
+        }
+        // if no center vertex selected build gear on the front plane at the origin
+        var location = vector(0, 0, 0) * meter;
+        var sketchPlane = plane(location, vector(0, -1, 0), vector(1, 0, 0));
+        var center3D = location;
+
+        // else find location of selected vertex and its sketch plane and create a new sketch for the gear profile
+        if (definition.centerPoint)
+        {
+            location = evaluateQuery(context, definition.center)[0];
+            sketchPlane = evOwnerSketchPlane(context, { "entity" : location });
+            center3D = evVertexPoint(context, { "vertex" : location });
+        }
+
+        const gearSketch = newSketchOnPlane(context, id + "gearSketch", { "sketchPlane" : sketchPlane });
+        const center2D = worldToPlane(sketchPlane, center3D);
+
+        var filletEdges = [];
+        var regionPoint;
+        // 漸開線近似點數
+        var imax = 5;
+        // 使用者所選的齒輪圓心 x 座標
+        var midx = center2D[0];
+        // 使用者所選的齒輪圓心 y 座標
+        var midy = center2D[1];
+        // 齒數
+        var n = definition.numTeeth;
+        // 模數
+        var m = definition.module;
+        // 壓力角, 單位為角度
+        var pa = definition.pressureAngle;
+        // 齒輪的節圓半徑
+        var rp = m*n/2;
+        
+        // 正齒輪囓合用的定位線
+        skLineSegment(gearSketch, "line", {
+        "start" : vector(midx,midy),
+        "end" : vector(midx,midy+rp)
+        });
+        
+        // 齒根, 暫時不考慮納入 offsetClearance
+        var d = 2.5*rp/n;
+        // 齒頂圓半徑, 暫不考慮納入 offsetDiameter
+        var ra = rp + m;
+        // 基圓半徑
+        var rb = rp*cos(pa);
+        //print(rb);
+        // 齒根圓半徑
+        var rd = rp - d;
+        // 分段後齒頂與齒根半徑差增量
+        var dr = 0*meter;
+        // 若 rb &amp;gt; rd 時從基圓開始繪製漸開線, 但是若 rd &amp;gt; rb, 則漸開線從 rd 畫到齒頂圓
+        if (rd &amp;gt; rb)
+        {
+            // 半徑差的分段, 由齒根圓到齒頂圓
+            dr = (ra-rd)/imax;
+        }
+        else
+        {
+            // 半徑差的分段, 由基圓到齒頂圓
+            dr = (ra-rb)/imax;
+        }
+        // PI 為實數值沒有單位, tan(pa)也沒有單位, pa 已經設定單位為 degree
+        var rot = PI/(2*n)*radian;
+        // 用來設定 entity id 用的增量變數
+        var nameId = 1;
+        var r = 0*meter;
+        // theta 為浮點數字
+        var theta = 0;
+        var inv = 0*radian;
+        var inc = 0*radian;
+        // 當 r=rp 時 ,計算 inv_rp 用來旋轉漸開線用
+        // theta 為沒有單位的實數
+        theta = sqrt((rp*rp)/(rb*rb)-1);
+        // atan(theta) 為 radian
+        // Onshape SG 的 const alpha 就是這裡的 inv_rp
+        // Onshape SG 的 const beta 就是這裡的 rot-inv_rp
+        var inv_rp = theta*radian-atan(theta);
+        // 漸開線上點的 x 座標
+        var xpt = 0*meter;
+        // 漸開線上點的 y 座標
+        var ypt = 0*meter;
+        // 左側漸開線第1點座標 left first x and y
+        var lfx = 0*meter;
+        var lfy = 0*meter;
+        // 右側漸開線第1點座標 right first x and y
+        var rfx = 0*meter;
+        var rfy = 0*meter;
+        // 左側齒根圓上點座標 left x of dedendum point
+        var lxd = 0*meter;
+        var lyd = 0*meter;
+        // 右側齒根圓上點座標 right x of dedendum point
+        var rxd = 0*meter;
+        var ryd = 0*meter;
+        // 左側齒根圓上點座標 right x of dedendum point (advanced)
+        var lxd_ad = 0*meter;
+        var lyd_ad = 0*meter;
+        var inc_ad = 0*radian;
+
+        for (var j=0;j&amp;lt;n;j+=1)
+        {
+            var involute1 = [];
+            var involute2 = [];
+            var arcDone = false;
+            var point1;
+            var point2;
+            
+            // 當 j 增量時, 按照齒數輪廓繞行旋轉增量角度, 加入 offsetAngle 參數
+            inc = (2.*j*PI/n)*radian+offsetAngle;
+            inc_ad = (2.*(j+1)*PI/n)*radian+offsetAngle;
+            if (rd&amp;gt;rb)
+            {
+                // 當齒根半徑因為齒數增多後大於基圓半徑時, 漸開線從齒根圓長起
+                theta = sqrt((rd*rd)/(rb*rb)-1.);
+                inv = theta*radian-atan(theta);
+                // 左側漸開線第1點座標
+                // 左側輪廓線配合逆時針旋轉 inc 角度
+                lfx = midx+rd*sin(inv-rot-inv_rp+inc);
+                lfy = midy+rd*cos(inv-rot-inv_rp+inc);
+                point1 = vector(lfx, lfy);
+                lxd = lfx;
+                lyd = lfy;
+                lxd_ad = midx+rd*sin(inv-rot-inv_rp+inc_ad);
+                lyd_ad = midy+rd*cos(inv-rot-inv_rp+inc_ad);
+                // 右側漸開線第1點座標
+                // 右側輪廓線配合順時針旋轉 inc 角度
+                rfx = midx-rd*sin(inv-rot-inv_rp-inc);
+                rfy = midy+rd*cos(inv-rot-inv_rp-inc);
+                point2 = vector(rfx, rfy);
+                rxd = rfx;
+                ryd = rfy;
+            }
+            else
+            {
+                // 當基圓半徑大於齒根圓時, 漸開線從基圓長起
+                //theta = sqrt((rb*rb)/(rb*rb)-1.);
+                theta = 0;
+                inv = theta*radian-atan(theta);
+                // 左側漸開線第1點座標
+                lfx = midx+rb*sin(inv-rot-inv_rp+inc);
+                lfy = midy+rb*cos(inv-rot-inv_rp+inc);
+                point1 = vector(lfx, lfy);
+                lxd = midx+rd*sin(inv-rot-inv_rp+inc);
+                lyd = midy+rd*cos(inv-rot-inv_rp+inc);
+                lxd_ad = midx+rd*sin(inv-rot-inv_rp+inc_ad);
+                lyd_ad = midy+rd*cos(inv-rot-inv_rp+inc_ad);
+                // 左側從基圓點到齒根圓點, 畫直線 left from base point to dedendum point
+                skLineSegment(gearSketch, "line_lbd" ~ nameId, {
+                "start" : vector(lfx,lfy),
+                "end" : vector((lxd),(lyd))
+                });
+                // 右側漸開線第1點座標
+                rfx = midx-rb*sin(inv-rot-inv_rp-inc);
+                rfy = midy+rb*cos(inv-rot-inv_rp-inc);
+                point2 = vector(rfx, rfy);
+                rxd = midx-rd*sin(inv-rot-inv_rp-inc);
+                ryd = midy+rd*cos(inv-rot-inv_rp-inc);
+                // 右側從基圓點到齒根圓點, 畫直線 right from base point to dedendum point
+                skLineSegment(gearSketch, "line_rbd" ~ nameId, {
+                "start" : vector(rfx,rfy),
+                "end" : vector((rxd),(ryd))
+                });
+            }
+            // 處理齒根的圓弧
+            if (!arcDone) // create base arc between involutes once per tooth
+            {
+                var mid = getArcMidPoint(center2D, vector(lxd_ad,lyd_ad), vector(rxd,ryd)); // sketch arc is arc 3 points so need addtional point on arc
+
+                if (mid != undefined) // if no base cylinder present (due to pressure angle), don't draw it
+                {
+                    // 齒根圓上的圓弧
+                    skArc(gearSketch, "arc-d" ~ nameId, {
+                                "start" : vector(lxd_ad,lyd_ad),
+                                "mid" : mid,
+                                "end" : vector(rxd,ryd)
+                            });
+                }
+                if (rd&amp;gt;rb)
+                {   
+                    // 只有在齒根圓半徑大於基圓時, 將漸開線起點作為倒圓角的基準點
+                    // find points in 3D space where edges need to be filleted later
+                    filletEdges = append(filletEdges, toWorldVector(planeToCSys(sketchPlane), point2, definition.gearDepth, definition.flipGear));
+                    filletEdges = append(filletEdges, toWorldVector(planeToCSys(sketchPlane), point1, definition.gearDepth, definition.flipGear));
+                }
+                else
+                {
+                    // 當小齒數時, 從基圓到齒根圓有一條直線, 因此倒角基準點必須以齒根圓上的點為基準
+                    // find points in 3D space where edges need to be filleted later
+                    filletEdges = append(filletEdges, toWorldVector(planeToCSys(sketchPlane), vector(rxd, ryd), definition.gearDepth, definition.flipGear));
+                    filletEdges = append(filletEdges, toWorldVector(planeToCSys(sketchPlane), vector(lxd, lyd), definition.gearDepth, definition.flipGear));
+                }
+                // find area to extrude
+                regionPoint = vector(point1[0] * 0.95 + center2D[0]*0.05, point1[1] * 0.95+center2D[1]*0.05, 0 * meter);
+                arcDone = true;
+            }
+            // 將漸開線第1點存入 involute1 與 involute2 陣列中
+            involute1 = append(involute1, point1);
+            involute2 = append(involute2, point2);
+ 
+            for (var i=1; i&amp;lt;imax+1; i+= 1)
+            {
+                // 先處理中線左側的漸開線
+                // 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if (rd&amp;gt;rb)
+                {
+                    r = rd+i*dr;
+                }
+                else
+                {
+                    r = rb+i*dr;
+                }
+                theta = sqrt((r*r)/(rb*rb)-1);
+                var inv = theta*radian-atan(theta);
+                // 漸開線上的點座標
+                xpt = midx+r*sin(inv-rot-inv_rp+inc);
+                ypt = midy+r*cos(inv-rot-inv_rp+inc);
+                point1 = vector(xpt, ypt);
+                // 更新漸開線點座標
+                lfx = xpt;
+                lfy = ypt;
+                //nameId += 1;
+                involute1 = append(involute1, point1);
+            }
+            // 紀錄左側漸開線的最後一點, 也就是齒頂圓上的點座標
+            var lastlx = xpt;
+            var lastly = ypt;
+            // another side
+            for (var i=1; i&amp;lt;imax+1; i+= 1)
+            {
+                if (rd&amp;gt;rb)
+                {
+                    r = rd+i*dr;
+                }
+                else
+                {
+                    r = rb+i*dr;
+                }
+                theta = sqrt((r*r)/(rb*rb)-1);
+                var inv = theta*radian-atan(theta);
+                // 漸開線上的點座標
+                xpt = midx-r*sin(inv-rot-inv_rp-inc);
+                ypt = midy+r*cos(inv-rot-inv_rp-inc);
+                point2 = vector(xpt, ypt);
+                // 更新漸開線點座標
+                rfx = xpt;
+                rfy = ypt;
+                //nameId += 1;
+                involute2 = append(involute2, point2);
+            }
+            var lastrx = xpt;
+            var lastry = ypt;
+
+            // create involute sketch splines
+            skFitSpline(gearSketch, "spline-a" ~ nameId, {
+                        "points" : involute1
+                    });
+            skFitSpline(gearSketch, "spline-b" ~ nameId, {
+                        "points" : involute2
+                    });
+            // 要注意, 若對調 vector(lastrx, lastry) 與 vector(lastlx, lastly) 則無法求得中點
+            var mid_a = getArcMidPoint(center2D, vector(lastrx,lastry), vector(lastlx,lastly));
+            if (mid_a != undefined)
+            {
+                skArc(gearSketch, "arc-a" ~ nameId, {
+                            "start" : vector(lastlx,lastly),
+                            "mid" : mid_a,
+                            "end" : vector(lastrx,lastry)
+                        }); 
+            }
+            nameId += 1;
+        }
+        if (definition.centerHole)
+        {
+            if (definition.key)
+            {
+                var keyVector = vector(0, 1);
+                var perpKeyVector = vector(-1, 0);
+                var keyHeight = (definition.keyHeight + definition.centerHoleDia) / 2;
+
+                var points = [
+                    center2D - (definition.keyWidth / 2) * perpKeyVector,
+                    center2D - (definition.keyWidth / 2) * perpKeyVector + keyHeight * keyVector,
+                    center2D + (definition.keyWidth / 2) * perpKeyVector + keyHeight * keyVector,
+                    center2D + (definition.keyWidth / 2) * perpKeyVector];
+
+                for (var i = 0; i &amp;lt; size(points); i += 1)
+                {
+                    skLineSegment(gearSketch, "line" ~ nameId,
+                            { "start" : points[i],
+                                "end" : points[(i + 1) % size(points)]
+                            });
+                    nameId += 1;
+                }
+            }
+
+            // center hole circle sketch
+            skCircle(gearSketch, "Center", {
+                        "center" : center2D,
+                        "radius" : definition.centerHoleDia / 2
+                    });
+        }
+    skSolve(gearSketch);
+    
+    extrude(context, id + "extrude1", {
+                "entities" : qContainsPoint(qCreatedBy(id + "gearSketch", EntityType.FACE), toWorld(planeToCSys(sketchPlane), regionPoint)),
+                "endBound" : BoundingType.BLIND,
+                "depth" : definition.gearDepth,
+                "oppositeDirection" : definition.flipGear
+            });
+    
+
+    var filletEdges3D = [];
+
+    for (var i = 0; i &amp;lt; size(filletEdges); i += 1)
+    {
+        // Find the edges that intersect the points previously collected
+        filletEdges3D = append(filletEdges3D, qContainsPoint(qCreatedBy(id + "extrude1", EntityType.EDGE), filletEdges[i]));
+    }
+
+    const filletRadius = norm(filletEdges[1] - filletEdges[0]) / 4; // arbitrary fillet size = one fourth the distance between the edges
+
+    if (filletRadius &amp;gt;= 0.2 * millimeter) // arbitrary small size assuming tooling cannot hold a fillet radius smaller than this
+    {
+        
+        try(opFillet(context, id + "fillet1", {
+                        "entities" : qUnion(filletEdges3D),
+                        "radius" : filletRadius
+                    }));
+        
+    }
+
+    // Remove sketch entities - no longer required
+    opDeleteBodies(context, id + "delete", { "entities" : qCreatedBy(id + "gearSketch") });
+
+    // created PCD sketch
+    const PCDSketch = newSketchOnPlane(context, id + "PCDsketch", { "sketchPlane" : sketchPlane });
+    skCircle(PCDSketch, "PCD", {
+                "center" : center2D,
+                "radius" : definition.pitchCircleDiameter / 2,
+                "construction" : true
+            });
+    skSolve(PCDSketch);
+    });
+    
+function getArcMidPoint(center is Vector, start is Vector, end is Vector)
+{
+    // need to convert 2D vectors back to 3D for vector angle calculation
+    const center3D = vector(center[0], center[1], 0 * meter);
+    const start3D = vector(start[0], start[1], 0 * meter);
+    const end3D = vector(end[0], end[1], 0 * meter);
+
+    const angle = vectorAngle(center3D - start3D, center3D - end3D) / 2;
+    // if angle is less than zero then arc was flipped
+    if (angle &amp;lt;= 0 * radian)
+        return;
+    start = center - start;
+
+    var ca = cos(angle); // in radians
+    var sa = sin(angle);
+    return center - vector(ca * start[0] - sa * start[1], sa * start[0] + ca * start[1]);
+}
+
+function vectorAngle(vector1 is Vector, vector2 is Vector)
+{
+    // function assumes vectors are on a 2D plane so Z is always zero and the normal vector is always [0, 0, 1]
+    return atan2(dot(vector(0, 0, 1), cross(vector1, vector2)), dot(vector1, vector2));
+}
+
+function toWorldVector(csys is CoordSystem, point is Vector, depth is map, direction is boolean) returns Vector
+{
+    var dir = direction ? -1 : 1;
+    var vector3D = vector(point[0], point[1], dir * depth / 2);
+    return toWorld(csys, vector3D);
+}
+
+export function editGearLogic(context is Context, id is Id, oldDefinition is map, definition is map, isCreating is boolean, specifiedParameters is map, hiddenBodies is Query) returns map
+{
+    // isCreating is required in the function definition for edit logic to work when editing an existing feature
+    if (oldDefinition.numTeeth != definition.numTeeth)
+    {
+        definition.module = definition.pitchCircleDiameter / definition.numTeeth;
+        definition.circularPitch = definition.module * PI;
+        definition.diametralPitch = 1 * inch / definition.module;
+        definition.teeth = toString(definition.numTeeth); //to name the feature
+        return definition;
+    }
+    
+    if (oldDefinition.circularPitch != definition.circularPitch)
+    {
+        definition.module = definition.circularPitch / PI;
+        definition.pitchCircleDiameter = (definition.circularPitch * definition.numTeeth) / PI;
+        definition.diametralPitch = 1 * inch / definition.module;
+        return definition;
+    }
+    
+    if (oldDefinition.pitchCircleDiameter != definition.pitchCircleDiameter)
+    {
+        definition.module = definition.pitchCircleDiameter / definition.numTeeth;
+        definition.circularPitch = (PI * definition.pitchCircleDiameter) / definition.numTeeth;
+        definition.diametralPitch = 1 * inch / definition.module;
+        return definition;
+    }
+    
+    if (oldDefinition.module != definition.module)
+    {
+        definition.circularPitch = definition.module * PI;
+        definition.pitchCircleDiameter = definition.numTeeth * definition.module;
+        definition.diametralPitch = 1 * inch / definition.module;
+        return definition;
+    }
+    
+    if (oldDefinition.diametralPitch != definition.diametralPitch)
+    {
+        definition.circularPitch = PI / (definition.diametralPitch / inch);
+        definition.module = definition.circularPitch / PI;
+        definition.pitchCircleDiameter = (definition.circularPitch * definition.numTeeth) / PI;
+        return definition;
+    }
+
+    return definition;
+}
+
+const TEETH_BOUNDS =
+{
+            "min" : 4,
+            "max" : 250,
+            (unitless) : [4, 25, 250]
+        } as IntegerBoundSpec;
+
+const PRESSURE_ANGLE_BOUNDS =
+{
+            "min" : 12 * degree,
+            "max" : 35 * degree,
+            (degree) : [12, 20, 35]
+        } as AngleBoundSpec;
+
+const MODULE_BOUNDS =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.001, 500],
+            (centimeter) : 0.1,
+            (millimeter) : 1.0,
+            (inch) : 0.04
+        } as LengthBoundSpec;
+
+const CENTERHOLE_BOUNDS =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.01, 500],
+            (centimeter) : 1.0,
+            (millimeter) : 10.0,
+            (inch) : 0.375
+        } as LengthBoundSpec;
+
+const KEY_BOUNDS =
+{
+            "min" : -TOLERANCE.zeroLength * meter,
+            "max" : 500 * meter,
+            (meter) : [1e-5, 0.003, 500],
+            (centimeter) : 0.3,
+            (millimeter) : 3.0,
+            (inch) : 0.125
+        } as LengthBoundSpec;
+
+export enum GearInputType
+{
+    annotation { "Name" : "Module" }
+    module,
+    annotation { "Name" : "Diametral pitch" }
+    diametralPitch,
+    annotation { "Name" : "Circular pitch" }
+    circularPitch
+}
+&lt;/pre&gt;</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
