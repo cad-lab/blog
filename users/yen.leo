@@ -84,7 +84,7 @@
 </v>
 <v t="amd.20160531094803.1"><vh>Brython 程式庫</vh></v>
 <v t="amd.20160106093454.1" a="E"><vh>yen 網誌文章</vh>
-<v t="amd.20160605111320.1" a="E"><vh>before 201606</vh>
+<v t="amd.20160605111320.1"><vh>before 201606</vh>
 <v t="amd.20160106093510.1"><vh>201601</vh>
 <v t="ibm.20160115121941.1"><vh>@clean yen_20160115.md</vh></v>
 <v t="amd.20160117143423.1"><vh>@clean yen_20160117.md</vh>
@@ -6726,6 +6726,14 @@ th, td {
         &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+各 MDE 用戶若在校外採用中華電信光世代上網, 需啟用 IPV6 協定, 請參考 &lt;a href="http://www.ipv6.hinet.net/"&gt;http://www.ipv6.hinet.net/&lt;/a&gt; 相關說明, 一旦啟用 IPV6 網路協定後, 可以利用 &lt;a href="http://[2001:288:6004:17::101]/"&gt;http://[2001:288:6004:17::101]/&lt;/a&gt; 與 &lt;a href="http://test-ipv6.com/"&gt;http://test-ipv6.com/&lt;/a&gt; 進行 IPV6 網路連線測試.
+
+從下圖可以發現目前中華電信光世代所提供的 IPV6 網路連線採用 IPV4 Tunnel 技術, 可以同時支援 IPV4/IPV6 雙協定連線:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/hinet_IPV6_connection_test.png" width="800" /&gt;
+
 </t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
