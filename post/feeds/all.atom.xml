@@ -1,5 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-06-16T06:21:54+08:00</updated><entry><title>Onshape Featurescript Spur Gear 零件</title><link href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-ling-jian.html" rel="alternate"></link><updated>2016-06-16T06:21:54+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-16:post/onshape-featurescript-spur-gear-ling-jian.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch"&gt;https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch&lt;/a&gt; 的討論, 我們得知, 目前無法利用 FeatureScript 在繪圖平面中利用 opFillet, 對特定平面圖元進行倒圓角運算, 因此延續&lt;a href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-lun-kuo-hui-tu.html"&gt;上一篇利用漸開線正齒輪輪廓&lt;/a&gt;轉換為正齒輪零件, 就必須在實體模型中進行倒圓角運算.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-06-18T13:38:28+08:00</updated><entry><title>機械設計工程系 IPV6 網址分配</title><link href="http://cadlab.mde.tw/post/ji-jie-she-ji-gong-cheng-xi-ipv6-wang-zhi-fen-pei.html" rel="alternate"></link><updated>2016-06-18T13:38:28+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-18:post/ji-jie-she-ji-gong-cheng-xi-ipv6-wang-zhi-fen-pei.html</id><summary type="html">&lt;p&gt;虎尾科大機械設計工程系將自即日起逐步啟用 IPV6 網路協定, 目前只有與軟體授權認証 (因為要服務廣域網路上僅支援 IPV4 協定的用戶連線) 及同時支援 IPV4/IPV6 協定的代理主機, 一定需要配置固定的 IPV4 網路位址外, 其他單純的網路連線均可採用純 IPV6 協定配置, 以純 IPV6 協定上網者, 若須連線到僅支援 IPV4 網路協定的主機, 請透過提供 IPV4/IPV6 雙支援的代理主機進行連線.&lt;/p&gt;
+
+
+&lt;p&gt;以下為各 MDE 使用群組的 IPV6 網址分配:&lt;/p&gt;
+&lt;style type="text/css"&gt;
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+}
+&lt;/style&gt;
+
+&lt;table&gt;
+&lt;tr&gt;
+    &lt;th&gt;MDE 群組&lt;/th&gt;
+    &lt;th&gt;分配 IPV6 網段&lt;/th&gt; 
+    &lt;th&gt;說明&lt;/th&gt;
+    &lt;th&gt;備註&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td rowspan="2"&gt;MDE 行政專用&lt;/td&gt;
+        &lt;td&gt;2001:288:6004:17:168:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:168:FFFF:FFFF:FFFF&lt;/td&gt;
+        &lt;td&gt;所有行政支援相關的裝置均採此網段設定,&lt;br /&gt;各行政人員再依員工編號設定所屬的裝置網址&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+    &lt;tr&gt;
+        &lt;td&gt;(以管理人員員工編號尾碼為 3026 為例)&lt;br /&gt;2001:288:6004:17:168:3026:0000:0000 ~&lt;br /&gt;2001:288:6004:17:168:3026:FFFF:FFFF&lt;/td&gt;
+        &lt;td&gt;以管理人員編號 B03026 為例, 取 3026 作為設定代號&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;MDE 各教師&lt;/td&gt;
+    &lt;td&gt;(以教師員工編號尾碼為 3001 為例)&lt;br /&gt;2001:288:6004:17:3001:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:3001:FFFF:FFFF:FFFF&lt;/td&gt;
+    &lt;td&gt;所有與教師相關的裝置均採此網段設定,&lt;br /&gt;
+取各教師員工編號最後四碼作為設定代號&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;MDE 工作站室&lt;/td&gt;
+    &lt;td&gt;2001:288:6004:17:0000:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:0000:0000:0000:FFFF&lt;/td&gt;
+    &lt;td&gt;所有 8F 工作站室相關的裝置均採此網段設定&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td rowspan="2"&gt;MDE 6F 教學實驗室&lt;/td&gt;
+        &lt;td&gt;2001:288:6004:17:6F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:6F:FFFF:FFFF:FFFF&lt;/td&gt;
+        &lt;td&gt;所有 6F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
+各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+    &lt;tr&gt;
+        &lt;td&gt;(以實驗室編號尾碼為 6768 為例)&lt;br /&gt;2001:288:6004:17:6F:6768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:6F:6768:FFFF:FFFF&lt;/td&gt;
+        &lt;td&gt;以 6F 實驗室編號最後四碼為 6768 為例, 取 6768 作為設定代號&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td rowspan="2"&gt;MDE 7F 教學實驗室&lt;/td&gt; 
+        &lt;td&gt;2001:288:6004:17:7F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:7F:FFFF:FFFF:FFFF&lt;/td&gt;
+        &lt;td&gt;所有 7F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
+各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+    &lt;tr&gt;
+        &lt;td&gt;(以實驗室編號尾碼為 7768 為例)&lt;br /&gt;2001:288:6004:17:7F:7768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:7F:7768:FFFF:FFFF&lt;/td&gt;
+        &lt;td&gt;以 7F 實驗室編號最後四碼為 7768 為例, 取 7768 作為設定代號&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td rowspan="2"&gt;MDE 8F 教學實驗室&lt;/td&gt;
+        &lt;td&gt;2001:288:6004:17:8F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:8F:FFFF:FFFF:FFFF&lt;/td&gt;
+        &lt;td&gt;所有 8F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
+各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+    &lt;tr&gt;
+        &lt;td&gt;(以實驗室編號尾碼為 8768 為例)&lt;br /&gt;2001:288:6004:17:8F:8768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:8F:8768:FFFF:FFFF&lt;/td&gt;
+        &lt;td&gt;以 8F 實驗室編號最後四碼為 8768 為例, 取 8768 作為設定代號&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td rowspan="2"&gt;MDE 9F 教學實驗室&lt;/td&gt;
+        &lt;td&gt;2001:288:6004:17:9F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:9F:FFFF:FFFF:FFFF&lt;/td&gt;
+        &lt;td&gt;所有 9F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
+各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+    &lt;tr&gt;
+        &lt;td&gt;(以實驗室編號尾碼為 9768 為例)&lt;br /&gt;2001:288:6004:17:9F:9768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:9F:9768:FFFF:FFFF&lt;/td&gt;
+        &lt;td&gt;以 9F 實驗室編號最後四碼為 9768 為例, 取 9768 作為設定代號&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;MDE 其他應用&lt;/td&gt;
+    &lt;td&gt;2001:288:6004:17:a:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:a:FFFF:FFFF:FFFF&lt;/td&gt;
+    &lt;td&gt;所有未納入上列相關的裝置均採此網段設定&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</summary><category term="cadlab"></category><category term="IPV6"></category></entry><entry><title>Onshape Featurescript Spur Gear 零件</title><link href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-ling-jian.html" rel="alternate"></link><updated>2016-06-16T06:21:54+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-16:post/onshape-featurescript-spur-gear-ling-jian.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch"&gt;https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch&lt;/a&gt; 的討論, 我們得知, 目前無法利用 FeatureScript 在繪圖平面中利用 opFillet, 對特定平面圖元進行倒圓角運算, 因此延續&lt;a href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-lun-kuo-hui-tu.html"&gt;上一篇利用漸開線正齒輪輪廓&lt;/a&gt;轉換為正齒輪零件, 就必須在實體模型中進行倒圓角運算.&lt;/p&gt;
 
 
 &lt;p&gt;這裡的 FeatureScript 程式碼, 基本架構引用 &lt;a href="https://cad.onshape.com/documents/57494152e4b05f50e871a72c/w/a4a3f09939bf1f43a8e4f133/e/2b865798923d6f648f7196f9"&gt;Onshape 官方正齒輪繪圖 FeatureScript 程式第1版&lt;/a&gt; 的內容, 只將推導的漸開線點座標, 透過 skFitSpline 轉為平滑曲線, 但是原版的 offset 參數, 目前只導入 offsetAngle, 以便產生的正齒輪, 可以在組立件中進行囓合.&lt;/p&gt;
