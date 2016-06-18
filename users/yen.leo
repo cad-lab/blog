@@ -150,7 +150,7 @@
 <v t="amd.20160614093804.1"><vh>@clean yen_20160614.md</vh></v>
 <v t="amd.20160614172648.1"><vh>@clean yen_20160614-2.md</vh></v>
 <v t="amd.20160615082003.1"><vh>@clean yen_20160615.md</vh></v>
-<v t="amd.20160618114526.1"><vh>@@clean yen_20160618.md</vh></v>
+<v t="amd.20160618114526.1"><vh>@clean yen_20160618.md</vh></v>
 <v t="amd.20160618115606.1"><vh>@clean yen_20160618-1.md</vh></v>
 </v>
 </v>
@@ -6611,14 +6611,52 @@ export enum GearInputType
 }
 &lt;/pre&gt;</t>
 <t tx="amd.20160618114526.1">@language md
-Title: Virtualbox 設定與應用
+Title: Virtualbox 的應用與網路設定 (二)
 Category: MISC
-Tags: cadlab, virtualbox
+Tags: cadlab, virtualbox, 虛擬機器
 Author: Cad Lab
 @others
+透過 Virtualbox 的使用說明: &lt;a href="https://www.virtualbox.org/manual/"&gt;https://www.virtualbox.org/manual/&lt;/a&gt; 可以了解一個 Virtualbox 的虛擬機器, 若啟用 ICH9 Chipset, 最多可以&lt;a href="https://www.virtualbox.org/manual/ch03.html#settings-motherboard"&gt;支援 36 片網路卡&lt;/a&gt;.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+如下圖所示:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_ich9_36_nic.png" width="800" /&gt;
+
+至於 &lt;a href="https://www.virtualbox.org/manual/ch06.html#network_hostonly"&gt;host-only 的網路卡設定&lt;/a&gt; 正好介於 bridged 與 internal 網路設定特性之間. 也就是說 host-only 網路卡設定與 bridged 網路卡設定類似, 可以想像各採用 host-only 設定的虛擬機器與 host 機器的網路線全部接到同一台network switch (網路交換器), 不僅可以彼此連線, 也能與 host 連線. 但是 host-only 網路卡設定與 bridged network 設定的差異是, host-only 無需與任何實體網路卡進行橋接, 而是透過位於 host 機器上的虛擬網路卡達到與各虛擬機器及 host 網路相連的目的. 
+
+而 host-only 網路卡設定與 internal 網路設定類似的地方, 在於這些設定為 host-only 網路卡相連的虛擬機器無法與 host 以外的網路相連.
+
+另外, 透過 bridged 網路卡設定說明: &lt;a href="https://www.virtualbox.org/manual/ch06.html#network_bridged"&gt;https://www.virtualbox.org/manual/ch06.html#network_bridged&lt;/a&gt;, 我們也可以得知, 所謂虛擬機器的橋接網路連線設定, 就是要讓虛擬機器透過 host 上的實體網路卡, 與外部的網路相連, 成為一台與 host 位階相同的伺服機器.
+
+至於在使用 Virtualbox 的過程, 當使用者需要設定虛擬機器的 uuid 時, 可以透過下列 Python3 程式產生 uuid.
+
+&lt;pre class="brush: python"&gt;
+import uuid
+print(uuid.uuid1())
+#UUID('5361a11b-615c-42bf-9bdb-e2c3790ada14')
+&lt;/pre&gt;
+
+接著再利用:
+
+VBoxManage startvm "Your VM name", 使用 Virtualbox 指定的 uuid, 或者自行指定虛擬機器的 uuid.
+
+VBoxManage startvm "Your VM name" 5361a11b-615c-42bf-9bdb-e2c3790ada14
+
+由於虛擬機器的 uuid 只用於 global configuration data 的設定, 以及各虛擬機器啟動時的基本辨識, 因此也可以直接在設定檔案中更改, 只要前後呼應即可. 但是虛擬硬碟的對應 uuid 則與 .vdi 檔案綁定, 因此根據 &lt;a href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-clonevdi"&gt;https://www.virtualbox.org/manual/ch08.html#vboxmanage-clonevdi&lt;/a&gt; 中的說明, 可以利用:
+
+VBoxManage clonemedium Master.vdi Clone.vdi
+
+手動進行 vdi 檔案的複製, 基本概念是存在同一個 host 中的虛擬機器個別要有一個 uuid 編號, 而這個編號會在 host 中所安裝的 Virtualbox 套件中, 經由 preferances 設定檔案與個別虛擬機器引用時進行對應, 至於虛擬硬碟的 uuid, 除了與 .vdi 綁定, 也會在個別虛擬機器的設定檔案中前後出現兩次.
+
+至於 Global configuration data 檔案的存放位置, 根據 &lt;a href="https://www.virtualbox.org/manual/ch10.html#idm8784"&gt;https://www.virtualbox.org/manual/ch10.html#idm8784&lt;/a&gt; 的說明, 在視窗操作系統會存在 HOME/.VirtualBox 目錄, 以 xml 格式儲存, 在 Linux 與 Solaris 操作系統中, 則儲存在 HOME/.config/VirtualBox 目錄中, 假如是 OS X 操作系統, 則會儲存在 HOME/Library/VirtualBox.
+
+最後一點提示則是, 當操作系統中 Virtualbox 沒有開啟時, 使用者可以直接修改上述的相關設定檔案, 例如, Virtualbox 的 GUI 介面中 ,只能讓一個虛擬機器啟用 4 片網路卡, 假如使用者需要啟用第 5 ~ 36 片網路卡時, 可以根據 &lt;a href="https://www.virtualbox.org/manual/ch08.html#idm4023"&gt;https://www.virtualbox.org/manual/ch08.html#idm4023&lt;/a&gt; 的說明, 利用 VBoxManage modifyvm 指令進行設定, 或者直接編輯相關的設定檔案達成.
 
 
-&lt;!-- PELICAN_END_SUMMARY --&gt;</t>
+
+</t>
 <t tx="amd.20160618115606.1">@language md
 Title: 機械設計工程系 IPV6 網址分配
 Category: MISC
