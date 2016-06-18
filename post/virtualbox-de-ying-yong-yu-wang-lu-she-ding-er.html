@@ -314,7 +314,7 @@ CADLab (虎尾科大MDE)            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2016-06-18T21:34:59.253497+08:00"> 六 18 六月 2016</time>
+        <i class="fa fa-calendar"></i><time datetime="2016-06-18T21:46:32.257518+08:00"> 六 18 六月 2016</time>
     </span>
             <span class="label label-default">By</span>
             <a href="http://cadlab.mde.tw/post/author/cad-lab.html"><i class="fa fa-user"></i> Cad Lab</a>
@@ -333,11 +333,13 @@ CADLab (虎尾科大MDE)            </a>
                 <p>透過 Virtualbox 的使用說明: <a href="https://www.virtualbox.org/manual/">https://www.virtualbox.org/manual/</a> 可以了解一個 Virtualbox 的虛擬機器, 若啟用 ICH9 Chipset, 最多可以<a href="https://www.virtualbox.org/manual/ch03.html#settings-motherboard">支援 36 片網路卡</a>.</p>
 
 
+<h3>Virtualbox 虛擬機器最多可以支援 36 片網路卡</h3>
 <p>如下圖所示:</p>
 <p><img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_ich9_36_nic.png" width="800" /></p>
 <p>至於 <a href="https://www.virtualbox.org/manual/ch06.html#network_hostonly">host-only 的網路卡設定</a> 正好介於 bridged 與 internal 網路設定特性之間. 也就是說 host-only 網路卡設定與 bridged 網路卡設定類似, 可以想像各採用 host-only 設定的虛擬機器與 host 機器的網路線全部接到同一台network switch (網路交換器), 不僅可以彼此連線, 也能與 host 連線. 但是 host-only 網路卡設定與 bridged network 設定的差異是, host-only 無需與任何實體網路卡進行橋接, 而是透過位於 host 機器上的虛擬網路卡達到與各虛擬機器及 host 網路相連的目的. </p>
 <p>而 host-only 網路卡設定與 internal 網路設定類似的地方, 在於這些設定為 host-only 網路卡相連的虛擬機器無法與 host 以外的網路相連.</p>
 <p>另外, 透過 bridged 網路卡設定說明: <a href="https://www.virtualbox.org/manual/ch06.html#network_bridged">https://www.virtualbox.org/manual/ch06.html#network_bridged</a>, 我們也可以得知, 所謂虛擬機器的橋接網路連線設定, 就是要讓虛擬機器透過 host 上的實體網路卡, 與外部的網路相連, 成為一台與 host 位階相同的伺服機器.</p>
+<h3>虛擬機器與虛擬硬碟的 uuid 編號</h3>
 <p>至於在使用 Virtualbox 的過程, 當使用者需要設定虛擬機器的 uuid 時, 可以透過下列 Python3 程式產生 uuid.</p>
 <pre class="brush: python">
 import uuid
@@ -353,7 +355,8 @@ print(uuid.uuid1())
 <p>手動進行 vdi 檔案的複製, 基本概念是存在同一個 host 中的虛擬機器個別要有一個 uuid 編號, 而這個編號會在 host 中所安裝的 Virtualbox 套件中, 經由 preferances 設定檔案與個別虛擬機器引用時進行對應, 至於虛擬硬碟的 uuid, 除了與 .vdi 綁定, 也會在個別虛擬機器的設定檔案中前後出現兩次.</p>
 <p>至於 Global configuration data 檔案的存放位置, 根據 <a href="https://www.virtualbox.org/manual/ch10.html#idm8784">https://www.virtualbox.org/manual/ch10.html#idm8784</a> 的說明, 在視窗操作系統會存在 HOME/.VirtualBox 目錄, 以 xml 格式儲存, 在 Linux 與 Solaris 操作系統中, 則儲存在 HOME/.config/VirtualBox 目錄中, 假如是 OS X 操作系統, 則會儲存在 HOME/Library/VirtualBox.</p>
 <p>值得一提的是, 當操作系統中 Virtualbox 沒有開啟時, 使用者可以直接修改上述的相關設定檔案, 例如, Virtualbox 的 GUI 介面中 ,只能讓一個虛擬機器啟用 4 片網路卡, 假如使用者需要啟用第 5 ~ 36 片網路卡時, 可以根據 <a href="https://www.virtualbox.org/manual/ch08.html#idm4023">https://www.virtualbox.org/manual/ch08.html#idm4023</a> 的說明, 利用 VBoxManage modifyvm 指令進行設定, 或者直接編輯相關的設定檔案達成.</p>
-<p>以下則是在 Windows 7 Pro 電腦上啟動 Vt-x, 建立 64 位元的 Windows 7 虛擬機器後, 將虛擬機器檔案轉到 Ubuntu 的 Virtualbox 上, 然後根據上述說明, 啟 36 片虛擬網路卡的畫面:</p>
+<h3>Virtualbox 虛擬機器檔案跨操作系統應用</h3>
+<p>以下則是在 Windows 7 Pro 電腦上啟動 Vt-x, 建立 64 位元的 Windows 7 虛擬機器後, 將虛擬機器檔案轉到 Ubuntu 的 Virtualbox 上, 然後根據上述說明, 啟動 36 片虛擬網路卡的過程畫面:</p>
 <p>首先是從網路上下載 Windows 7 64 位元的虛擬機器檔案壓縮檔, 然後解開壓縮檔, 準備在 Ubuntu 上的 Virtualbox 建立虛擬機器:</p>
 <p><img src="http://cad-lab.github.io/cadlab_data/files/201606/win7_64_on_ubuntu1.png" width="800" /></p>
 <p>接著是解開壓縮檔案之後的 Windows 7 虛擬機器檔案, 其中包括 .vdi 與兩個虛擬機器的設定檔:</p>
@@ -366,6 +369,7 @@ print(uuid.uuid1())
 <p><img src="http://cad-lab.github.io/cadlab_data/files/201606/win7_64_on_ubuntu5.png" width="800" /></p>
 <p>最後則是在 Windows 7 虛擬機器中創建 36 張虛擬網路卡的畫面:</p>
 <p><img src="http://cad-lab.github.io/cadlab_data/files/201606/win7_64_on_ubuntu6.png" width="800" /></p>
+<h3>虛擬機器設定檔案</h3>
 <p>以下則為創建 36 片虛擬網路卡的虛擬機器設定檔案:</p>
 <pre class="brush:html">
 &lt;?xml version="1.0"?&gt;
