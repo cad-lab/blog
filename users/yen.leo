@@ -7110,10 +7110,6 @@ VBoxManage clonemedium Master.vdi Clone.vdi
   &amp;lt;/Machine&amp;gt;
 &amp;lt;/VirtualBox&amp;gt;
 &lt;/pre&gt;
-
-最後假如 Virtualbox 目前每台虛擬機器可以支援 36 張虛擬網路卡的功能, 還是不敷使用, 就必須轉而使用微軟的 Hyper-V, 可以建立不限數量的虛擬網路卡:
-
-&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/Hyper-v_maximums.png" width="800" /&gt;
 </t>
 <t tx="amd.20160618115606.1">@language md
 Title: 機械設計工程系 IPV6 網址分配
