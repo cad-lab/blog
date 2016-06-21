@@ -152,6 +152,7 @@
 <v t="amd.20160615082003.1"><vh>@clean yen_20160615.md</vh></v>
 <v t="amd.20160618114526.1"><vh>@clean yen_20160618.md</vh></v>
 <v t="amd.20160618115606.1"><vh>@clean yen_20160618-1.md</vh></v>
+<v t="amd.20160618225934.1"><vh>@clean yen_20160618-2.md</vh></v>
 </v>
 </v>
 </v>
@@ -5409,7 +5410,7 @@ NAT 使用情境為啟動虛擬機器後, 當作一般客戶端電腦使用, 虛
 
 Bridged 使用情境為啟動虛擬機器後, 當作一般伺服器電腦使用, 在 Host 操作系統中模擬出的虛擬網卡, 可以與 Host 電腦的實體網路卡進行橋接與設定外部 IP 後, 視為網路幹線上的一台伺服器.
 
-Interal 使用情境主要關注在虛擬機器之間的網路彼此相連, 但卻自外於與 Host 連接的區域或廣域網路, Internal networking 的特性通常用來當作資料庫伺服器, 可以透過 internal 網路, 提供對外連線的全球資訊網伺服器資料, 但是外部電腦無法跨越 internal 網路架構直接連線.
+Internal 使用情境主要關注在虛擬機器之間的網路彼此相連, 但卻自外於與 Host 連接的區域或廣域網路, Internal networking 的特性通常用來當作資料庫伺服器, 可以透過 internal 網路, 提供對外連線的全球資訊網伺服器資料, 但是外部電腦無法跨越 internal 網路架構直接連線.
 
 Host-only 使用情境則將網路服務的範圍界定在 Host 主機範圍內, 在虛擬機器所啟動的各種服務, 可以讓 Host 連線, 但是因為沒有像 Bridged 網路設置, 與 Host 的實體網路卡進行橋接, 因此 Host-only 的網路環境通常讓操作 Host 的程式設計師將 Host-only 的電腦當作跨網路的虛擬伺服器使用.
 
@@ -6654,6 +6655,18 @@ VBoxManage clonemedium Master.vdi Clone.vdi
 
 手動進行 vdi 檔案的複製, 基本概念是存在同一個 host 中的虛擬機器個別要有一個 uuid 編號, 而這個編號會在 host 中所安裝的 Virtualbox 套件中, 經由 preferances 設定檔案與個別虛擬機器引用時進行對應, 至於虛擬硬碟的 uuid, 除了與 .vdi 綁定, 也會在個別虛擬機器的設定檔案中前後出現兩次.
 
+但是若 Master.vdi 在下 VBoxManage.exe 指令的 Host 機器上, 已經註冊在虛擬機器中, 則必須要先更改虛擬機器的硬碟 .vdi 檔案之後, 才能夠執行 clonemedium 指令:
+
+也就是必須先執行:
+
+"c:\Program Files\Oracle\VirtualBox\VBoxManage.exe" internalcommands sethduuid registered_vdi.vdi
+
+然後再執行:
+
+"c:\Program Files\Oracle\VirtualBox\VBoxManage.exe" clonemedium registered_vdi.vdi new_vdi.vdi
+
+之後若在同一個 Virtualbox 的主體中利用此一 new_vdi.vdi 建立虛擬機器, 就不會發生硬碟 uuid 編號重複的問題.
+
 至於 Global configuration data 檔案的存放位置, 根據 &lt;a href="https://www.virtualbox.org/manual/ch10.html#idm8784"&gt;https://www.virtualbox.org/manual/ch10.html#idm8784&lt;/a&gt; 的說明, 在視窗操作系統會存在 HOME/.VirtualBox 目錄, 以 xml 格式儲存, 在 Linux 與 Solaris 操作系統中, 則儲存在 HOME/.config/VirtualBox 目錄中, 假如是 OS X 操作系統, 則會儲存在 HOME/Library/VirtualBox.
 
 值得一提的是, 當操作系統中 Virtualbox 沒有開啟時, 使用者可以直接修改上述的相關設定檔案, 例如, Virtualbox 的 GUI 介面中 ,只能讓一個虛擬機器啟用 4 片網路卡, 假如使用者需要啟用第 5 ~ 36 片網路卡時, 可以根據 &lt;a href="https://www.virtualbox.org/manual/ch08.html#idm4023"&gt;https://www.virtualbox.org/manual/ch08.html#idm4023&lt;/a&gt; 的說明, 利用 VBoxManage modifyvm 指令進行設定, 或者直接編輯相關的設定檔案達成.
@@ -7151,11 +7164,11 @@ th, td {
     &lt;td rowspan="2"&gt;MDE 行政專用&lt;/td&gt;
         &lt;td&gt;2001:288:6004:17:168:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:168:FFFF:FFFF:FFFF&lt;/td&gt;
         &lt;td&gt;所有行政支援相關的裝置均採此網段設定,&lt;br /&gt;各行政人員再依員工編號設定所屬的裝置網址&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
     &lt;tr&gt;
         &lt;td&gt;(以管理人員員工編號尾碼為 3026 為例)&lt;br /&gt;2001:288:6004:17:168:3026:0000:0000 ~&lt;br /&gt;2001:288:6004:17:168:3026:FFFF:FFFF&lt;/td&gt;
         &lt;td&gt;以管理人員編號 B03026 為例, 取 3026 作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -7163,24 +7176,24 @@ th, td {
     &lt;td&gt;(以教師員工編號尾碼為 3001 為例)&lt;br /&gt;2001:288:6004:17:3001:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:3001:FFFF:FFFF:FFFF&lt;/td&gt;
     &lt;td&gt;所有與教師相關的裝置均採此網段設定,&lt;br /&gt;
 取各教師員工編號最後四碼作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
     &lt;td&gt;MDE 工作站室&lt;/td&gt;
     &lt;td&gt;2001:288:6004:17:0000:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:0000:0000:0000:FFFF&lt;/td&gt;
     &lt;td&gt;所有 8F 工作站室相關的裝置均採此網段設定&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
     &lt;td rowspan="2"&gt;MDE 6F 教學實驗室&lt;/td&gt;
         &lt;td&gt;2001:288:6004:17:6F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:6F:FFFF:FFFF:FFFF&lt;/td&gt;
         &lt;td&gt;所有 6F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
 各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
     &lt;tr&gt;
         &lt;td&gt;(以實驗室編號尾碼為 6768 為例)&lt;br /&gt;2001:288:6004:17:6F:6768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:6F:6768:FFFF:FFFF&lt;/td&gt;
         &lt;td&gt;以 6F 實驗室編號最後四碼為 6768 為例, 取 6768 作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -7188,11 +7201,11 @@ th, td {
         &lt;td&gt;2001:288:6004:17:7F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:7F:FFFF:FFFF:FFFF&lt;/td&gt;
         &lt;td&gt;所有 7F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
 各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
     &lt;tr&gt;
         &lt;td&gt;(以實驗室編號尾碼為 7768 為例)&lt;br /&gt;2001:288:6004:17:7F:7768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:7F:7768:FFFF:FFFF&lt;/td&gt;
         &lt;td&gt;以 7F 實驗室編號最後四碼為 7768 為例, 取 7768 作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -7200,11 +7213,11 @@ th, td {
         &lt;td&gt;2001:288:6004:17:8F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:8F:FFFF:FFFF:FFFF&lt;/td&gt;
         &lt;td&gt;所有 8F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
 各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
     &lt;tr&gt;
         &lt;td&gt;(以實驗室編號尾碼為 8768 為例)&lt;br /&gt;2001:288:6004:17:8F:8768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:8F:8768:FFFF:FFFF&lt;/td&gt;
         &lt;td&gt;以 8F 實驗室編號最後四碼為 8768 為例, 取 8768 作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -7212,18 +7225,18 @@ th, td {
         &lt;td&gt;2001:288:6004:17:9F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:9F:FFFF:FFFF:FFFF&lt;/td&gt;
         &lt;td&gt;所有 9F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
 各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
     &lt;tr&gt;
         &lt;td&gt;(以實驗室編號尾碼為 9768 為例)&lt;br /&gt;2001:288:6004:17:9F:9768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:9F:9768:FFFF:FFFF&lt;/td&gt;
         &lt;td&gt;以 9F 實驗室編號最後四碼為 9768 為例, 取 9768 作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
     &lt;td&gt;MDE 其他應用&lt;/td&gt;
     &lt;td&gt;2001:288:6004:17:a:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:a:FFFF:FFFF:FFFF&lt;/td&gt;
     &lt;td&gt;所有未納入上列相關的裝置均採此網段設定&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1:2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;br /&gt;
@@ -7233,8 +7246,462 @@ th, td {
 從下圖可以發現目前中華電信光世代所提供的 IPV6 網路連線採用 IPV4 Tunnel 技術, 可以同時支援 IPV4/IPV6 雙協定連線:
 
 &lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/hinet_IPV6_connection_test.png" width="800" /&gt;
-
 </t>
+<t tx="amd.20160618225934.1">@language md
+Title: 跨操作系統的 Virtualbox vdi 檔案
+Category: MISC
+Tags: cadlab, Virtualbox
+Author: Cad Lab
+@others
+在這個展示中, 我們利用 Windows 7 操作系統中的 Virtualbox 5.0 建立了一個 Windows 7 pro 操作系統的虛擬機器 vdi 檔案後, 將這個 64 位元的 Windows 7 pro 檔案轉到 Ubuntu Virtualbox 中, 用來建立 新的 Windows 7 虛擬機器, 其中分別啟用三種虛擬網路卡的設定, 也就是分別將虛擬網卡設定為 NAT, Host-only 與 Bridged 網路, 主要目的在說明這三種虛擬網路的使用時機與設定細節.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+###NAT 網路設定
+
+通常使用者在虛擬機器中建立虛擬 NAT 網路卡, 在於讓虛擬機器利用網路轉址上網, 其中的設定只需要在 Virtualbox 的 File-Preference-Network 中加入對應的 NAT 設定, 決定該網路卡的名稱, 網路 CIDR, 是否啟用 DHCP, 以及是否支援 IPV6 協定與 Port Forwarding 等, 至於在個人虛擬機器中, 與此 NAT 網路對應的虛擬網路卡只要設定為透過 DHCP 取得 CIDR 所選用的網段網路 IP 位址, 就能以 NAT 方式上網.
+
+當然, 從 File-Preference-Network 中的 NAT Networks 頁面中, 可以發現使用者可以建立多個 global configuration 對應的 NAT 網路, 並給予不同的名稱, 好讓隨後的虛擬機器中選用 NAT 啟動的虛擬網路卡時, 可以配合納入不同的網段, 模擬各種需求的網路架構.
+
+以下這一張圖就是在 Ubuntu 操作系統中, File-Preference-Network 設定選項, 也就是所謂的 global configuration 設定, 這裡的設定適用於所有這個操作系統下 Virtualbox 所屬的虛擬機器.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_nat_1.png" width="800" /&gt;
+
+當使用者進 File-Preference-Network 中的網路設定, 選擇新增 NAT 網路時, 呈現的畫面如下, NatNetwork 就是這個 NAT 網路的內定名稱, 假如使用者新增第二個 NAT 網路, 內定名稱就是 NatNetwork1, 當使用者建立虛擬機器, 並在虛擬機器中選擇建立 NAT 虛擬網路卡時, 就可以配合需要, 將該網路卡納入 NatNetwork 或 NatNetwork1 網段, 以取得不同網段的位址與設定.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_nat_2.png" width="800" /&gt;
+
+接下來這個畫面就是有關 File-Preference-Network global configuration 中有關網路設定的第二個頁面, 也就是 Host-only 網路的設定頁面, 這是用來新增 "僅限主機" 網路中的喜好設定, 當使用者增加一組 Host-only 網路設定時, 就可以選擇該網路的網段與是否啟用虛擬的 DHCP 服務, 這項功能隨後再來說明.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_nat_3.png" width="800" /&gt;
+
+而下面這張圖, 就是針對個別虛擬機器的網路卡設定, 這裡啟用的第1張網路卡, 選擇使用 NAT 設定, 從畫面上顯示, 選用的是最簡單的 NAT (而不是可以選擇網段的 NAT NetWork, 如前所述, 若選擇 NAT NetWork, 可以再對應到 NatNetwork 或 NatNetwork1 NAT 網路名稱), 這裡選擇 NAT, 目的純脆是讓虛擬機器上網.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_nat_4.png" width="800" /&gt;
+
+接下來, 有關虛擬的 NAT 網路卡, 在對應的 Windows 7 操作系統中開機之後的網路設定畫面, 只要確定與 NAT 網路對應的虛擬網卡, 選擇所使用的 IPV4 或 IPV6 協定, 並讓該網卡以 DHCP client, 自動取得 IP 與網路設定即可.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_nat_6.png" width="800" /&gt;
+
+這裡要特別提醒的是, 假如某一個虛擬機器啟用多片網路卡之後, 不同屬性的虛擬網卡只能透過 MAC 位址加以對應, 假如是在 Windows 虛擬操作系統, 可以利用命令列, 以 ipconfig /all 取得所有與網路相關的設定, 假如是在 Ubuntu 虛擬操作系統, 則採用 ifconfig.
+
+###Host-only 網路設定與 tinyproxy
+
+接著, 我們來看看與 Host-only 相關的網路設定, 先前的網誌已經談過, Host-only 建置的主要目的, 通常在讓虛擬機器與 Host 間透過虛擬交換器, 讓 Host 的實體網路卡與虛擬機器的虛擬網路卡, 連接在同一個網段上, 而這個網段所使用的設定分為 global configuration 與個別虛擬機器的設定.
+
+global configuration 可在 File-Preference-Network 的 Host-only Network 頁面中新增一個對應虛擬網卡, 而每一個虛擬 Host-only 網卡 global 設定, 可以決定所要使用的區域網路段, 這裡選擇不啟用 DHCP, 而是自行在虛擬機器的 Host-only 虛擬網卡設定固定 IPV4 與 IPV6 網址. 
+
+下圖就是設定 File-Preference-Network 的地方:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_1.png" width="800" /&gt;
+
+使用者可以進入 Host-only 頁面, 新增一個 Host-only 的全域用虛擬網路設定.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_2.png" width="800" /&gt;
+
+從下圖可以看到, 新增了一個 Host-only 的 vboxnet0 網路, 以及 Adapter 與 DHCP Server 的相關設定. 必須特別注意的是, 這裡的設定會影響 Host 操作系統中 (再提醒一下, 是 Host 中的虛擬網卡 ,而不是虛擬機器中的虛擬網路卡) 所產生的 Host-only 虛擬網路卡中的設定 (使用者無需手動設定, 當然也不可以自行手動修改設定, 因為必須與 Virtualbox 中的虛擬交換器與虛擬 DHCP 伺服器彼此對應) , 並且決定虛擬機器中加入此 Host-only 網路設定 (也就是 vboxnet0, 或其他 Host-only 網路設定, 分別以不同名稱對應) 中虛擬網卡所相依的設定.
+
+例如, 下圖中的 Host-only Network Details 畫面中使用的 IPV4 位址為 192.168.56.1, 就表示 Host 中與此一 Host-only 對應的的虛擬網卡, 會採用這個網路位址設定.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_3.png" width="800" /&gt;
+
+至於 DHCP Server 的設定, 如下圖所示, 假如啟用 DHCP, 且令其產生一個虛擬的 DHCP 伺服器, 可以設定該伺服器的網址與所能分配的網路位 IP 位址範圍:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_4.png" width="800" /&gt;
+
+但是一般在機械設計分析與模擬的情境下, 選用 Host-only 虛擬網路, 通常是要在虛擬機器與 Host 之後配置固定 IP 的各種伺服器, 因此就必須如下圖, 不啟用 DHCP, 而是在各虛擬機器中選擇所附屬的 Host-only 網路設定 (如附屬到前述的 vboxnet0, 或其他 Host-only 網路設定) 後, 配合該網路段, 設定固定 IP 位址.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_5.png" width="800" /&gt;
+
+處理好了 Host-only global configuration 設定後, 接下來就是配合在虛擬機器中, 啟用 Host-only 的網路卡, 如下圖所示, 我們將該虛擬網路卡附屬到 vboxnet0 設定, 並且選擇網路卡的型號, 並且設定 MAC 位址.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_6.png" width="800" /&gt;
+
+完成設定後, 可以從下圖見到 test 虛擬機器中的虛擬網路卡已經透過 Host-only 配置到 vboxnet0 的設定中:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_7.png" width="800" /&gt;
+
+接下來, 將 test 虛擬機器開機, 下圖就是配合 vboxnet0 中所選擇的 192.168.56.1 作為虛擬網路的通道 (gateway), 完成設定, 但是從下圖可以看到, 該虛擬機器僅與 Host 操作系統中的虛擬網卡, 以虛擬交換器相連,  因為屬於內部網路段, 並沒有任何虛擬 NAT 或橋接, 讓此一 192.168.56.0/24 的網路連上廣域網路, 因此若這時啟動 Chrome, 在不使用 Host 機器中的代理主機情況下, 將無法上網.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_8.png" width="800" /&gt;
+
+有關 Host 操作系統中的代理主機 (proxy server), 先前我們在 Windows host 中介紹利用 &lt;a href="http://www.youngzsoft.net/ccproxy/"&gt;ccproxy&lt;/a&gt; 當作代理主機, 這裡在 Ubuntu 中則利用 sudo apt-get install tinyproxy 安裝 &lt;a href="https://tinyproxy.github.io/"&gt;tinyproxy&lt;/a&gt;, 並設定允許 VM 連結. 當然也可以在 Host 機器中安裝功能更強的 Squid 作為代理主機.
+
+如下圖所示, 在 Host-only 模式下, 虛擬機器設定了 Host 機器中的代理主機, 就可以順利上網了, 而且虛擬機器中的 git 操作, 也必須透過 git config --global http.proxy http://192.168.56.1:8888 與 git config --global https.proxy http://192.168.56.1:8888 才能連上廣域網路.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_9.png" width="800" /&gt;
+
+接著, 在 Host-only 的網路設定中, 為了讓虛擬機器中的 Filezilla 可以經由 tinyproxy 代理主機以 SFTP 連線, 則該 proxy 必須允許 port 22 進行 connect 資料傳送, 以下為 tinyproxy 的參考用設定檔:
+
+&lt;pre class="brush: python"&gt;
+##
+## tinyproxy.conf -- tinyproxy daemon configuration file
+##
+## This example tinyproxy.conf file contains example settings
+## with explanations in comments. For decriptions of all
+## parameters, see the tinproxy.conf(5) manual page.
+##
+
+#
+# User/Group: This allows you to set the user and group that will be
+# used for tinyproxy after the initial binding to the port has been done
+# as the root user. Either the user or group name or the UID or GID
+# number may be used.
+#
+User nobody
+Group nogroup
+
+#
+# Port: Specify the port which tinyproxy will listen on.  Please note
+# that should you choose to run on a port lower than 1024 you will need
+# to start tinyproxy using root.
+# tinyproxy 代理主機所使用的埠號
+
+Port 8888
+
+#
+# Listen: If you have multiple interfaces this allows you to bind to
+# only one. If this is commented out, tinyproxy will bind to all
+# interfaces present.
+#
+#Listen 192.168.0.1
+
+#
+# Bind: This allows you to specify which interface will be used for
+# outgoing connections.  This is useful for multi-home'd machines where
+# you want all traffic to appear outgoing from one particular interface.
+#
+#Bind 192.168.0.1
+
+#
+# BindSame: If enabled, tinyproxy will bind the outgoing connection to the
+# ip address of the incoming connection.
+#
+#BindSame yes
+
+#
+# Timeout: The maximum number of seconds of inactivity a connection is
+# allowed to have before it is closed by tinyproxy.
+#
+Timeout 600
+
+#
+# ErrorFile: Defines the HTML file to send when a given HTTP error
+# occurs.  You will probably need to customize the location to your
+# particular install.  The usual locations to check are:
+#   /usr/local/share/tinyproxy
+#   /usr/share/tinyproxy
+#   /etc/tinyproxy
+#
+#ErrorFile 404 "/usr/share/tinyproxy/404.html"
+#ErrorFile 400 "/usr/share/tinyproxy/400.html"
+#ErrorFile 503 "/usr/share/tinyproxy/503.html"
+#ErrorFile 403 "/usr/share/tinyproxy/403.html"
+#ErrorFile 408 "/usr/share/tinyproxy/408.html"
+
+#
+# DefaultErrorFile: The HTML file that gets sent if there is no
+# HTML file defined with an ErrorFile keyword for the HTTP error
+# that has occured.
+#
+DefaultErrorFile "/usr/share/tinyproxy/default.html"
+
+#
+# StatHost: This configures the host name or IP address that is treated
+# as the stat host: Whenever a request for this host is received,
+# Tinyproxy will return an internal statistics page instead of
+# forwarding the request to that host.  The default value of StatHost is
+# tinyproxy.stats.
+#
+#StatHost "tinyproxy.stats"
+#
+
+#
+# StatFile: The HTML file that gets sent when a request is made
+# for the stathost.  If this file doesn't exist a basic page is
+# hardcoded in tinyproxy.
+#
+StatFile "/usr/share/tinyproxy/stats.html"
+
+#
+# Logfile: Allows you to specify the location where information should
+# be logged to.  If you would prefer to log to syslog, then disable this
+# and enable the Syslog directive.  These directives are mutually
+# exclusive.
+#
+Logfile "/var/log/tinyproxy/tinyproxy.log"
+
+#
+# Syslog: Tell tinyproxy to use syslog instead of a logfile.  This
+# option must not be enabled if the Logfile directive is being used.
+# These two directives are mutually exclusive.
+#
+#Syslog On
+
+#
+# LogLevel: 
+#
+# Set the logging level. Allowed settings are:
+#	Critical	(least verbose)
+#	Error
+#	Warning
+#	Notice
+#	Connect		(to log connections without Info's noise)
+#	Info		(most verbose)
+#
+# The LogLevel logs from the set level and above. For example, if the
+# LogLevel was set to Warning, then all log messages from Warning to
+# Critical would be output, but Notice and below would be suppressed.
+#
+LogLevel Info
+
+#
+# PidFile: Write the PID of the main tinyproxy thread to this file so it
+# can be used for signalling purposes.
+#
+PidFile "/var/run/tinyproxy/tinyproxy.pid"
+
+#
+# XTinyproxy: Tell Tinyproxy to include the X-Tinyproxy header, which
+# contains the client's IP address.
+#
+#XTinyproxy Yes
+
+#
+# Upstream:
+#
+# Turns on upstream proxy support.
+#
+# The upstream rules allow you to selectively route upstream connections
+# based on the host/domain of the site being accessed.
+#
+# For example:
+#  # connection to test domain goes through testproxy
+#  upstream testproxy:8008 ".test.domain.invalid"
+#  upstream testproxy:8008 ".our_testbed.example.com"
+#  upstream testproxy:8008 "192.168.128.0/255.255.254.0"
+#
+#  # no upstream proxy for internal websites and unqualified hosts
+#  no upstream ".internal.example.com"
+#  no upstream "www.example.com"
+#  no upstream "10.0.0.0/8"
+#  no upstream "192.168.0.0/255.255.254.0"
+#  no upstream "."
+#
+#  # connection to these boxes go through their DMZ firewalls
+#  upstream cust1_firewall:8008 "testbed_for_cust1"
+#  upstream cust2_firewall:8008 "testbed_for_cust2"
+#
+#  # default upstream is internet firewall
+#  upstream firewall.internal.example.com:80
+#
+# The LAST matching rule wins the route decision.  As you can see, you
+# can use a host, or a domain:
+#  name     matches host exactly
+#  .name    matches any host in domain "name"
+#  .        matches any host with no domain (in 'empty' domain)
+#  IP/bits  matches network/mask
+#  IP/mask  matches network/mask
+#
+#Upstream some.remote.proxy:port
+
+#
+# MaxClients: This is the absolute highest number of threads which will
+# be created. In other words, only MaxClients number of clients can be
+# connected at the same time.
+#
+MaxClients 100
+
+#
+# MinSpareServers/MaxSpareServers: These settings set the upper and
+# lower limit for the number of spare servers which should be available.
+#
+# If the number of spare servers falls below MinSpareServers then new
+# server processes will be spawned.  If the number of servers exceeds
+# MaxSpareServers then the extras will be killed off.
+#
+MinSpareServers 5
+MaxSpareServers 20
+
+#
+# StartServers: The number of servers to start initially.
+#
+StartServers 10
+
+#
+# MaxRequestsPerChild: The number of connections a thread will handle
+# before it is killed. In practise this should be set to 0, which
+# disables thread reaping. If you do notice problems with memory
+# leakage, then set this to something like 10000.
+#
+MaxRequestsPerChild 0
+
+#
+# Allow: Customization of authorization controls. If there are any
+# access control keywords then the default action is to DENY. Otherwise,
+# the default action is ALLOW.
+#
+# The order of the controls are important. All incoming connections are
+# tested against the controls based on order.
+#
+Allow 127.0.0.1
+# 設定允許使用 tinyproxy 代理主機的網路段
+Allow 192.168.56.0/24
+#Allow 192.168.0.0/16
+#Allow 172.16.0.0/12
+#Allow 10.0.0.0/8
+
+#
+# AddHeader: Adds the specified headers to outgoing HTTP requests that
+# Tinyproxy makes. Note that this option will not work for HTTPS
+# traffic, as Tinyproxy has no control over what headers are exchanged.
+#
+#AddHeader "X-My-Header" "Powered by Tinyproxy"
+
+#
+# ViaProxyName: The "Via" header is required by the HTTP RFC, but using
+# the real host name is a security concern.  If the following directive
+# is enabled, the string supplied will be used as the host name in the
+# Via header; otherwise, the server's host name will be used.
+#
+ViaProxyName "tinyproxy"
+
+#
+# DisableViaHeader: When this is set to yes, Tinyproxy does NOT add
+# the Via header to the requests. This virtually puts Tinyproxy into
+# stealth mode. Note that RFC 2616 requires proxies to set the Via
+# header, so by enabling this option, you break compliance.
+# Don't disable the Via header unless you know what you are doing...
+#
+#DisableViaHeader Yes
+
+#
+# Filter: This allows you to specify the location of the filter file.
+#
+#Filter "/etc/filter"
+
+#
+# FilterURLs: Filter based on URLs rather than domains.
+#
+#FilterURLs On
+
+#
+# FilterExtended: Use POSIX Extended regular expressions rather than
+# basic.
+#
+#FilterExtended On
+
+#
+# FilterCaseSensitive: Use case sensitive regular expressions.
+#
+#FilterCaseSensitive On
+
+#
+# FilterDefaultDeny: Change the default policy of the filtering system.
+# If this directive is commented out, or is set to "No" then the default
+# policy is to allow everything which is not specifically denied by the
+# filter file.
+#
+# However, by setting this directive to "Yes" the default policy becomes
+# to deny everything which is _not_ specifically allowed by the filter
+# file.
+#
+#FilterDefaultDeny Yes
+
+#
+# Anonymous: If an Anonymous keyword is present, then anonymous proxying
+# is enabled.  The headers listed are allowed through, while all others
+# are denied. If no Anonymous keyword is present, then all headers are
+# allowed through.  You must include quotes around the headers.
+#
+# Most sites require cookies to be enabled for them to work correctly, so
+# you will need to allow Cookies through if you access those sites.
+#
+#Anonymous "Host"
+#Anonymous "Authorization"
+#Anonymous "Cookie"
+
+#
+# ConnectPort: This is a list of ports allowed by tinyproxy when the
+# CONNECT method is used.  To disable the CONNECT method altogether, set
+# the value to 0.  If no ConnectPort line is found, all ports are
+# allowed (which is not very secure.)
+#
+# The following two ports are used by SSL.
+#
+# for HTTPS
+ConnectPort 443
+ConnectPort 563
+# 為了讓虛擬機器中的 filezilla 可以透過 SFTP 協定傳輸, 必須允許使用 port 22
+ConnectPort 22
+#
+# Configure one or more ReversePath directives to enable reverse proxy
+# support. With reverse proxying it's possible to make a number of
+# sites appear as if they were part of a single site.
+#
+# If you uncomment the following two directives and run tinyproxy
+# on your own computer at port 8888, you can access Google using
+# http://localhost:8888/google/ and Wired News using
+# http://localhost:8888/wired/news/. Neither will actually work
+# until you uncomment ReverseMagic as they use absolute linking.
+#
+#ReversePath "/google/"	"http://www.google.com/"
+#ReversePath "/wired/"	"http://www.wired.com/"
+
+#
+# When using tinyproxy as a reverse proxy, it is STRONGLY recommended
+# that the normal proxy is turned off by uncommenting the next directive.
+#
+#ReverseOnly Yes
+
+#
+# Use a cookie to track reverse proxy mappings. If you need to reverse
+# proxy sites which have absolute links you must uncomment this.
+#
+#ReverseMagic Yes
+
+#
+# The URL that's used to access this reverse proxy. The URL is used to
+# rewrite HTTP redirects so that they won't escape the proxy. If you
+# have a chain of reverse proxies, you'll need to put the outermost
+# URL here (the address which the end user types into his/her browser).
+#
+# If not set then no rewriting occurs.
+#
+#ReverseBaseURL "http://localhost:8888/"
+&lt;/pre&gt;
+
+###Bridged 網路設定
+
+接下來, 則是 Bridged network 的應用, 先前已經提過, 虛擬機器採用 Bridged 設定的目的在於讓虛擬機器可以藉由 host 電腦的實體網路卡, 充當一台虛擬的伺服器.
+
+當使用者在建立虛擬機器的過程, 啟用 Bridged 網路卡時, 就必須選擇 host 電腦上, 所要附加的一片實體網路卡, 經過實作, 即便在只有一片實體網路卡的電腦, 也可以將此唯一的實體網卡附加給虛擬機器中的 Bridged 虛擬網路卡, 
+
+以下的網路情境是 Host 為 Ubuntu 操作系統採用光世代路由器, 以 IPV4 tunnel 啟用 IPV6 網路協定, 因此一旦 Windows 7 中的虛擬機器選擇將虛擬網卡, 以 bridged network 的設定, 附加到 Ubuntu 操作系統中唯一的網路卡時, 就 Ubuntu 操作系統所對應的連外網路來說, Windows 7 的這一片虛擬網卡, 就成為一張可以獨立設定與運作的網路卡 (儘管是虛擬產生, 且透過虛擬交換器與實體網卡相連), 由於此時 Host 機器中的實體網路卡是直接連光世代的 NAT/DHCP 上網, 因此若將虛擬機器 Windows 7 中的這片 bridged 虛擬網卡設為採 DHCP client 連網, 則這片網卡也能透過虛擬的交換器與 Ubuntu 的實體網卡同位階, 以 DHCP 取得光世代的網路設定而連接到廣域網路, 如下圖所示:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_bridged_1.png" width="800" /&gt;
+
+讓我們再回頭看看 bridged 網路的設定, 選用 bridged 網路設定後的虛擬機器 Windows 7 網卡採自動取得網路設定:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_bridged_2.png" width="800" /&gt;
+
+Virtualbox 的 global configuratin 網路設定中, 可以無需建立任何 NAT 或 Host-only 的設定:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_bridged_3.png" width="800" /&gt;
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_bridged_4.png" width="800" /&gt;
+
+只需要在個別的虛擬機器網路設定中, 啟用 Bridged 網路時, 與 Host 中的實體網路卡進行綁定 (這裡 attached 到 Ubuntu 操作系統中的 p10p1 實體網路卡):
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_bridged_5.png" width="800" /&gt;
+
+###Virtualbox 網路設定結論
+
+從上面與 Virtualbox 網路設定有關的三種模式: NAT, Host-only 與 Bridged, 各有不同的特性, NAT 可以簡便地讓虛擬機器上網, Host-only 可以在主機範圍以內的虛擬網域中創造出多台內部伺服器, 而 Bridged 網路則透過 Host 實體網路卡的驅動程式與實體的網路卡接線, 在虛擬機器中模擬出一片如假包換的網路卡, 可以讓外部網路上的主機, 直接連線到虛擬機器中的各種伺服服務.
+
+就 MDE CADLab 的實際配置而言, 我們在 Windows 7 Host 操作系統中配置 Ubuntu 虛擬機器, 並採用 &lt;a href="http://vboxvmservice.sourceforge.net/"&gt;http://vboxvmservice.sourceforge.net/&lt;/a&gt; 服務自動啟用, 然後在 Ubuntu 虛擬操作系統中配置固定的 IPV4 與 IPV6 網路位址, 安裝配置支援雙網路協定的 Squid 代理主機後, 接著再透過 Bridged 網路設定讓其他純 IPV6 上網的電腦, 就能透過這些 Squid 代理主機連線到 IPV4 與 IPV6 的網路服務器.
+
+最後, 當我們在安裝配置各種電腦輔助設計、工程分析、電腦輔助製造與自動控制相關套件時, 可以在一台機器中完成多元的安裝配置與測試, 並且希望未來能將這些實際配置的過程納入相關課程教學之中.</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃

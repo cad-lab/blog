@@ -177,7 +177,7 @@ init_mathjax();
         <meta property="og:title" content="Virtualbox 的應用與網路設定 (二)"/>
         <meta property="og:url" content="http://cadlab.mde.tw/post/virtualbox-de-ying-yong-yu-wang-lu-she-ding-er.html"/>
         <meta property="og:description" content="透過 Virtualbox 的使用說明: https://www.virtualbox.org/manual/ 可以了解一個 Virtualbox 的虛擬機器, 若啟用 ICH9 Chipset, 最多可以支援 36 片網路卡."/>
-        <meta property="article:published_time" content="2016-06-18" />
+        <meta property="article:published_time" content="2016-06-20" />
             <meta property="article:section" content="MISC" />
             <meta property="article:tag" content="cadlab" />
             <meta property="article:tag" content="virtualbox" />
@@ -314,7 +314,7 @@ CADLab (虎尾科大MDE)            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2016-06-18T21:46:32.257518+08:00"> 六 18 六月 2016</time>
+        <i class="fa fa-calendar"></i><time datetime="2016-06-20T21:45:08.139523+08:00"> 一 20 六月 2016</time>
     </span>
             <span class="label label-default">By</span>
             <a href="http://cadlab.mde.tw/post/author/cad-lab.html"><i class="fa fa-user"></i> Cad Lab</a>
@@ -353,6 +353,12 @@ print(uuid.uuid1())
 <p>由於虛擬機器的 uuid 只用於 global configuration data 的設定, 以及各虛擬機器啟動時的基本辨識, 因此也可以直接在設定檔案中更改, 只要前後呼應即可. 但是虛擬硬碟的對應 uuid 則與 .vdi 檔案綁定, 因此根據 <a href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-clonevdi">https://www.virtualbox.org/manual/ch08.html#vboxmanage-clonevdi</a> 中的說明, 可以利用:</p>
 <p>VBoxManage clonemedium Master.vdi Clone.vdi</p>
 <p>手動進行 vdi 檔案的複製, 基本概念是存在同一個 host 中的虛擬機器個別要有一個 uuid 編號, 而這個編號會在 host 中所安裝的 Virtualbox 套件中, 經由 preferances 設定檔案與個別虛擬機器引用時進行對應, 至於虛擬硬碟的 uuid, 除了與 .vdi 綁定, 也會在個別虛擬機器的設定檔案中前後出現兩次.</p>
+<p>但是若 Master.vdi 在下 VBoxManage.exe 指令的 Host 機器上, 已經註冊在虛擬機器中, 則必須要先更改虛擬機器的硬碟 .vdi 檔案之後, 才能夠執行 clonemedium 指令:</p>
+<p>也就是必須先執行:</p>
+<p>"c:\Program Files\Oracle\VirtualBox\VBoxManage.exe" internalcommands sethduuid registered_vdi.vdi</p>
+<p>然後再執行:</p>
+<p>"c:\Program Files\Oracle\VirtualBox\VBoxManage.exe" clonemedium registered_vdi.vdi new_vdi.vdi</p>
+<p>之後若在同一個 Virtualbox 的主體中利用此一 new_vdi.vdi 建立虛擬機器, 就不會發生硬碟 uuid 編號重複的問題.</p>
 <p>至於 Global configuration data 檔案的存放位置, 根據 <a href="https://www.virtualbox.org/manual/ch10.html#idm8784">https://www.virtualbox.org/manual/ch10.html#idm8784</a> 的說明, 在視窗操作系統會存在 HOME/.VirtualBox 目錄, 以 xml 格式儲存, 在 Linux 與 Solaris 操作系統中, 則儲存在 HOME/.config/VirtualBox 目錄中, 假如是 OS X 操作系統, 則會儲存在 HOME/Library/VirtualBox.</p>
 <p>值得一提的是, 當操作系統中 Virtualbox 沒有開啟時, 使用者可以直接修改上述的相關設定檔案, 例如, Virtualbox 的 GUI 介面中 ,只能讓一個虛擬機器啟用 4 片網路卡, 假如使用者需要啟用第 5 ~ 36 片網路卡時, 可以根據 <a href="https://www.virtualbox.org/manual/ch08.html#idm4023">https://www.virtualbox.org/manual/ch08.html#idm4023</a> 的說明, 利用 VBoxManage modifyvm 指令進行設定, 或者直接編輯相關的設定檔案達成.</p>
 <h3>Virtualbox 虛擬機器檔案跨操作系統應用</h3>
@@ -844,6 +850,11 @@ print(uuid.uuid1())
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/kua-cao-zuo-xi-tong-de-virtualbox-vdi-dang-an.html">
+                            跨操作系統的 Virtualbox vdi 檔案
+                        </a>
+                    </li>
+                    <li class="list-group-item">
                         <a href="http://cadlab.mde.tw/post/virtualbox-de-ying-yong-yu-wang-lu-she-ding-er.html">
                             Virtualbox 的應用與網路設定 (二)
                         </a>
@@ -854,18 +865,13 @@ print(uuid.uuid1())
                         </a>
                     </li>
                     <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/virtualbox-de-ying-yong-yu-wang-lu-she-ding.html">
+                            Virtualbox 的應用與網路設定
+                        </a>
+                    </li>
+                    <li class="list-group-item">
                         <a href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-ling-jian.html">
                             Onshape Featurescript Spur Gear 零件
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-lun-kuo-hui-tu.html">
-                            Onshape Featurescript Spur Gear 輪廓繪圖
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-xiang-guan-qu-yu-wang-lu-she-ding.html">
-                            電腦輔助設計室相關區域網路設定
                         </a>
                     </li>
                 </ul>
