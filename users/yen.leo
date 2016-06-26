@@ -84,8 +84,8 @@
 </v>
 <v t="amd.20160531094803.1"><vh>Brython 程式庫</vh></v>
 <v t="amd.20160106093454.1" a="E"><vh>yen 網誌文章</vh>
-<v t="amd.20160605111320.1"><vh>before 201606</vh>
-<v t="amd.20160106093510.1"><vh>201601</vh>
+<v t="amd.20160605111320.1" a="E"><vh>before 201606</vh>
+<v t="amd.20160106093510.1" a="E"><vh>201601</vh>
 <v t="ibm.20160115121941.1"><vh>@clean yen_20160115.md</vh></v>
 <v t="amd.20160117143423.1"><vh>@clean yen_20160117.md</vh>
 <v t="amd.20160328210705.1"><vh>30</vh></v>
@@ -153,6 +153,9 @@
 <v t="amd.20160618114526.1"><vh>@clean yen_20160618.md</vh></v>
 <v t="amd.20160618115606.1"><vh>@clean yen_20160618-1.md</vh></v>
 <v t="amd.20160618225934.1"><vh>@clean yen_20160618-2.md</vh></v>
+<v t="amd.20160622201721.1"><vh>@clean yen_20160622.md</vh></v>
+<v t="amd.20160623151329.1"><vh>@clean yen_20160623.md</vh></v>
+<v t="amd.20160626092325.1"><vh>@clean yen_20160626.md</vh></v>
 </v>
 </v>
 </v>
@@ -1494,7 +1497,7 @@ Onshape 中的 Documents 為設計專案層次 (Project level) 的文件庫 (Con
 <t tx="amd.20160506230749.1"></t>
 <t tx="amd.20160506230801.1">@language md
 Title: Wordpress 網誌文章中的網際程式碼
-Category:導引
+Category: MISC
 Tags: Wordpress, MCAD
 Author: kmol
 @others
@@ -1869,7 +1872,7 @@ Jupyter and oauth2
 &lt;a href="https://github.com/ryanlovett/jh-google-oauthenticator"&gt;https://github.com/ryanlovett/jh-google-oauthenticator&lt;/a&gt;</t>
 <t tx="amd.20160517115058.1">@language md
 Title: 網際機械設計 2D 繪圖
-Category:導引
+Category: MISC
 Tags: MCAD, Web based
 Author: kmol
 @others
@@ -5379,8 +5382,8 @@ setupgame(None)</t>
 <t tx="amd.20160531120758.1"></t>
 <t tx="amd.20160603225335.1">@language md
 Title: Virtualbox 的應用與網路設定
-Category: MISC
-Tags: CADLab, 虛擬機器
+Category: 導引
+Tags: CADLab, Virtualbox, 虛擬機器
 Author: kmol
 @others
 
@@ -5475,7 +5478,7 @@ i7-6700: &lt;a href="http://ark.intel.com/products/88196"&gt;http://ark.intel.co
 <t tx="amd.20160605104725.1"></t>
 <t tx="amd.20160605104803.1">@language md
 Title: 電腦輔助設計室電腦磁區規劃
-Category: MISC
+Category: 規劃
 Tags: 電腦輔助設計室, 電腦硬體
 Author: Cad Lab
 @others
@@ -6613,8 +6616,8 @@ export enum GearInputType
 &lt;/pre&gt;</t>
 <t tx="amd.20160618114526.1">@language md
 Title: Virtualbox 的應用與網路設定 (二)
-Category: MISC
-Tags: cadlab, virtualbox, 虛擬機器
+Category: 導引
+Tags: cadlab, Virtualbox, 虛擬機器
 Author: Cad Lab
 @others
 透過 Virtualbox 的使用說明: &lt;a href="https://www.virtualbox.org/manual/"&gt;https://www.virtualbox.org/manual/&lt;/a&gt; 可以了解一個 Virtualbox 的虛擬機器, 若啟用 ICH9 Chipset, 最多可以&lt;a href="https://www.virtualbox.org/manual/ch03.html#settings-motherboard"&gt;支援 36 片網路卡&lt;/a&gt;.
@@ -7134,7 +7137,7 @@ VBoxManage clonemedium Master.vdi Clone.vdi
 </t>
 <t tx="amd.20160618115606.1">@language md
 Title: 機械設計工程系 IPV6 網址分配
-Category: MISC
+Category: 規劃
 Tags: cadlab, IPV6
 Author: Cad Lab
 @others
@@ -7249,8 +7252,8 @@ th, td {
 </t>
 <t tx="amd.20160618225934.1">@language md
 Title: 跨操作系統的 Virtualbox vdi 檔案
-Category: MISC
-Tags: cadlab, Virtualbox
+Category: 導引
+Tags: cadlab, Virtualbox, 虛擬機器
 Author: Cad Lab
 @others
 在這個展示中, 我們利用 Windows 7 操作系統中的 Virtualbox 5.0 建立了一個 Windows 7 pro 操作系統的虛擬機器 vdi 檔案後, 將這個 64 位元的 Windows 7 pro 檔案轉到 Ubuntu Virtualbox 中, 用來建立 新的 Windows 7 虛擬機器, 其中分別啟用三種虛擬網路卡的設定, 也就是分別將虛擬網卡設定為 NAT, Host-only 與 Bridged 網路, 主要目的在說明這三種虛擬網路的使用時機與設定細節.
@@ -7702,6 +7705,249 @@ Virtualbox 的 global configuratin 網路設定中, 可以無需建立任何 NAT
 就 MDE CADLab 的實際配置而言, 我們在 Windows 7 Host 操作系統中配置 Ubuntu 虛擬機器, 並採用 &lt;a href="http://vboxvmservice.sourceforge.net/"&gt;http://vboxvmservice.sourceforge.net/&lt;/a&gt; 服務自動啟用, 然後在 Ubuntu 虛擬操作系統中配置固定的 IPV4 與 IPV6 網路位址, 安裝配置支援雙網路協定的 Squid 代理主機後, 接著再透過 Bridged 網路設定讓其他純 IPV6 上網的電腦, 就能透過這些 Squid 代理主機連線到 IPV4 與 IPV6 的網路服務器.
 
 最後, 當我們在安裝配置各種電腦輔助設計、工程分析、電腦輔助製造與自動控制相關套件時, 可以在一台機器中完成多元的安裝配置與測試, 並且希望未來能將這些實際配置的過程納入相關課程教學之中.</t>
+<t tx="amd.20160622201721.1">@language md
+Title: Ubuntu 16.04, Windows 7 與 Windows 10 虛擬機器
+Category: 導引
+Tags: cadlab, Virtualbox, 虛擬機器
+Author: Cad Lab
+@others
+Ubuntu 16.04 剛推出兩個月, Windows 10 則推出將近滿一年, 這兩個號稱創新度高的電腦操作系統, 經過幾個禮拜密集的測試, 在今年暑假即將更新的電腦輔助設計室所採購的電腦中, 初步決定都不積極採用, 而只在虛擬機器中提供測試之用.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+當然我們必須承認, 問題出在我們迎接創新的速度不足, 現有整體環境沒有辦法迎接這兩種"最新"的操作系統.
+
+兩年多前從 Ubuntu 12.04 轉到 14.04 的過程, 或者 5 年多前從 XP 轉進 Windows 7 時, 也面臨過類似的問題, 但是感覺問題都很容易解決, 只是這次之所以捨棄全面提升到 Ubuntu 16.04, 問題出在 AMD 陣營中的 libGL 程式庫驅動程式老舊, 導致 X-Windows 無法 remote 帶回瀏覽器, 至於 Windows 10 在非觸控螢幕的電腦上感覺操作效能提升不大, 但是必須額外配合新介面與並不實用的許多即時服務, 所花費的代價實在太高, 因此作罷.
+
+另外一個讓我們決定不採用 Windows 10 與 Ubuntu 16.04 作為主要操作系統的原因是, 機械設計工程系正要逐步將已經使用多年的 IPV4 環境, 換轉到 IPV6 與 IPV4 混用的環境, 所遭遇的問題已經夠多, 因此決定在新電腦安裝 Windows 7 專業版, 並且在其中利用 Virtualbox 配置 Windows 7, Windows 10, Ubuntu 14.04 與 Ubuntu 16.04 虛擬機器, 讓使用者可以在虛實整合的環境中配置各種機械設計相關的網路環境.
+
+###Python3, Git 與 Leo Editor
+
+機械設計工程系目前的計算機程式、網際內容管理、電腦輔助設計實習與協同產品設計實習等課程, 強調以數位運算方法來協助解決問題的工具, 包含 Python3, Git 與 Leo Editor.
+
+在 Windows 64 位元環境中, 我們已經製作了一套可攜的 Python3 程式環境, 其中還包括 Git 與 Leo Editor, 使用者只要 git clone https://github.com/chiamingyen/kmol2016.git 就可以取得, 但前提是使用者的 Windows 環境必須要有 git 工具, 可以從 &lt;a href="https://github.com/git-for-windows/git/releases"&gt;https://github.com/git-for-windows/git/releases&lt;/a&gt; 下載.
+
+假如是在 Ubuntu 14.04 或 16.04 環境中, 使用純 IPV6 網路協定上網, 而 apt-get, pip3 或 git 等指令正, 可能就必須要設定支援 IPV4/IPV6 的代理主機, 才能正確執行.
+
+###Git 使用代理主機
+
+git 在純 IPV6 協定下使用代理主機的設定如下:
+
+git config --global http.proxy http://[2001:288:6004:17::17]:3128
+
+git config --global https.proxy http://[2001:288:6004:17::17]:3128
+
+###apt 使用代理主機
+
+編輯 /etc/apt/apt.conf, 並且納入下列內容:
+
+Acquire::http::Proxy "http://username:password@your.proxy.server:3128";
+
+之後就可以安裝 python3-pip 與 python3-pyqt5
+
+sudo apt install python3-pip
+
+sudo apt install python3-pyqt5
+
+###pip3 使用代理主機
+
+在支援純 IPV6 協定上網的 Ubuntu 電腦安裝 pip3 與 python3-pyqt5 之後, 就可以接著安裝 Leo Editor, 但是為了安裝 5.1 以上的版本 (才提供 @clean 節點指令的支援), 必須要先以下列指令安裝 Leo Editor 5.0b2 版, 然後再利用 5.3 版的程式碼進行替換即可.
+
+首先是利用代理主機安裝 leo:
+
+sudo pip3 --proxy=[2001:288:6004:17::17]:3128 install leo
+
+假如使用者利用：
+
+sudo pip3 --proxy=[2001:288:6004:17::17]:3128 install  https://github.com/leo-editor/leo-editor/archive/5.3.zip
+
+執行 Leo Editor 5.3 版程式碼安裝時, 將會出現以 Python2 進行 setup.py 的錯誤, 處理方式可以採直接修改 Leo Editor 5.3 版的原始碼, 或者安裝完 5.0b2 版之後, 再將 5.3 版的程式碼取代 /usr/local/lib/python3.5/dist-packages/leo 中的內容.
+
+另外, 利用 pip3 移除模組的指令如下:
+
+sudo pip3 --proxy=[2001:288:6004:17::17]:3128 uninstall leo
+
+而在 Ubuntu 16.04 中移除 apt 所安裝的模組, 則必須使用:
+
+sudo apt remove python3-pyqt4
+
+完成 Leo Editor 安裝後, 就可以利用 leo&amp; 啟動.
+
+###純 IPV6 環境下的 wsgi 程式
+
+當 Virtualbox 環境下的各虛擬機器, 利用  Bridged 網路設定, 成為一台廣域網路上的伺服器之後, 假如要以 IPV6 網址執行 wsgi 程式, 可以修改 CMSimply 的設定:
+
+&lt;pre class="brush: python"&gt;
+if inOpenshift:
+    # operate in OpenShift
+    application = cherrypy.Application(root, config = application_conf)
+else:
+    # operate in localhost
+    cherrypy.server.socket_port = 8080
+    cherrypy.server.socket_host = '2001:288:6004:17::6666'
+    cherrypy.quickstart(root, config = application_conf)
+&lt;/pre&gt;
+
+然後透過 http://[2001:288:6004:17::6666]:8080 擷取 CMSimply  wsgi 網際程式, 但是目前的 CMSimply 系統中的 html editor 為 tinymce3, 無法正確解析 IPV6 網址, 因此需要改用最新的 &lt;a href="https://www.tinymce.com/"&gt;tinymce4&lt;/a&gt; 才行.
+
+但是, 隨著改用 tinymce4, 後續衍生的問題就是必須再將先前已經在 tinymce3 實現的各種 html 上傳檔案與圖片整合的程序, 全部修改為 tinymce4 相容.
+
+###Virtualbox 虛擬機器採用純 IPV6 結論
+
+隨著操作系統版本不斷更新, 而且各單位轉用 IPV6 的需求日益增高, 許多過去所使用的流程與架構都被迫必須修改因應:
+
+就各純 IPV6 環境架設的虛擬機器, 至少需要以下代理主機設定, 來配合許多僅支援 IPV4 的服務主機:
+
+1. git 指令的代理, 使用 git config --global http.proxy http://[2001:288:6004:17::17]:3128
+
+2. apt 或 apt-get 的代理, 必須建立 /etc/apt/apt.conf, 並納入代理主機的設定: Acquire::http::Proxy "http://username:password@your.proxy.server:3128";
+
+3. pip3 的代理, 則採用 sudo pip3 --proxy=[2001:288:6004:17::17]:3128 install leo
+
+除了上述的程式安裝代理, 後續還有 sftp 的代理, 工程軟體套件的認証協定, 也都必須配合 IPV4 轉進到 IPV6 逐一處理.
+  
+  
+</t>
+<t tx="amd.20160623151329.1">@language md
+Title: Tinymce4 使用導引
+Category: 導引
+Tags: cadlab, html editor, tinymce
+Author: Cad Lab
+@others
+&lt;a href="https://www.tinymce.com/"&gt;https://www.tinymce.com/&lt;/a&gt; 版本為 4.3.13 community 版本, 使用授權為 Open Source LGPL 2.1.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+###啟用 Tinymce4
+
+導入 Tinymce4 Javascript 程式庫, 然後啟動:
+
+&lt;pre class="brush: jscript"&gt;
+&amp;lt;script src='//cdn.tinymce.com/4/tinymce.min.js'&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script&amp;gt;tinymce.init({ selector:'textarea' });&amp;lt;/script&amp;gt;
+&lt;/pre&gt;
+
+有關 tinymce4 的啟動:
+
+&lt;pre class="brush: jscript"&gt;
+&amp;lt;script&amp;gt;
+tinymce.init({
+  selector: "textarea",
+  height: 500,
+  plugins: [
+    "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+    "table contextmenu directionality emoticons template textcolor paste textcolor colorpicker textpattern"
+  ],
+
+  toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+  toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+  toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+
+  menubar: false,
+  toolbar_items_size: 'small',
+
+  style_formats: [{
+    title: 'Bold text',
+    inline: 'b'
+  }, {
+    title: 'Red text',
+    inline: 'span',
+    styles: {
+      color: '#ff0000'
+    }
+  }, {
+    title: 'Red header',
+    block: 'h1',
+    styles: {
+      color: '#ff0000'
+    }
+  }, {
+    title: 'Example 1',
+    inline: 'span',
+    classes: 'example1'
+  }, {
+    title: 'Example 2',
+    inline: 'span',
+    classes: 'example2'
+  }, {
+    title: 'Table styles'
+  }, {
+    title: 'Table row 1',
+    selector: 'tr',
+    classes: 'tablerow1'
+  }],
+
+  templates: [{
+    title: 'Test template 1',
+    content: 'Test 1'
+  }, {
+    title: 'Test template 2',
+    content: 'Test 2'
+  }],
+  content_css: [
+    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+    '//www.tinymce.com/css/codepen.min.css'
+  ]
+});
+&amp;lt;/script&amp;gt;
+&lt;/pre&gt;
+
+這裡在將 CMSimply 中的 Tinymce3 改為 Tinymce4 的過程有一點必須注意, 因為 CMSimply 中的各頁面編輯所傳回的 html 並不需要 fullpage plugin, 因此導入 Tinyme4 時就必須避開 fullpage 的使用.
+
+</t>
+<t tx="amd.20160626092325.1">@language md
+Title: 讓 Virtualbox 虛擬機器隨主機啟動
+Category: 導引
+Tags: cadlab, Virtualbox, 虛擬機器
+Author: Cad Lab
+@others
+目前所使用的 Virtualbox 主體分別是 Windows 7 與 Ubuntu 14.04/16.04, 在 Windows 7 的虛擬機器可以透過 &lt;a href="http://vboxvmservice.sourceforge.net/"&gt;http://vboxvmservice.sourceforge.net/&lt;/a&gt;, 讓特定虛擬機器 (virtual machine), 隨著 Host 電腦的開啟而以 service 的方式啟用. 至於在 Ubuntu 14.04 或 16.04 操作系統中, 則可以在 /etc/init.d/ 目錄下建立一個啟動程序, 然後讓電腦在開關機時執行, 主要的指令是開機時, 利用 VBoxHeadless 啟動個別的虛擬機器, 且在關機時, 利用 VBoxManage controlvm 儲存各虛擬機器的運行狀態.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+StartVM 檔案的內容如下, 分別控制三台虛擬機器:
+
+&lt;pre class="brush: jscript"&gt;
+#! /bin/sh
+# /etc/init.d/StartVM
+ 
+VMUSER=yen
+VMNAME1="Ubuntu_1604_8888"
+VMNAME2="Ubuntu_1604_6666"
+VMNAME3="Ubuntu_1404_4444"
+ 
+case "$1" in
+start)
+echo "Starting VirtualBox VM..."
+sudo -H -b -u $VMUSER /usr/bin/VBoxHeadless -startvm "$VMNAME1"
+sudo -H -b -u $VMUSER /usr/bin/VBoxHeadless -startvm "$VMNAME2"
+sudo -H -b -u $VMUSER /usr/bin/VBoxHeadless -startvm "$VMNAME3"
+;;
+stop)
+echo "Saving state of Virtualbox VM..."
+sudo -H -u  $VMUSER /usr/bin/VBoxManage controlvm "$VMNAME1" savestate
+sudo -H -u  $VMUSER /usr/bin/VBoxManage controlvm "$VMNAME2" savestate
+sudo -H -u  $VMUSER /usr/bin/VBoxManage controlvm "$VMNAME3" savestate
+;;
+*)
+echo "Usage: /etc/init.d/StartVM {start|stop}"
+exit 1
+;;
+esac
+
+exit 0
+&lt;/pre&gt;
+
+接著讓 StartVM 程序檔案可以執行:
+
+sudo chmod +x /etc/init.d/StartVM
+
+最後則是將 StartVM 納入開機程序中:
+
+sudo update-rc.d StartVM defaults 99 01
+
+參考資料: &lt;a href="http://askubuntu.com/questions/57220/start-vboxheadless-vm-at-startup"&gt;http://askubuntu.com/questions/57220/start-vboxheadless-vm-at-startup&lt;/a&gt;</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃

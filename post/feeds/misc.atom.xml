@@ -1,1021 +1,1616 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/misc.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-06-21T11:34:28+08:00</updated><entry><title>跨操作系統的 Virtualbox vdi 檔案</title><link href="http://cadlab.mde.tw/post/kua-cao-zuo-xi-tong-de-virtualbox-vdi-dang-an.html" rel="alternate"></link><updated>2016-06-21T11:34:28+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-21:post/kua-cao-zuo-xi-tong-de-virtualbox-vdi-dang-an.html</id><summary type="html">&lt;p&gt;在這個展示中, 我們利用 Windows 7 操作系統中的 Virtualbox 5.0 建立了一個 Windows 7 pro 操作系統的虛擬機器 vdi 檔案後, 將這個 64 位元的 Windows 7 pro 檔案轉到 Ubuntu Virtualbox 中, 用來建立 新的 Windows 7 虛擬機器, 其中分別啟用三種虛擬網路卡的設定, 也就是分別將虛擬網卡設定為 NAT, Host-only 與 Bridged 網路, 主要目的在說明這三種虛擬網路的使用時機與設定細節.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/misc.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-06-26T10:06:56+08:00</updated><entry><title>網際機械設計 2D 繪圖</title><link href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html" rel="alternate"></link><updated>2016-06-26T10:06:56+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-06-26:post/wang-ji-ji-jie-she-ji-2d-hui-tu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://2015fallhw.github.io/arcidau/Flintlock.html"&gt;http://2015fallhw.github.io/arcidau/Flintlock.html&lt;/a&gt; 是一個典型的網際機械設計 2D 繪圖範例, CADLab 希望能夠利用 Brython 重新建立一個直接以 Python3 在網頁中繪圖的類似應用.&lt;/p&gt;
 
 
-&lt;h3&gt;NAT 網路設定&lt;/h3&gt;
-&lt;p&gt;通常使用者在虛擬機器中建立虛擬 NAT 網路卡, 在於讓虛擬機器利用網路轉址上網, 其中的設定只需要在 Virtualbox 的 File-Preference-Network 中加入對應的 NAT 設定, 決定該網路卡的名稱, 網路 CIDR, 是否啟用 DHCP, 以及是否支援 IPV6 協定與 Port Forwarding 等, 至於在個人虛擬機器中, 與此 NAT 網路對應的虛擬網路卡只要設定為透過 DHCP 取得 CIDR 所選用的網段網路 IP 位址, 就能以 NAT 方式上網.&lt;/p&gt;
-&lt;p&gt;當然, 從 File-Preference-Network 中的 NAT Networks 頁面中, 可以發現使用者可以建立多個 global configuration 對應的 NAT 網路, 並給予不同的名稱, 好讓隨後的虛擬機器中選用 NAT 啟動的虛擬網路卡時, 可以配合納入不同的網段, 模擬各種需求的網路架構.&lt;/p&gt;
-&lt;p&gt;以下這一張圖就是在 Ubuntu 操作系統中, File-Preference-Network 設定選項, 也就是所謂的 global configuration 設定, 這裡的設定適用於所有這個操作系統下 Virtualbox 所屬的虛擬機器.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_nat_1.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;當使用者進 File-Preference-Network 中的網路設定, 選擇新增 NAT 網路時, 呈現的畫面如下, NatNetwork 就是這個 NAT 網路的內定名稱, 假如使用者新增第二個 NAT 網路, 內定名稱就是 NatNetwork1, 當使用者建立虛擬機器, 並在虛擬機器中選擇建立 NAT 虛擬網路卡時, 就可以配合需要, 將該網路卡納入 NatNetwork 或 NatNetwork1 網段, 以取得不同網段的位址與設定.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_nat_2.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;接下來這個畫面就是有關 File-Preference-Network global configuration 中有關網路設定的第二個頁面, 也就是 Host-only 網路的設定頁面, 這是用來新增 "僅限主機" 網路中的喜好設定, 當使用者增加一組 Host-only 網路設定時, 就可以選擇該網路的網段與是否啟用虛擬的 DHCP 服務, 這項功能隨後再來說明.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_nat_3.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;而下面這張圖, 就是針對個別虛擬機器的網路卡設定, 這裡啟用的第1張網路卡, 選擇使用 NAT 設定, 從畫面上顯示, 選用的是最簡單的 NAT (而不是可以選擇網段的 NAT NetWork, 如前所述, 若選擇 NAT NetWork, 可以再對應到 NatNetwork 或 NatNetwork1 NAT 網路名稱), 這裡選擇 NAT, 目的純脆是讓虛擬機器上網.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_nat_4.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;接下來, 有關虛擬的 NAT 網路卡, 在對應的 Windows 7 操作系統中開機之後的網路設定畫面, 只要確定與 NAT 網路對應的虛擬網卡, 選擇所使用的 IPV4 或 IPV6 協定, 並讓該網卡以 DHCP client, 自動取得 IP 與網路設定即可.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_nat_6.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;這裡要特別提醒的是, 假如某一個虛擬機器啟用多片網路卡之後, 不同屬性的虛擬網卡只能透過 MAC 位址加以對應, 假如是在 Windows 虛擬操作系統, 可以利用命令列, 以 ipconfig /all 取得所有與網路相關的設定, 假如是在 Ubuntu 虛擬操作系統, 則採用 ifconfig.&lt;/p&gt;
-&lt;h3&gt;Host-only 網路設定與 tinyproxy&lt;/h3&gt;
-&lt;p&gt;接著, 我們來看看與 Host-only 相關的網路設定, 先前的網誌已經談過, Host-only 建置的主要目的, 通常在讓虛擬機器與 Host 間透過虛擬交換器, 讓 Host 的實體網路卡與虛擬機器的虛擬網路卡, 連接在同一個網段上, 而這個網段所使用的設定分為 global configuration 與個別虛擬機器的設定.&lt;/p&gt;
-&lt;p&gt;global configuration 可在 File-Preference-Network 的 Host-only Network 頁面中新增一個對應虛擬網卡, 而每一個虛擬 Host-only 網卡 global 設定, 可以決定所要使用的區域網路段, 這裡選擇不啟用 DHCP, 而是自行在虛擬機器的 Host-only 虛擬網卡設定固定 IPV4 與 IPV6 網址. &lt;/p&gt;
-&lt;p&gt;下圖就是設定 File-Preference-Network 的地方:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_1.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;使用者可以進入 Host-only 頁面, 新增一個 Host-only 的全域用虛擬網路設定.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_2.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;從下圖可以看到, 新增了一個 Host-only 的 vboxnet0 網路, 以及 Adapter 與 DHCP Server 的相關設定. 必須特別注意的是, 這裡的設定會影響 Host 操作系統中 (再提醒一下, 是 Host 中的虛擬網卡 ,而不是虛擬機器中的虛擬網路卡) 所產生的 Host-only 虛擬網路卡中的設定 (使用者無需手動設定, 當然也不可以自行手動修改設定, 因為必須與 Virtualbox 中的虛擬交換器與虛擬 DHCP 伺服器彼此對應) , 並且決定虛擬機器中加入此 Host-only 網路設定 (也就是 vboxnet0, 或其他 Host-only 網路設定, 分別以不同名稱對應) 中虛擬網卡所相依的設定.&lt;/p&gt;
-&lt;p&gt;例如, 下圖中的 Host-only Network Details 畫面中使用的 IPV4 位址為 192.168.56.1, 就表示 Host 中與此一 Host-only 對應的的虛擬網卡, 會採用這個網路位址設定.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_3.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;至於 DHCP Server 的設定, 如下圖所示, 假如啟用 DHCP, 且令其產生一個虛擬的 DHCP 伺服器, 可以設定該伺服器的網址與所能分配的網路位 IP 位址範圍:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_4.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;但是一般在機械設計分析與模擬的情境下, 選用 Host-only 虛擬網路, 通常是要在虛擬機器與 Host 之後配置固定 IP 的各種伺服器, 因此就必須如下圖, 不啟用 DHCP, 而是在各虛擬機器中選擇所附屬的 Host-only 網路設定 (如附屬到前述的 vboxnet0, 或其他 Host-only 網路設定) 後, 配合該網路段, 設定固定 IP 位址.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_5.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;處理好了 Host-only global configuration 設定後, 接下來就是配合在虛擬機器中, 啟用 Host-only 的網路卡, 如下圖所示, 我們將該虛擬網路卡附屬到 vboxnet0 設定, 並且選擇網路卡的型號, 並且設定 MAC 位址.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_6.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;完成設定後, 可以從下圖見到 test 虛擬機器中的虛擬網路卡已經透過 Host-only 配置到 vboxnet0 的設定中:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_7.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;接下來, 將 test 虛擬機器開機, 下圖就是配合 vboxnet0 中所選擇的 192.168.56.1 作為虛擬網路的通道 (gateway), 完成設定, 但是從下圖可以看到, 該虛擬機器僅與 Host 操作系統中的虛擬網卡, 以虛擬交換器相連,  因為屬於內部網路段, 並沒有任何虛擬 NAT 或橋接, 讓此一 192.168.56.0/24 的網路連上廣域網路, 因此若這時啟動 Chrome, 在不使用 Host 機器中的代理主機情況下, 將無法上網.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_8.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;有關 Host 操作系統中的代理主機 (proxy server), 先前我們在 Windows host 中介紹利用 &lt;a href="http://www.youngzsoft.net/ccproxy/"&gt;ccproxy&lt;/a&gt; 當作代理主機, 這裡在 Ubuntu 中則利用 sudo apt-get install tinyproxy 安裝 &lt;a href="https://tinyproxy.github.io/"&gt;tinyproxy&lt;/a&gt;, 並設定允許 VM 連結. 當然也可以在 Host 機器中安裝功能更強的 Squid 作為代理主機.&lt;/p&gt;
-&lt;p&gt;如下圖所示, 在 Host-only 模式下, 虛擬機器設定了 Host 機器中的代理主機, 就可以順利上網了, 而且虛擬機器中的 git 操作, 也必須透過 git config --global http.proxy http://192.168.56.1:8888 與 git config --global https.proxy http://192.168.56.1:8888 才能連上廣域網路.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_hostonly_9.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;接著, 在 Host-only 的網路設定中, 為了讓虛擬機器中的 Filezilla 可以經由 tinyproxy 代理主機以 SFTP 連線, 則該 proxy 必須允許 port 22 進行 connect 資料傳送, 以下為 tinyproxy 的參考用設定檔:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-##
-## tinyproxy.conf -- tinyproxy daemon configuration file
-##
-## This example tinyproxy.conf file contains example settings
-## with explanations in comments. For decriptions of all
-## parameters, see the tinproxy.conf(5) manual page.
-##
+&lt;style type="text/css" media="screen"&gt;
 
-#
-# User/Group: This allows you to set the user and group that will be
-# used for tinyproxy after the initial binding to the port has been done
-# as the root user. Either the user or group name or the UID or GID
-# number may be used.
-#
-User nobody
-Group nogroup
-
-#
-# Port: Specify the port which tinyproxy will listen on.  Please note
-# that should you choose to run on a port lower than 1024 you will need
-# to start tinyproxy using root.
-# tinyproxy 代理主機所使用的埠號
-
-Port 8888
-
-#
-# Listen: If you have multiple interfaces this allows you to bind to
-# only one. If this is commented out, tinyproxy will bind to all
-# interfaces present.
-#
-#Listen 192.168.0.1
-
-#
-# Bind: This allows you to specify which interface will be used for
-# outgoing connections.  This is useful for multi-home'd machines where
-# you want all traffic to appear outgoing from one particular interface.
-#
-#Bind 192.168.0.1
-
-#
-# BindSame: If enabled, tinyproxy will bind the outgoing connection to the
-# ip address of the incoming connection.
-#
-#BindSame yes
-
-#
-# Timeout: The maximum number of seconds of inactivity a connection is
-# allowed to have before it is closed by tinyproxy.
-#
-Timeout 600
-
-#
-# ErrorFile: Defines the HTML file to send when a given HTTP error
-# occurs.  You will probably need to customize the location to your
-# particular install.  The usual locations to check are:
-#   /usr/local/share/tinyproxy
-#   /usr/share/tinyproxy
-#   /etc/tinyproxy
-#
-#ErrorFile 404 "/usr/share/tinyproxy/404.html"
-#ErrorFile 400 "/usr/share/tinyproxy/400.html"
-#ErrorFile 503 "/usr/share/tinyproxy/503.html"
-#ErrorFile 403 "/usr/share/tinyproxy/403.html"
-#ErrorFile 408 "/usr/share/tinyproxy/408.html"
-
-#
-# DefaultErrorFile: The HTML file that gets sent if there is no
-# HTML file defined with an ErrorFile keyword for the HTTP error
-# that has occured.
-#
-DefaultErrorFile "/usr/share/tinyproxy/default.html"
-
-#
-# StatHost: This configures the host name or IP address that is treated
-# as the stat host: Whenever a request for this host is received,
-# Tinyproxy will return an internal statistics page instead of
-# forwarding the request to that host.  The default value of StatHost is
-# tinyproxy.stats.
-#
-#StatHost "tinyproxy.stats"
-#
-
-#
-# StatFile: The HTML file that gets sent when a request is made
-# for the stathost.  If this file doesn't exist a basic page is
-# hardcoded in tinyproxy.
-#
-StatFile "/usr/share/tinyproxy/stats.html"
-
-#
-# Logfile: Allows you to specify the location where information should
-# be logged to.  If you would prefer to log to syslog, then disable this
-# and enable the Syslog directive.  These directives are mutually
-# exclusive.
-#
-Logfile "/var/log/tinyproxy/tinyproxy.log"
-
-#
-# Syslog: Tell tinyproxy to use syslog instead of a logfile.  This
-# option must not be enabled if the Logfile directive is being used.
-# These two directives are mutually exclusive.
-#
-#Syslog On
-
-#
-# LogLevel: 
-#
-# Set the logging level. Allowed settings are:
-#   Critical    (least verbose)
-#   Error
-#   Warning
-#   Notice
-#   Connect     (to log connections without Info's noise)
-#   Info        (most verbose)
-#
-# The LogLevel logs from the set level and above. For example, if the
-# LogLevel was set to Warning, then all log messages from Warning to
-# Critical would be output, but Notice and below would be suppressed.
-#
-LogLevel Info
-
-#
-# PidFile: Write the PID of the main tinyproxy thread to this file so it
-# can be used for signalling purposes.
-#
-PidFile "/var/run/tinyproxy/tinyproxy.pid"
-
-#
-# XTinyproxy: Tell Tinyproxy to include the X-Tinyproxy header, which
-# contains the client's IP address.
-#
-#XTinyproxy Yes
-
-#
-# Upstream:
-#
-# Turns on upstream proxy support.
-#
-# The upstream rules allow you to selectively route upstream connections
-# based on the host/domain of the site being accessed.
-#
-# For example:
-#  # connection to test domain goes through testproxy
-#  upstream testproxy:8008 ".test.domain.invalid"
-#  upstream testproxy:8008 ".our_testbed.example.com"
-#  upstream testproxy:8008 "192.168.128.0/255.255.254.0"
-#
-#  # no upstream proxy for internal websites and unqualified hosts
-#  no upstream ".internal.example.com"
-#  no upstream "www.example.com"
-#  no upstream "10.0.0.0/8"
-#  no upstream "192.168.0.0/255.255.254.0"
-#  no upstream "."
-#
-#  # connection to these boxes go through their DMZ firewalls
-#  upstream cust1_firewall:8008 "testbed_for_cust1"
-#  upstream cust2_firewall:8008 "testbed_for_cust2"
-#
-#  # default upstream is internet firewall
-#  upstream firewall.internal.example.com:80
-#
-# The LAST matching rule wins the route decision.  As you can see, you
-# can use a host, or a domain:
-#  name     matches host exactly
-#  .name    matches any host in domain "name"
-#  .        matches any host with no domain (in 'empty' domain)
-#  IP/bits  matches network/mask
-#  IP/mask  matches network/mask
-#
-#Upstream some.remote.proxy:port
-
-#
-# MaxClients: This is the absolute highest number of threads which will
-# be created. In other words, only MaxClients number of clients can be
-# connected at the same time.
-#
-MaxClients 100
-
-#
-# MinSpareServers/MaxSpareServers: These settings set the upper and
-# lower limit for the number of spare servers which should be available.
-#
-# If the number of spare servers falls below MinSpareServers then new
-# server processes will be spawned.  If the number of servers exceeds
-# MaxSpareServers then the extras will be killed off.
-#
-MinSpareServers 5
-MaxSpareServers 20
-
-#
-# StartServers: The number of servers to start initially.
-#
-StartServers 10
-
-#
-# MaxRequestsPerChild: The number of connections a thread will handle
-# before it is killed. In practise this should be set to 0, which
-# disables thread reaping. If you do notice problems with memory
-# leakage, then set this to something like 10000.
-#
-MaxRequestsPerChild 0
-
-#
-# Allow: Customization of authorization controls. If there are any
-# access control keywords then the default action is to DENY. Otherwise,
-# the default action is ALLOW.
-#
-# The order of the controls are important. All incoming connections are
-# tested against the controls based on order.
-#
-Allow 127.0.0.1
-# 設定允許使用 tinyproxy 代理主機的網路段
-Allow 192.168.56.0/24
-#Allow 192.168.0.0/16
-#Allow 172.16.0.0/12
-#Allow 10.0.0.0/8
-
-#
-# AddHeader: Adds the specified headers to outgoing HTTP requests that
-# Tinyproxy makes. Note that this option will not work for HTTPS
-# traffic, as Tinyproxy has no control over what headers are exchanged.
-#
-#AddHeader "X-My-Header" "Powered by Tinyproxy"
-
-#
-# ViaProxyName: The "Via" header is required by the HTTP RFC, but using
-# the real host name is a security concern.  If the following directive
-# is enabled, the string supplied will be used as the host name in the
-# Via header; otherwise, the server's host name will be used.
-#
-ViaProxyName "tinyproxy"
-
-#
-# DisableViaHeader: When this is set to yes, Tinyproxy does NOT add
-# the Via header to the requests. This virtually puts Tinyproxy into
-# stealth mode. Note that RFC 2616 requires proxies to set the Via
-# header, so by enabling this option, you break compliance.
-# Don't disable the Via header unless you know what you are doing...
-#
-#DisableViaHeader Yes
-
-#
-# Filter: This allows you to specify the location of the filter file.
-#
-#Filter "/etc/filter"
-
-#
-# FilterURLs: Filter based on URLs rather than domains.
-#
-#FilterURLs On
-
-#
-# FilterExtended: Use POSIX Extended regular expressions rather than
-# basic.
-#
-#FilterExtended On
-
-#
-# FilterCaseSensitive: Use case sensitive regular expressions.
-#
-#FilterCaseSensitive On
-
-#
-# FilterDefaultDeny: Change the default policy of the filtering system.
-# If this directive is commented out, or is set to "No" then the default
-# policy is to allow everything which is not specifically denied by the
-# filter file.
-#
-# However, by setting this directive to "Yes" the default policy becomes
-# to deny everything which is _not_ specifically allowed by the filter
-# file.
-#
-#FilterDefaultDeny Yes
-
-#
-# Anonymous: If an Anonymous keyword is present, then anonymous proxying
-# is enabled.  The headers listed are allowed through, while all others
-# are denied. If no Anonymous keyword is present, then all headers are
-# allowed through.  You must include quotes around the headers.
-#
-# Most sites require cookies to be enabled for them to work correctly, so
-# you will need to allow Cookies through if you access those sites.
-#
-#Anonymous "Host"
-#Anonymous "Authorization"
-#Anonymous "Cookie"
-
-#
-# ConnectPort: This is a list of ports allowed by tinyproxy when the
-# CONNECT method is used.  To disable the CONNECT method altogether, set
-# the value to 0.  If no ConnectPort line is found, all ports are
-# allowed (which is not very secure.)
-#
-# The following two ports are used by SSL.
-#
-# for HTTPS
-ConnectPort 443
-ConnectPort 563
-# 為了讓虛擬機器中的 filezilla 可以透過 SFTP 協定傳輸, 必須允許使用 port 22
-ConnectPort 22
-#
-# Configure one or more ReversePath directives to enable reverse proxy
-# support. With reverse proxying it's possible to make a number of
-# sites appear as if they were part of a single site.
-#
-# If you uncomment the following two directives and run tinyproxy
-# on your own computer at port 8888, you can access Google using
-# http://localhost:8888/google/ and Wired News using
-# http://localhost:8888/wired/news/. Neither will actually work
-# until you uncomment ReverseMagic as they use absolute linking.
-#
-#ReversePath "/google/" "http://www.google.com/"
-#ReversePath "/wired/"  "http://www.wired.com/"
-
-#
-# When using tinyproxy as a reverse proxy, it is STRONGLY recommended
-# that the normal proxy is turned off by uncommenting the next directive.
-#
-#ReverseOnly Yes
-
-#
-# Use a cookie to track reverse proxy mappings. If you need to reverse
-# proxy sites which have absolute links you must uncomment this.
-#
-#ReverseMagic Yes
-
-#
-# The URL that's used to access this reverse proxy. The URL is used to
-# rewrite HTTP redirects so that they won't escape the proxy. If you
-# have a chain of reverse proxies, you'll need to put the outermost
-# URL here (the address which the end user types into his/her browser).
-#
-# If not set then no rewriting occurs.
-#
-#ReverseBaseURL "http://localhost:8888/"
-&lt;/pre&gt;
-
-&lt;h3&gt;Bridged 網路設定&lt;/h3&gt;
-&lt;p&gt;接下來, 則是 Bridged network 的應用, 先前已經提過, 虛擬機器採用 Bridged 設定的目的在於讓虛擬機器可以藉由 host 電腦的實體網路卡, 充當一台虛擬的伺服器.&lt;/p&gt;
-&lt;p&gt;當使用者在建立虛擬機器的過程, 啟用 Bridged 網路卡時, 就必須選擇 host 電腦上, 所要附加的一片實體網路卡, 經過實作, 即便在只有一片實體網路卡的電腦, 也可以將此唯一的實體網卡附加給虛擬機器中的 Bridged 虛擬網路卡, &lt;/p&gt;
-&lt;p&gt;以下的網路情境是 Host 為 Ubuntu 操作系統採用光世代路由器, 以 IPV4 tunnel 啟用 IPV6 網路協定, 因此一旦 Windows 7 中的虛擬機器選擇將虛擬網卡, 以 bridged network 的設定, 附加到 Ubuntu 操作系統中唯一的網路卡時, 就 Ubuntu 操作系統所對應的連外網路來說, Windows 7 的這一片虛擬網卡, 就成為一張可以獨立設定與運作的網路卡 (儘管是虛擬產生, 且透過虛擬交換器與實體網卡相連), 由於此時 Host 機器中的實體網路卡是直接連光世代的 NAT/DHCP 上網, 因此若將虛擬機器 Windows 7 中的這片 bridged 虛擬網卡設為採 DHCP client 連網, 則這片網卡也能透過虛擬的交換器與 Ubuntu 的實體網卡同位階, 以 DHCP 取得光世代的網路設定而連接到廣域網路, 如下圖所示:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_bridged_1.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;讓我們再回頭看看 bridged 網路的設定, 選用 bridged 網路設定後的虛擬機器 Windows 7 網卡採自動取得網路設定:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_bridged_2.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;Virtualbox 的 global configuratin 網路設定中, 可以無需建立任何 NAT 或 Host-only 的設定:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_bridged_3.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_bridged_4.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;只需要在個別的虛擬機器網路設定中, 啟用 Bridged 網路時, 與 Host 中的實體網路卡進行綁定 (這裡 attached 到 Ubuntu 操作系統中的 p10p1 實體網路卡):&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_bridged_5.png" width="800" /&gt;&lt;/p&gt;
-&lt;h3&gt;Virtualbox 網路設定結論&lt;/h3&gt;
-&lt;p&gt;從上面與 Virtualbox 網路設定有關的三種模式: NAT, Host-only 與 Bridged, 各有不同的特性, NAT 可以簡便地讓虛擬機器上網, Host-only 可以在主機範圍以內的虛擬網域中創造出多台內部伺服器, 而 Bridged 網路則透過 Host 實體網路卡的驅動程式與實體的網路卡接線, 在虛擬機器中模擬出一片如假包換的網路卡, 可以讓外部網路上的主機, 直接連線到虛擬機器中的各種伺服服務.&lt;/p&gt;
-&lt;p&gt;就 MDE CADLab 的實際配置而言, 我們在 Windows 7 Host 操作系統中配置 Ubuntu 虛擬機器, 並採用 &lt;a href="http://vboxvmservice.sourceforge.net/"&gt;http://vboxvmservice.sourceforge.net/&lt;/a&gt; 服務自動啟用, 然後在 Ubuntu 虛擬操作系統中配置固定的 IPV4 與 IPV6 網路位址, 安裝配置支援雙網路協定的 Squid 代理主機後, 接著再透過 Bridged 網路設定讓其他純 IPV6 上網的電腦, 就能透過這些 Squid 代理主機連線到 IPV4 與 IPV6 的網路服務器.&lt;/p&gt;
-&lt;p&gt;最後, 當我們在安裝配置各種電腦輔助設計、工程分析、電腦輔助製造與自動控制相關套件時, 可以在一台機器中完成多元的安裝配置與測試, 並且希望未來能將這些實際配置的過程納入相關課程教學之中.&lt;/p&gt;</summary><category term="cadlab"></category><category term="Virtualbox"></category></entry><entry><title>Virtualbox 的應用與網路設定 (二)</title><link href="http://cadlab.mde.tw/post/virtualbox-de-ying-yong-yu-wang-lu-she-ding-er.html" rel="alternate"></link><updated>2016-06-20T21:45:08+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-20:post/virtualbox-de-ying-yong-yu-wang-lu-she-ding-er.html</id><summary type="html">&lt;p&gt;透過 Virtualbox 的使用說明: &lt;a href="https://www.virtualbox.org/manual/"&gt;https://www.virtualbox.org/manual/&lt;/a&gt; 可以了解一個 Virtualbox 的虛擬機器, 若啟用 ICH9 Chipset, 最多可以&lt;a href="https://www.virtualbox.org/manual/ch03.html#settings-motherboard"&gt;支援 36 片網路卡&lt;/a&gt;.&lt;/p&gt;
-
-
-&lt;h3&gt;Virtualbox 虛擬機器最多可以支援 36 片網路卡&lt;/h3&gt;
-&lt;p&gt;如下圖所示:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_ich9_36_nic.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;至於 &lt;a href="https://www.virtualbox.org/manual/ch06.html#network_hostonly"&gt;host-only 的網路卡設定&lt;/a&gt; 正好介於 bridged 與 internal 網路設定特性之間. 也就是說 host-only 網路卡設定與 bridged 網路卡設定類似, 可以想像各採用 host-only 設定的虛擬機器與 host 機器的網路線全部接到同一台network switch (網路交換器), 不僅可以彼此連線, 也能與 host 連線. 但是 host-only 網路卡設定與 bridged network 設定的差異是, host-only 無需與任何實體網路卡進行橋接, 而是透過位於 host 機器上的虛擬網路卡達到與各虛擬機器及 host 網路相連的目的. &lt;/p&gt;
-&lt;p&gt;而 host-only 網路卡設定與 internal 網路設定類似的地方, 在於這些設定為 host-only 網路卡相連的虛擬機器無法與 host 以外的網路相連.&lt;/p&gt;
-&lt;p&gt;另外, 透過 bridged 網路卡設定說明: &lt;a href="https://www.virtualbox.org/manual/ch06.html#network_bridged"&gt;https://www.virtualbox.org/manual/ch06.html#network_bridged&lt;/a&gt;, 我們也可以得知, 所謂虛擬機器的橋接網路連線設定, 就是要讓虛擬機器透過 host 上的實體網路卡, 與外部的網路相連, 成為一台與 host 位階相同的伺服機器.&lt;/p&gt;
-&lt;h3&gt;虛擬機器與虛擬硬碟的 uuid 編號&lt;/h3&gt;
-&lt;p&gt;至於在使用 Virtualbox 的過程, 當使用者需要設定虛擬機器的 uuid 時, 可以透過下列 Python3 程式產生 uuid.&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-import uuid
-print(uuid.uuid1())
-#UUID('5361a11b-615c-42bf-9bdb-e2c3790ada14')
-&lt;/pre&gt;
-
-&lt;p&gt;接著再利用:&lt;/p&gt;
-&lt;p&gt;VBoxManage startvm "Your VM name", 使用 Virtualbox 指定的 uuid, 或者自行指定虛擬機器的 uuid.&lt;/p&gt;
-&lt;p&gt;VBoxManage startvm "Your VM name" 5361a11b-615c-42bf-9bdb-e2c3790ada14&lt;/p&gt;
-&lt;p&gt;由於虛擬機器的 uuid 只用於 global configuration data 的設定, 以及各虛擬機器啟動時的基本辨識, 因此也可以直接在設定檔案中更改, 只要前後呼應即可. 但是虛擬硬碟的對應 uuid 則與 .vdi 檔案綁定, 因此根據 &lt;a href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-clonevdi"&gt;https://www.virtualbox.org/manual/ch08.html#vboxmanage-clonevdi&lt;/a&gt; 中的說明, 可以利用:&lt;/p&gt;
-&lt;p&gt;VBoxManage clonemedium Master.vdi Clone.vdi&lt;/p&gt;
-&lt;p&gt;手動進行 vdi 檔案的複製, 基本概念是存在同一個 host 中的虛擬機器個別要有一個 uuid 編號, 而這個編號會在 host 中所安裝的 Virtualbox 套件中, 經由 preferances 設定檔案與個別虛擬機器引用時進行對應, 至於虛擬硬碟的 uuid, 除了與 .vdi 綁定, 也會在個別虛擬機器的設定檔案中前後出現兩次.&lt;/p&gt;
-&lt;p&gt;但是若 Master.vdi 在下 VBoxManage.exe 指令的 Host 機器上, 已經註冊在虛擬機器中, 則必須要先更改虛擬機器的硬碟 .vdi 檔案之後, 才能夠執行 clonemedium 指令:&lt;/p&gt;
-&lt;p&gt;也就是必須先執行:&lt;/p&gt;
-&lt;p&gt;"c:\Program Files\Oracle\VirtualBox\VBoxManage.exe" internalcommands sethduuid registered_vdi.vdi&lt;/p&gt;
-&lt;p&gt;然後再執行:&lt;/p&gt;
-&lt;p&gt;"c:\Program Files\Oracle\VirtualBox\VBoxManage.exe" clonemedium registered_vdi.vdi new_vdi.vdi&lt;/p&gt;
-&lt;p&gt;之後若在同一個 Virtualbox 的主體中利用此一 new_vdi.vdi 建立虛擬機器, 就不會發生硬碟 uuid 編號重複的問題.&lt;/p&gt;
-&lt;p&gt;至於 Global configuration data 檔案的存放位置, 根據 &lt;a href="https://www.virtualbox.org/manual/ch10.html#idm8784"&gt;https://www.virtualbox.org/manual/ch10.html#idm8784&lt;/a&gt; 的說明, 在視窗操作系統會存在 HOME/.VirtualBox 目錄, 以 xml 格式儲存, 在 Linux 與 Solaris 操作系統中, 則儲存在 HOME/.config/VirtualBox 目錄中, 假如是 OS X 操作系統, 則會儲存在 HOME/Library/VirtualBox.&lt;/p&gt;
-&lt;p&gt;值得一提的是, 當操作系統中 Virtualbox 沒有開啟時, 使用者可以直接修改上述的相關設定檔案, 例如, Virtualbox 的 GUI 介面中 ,只能讓一個虛擬機器啟用 4 片網路卡, 假如使用者需要啟用第 5 ~ 36 片網路卡時, 可以根據 &lt;a href="https://www.virtualbox.org/manual/ch08.html#idm4023"&gt;https://www.virtualbox.org/manual/ch08.html#idm4023&lt;/a&gt; 的說明, 利用 VBoxManage modifyvm 指令進行設定, 或者直接編輯相關的設定檔案達成.&lt;/p&gt;
-&lt;h3&gt;Virtualbox 虛擬機器檔案跨操作系統應用&lt;/h3&gt;
-&lt;p&gt;以下則是在 Windows 7 Pro 電腦上啟動 Vt-x, 建立 64 位元的 Windows 7 虛擬機器後, 將虛擬機器檔案轉到 Ubuntu 的 Virtualbox 上, 然後根據上述說明, 啟動 36 片虛擬網路卡的過程畫面:&lt;/p&gt;
-&lt;p&gt;首先是從網路上下載 Windows 7 64 位元的虛擬機器檔案壓縮檔, 然後解開壓縮檔, 準備在 Ubuntu 上的 Virtualbox 建立虛擬機器:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/win7_64_on_ubuntu1.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;接著是解開壓縮檔案之後的 Windows 7 虛擬機器檔案, 其中包括 .vdi 與兩個虛擬機器的設定檔:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/win7_64_on_ubuntu2.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;利用解開壓縮的 .vdi 檔案, 在 Ubuntu 上的 Virtualbox 建立虛擬機器, 每一個虛擬機器都對應一個 .vdi 檔案與兩個設定檔案:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/win7_64_on_ubuntu3.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;接下來是 Ubuntu 上的虛擬機器準備開機的畫面:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/win7_64_on_ubuntu4.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;接著是虛擬機器在 Ubuntu 上開啟 Windows 7 的畫面, 測試 V-rep, 可攜 Python3 程式環境啟動, 開啟 Leo Editor 與 Jypyter 的畫面:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/win7_64_on_ubuntu5.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;最後則是在 Windows 7 虛擬機器中創建 36 張虛擬網路卡的畫面:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/win7_64_on_ubuntu6.png" width="800" /&gt;&lt;/p&gt;
-&lt;h3&gt;虛擬機器設定檔案&lt;/h3&gt;
-&lt;p&gt;以下則為創建 36 片虛擬網路卡的虛擬機器設定檔案:&lt;/p&gt;
-&lt;pre class="brush:html"&gt;
-&amp;lt;?xml version="1.0"?&amp;gt;
-&amp;lt;!--
-** DO NOT EDIT THIS FILE.
-** If you make changes to this file while any VirtualBox related application
-** is running, your changes will be overwritten later, without taking effect.
-** Use VBoxManage or the VirtualBox Manager GUI to make changes.
---&amp;gt;
-&amp;lt;VirtualBox xmlns="http://www.innotek.de/VirtualBox-settings" version="1.14-linux"&amp;gt;
-  &amp;lt;Machine uuid="{2d4c505c-6d5c-430b-9e07-e7cc478d3386}" name="test" OSType="Windows7_64" snapshotFolder="Snapshots" lastStateChange="2016-06-18T12:23:49Z"&amp;gt;
-    &amp;lt;MediaRegistry&amp;gt;
-      &amp;lt;HardDisks&amp;gt;
-        &amp;lt;HardDisk uuid="{f03c812c-5a12-496b-bd9a-d235f809d184}" location="/home/amd/VirtualBox VMs/Win7/cadlab_win7_64/cadlab_win7_64.vdi" format="VDI" type="Normal"/&amp;gt;
-      &amp;lt;/HardDisks&amp;gt;
-      &amp;lt;DVDImages/&amp;gt;
-      &amp;lt;FloppyImages/&amp;gt;
-    &amp;lt;/MediaRegistry&amp;gt;
-    &amp;lt;ExtraData&amp;gt;
-      &amp;lt;ExtraDataItem name="GUI/LastGuestSizeHint" value="1835,986"/&amp;gt;
-      &amp;lt;ExtraDataItem name="GUI/LastNormalWindowPosition" value="710,284,1835,1008"/&amp;gt;
-    &amp;lt;/ExtraData&amp;gt;
-    &amp;lt;Hardware version="2"&amp;gt;
-      &amp;lt;CPU count="1" hotplug="false"&amp;gt;
-        &amp;lt;HardwareVirtEx enabled="true"/&amp;gt;
-        &amp;lt;HardwareVirtExNestedPaging enabled="true"/&amp;gt;
-        &amp;lt;HardwareVirtExVPID enabled="true"/&amp;gt;
-        &amp;lt;HardwareVirtExUX enabled="true"/&amp;gt;
-        &amp;lt;PAE enabled="false"/&amp;gt;
-        &amp;lt;LongMode enabled="true"/&amp;gt;
-        &amp;lt;HardwareVirtExLargePages enabled="false"/&amp;gt;
-        &amp;lt;HardwareVirtForce enabled="false"/&amp;gt;
-      &amp;lt;/CPU&amp;gt;
-      &amp;lt;Memory RAMSize="1024" PageFusion="false"/&amp;gt;
-      &amp;lt;HID Pointing="USBTablet" Keyboard="PS2Keyboard"/&amp;gt;
-      &amp;lt;HPET enabled="false"/&amp;gt;
-      &amp;lt;Chipset type="ICH9"/&amp;gt;
-      &amp;lt;Boot&amp;gt;
-        &amp;lt;Order position="1" device="Floppy"/&amp;gt;
-        &amp;lt;Order position="2" device="DVD"/&amp;gt;
-        &amp;lt;Order position="3" device="HardDisk"/&amp;gt;
-        &amp;lt;Order position="4" device="None"/&amp;gt;
-      &amp;lt;/Boot&amp;gt;
-      &amp;lt;Display VRAMSize="27" monitorCount="1" accelerate3D="false" accelerate2DVideo="false"/&amp;gt;
-      &amp;lt;VideoCapture enabled="false" screens="18446744073709551615" horzRes="1024" vertRes="768" rate="512" fps="25"/&amp;gt;
-      &amp;lt;RemoteDisplay enabled="false" authType="Null" authTimeout="5000"/&amp;gt;
-      &amp;lt;BIOS&amp;gt;
-        &amp;lt;ACPI enabled="true"/&amp;gt;
-        &amp;lt;IOAPIC enabled="true"/&amp;gt;
-        &amp;lt;Logo fadeIn="true" fadeOut="true" displayTime="0"/&amp;gt;
-        &amp;lt;BootMenu mode="MessageAndMenu"/&amp;gt;
-        &amp;lt;TimeOffset value="0"/&amp;gt;
-        &amp;lt;PXEDebug enabled="false"/&amp;gt;
-      &amp;lt;/BIOS&amp;gt;
-      &amp;lt;USB&amp;gt;
-        &amp;lt;Controllers&amp;gt;
-          &amp;lt;Controller name="OHCI" type="OHCI"/&amp;gt;
-        &amp;lt;/Controllers&amp;gt;
-        &amp;lt;DeviceFilters/&amp;gt;
-      &amp;lt;/USB&amp;gt;
-      &amp;lt;Network&amp;gt;
-        &amp;lt;Adapter slot="0" enabled="true" MACAddress="0800277B9303" cable="true" speed="0" promiscuousModePolicy="AllowAll" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-            &amp;lt;InternalNetwork name="intnet"/&amp;gt;
-            &amp;lt;NATNetwork name="NatNetwork"/&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-          &amp;lt;HostOnlyInterface name="vboxnet0"/&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="1" enabled="true" MACAddress="0800278F6747" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-            &amp;lt;InternalNetwork name="intnet"/&amp;gt;
-            &amp;lt;NATNetwork name="NatNetwork"/&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-          &amp;lt;HostOnlyInterface name="vboxnet0"/&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="2" enabled="true" MACAddress="0800272937DA" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-            &amp;lt;InternalNetwork name="intnet"/&amp;gt;
-            &amp;lt;NATNetwork name="NatNetwork"/&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-          &amp;lt;HostOnlyInterface name="vboxnet0"/&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="3" enabled="true" MACAddress="0800270A010D" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-            &amp;lt;InternalNetwork name="intnet"/&amp;gt;
-            &amp;lt;NATNetwork name="NatNetwork"/&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-          &amp;lt;HostOnlyInterface name="vboxnet0"/&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="4" enabled="true" MACAddress="0800273CE501" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="5" enabled="true" MACAddress="08002745C214" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="6" enabled="true" MACAddress="080027AE8437" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="7" enabled="true" MACAddress="080027AD4C2C" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="8" enabled="true" MACAddress="080027B1ECB6" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="9" enabled="true" MACAddress="0800272514D6" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="10" enabled="true" MACAddress="0800272FBEFC" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="11" enabled="true" MACAddress="080027461D31" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="12" enabled="true" MACAddress="08002713AA63" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="13" enabled="true" MACAddress="080027926EC8" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="14" enabled="true" MACAddress="08002730A135" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="15" enabled="true" MACAddress="080027C7A2E5" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="16" enabled="true" MACAddress="080027DEB56D" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="17" enabled="true" MACAddress="080027C72A21" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="18" enabled="true" MACAddress="080027C91346" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="19" enabled="true" MACAddress="080027EA4F42" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="20" enabled="true" MACAddress="08002704BF93" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="21" enabled="true" MACAddress="080027A40974" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="22" enabled="true" MACAddress="08002753975C" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="23" enabled="true" MACAddress="080027ECD7D1" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="24" enabled="true" MACAddress="080027F9E90D" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="25" enabled="true" MACAddress="080027800C0B" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="26" enabled="true" MACAddress="080027F2677A" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="27" enabled="true" MACAddress="080027804C07" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="28" enabled="true" MACAddress="080027FA622A" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="29" enabled="true" MACAddress="0800272BBA95" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="30" enabled="true" MACAddress="080027B65D42" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="31" enabled="true" MACAddress="08002748148E" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="32" enabled="true" MACAddress="080027D7F82D" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="33" enabled="true" MACAddress="08002744A19B" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="34" enabled="true" MACAddress="080027FFCAD2" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-        &amp;lt;Adapter slot="35" enabled="true" MACAddress="08002711EAF7" cable="true" speed="0" type="82540EM"&amp;gt;
-          &amp;lt;DisabledModes&amp;gt;
-            &amp;lt;NAT&amp;gt;
-              &amp;lt;DNS pass-domain="true" use-proxy="false" use-host-resolver="false"/&amp;gt;
-              &amp;lt;Alias logging="false" proxy-only="false" use-same-ports="false"/&amp;gt;
-            &amp;lt;/NAT&amp;gt;
-          &amp;lt;/DisabledModes&amp;gt;
-        &amp;lt;/Adapter&amp;gt;
-      &amp;lt;/Network&amp;gt;
-      &amp;lt;UART&amp;gt;
-        &amp;lt;Port slot="0" enabled="false" IOBase="0x3f8" IRQ="4" hostMode="Disconnected"/&amp;gt;
-        &amp;lt;Port slot="1" enabled="false" IOBase="0x2f8" IRQ="3" hostMode="Disconnected"/&amp;gt;
-      &amp;lt;/UART&amp;gt;
-      &amp;lt;LPT&amp;gt;
-        &amp;lt;Port slot="0" enabled="false" IOBase="0x378" IRQ="7"/&amp;gt;
-        &amp;lt;Port slot="1" enabled="false" IOBase="0x378" IRQ="7"/&amp;gt;
-      &amp;lt;/LPT&amp;gt;
-      &amp;lt;AudioAdapter controller="HDA" driver="Pulse" enabled="true"/&amp;gt;
-      &amp;lt;RTC localOrUTC="local"/&amp;gt;
-      &amp;lt;SharedFolders/&amp;gt;
-      &amp;lt;Clipboard mode="Disabled"/&amp;gt;
-      &amp;lt;DragAndDrop mode="Disabled"/&amp;gt;
-      &amp;lt;IO&amp;gt;
-        &amp;lt;IoCache enabled="true" size="5"/&amp;gt;
-        &amp;lt;BandwidthGroups/&amp;gt;
-      &amp;lt;/IO&amp;gt;
-      &amp;lt;HostPci&amp;gt;
-        &amp;lt;Devices/&amp;gt;
-      &amp;lt;/HostPci&amp;gt;
-      &amp;lt;EmulatedUSB&amp;gt;
-        &amp;lt;CardReader enabled="false"/&amp;gt;
-      &amp;lt;/EmulatedUSB&amp;gt;
-      &amp;lt;Guest memoryBalloonSize="0"/&amp;gt;
-      &amp;lt;GuestProperties&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxControl.exe" value="5.0.20r106931" timestamp="1466252388372790000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxCredProv.dll" value="-" timestamp="1466252388391702000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxDisp.dll" value="5.0.20r106931" timestamp="1466252388376477000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxGINA.dll" value="-" timestamp="1466252388391487000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxGuest.sys" value="5.0.20r106931" timestamp="1466252388435555000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxHook.dll" value="5.0.20r106931" timestamp="1466252388376005000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxMRXNP.dll" value="5.0.20r106931" timestamp="1466252388382593000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxMouse.sys" value="5.0.20r106931" timestamp="1466252388436002000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxOGL.dll" value="5.0.20r106931" timestamp="1466252388433836000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxOGLarrayspu.dll" value="5.0.20r106931" timestamp="1466252388394307000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxOGLcrutil.dll" value="5.0.20r106931" timestamp="1466252388397255000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxOGLerrorspu.dll" value="5.0.20r106931" timestamp="1466252388399115000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxOGLfeedbackspu.dll" value="5.0.20r106931" timestamp="1466252388416093000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxOGLpackspu.dll" value="5.0.20r106931" timestamp="1466252388411664000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxOGLpassthroughspu.dll" value="5.0.20r106931" timestamp="1466252388413562000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxSF.sys" value="5.0.20r106931" timestamp="1466252388436401000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxService.exe" value="5.0.20r106931" timestamp="1466252388379749000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxTray.exe" value="5.0.20r106931" timestamp="1466252388379335000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Components/VBoxVideo.sys" value="5.0.20r106931" timestamp="1466252388436923000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/HostVerLastChecked" value="4.3.36" timestamp="1466252184409813000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/InstallDir" value="C:/Program Files/Oracle/VirtualBox Guest Additions" timestamp="1466252388370068000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Revision" value="106931" timestamp="1466252388369917000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/Version" value="5.0.20" timestamp="1466252388369624000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestAdd/VersionExt" value="5.0.20" timestamp="1466252388369717000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestInfo/OS/Product" value="Windows 7" timestamp="1466252388368633000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/GuestInfo/OS/Release" value="6.1.7600" timestamp="1466252388368805000" flags=""/&amp;gt;
-        &amp;lt;GuestProperty name="/VirtualBox/HostInfo/GUI/LanguageID" value="en_US" timestamp="1466252365654611000" flags=""/&amp;gt;
-      &amp;lt;/GuestProperties&amp;gt;
-    &amp;lt;/Hardware&amp;gt;
-    &amp;lt;StorageControllers&amp;gt;
-      &amp;lt;StorageController name="IDE" type="PIIX4" PortCount="2" useHostIOCache="true" Bootable="true"&amp;gt;
-        &amp;lt;AttachedDevice passthrough="false" type="DVD" port="1" device="0"/&amp;gt;
-      &amp;lt;/StorageController&amp;gt;
-      &amp;lt;StorageController name="SATA" type="AHCI" PortCount="1" useHostIOCache="false" Bootable="true" IDE0MasterEmulationPort="0" IDE0SlaveEmulationPort="1" IDE1MasterEmulationPort="2" IDE1SlaveEmulationPort="3"&amp;gt;
-        &amp;lt;AttachedDevice type="HardDisk" port="0" device="0"&amp;gt;
-          &amp;lt;Image uuid="{f03c812c-5a12-496b-bd9a-d235f809d184}"/&amp;gt;
-        &amp;lt;/AttachedDevice&amp;gt;
-      &amp;lt;/StorageController&amp;gt;
-    &amp;lt;/StorageControllers&amp;gt;
-  &amp;lt;/Machine&amp;gt;
-&amp;lt;/VirtualBox&amp;gt;
-&lt;/pre&gt;</summary><category term="cadlab"></category><category term="virtualbox"></category><category term="虛擬機器"></category></entry><entry><title>機械設計工程系 IPV6 網址分配</title><link href="http://cadlab.mde.tw/post/ji-jie-she-ji-gong-cheng-xi-ipv6-wang-zhi-fen-pei.html" rel="alternate"></link><updated>2016-06-20T21:39:06+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-20:post/ji-jie-she-ji-gong-cheng-xi-ipv6-wang-zhi-fen-pei.html</id><summary type="html">&lt;p&gt;虎尾科大機械設計工程系將自即日起逐步啟用 IPV6 網路協定, 目前只有與軟體授權認証 (因為要服務廣域網路上僅支援 IPV4 協定的用戶連線) 及同時支援 IPV4/IPV6 協定的代理主機, 一定需要配置固定的 IPV4 網路位址外, 其他單純的網路連線均可採用純 IPV6 協定配置, 以純 IPV6 協定上網者, 若須連線到僅支援 IPV4 網路協定的主機, 請透過提供 IPV4/IPV6 雙支援的代理主機進行連線.&lt;/p&gt;
-
-
-&lt;p&gt;以下為各 MDE 使用群組的 IPV6 網址分配:&lt;/p&gt;
-&lt;style type="text/css"&gt;
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+#flintlockImg {
+  float: right;
+  display: inline;  /* IE6 hack to fix double margin bug */
+  width: 24em;
+  margin: 1em 2em 1em 1em;
 }
-th, td {
-    padding: 15px;
+
+#flintlockImg img {
+  width: 100%;
+  padding: 0.5em;
+  border: 1px solid #404040;
+}
+
+#cvsUpper, #cvsLower {
+  position: relative;
+  width: 600px;
+  height: 300px;
+  text-align: center;  /* this will center console if it has display:inline-block */
+  background-color: #aabdd3;
 }
 &lt;/style&gt;
 
-&lt;table&gt;
-&lt;tr&gt;
-    &lt;th&gt;MDE 群組&lt;/th&gt;
-    &lt;th&gt;分配 IPV6 網段&lt;/th&gt; 
-    &lt;th&gt;說明&lt;/th&gt;
-    &lt;th&gt;備註&lt;/th&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td rowspan="2"&gt;MDE 行政專用&lt;/td&gt;
-        &lt;td&gt;2001:288:6004:17:168:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:168:FFFF:FFFF:FFFF&lt;/td&gt;
-        &lt;td&gt;所有行政支援相關的裝置均採此網段設定,&lt;br /&gt;各行政人員再依員工編號設定所屬的裝置網址&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-    &lt;tr&gt;
-        &lt;td&gt;(以管理人員員工編號尾碼為 3026 為例)&lt;br /&gt;2001:288:6004:17:168:3026:0000:0000 ~&lt;br /&gt;2001:288:6004:17:168:3026:FFFF:FFFF&lt;/td&gt;
-        &lt;td&gt;以管理人員編號 B03026 為例, 取 3026 作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
+&lt;script type="text/javascript" src="http://brython.info/src/brython_dist.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/Cango-8v03.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/Cango2D-7v01-min.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/CangoAxes-1v33.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/flintlockPartDefs-02.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/CangoAnimation-4v01.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+window.onload=function(){
+brython(1);
+}
+&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+
+    if (typeof addLoadEvent === "undefined")
+    {
+      var addLoadEvent = function(func)
+      {
+        var oldonload = window.onload;
+        if (typeof window.onload != 'function')
+        {
+          window.onload = func;
+        }
+        else
+        {
+            window.onload = function(){oldonload(); func();}
+        }
+      }
+    }
+
+    if (typeof addEvent === "undefined")
+    {
+      var addEvent = function(element, eventType, handler)
+      {
+        if (element.attachEvent)
+        {
+          return element.attachEvent('on'+eventType, handler);
+        }
+        return element.addEventListener(eventType, handler, false);
+      };
+    }
+
+    function cancelBubble(e)
+    {
+      var evt = e ? e:window.event;
+      if (evt.stopPropagation) evt.stopPropagation();
+      if (evt.cancelBubble!=null) evt.cancelBubble = true;
+    }
+&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+
+function enableBtn(btnId)
+{
+  var btn = document.getElementById(btnId);
+  btn.disabled = false;
+}
+
+function disableBtn(btnId)
+{
+  var btn = document.getElementById(btnId);
+  btn.disabled = true;
+}
+
+function FlintlockDemo(cvsU, cvsL)
+{
+  "use strict"
+  var innerGCL0, innerGCL1,
+      outerGC,
+      // Lock components (Cango2D groups)
+      cockObj,
+      fizzenObj,
+      plateObj,
+      searSpringObj,
+      searObj,
+      tumblerObj,
+      mainSpringObj,
+      screwsObj,
+      // draw outside in lower canvas
+      plateOutside,
+      cockOutside,
+      fizzenOutside,
+      fizzenSpring,
+      outScrews;
+
+  this.fire_JS = function()
+    {
+    innerGCL0.playAnimation(0, 1000);   // play for 1000 then pause
+    outerGC.playAnimation(0, 1000);
+
+    disableBtn('cock');
+    disableBtn('fire');
+    setTimeout("enableBtn('load')", 1000);
+  };
+
+  this.load_JS = function()
+  {
+    innerGCL0.playAnimation(1000, 3500);    // resume from pause play until 3500
+    outerGC.playAnimation(1000, 3500);
+
+    disableBtn('load');
+    disableBtn('fire');
+    setTimeout("enableBtn('cock')", 2500);
+
+  };
+
+  this.cock_JS = function()
+  {
+    innerGCL0.playAnimation(3500, 5000);      // resume from pause play until 5000
+    outerGC.playAnimation(3500, 5000);
+
+    disableBtn('load');
+    disableBtn('cock');
+    setTimeout("enableBtn('fire')", 1500);
+  };
+
+  // Upper display
+  innerGCL0 = new Cango(cvsU);                     // layer for the cock and fizzen
+  innerGCL0.setWorldCoords(-250, -100, 500);       // square pixels origin in center of canvas
+  innerGCL1 = new Cango(innerGCL0.createLayer());  // layer for main spring and sear
+  innerGCL1.dupCtx(innerGCL0);
+
+  // construct all the component objects
+  cockObj = makeCock(innerGCL0);
+  fizzenObj = makeFizzenInside(innerGCL0);
+  plateObj = makePlate(innerGCL0);
+  searSpringObj = makeSearSpring(innerGCL1);
+  searObj = makeSear(innerGCL1);
+  tumblerObj = makeTumbler(innerGCL1);
+  mainSpringObj = makeMainSpring(innerGCL1);
+  screwsObj = makeScrews(innerGCL1);
+
+        var innerTwnr = new Tweener(0, 5000);
+  var innerData = {
+      cockRot:     [0, 54, 54, 18, 18,  0],
+    cockRotTimes:[0, 10, 20, 60, 70, 90],
+    fizzenRot:     [0, 0, 73, 73,  0],
+    fizzenRotTimes:[0, 4,  8, 60, 70],
+    searSpringRot:     [0, -5, -6, -3.5,  0, -2, -3.5, -3.5,  0,  0, -2, -3, -3.5,  0],
+    searSpringRotTimes:[0,  5, 10,   15, 20, 30,   40,   50, 60, 70, 75, 80,   85, 90],
+    searRot:     [0, 10, 12,  7,  0,  4,   7,   7,  0,  0,  4, 5.5,  7,  0],
+    searRotTimes:[0,  5, 10, 15, 20, 30,  40,  50, 60, 70, 75,  80, 85, 90],
+      tumblerRot:     [0, 54, 54, 18, 18,  0],
+    tumblerRotTimes:[0, 10, 20, 60, 70, 90],
+    mainSpringRot:     [0, -7, -7, -2, -2,  0],
+    mainSpringRotTimes:[0, 10, 20, 60, 70, 90]
+  };
+
+  function initCock(opts)
+  {
+    this.nextState.x = cockCxOfs;
+    this.nextState.y = -cockCyOfs;
+  }
+
+  function initFissen(opts)
+  {
+    this.nextState.x = fizzenCxOfs;
+    this.nextState.y = -fizzenCyOfs;
+  }
+
+  function initSearSpring(opts)
+  {
+    this.nextState.x = searSpringCxOfs;
+    this.nextState.y = -searSpringCyOfs;
+  }
+
+  function initSear(opts)
+  {
+    this.nextState.x = searCxOfs;
+    this.nextState.y = -searCyOfs;
+  }
+
+  function initMainSpring(opts)
+  {
+    this.nextState.x = mainSpringCxOfs;
+    this.nextState.y = -mainSpringCyOfs;
+  }
+
+  function cockPathFn(time, opts)
+  {
+    var cockRotVal = innerTwnr.getVal(time, opts.cockRot, opts.cockRotTimes);
+
+    this.nextState.rot = cockRotVal;
+  }
+
+  function fizzenPathFn(time, opts)
+  {
+    var fizzenRotVal = innerTwnr.getVal(time, opts.fizzenRot, opts.fizzenRotTimes);
+
+    this.nextState.rot = fizzenRotVal;
+  }
+
+  function searSpringPathFn(time, opts)
+  {
+    var searSpringRotVal = innerTwnr.getVal(time, opts.searSpringRot, opts.searSpringRotTimes);
+
+    this.nextState.rot = searSpringRotVal;
+  }
+
+  function searPathFn(time, opts)
+  {
+    var searRotVal = innerTwnr.getVal(time, opts.searRot, opts.searRotTimes);
+
+    this.nextState.rot = searRotVal;
+  }
+
+  function tumblerPathFn(time, opts)
+  {
+    var tumblerRotVal = innerTwnr.getVal(time, opts.tumblerRot, opts.tumblerRotTimes);
+
+    this.nextState.rot = tumblerRotVal;
+  }
+
+  function mainSpringPathFn(time, opts)
+  {
+    var mainSpringRotVal = innerTwnr.getVal(time, opts.mainSpringRot, opts.mainSpringRotTimes);
+
+    this.nextState.rot = mainSpringRotVal;
+  }
+
+  innerGCL0.animate(cockObj, initCock, cockPathFn, innerData);
+  innerGCL0.animate(fizzenObj, initFissen, fizzenPathFn, innerData);
+  innerGCL0.animate(plateObj);
+  innerGCL1.animate(searSpringObj, initSearSpring, searSpringPathFn, innerData);
+  innerGCL1.animate(searObj, initSear, searPathFn, innerData);
+  innerGCL1.animate(tumblerObj, initCock, tumblerPathFn, innerData);
+  innerGCL1.animate(mainSpringObj, initMainSpring, mainSpringPathFn, innerData);
+  innerGCL1.animate(screwsObj);
+
+  // Lower display
+  outerGC = new Cango(cvsL);
+  outerGC.setWorldCoords(-250, -100, 500);
+
+  // construct all the component objects
+  plateOutside = makePlateOutside(outerGC);
+  cockOutside = makeCockOutside(outerGC);
+  fizzenOutside = makeFizzenOutside(outerGC);
+  fizzenSpring = makeFizzenSpring(outerGC);
+  outScrews = makeOutScrews(outerGC);
+
+        var outerTwnr = new Tweener(0, 5000);
+  var outerData = {
+      outerCockRot:     [0, -54, -54, -18, -18,  0],
+    outerCockRotTimes:[0,  10,  20,  60,  70, 90],
+    outerFizRot:     [0, 0, -73, -73,  0],
+    outerFizRotTimes:[0, 4,   8,  60, 70],
+    outerFizSpringRot:     [0, 0, 5, 6, 3.5, 0,  0,    3,  4,    3,  0],
+    outerFizSpringRotTimes:[0, 4, 5, 6,   7, 8, 60, 62.5, 65, 67.5, 70]
+  };
+
+  function initCockOutside(opts)
+  {
+    this.nextState.x = -cockCxOfs;
+    this.nextState.y = -cockCyOfs;
+  }
+
+  function initFissenOutside(opts)
+  {
+    this.nextState.x = -fizzenCxOfs;
+    this.nextState.y = -fizzenCyOfs;
+  }
+
+  function initFissenSpring(opts)
+  {
+    this.nextState.x = -fizzenSpringCxOfs;
+    this.nextState.y = -fizzenSpringCyOfs;
+  }
+
+  function outerCockPathFn(time, opts)
+  {
+    var cockRotVal = outerTwnr.getVal(time, opts.outerCockRot, opts.outerCockRotTimes);
+
+    this.nextState.rot = cockRotVal;
+  }
+
+  function outerFizzenPathFn(time, opts)
+  {
+    var fizzenRotVal = outerTwnr.getVal(time, opts.outerFizRot, opts.outerFizRotTimes);
+
+    this.nextState.rot = fizzenRotVal;
+  }
+
+  function fizzenSpringPathFn(time, opts)
+  {
+    var fizzenSpringRotVal = outerTwnr.getVal(time, opts.outerFizSpringRot, opts.outerFizSpringRotTimes);
+
+    this.nextState.rot = fizzenSpringRotVal;
+  }
+
+  outerGC.animate(plateOutside);
+  outerGC.animate(cockOutside, initCockOutside, outerCockPathFn, outerData);
+  outerGC.animate(fizzenOutside, initFissenOutside, outerFizzenPathFn, outerData);
+  outerGC.animate(fizzenSpring, initFissenSpring, fizzenSpringPathFn, outerData);
+  outerGC.animate(outScrews);
+
+  disableBtn('load');
+  disableBtn('cock');
+  enableBtn('fire');
+}
+
+var consoleBtns =
+{
+  f1:function(){demo.load_JS()},
+  f2:function(){demo.cock_JS()},
+  f3:function(){demo.fire_JS()},
+  f4:function(){}
+};
+
+&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+addLoadEvent( function(){
+  demo = new FlintlockDemo('cvsUpper', 'cvsLower');
+  enableStickyNav();
+});
+&lt;/script&gt;
+
+&lt;div class="consoleHolder"&gt;
+&lt;div class="console"&gt;
+&lt;div class="bezel"&gt;
+
+    &lt;div class="scrnBevel"&gt;
+    &lt;canvas id="cvsUpper" width="600" height="300"&gt;&lt;/canvas&gt;
+    &lt;canvas id="cvsLower" width="600" height="300"&gt;&lt;/canvas&gt;
+    &lt;/div&gt;  &lt;!-- scrnBevel --&gt;
+
+    &lt;table class="btnHolder" cellspacing="0" cellpadding="0"&gt;
+    &lt;tr align="center"&gt;
+      &lt;td width="33%"&gt;&lt;button type="button" onclick="consoleBtns.f1()" class="button-link" id="load"&gt;HALF COCK&lt;/button&gt;&lt;/td&gt;
+      &lt;td width="33%"&gt;&lt;button type="button" onclick="consoleBtns.f2()" class="button-link" id="cock"&gt;COCK&lt;/button&gt;&lt;/td&gt;
+      &lt;td width="33%"&gt;&lt;button type="button" onclick="consoleBtns.f3()" class="button-link" id="fire"&gt;FIRE&lt;/button&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td&gt;MDE 各教師&lt;/td&gt;
-    &lt;td&gt;(以教師員工編號尾碼為 3001 為例)&lt;br /&gt;2001:288:6004:17:3001:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:3001:FFFF:FFFF:FFFF&lt;/td&gt;
-    &lt;td&gt;所有與教師相關的裝置均採此網段設定,&lt;br /&gt;
-取各教師員工編號最後四碼作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td&gt;MDE 工作站室&lt;/td&gt;
-    &lt;td&gt;2001:288:6004:17:0000:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:0000:0000:0000:FFFF&lt;/td&gt;
-    &lt;td&gt;所有 8F 工作站室相關的裝置均採此網段設定&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td rowspan="2"&gt;MDE 6F 教學實驗室&lt;/td&gt;
-        &lt;td&gt;2001:288:6004:17:6F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:6F:FFFF:FFFF:FFFF&lt;/td&gt;
-        &lt;td&gt;所有 6F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
-各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-    &lt;tr&gt;
-        &lt;td&gt;(以實驗室編號尾碼為 6768 為例)&lt;br /&gt;2001:288:6004:17:6F:6768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:6F:6768:FFFF:FFFF&lt;/td&gt;
-        &lt;td&gt;以 6F 實驗室編號最後四碼為 6768 為例, 取 6768 作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-    &lt;/tr&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td rowspan="2"&gt;MDE 7F 教學實驗室&lt;/td&gt; 
-        &lt;td&gt;2001:288:6004:17:7F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:7F:FFFF:FFFF:FFFF&lt;/td&gt;
-        &lt;td&gt;所有 7F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
-各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-    &lt;tr&gt;
-        &lt;td&gt;(以實驗室編號尾碼為 7768 為例)&lt;br /&gt;2001:288:6004:17:7F:7768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:7F:7768:FFFF:FFFF&lt;/td&gt;
-        &lt;td&gt;以 7F 實驗室編號最後四碼為 7768 為例, 取 7768 作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-    &lt;/tr&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td rowspan="2"&gt;MDE 8F 教學實驗室&lt;/td&gt;
-        &lt;td&gt;2001:288:6004:17:8F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:8F:FFFF:FFFF:FFFF&lt;/td&gt;
-        &lt;td&gt;所有 8F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
-各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-    &lt;tr&gt;
-        &lt;td&gt;(以實驗室編號尾碼為 8768 為例)&lt;br /&gt;2001:288:6004:17:8F:8768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:8F:8768:FFFF:FFFF&lt;/td&gt;
-        &lt;td&gt;以 8F 實驗室編號最後四碼為 8768 為例, 取 8768 作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-    &lt;/tr&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td rowspan="2"&gt;MDE 9F 教學實驗室&lt;/td&gt;
-        &lt;td&gt;2001:288:6004:17:9F:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:9F:FFFF:FFFF:FFFF&lt;/td&gt;
-        &lt;td&gt;所有 9F 與教學相關的裝置均採此網段設定,&lt;br /&gt;
-各教學實驗室再依教室編號最後四碼設定所屬的裝置網址&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-    &lt;tr&gt;
-        &lt;td&gt;(以實驗室編號尾碼為 9768 為例)&lt;br /&gt;2001:288:6004:17:9F:9768:0000:0000 ~&lt;br /&gt;2001:288:6004:17:9F:9768:FFFF:FFFF&lt;/td&gt;
-        &lt;td&gt;以 9F 實驗室編號最後四碼為 9768 為例, 取 9768 作為設定代號&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-    &lt;/tr&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td&gt;MDE 其他應用&lt;/td&gt;
-    &lt;td&gt;2001:288:6004:17:a:0000:0000:0000 ~&lt;br /&gt;2001:288:6004:17:a:FFFF:FFFF:FFFF&lt;/td&gt;
-    &lt;td&gt;所有未納入上列相關的裝置均採此網段設定&lt;/td&gt;
-        &lt;td&gt;prefix 設為 64&lt;br/&gt;gateway 設為 2001:288:6004:17::254&lt;br/&gt;dns 伺服器設為:&lt;br/&gt; 2001:288:6004:1::2 (虎科大) 與&lt;br/&gt;2001:b000:168::1 (中華電信)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
+    &lt;/table&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;&lt;!-- bezel --&gt;
+&lt;div style="clear: both;"&gt;&lt;/div&gt;
+&lt;/div&gt; &lt;!-- console --&gt;
+&lt;/div&gt;   &lt;!-- consoleHolder --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;利用 &lt;a href="http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js"&gt;http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js&lt;/a&gt; 程式庫, 繪製正齒輪:&lt;/p&gt;
+&lt;!-- 齒輪繪圖 --&gt;
+
+&lt;canvas id='gear1' width='800' height='750'&gt;&lt;/canvas&gt;
+
+&lt;script type="text/python"&gt;
+# 將 導入的 document 設為 doc 主要原因在於與舊程式碼相容
+from browser import document as doc
+# 由於 Python3 與 Javascript 程式碼已經不再混用, 因此來自 Javascript 的變數, 必須居中透過 window 物件轉換
+from browser import window
+# 針對 Javascript 既有的物件, 則必須透過 JSConstructor 轉換
+from javascript import JSConstructor
+import math
+
+# 主要用來取得畫布大小
+canvas = doc["gear1"]
+# 此程式採用 Cango Javascript 程式庫繪圖, 因此無需 ctx
+#ctx = canvas.getContext("2d")
+# 針對類別的轉換, 將 Cango.js 中的 Cango 物件轉為 Python cango 物件
+cango = JSConstructor(window.Cango)
+# 針對變數的轉換, shapeDefs 在 Cango 中資料型別為變數, 可以透過 window 轉換
+shapedefs = window.shapeDefs
+# 目前 Cango 結合 Animation 在 Brython 尚無法運作, 此刻只能繪製靜態圖形
+# in CangoAnimation.js
+#interpolate1 = window.interpolate
+# Cobi 與 createGearTooth 都是 Cango Javascript 程式庫中的物件
+cobj = JSConstructor(window.Cobj)
+creategeartooth = JSConstructor(window.createGearTooth)
+
+# 經由 Cango 轉換成 Brython 的 cango, 指定將圖畫在 id="plotarea" 的 canvas 上
+cgo = cango("gear1")
+
+######################################
+# 畫正齒輪輪廓
+#####################################
+# n 為齒數
+n = 17
+# pa 為壓力角
+pa = 25
+# m 為模數, 根據畫布的寬度, 計算適合的模數大小
+# Module = mm of pitch diameter per tooth
+m = 0.8*canvas.width/n
+# pr 為節圓半徑
+pr = n*m/2 # gear Pitch radius
+# generate gear
+data = creategeartooth(m, n, pa)
+# Brython 程式中的 print 會將資料印在 Browser 的 console 區
+#print(data)
+gearTooth = cobj(data, "SHAPE", {
+        "fillColor":"#ddd0dd",
+        "border": True,
+        "strokeColor": "#606060" })
+gearTooth.rotate(180/n) # rotate gear 1/2 tooth to mesh
+# 單齒的齒形資料經過旋轉後, 將資料複製到 gear 物件中
+gear = gearTooth.dup()
+# gear 為單一齒的輪廓資料
+#cgo.render(gearTooth)
+
+# 利用單齒輪廓旋轉, 產生整個正齒輪外形
+for i in range(1, n):
+    # 將 gearTooth 中的資料複製到 newTooth
+    newTooth = gearTooth.dup()
+    # 配合迴圈, newTooth 的齒形資料進行旋轉, 然後利用 appendPath 方法, 將資料併入 gear
+    newTooth.rotate(360*i/n)
+    # appendPath 為 Cango 程式庫中的方法, 第二個變數為 True, 表示要刪除最前頭的 Move to SVG Path 標註符號
+    gear.appendPath(newTooth, True) # trim move command = True
+
+# 建立軸孔
+# add axle hole, hr 為 hole radius
+hr = 0.6*pr # diameter of gear shaft
+shaft = cobj(shapedefs.circle(hr), "PATH")
+shaft.revWinding()
+gear.appendPath(shaft) # retain the 'moveTo' command for shaft sub path
+cx = canvas.width/2
+cy = canvas.height/2
+gear.translate(cx, cy)
+# render 繪出靜態正齒輪輪廓
+cgo.render(gear)
+&lt;/script&gt;
 
 &lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;
-各 MDE 用戶若在校外採用中華電信光世代上網, 需啟用 IPV6 協定, 請參考 &lt;a href="http://www.ipv6.hinet.net/"&gt;http://www.ipv6.hinet.net/&lt;/a&gt; 相關說明, 一旦啟用 IPV6 網路協定後, 可以利用 &lt;a href="http://[2001:288:6004:17::101]/"&gt;http://[2001:288:6004:17::101]/&lt;/a&gt; 與 &lt;a href="http://test-ipv6.com/"&gt;http://test-ipv6.com/&lt;/a&gt; 進行 IPV6 網路連線測試.&lt;/p&gt;
-&lt;p&gt;從下圖可以發現目前中華電信光世代所提供的 IPV6 網路連線採用 IPV4 Tunnel 技術, 可以同時支援 IPV4/IPV6 雙協定連線:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/hinet_IPV6_connection_test.png" width="800" /&gt;&lt;/p&gt;</summary><category term="cadlab"></category><category term="IPV6"></category></entry><entry><title>Virtualbox 的應用與網路設定</title><link href="http://cadlab.mde.tw/post/virtualbox-de-ying-yong-yu-wang-lu-she-ding.html" rel="alternate"></link><updated>2016-06-20T21:39:06+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-06-20:post/virtualbox-de-ying-yong-yu-wang-lu-she-ding.html</id><summary type="html">&lt;p&gt;&lt;a href="https://www.virtualbox.org/"&gt;Virtualbox&lt;/a&gt; 是一套能在 Windows, Linux, Mac 與 Solaris 操作系統上使用的虛擬器 (Virtualizer).&lt;/p&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;上述正齒輪繪圖原始碼:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+&amp;lt;canvas id='gear1' width='800' height='750'&amp;gt;&amp;lt;/canvas&amp;gt;
+
+&amp;lt;script type="text/python"&amp;gt;
+# 將 導入的 document 設為 doc 主要原因在於與舊程式碼相容
+from browser import document as doc
+# 由於 Python3 與 Javascript 程式碼已經不再混用, 因此來自 Javascript 的變數, 必須居中透過 window 物件轉換
+from browser import window
+# 針對 Javascript 既有的物件, 則必須透過 JSConstructor 轉換
+from javascript import JSConstructor
+import math
+
+# 主要用來取得畫布大小
+canvas = doc["gear1"]
+# 此程式採用 Cango Javascript 程式庫繪圖, 因此無需 ctx
+#ctx = canvas.getContext("2d")
+# 針對類別的轉換, 將 Cango.js 中的 Cango 物件轉為 Python cango 物件
+cango = JSConstructor(window.Cango)
+# 針對變數的轉換, shapeDefs 在 Cango 中資料型別為變數, 可以透過 window 轉換
+shapedefs = window.shapeDefs
+# 目前 Cango 結合 Animation 在 Brython 尚無法運作, 此刻只能繪製靜態圖形
+# in CangoAnimation.js
+#interpolate1 = window.interpolate
+# Cobi 與 createGearTooth 都是 Cango Javascript 程式庫中的物件
+cobj = JSConstructor(window.Cobj)
+creategeartooth = JSConstructor(window.createGearTooth)
+
+# 經由 Cango 轉換成 Brython 的 cango, 指定將圖畫在 id="plotarea" 的 canvas 上
+cgo = cango("gear1")
+
+######################################
+# 畫正齒輪輪廓
+#####################################
+# n 為齒數
+n = 17
+# pa 為壓力角
+pa = 25
+# m 為模數, 根據畫布的寬度, 計算適合的模數大小
+# Module = mm of pitch diameter per tooth
+m = 0.8*canvas.width/n
+# pr 為節圓半徑
+pr = n*m/2 # gear Pitch radius
+# generate gear
+data = creategeartooth(m, n, pa)
+# Brython 程式中的 print 會將資料印在 Browser 的 console 區
+#print(data)
+gearTooth = cobj(data, "SHAPE", {
+        "fillColor":"#ddd0dd",
+        "border": True,
+        "strokeColor": "#606060" })
+gearTooth.rotate(180/n) # rotate gear 1/2 tooth to mesh
+# 單齒的齒形資料經過旋轉後, 將資料複製到 gear 物件中
+gear = gearTooth.dup()
+# gear 為單一齒的輪廓資料
+#cgo.render(gearTooth)
+
+# 利用單齒輪廓旋轉, 產生整個正齒輪外形
+for i in range(1, n):
+    # 將 gearTooth 中的資料複製到 newTooth
+    newTooth = gearTooth.dup()
+    # 配合迴圈, newTooth 的齒形資料進行旋轉, 然後利用 appendPath 方法, 將資料併入 gear
+    newTooth.rotate(360*i/n)
+    # appendPath 為 Cango 程式庫中的方法, 第二個變數為 True, 表示要刪除最前頭的 Move to SVG Path 標註符號
+    gear.appendPath(newTooth, True) # trim move command = True
+
+# 建立軸孔
+# add axle hole, hr 為 hole radius
+hr = 0.6*pr # diameter of gear shaft
+shaft = cobj(shapedefs.circle(hr), "PATH")
+shaft.revWinding()
+gear.appendPath(shaft) # retain the 'moveTo' command for shaft sub path
+cx = canvas.width/2
+cy = canvas.height/2
+gear.translate(cx, cy)
+# render 繪出靜態正齒輪輪廓
+cgo.render(gear)
+&amp;lt;/script&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;直接利用 Canvas 繪製正齒輪:&lt;/p&gt;
+&lt;canvas id='gear2' width='800' height='700'&gt;&lt;/canvas&gt;
+
+&lt;script type="text/python3"&gt;
+# 導入 browser 模組中的 document, 並設為 doc 變數
+from browser import document as doc
+import math
+# deg 為角度轉為徑度的轉換因子
+deg = math.pi/180.
+# 定義 Spur 類別
+class Spur(object):
+    def __init__(self, ctx):
+        self.ctx = ctx
+
+    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
+        self.ctx.beginPath()
+        self.ctx.lineWidth = width
+        self.ctx.moveTo(x1, y1)
+        self.ctx.lineTo(x2, y2)
+        self.ctx.strokeStyle = fill
+        self.ctx.stroke()
+    #
+    # 定義一個繪正齒輪的繪圖函式
+    # midx 為齒輪圓心 x 座標
+    # midy 為齒輪圓心 y 座標
+    # rp 為節圓半徑, n 為齒數
+    # pa 為壓力角 (deg)
+    # rot 為旋轉角 (deg)
+    # 已經針對 n 大於等於 52 齒時的繪圖錯誤修正, 因為 base circle 與齒根圓大小必須進行判斷
+    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
+        # 齒輪漸開線分成 15 線段繪製
+        imax = 15
+        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
+        self.create_line(midx, midy, midx, midy-rp)
+        # 畫出 rp 圓, 畫圓函式尚未定義
+        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
+        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
+        # 模數也就是齒冠大小
+        a=2*rp/n
+        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
+        d=2.5*rp/n
+        # ra 為齒輪的外圍半徑
+        ra=rp+a
+        # 畫出 ra 圓, 畫圓函式尚未定義
+        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
+        # rb 則為齒輪的基圓半徑
+        # 基圓為漸開線長齒之基準圓
+        rb=rp*math.cos(pa*deg)
+        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
+        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
+        # rd 為齒根圓半徑
+        rd=rp-d
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
+        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
+        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
+        # 將圓弧分成 imax 段來繪製漸開線
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        if rd&gt;rb:
+            dr = (ra-rd)/imax
+        else:
+            dr=(ra-rb)/imax
+        # tan(pa*deg)-pa*deg 為漸開線函數
+        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
+        for j in range(n):
+            ang=-2.*j*math.pi/n+sigma
+            ang2=2.*j*math.pi/n+sigma
+            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
+            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(alpha-ang)
+                ypt=r*math.cos(alpha-ang)
+                xd=rd*math.sin(-ang)
+                yd=rd*math.cos(-ang)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    lfx=midx+xpt
+                    lfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # the line from last end of dedendum point to the recent
+            # end of dedendum point
+            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
+            # 下列為齒根圓上用來近似圓弧的直線
+            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(ang2-alpha)
+                ypt=r*math.cos(ang2-alpha)
+                xd=rd*math.sin(ang2)
+                yd=rd*math.cos(ang2)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    rfx=midx+xpt
+                    rfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
+            # 下列為齒頂圓上用來近似圓弧的直線
+            self.create_line(lfx,lfy,rfx,rfy,fill=color)
+
+# 準備在 id="gear2" 的 canvas 中繪圖
+canvas = doc["gear2"]
+ctx = canvas.getContext("2d")
+x = (canvas.width)/2
+y = (canvas.height)/2
+r = 0.8*(canvas.width/2)
+# 齒數
+n = 53
+# 壓力角
+pa = 20
+Spur(ctx).Gear(x, y, r, n, pa, "blue")
+&lt;/script&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;上述直接利用 Canvas 繪正齒輪的原始碼:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+&amp;lt;canvas id='gear2' width='800' height='700'&amp;gt;&amp;lt;/canvas&amp;gt;
+
+&amp;lt;script type="text/python3"&amp;gt;
+# 導入 browser 模組中的 document, 並設為 doc 變數
+from browser import document as doc
+import math
+# deg 為角度轉為徑度的轉換因子
+deg = math.pi/180.
+# 定義 Spur 類別
+class Spur(object):
+    def __init__(self, ctx):
+        self.ctx = ctx
+
+    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
+        self.ctx.beginPath()
+        self.ctx.lineWidth = width
+        self.ctx.moveTo(x1, y1)
+        self.ctx.lineTo(x2, y2)
+        self.ctx.strokeStyle = fill
+        self.ctx.stroke()
+    #
+    # 定義一個繪正齒輪的繪圖函式
+    # midx 為齒輪圓心 x 座標
+    # midy 為齒輪圓心 y 座標
+    # rp 為節圓半徑, n 為齒數
+    # pa 為壓力角 (deg)
+    # rot 為旋轉角 (deg)
+    # 已經針對 n 大於等於 52 齒時的繪圖錯誤修正, 因為 base circle 與齒根圓大小必須進行判斷
+    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
+        # 齒輪漸開線分成 15 線段繪製
+        imax = 15
+        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
+        self.create_line(midx, midy, midx, midy-rp)
+        # 畫出 rp 圓, 畫圓函式尚未定義
+        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
+        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
+        # 模數也就是齒冠大小
+        a=2*rp/n
+        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
+        d=2.5*rp/n
+        # ra 為齒輪的外圍半徑
+        ra=rp+a
+        # 畫出 ra 圓, 畫圓函式尚未定義
+        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
+        # rb 則為齒輪的基圓半徑
+        # 基圓為漸開線長齒之基準圓
+        rb=rp*math.cos(pa*deg)
+        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
+        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
+        # rd 為齒根圓半徑
+        rd=rp-d
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
+        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
+        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
+        # 將圓弧分成 imax 段來繪製漸開線
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        if rd&amp;gt;rb:
+            dr = (ra-rd)/imax
+        else:
+            dr=(ra-rb)/imax
+        # tan(pa*deg)-pa*deg 為漸開線函數
+        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
+        for j in range(n):
+            ang=-2.*j*math.pi/n+sigma
+            ang2=2.*j*math.pi/n+sigma
+            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
+            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&amp;gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(alpha-ang)
+                ypt=r*math.cos(alpha-ang)
+                xd=rd*math.sin(-ang)
+                yd=rd*math.cos(-ang)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    lfx=midx+xpt
+                    lfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # the line from last end of dedendum point to the recent
+            # end of dedendum point
+            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
+            # 下列為齒根圓上用來近似圓弧的直線
+            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&amp;gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(ang2-alpha)
+                ypt=r*math.cos(ang2-alpha)
+                xd=rd*math.sin(ang2)
+                yd=rd*math.cos(ang2)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    rfx=midx+xpt
+                    rfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
+            # 下列為齒頂圓上用來近似圓弧的直線
+            self.create_line(lfx,lfy,rfx,rfy,fill=color)
+
+# 準備在 id="gear2" 的 canvas 中繪圖
+canvas = doc["gear2"]
+ctx = canvas.getContext("2d")
+x = (canvas.width)/2
+y = (canvas.height)/2
+r = 0.8*(canvas.width/2)
+# 齒數
+n = 53
+# 壓力角
+pa = 20
+Spur(ctx).Gear(x, y, r, n, pa, "blue")
+&amp;lt;/script&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;正齒輪囓合繪圖:&lt;/p&gt;
+&lt;canvas id='gear3' width='800' height='400'&gt;&lt;/canvas&gt;
+
+&lt;script type="text/python3"&gt;
+# 導入 browser 模組中的 document, 並設為 doc 變數
+from browser import document as doc
+import math
+# deg 為角度轉為徑度的轉換因子
+deg = math.pi/180.
+# 定義 Spur 類別
+class Spur(object):
+    def __init__(self, ctx):
+        self.ctx = ctx
+
+    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
+        self.ctx.beginPath()
+        self.ctx.lineWidth = width
+        self.ctx.moveTo(x1, y1)
+        self.ctx.lineTo(x2, y2)
+        self.ctx.strokeStyle = fill
+        self.ctx.stroke()
+    #
+    # 定義一個繪正齒輪的繪圖函式
+    # midx 為齒輪圓心 x 座標
+    # midy 為齒輪圓心 y 座標
+    # rp 為節圓半徑, n 為齒數
+    # pa 為壓力角 (deg)
+    # rot 為旋轉角 (deg)
+    # 已經針對 n 大於等於 52 齒時的繪圖錯誤修正, 因為 base circle 與齒根圓大小必須進行判斷
+    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
+        # 齒輪漸開線分成 15 線段繪製
+        imax = 15
+        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
+        self.create_line(midx, midy, midx, midy-rp)
+        # 畫出 rp 圓, 畫圓函式尚未定義
+        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
+        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
+        # 模數也就是齒冠大小
+        a=2*rp/n
+        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
+        d=2.5*rp/n
+        # ra 為齒輪的外圍半徑
+        ra=rp+a
+        # 畫出 ra 圓, 畫圓函式尚未定義
+        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
+        # rb 則為齒輪的基圓半徑
+        # 基圓為漸開線長齒之基準圓
+        rb=rp*math.cos(pa*deg)
+        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
+        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
+        # rd 為齒根圓半徑
+        rd=rp-d
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
+        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
+        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
+        # 將圓弧分成 imax 段來繪製漸開線
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        if rd&gt;rb:
+            dr = (ra-rd)/imax
+        else:
+            dr=(ra-rb)/imax
+        # tan(pa*deg)-pa*deg 為漸開線函數
+        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
+        for j in range(n):
+            ang=-2.*j*math.pi/n+sigma
+            ang2=2.*j*math.pi/n+sigma
+            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
+            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(alpha-ang)
+                ypt=r*math.cos(alpha-ang)
+                xd=rd*math.sin(-ang)
+
+                yd=rd*math.cos(-ang)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    lfx=midx+xpt
+                    lfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # the line from last end of dedendum point to the recent
+            # end of dedendum point
+            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
+            # 下列為齒根圓上用來近似圓弧的直線
+            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(ang2-alpha)
+                ypt=r*math.cos(ang2-alpha)
+                xd=rd*math.sin(ang2)
+                yd=rd*math.cos(ang2)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    rfx=midx+xpt
+                    rfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
+            # 下列為齒頂圓上用來近似圓弧的直線
+            self.create_line(lfx,lfy,rfx,rfy,fill=color)
+
+# 準備在 id="gear3" 的 canvas 中繪圖
+canvas = doc["gear3"]
+ctx = canvas.getContext("2d")
+
+# 模數決定齒的尺寸大小, 囓合齒輪組必須有相同的模數與壓力角
+# 壓力角 pa 單位為角度
+pa = 20
+# 第1齒輪齒數
+n_g1 = 17
+# 第2齒輪齒數
+n_g2 = 11
+# 第3齒輪齒數
+n_g3 = 13
+# m 為模數, 根據畫布的寬度, 計算適合的模數大小
+m = (0.8*canvas.width)/(n_g1+n_g2+n_g3)
+# 根據模數 m, 計算各齒輪的節圓半徑
+rp_g1 = m*n_g1/2
+rp_g2 = m*n_g2/2
+rp_g3 = m*n_g3/2
+#單一正齒輪繪圖呼叫格式 Spur(ctx).Gear(x, y, r, n, pa, "blue")
+# 開始繪製囓合齒輪輪廓
+# 繪圖第1齒輪的圓心座標, 因為希望繪圖佔去 canvas.width 的 80%, 所以兩邊各預留 10% 距離
+x_g1 = canvas.width*0.1+rp_g1
+# y 方向繪圖區域上方預留 canvas.height 的 20%
+y_g1 = canvas.height*0.2+rp_g1
+# 第2齒輪的圓心座標, 假設排列成水平, 表示各齒輪圓心 y 座標相同
+x_g2 = x_g1 + rp_g1 + rp_g2
+y_g2 = y_g1
+# 第3齒輪的圓心座標
+x_g3 = x_g1 + rp_g1 + 2*rp_g2 + rp_g3
+y_g3 = y_g1
+
+# 將第1齒輪順時鐘轉 90 度, 也就是 math.pi/2
+# 使用 ctx.save() 與 ctx.restore() 以確保各齒輪以相對座標進行旋轉繪圖
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g1, y_g1)
+# rotate to engage
+ctx.rotate(math.pi/2)
+# put it back
+ctx.translate(-x_g1, -y_g1)
+# 繪製第一個齒輪輪廓
+Spur(ctx).Gear(x_g1, y_g1, rp_g1, n_g1, pa, "blue")
+ctx.restore()
+
+# 將第2齒輪逆時鐘轉 90 度之後, 再多轉一齒, 以便與第1齒輪進行囓合
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g2, y_g2)
+# rotate to engage
+ctx.rotate(-math.pi/2-math.pi/n_g2)
+# put it back
+ctx.translate(-x_g2, -y_g2)
+Spur(ctx).Gear(x_g2, y_g2, rp_g2, n_g2, pa, "black")
+ctx.restore()
+
+# 將第3齒輪逆時鐘轉 90 度之後, 再往回轉第2齒輪定位帶動轉角, 然後再逆時鐘多轉一齒, 以便與第2齒輪進行囓合
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g3, y_g3)
+# rotate to engage
+# math.pi+math.pi/n_g2 為第2齒輪從順時鐘轉 90 度之後, 必須配合目前的標記線所作的齒輪 2 轉動角度, 要轉換到齒輪3 的轉動角度
+# 必須乘上兩齒輪齒數的比例, 若齒輪2 大, 則齒輪3 會轉動較快
+# 第1個 -math.pi/2 為將原先垂直的第3齒輪定位線逆時鐘旋轉 90 度
+# -math.pi/n_g3 則是第3齒與第2齒定位線重合後, 必須再逆時鐘多轉一齒的轉角, 以便進行囓合
+# (math.pi+math.pi/n_g2)*n_g2/n_g3 則是第2齒原定位線為順時鐘轉動 90 度, 
+# 但是第2齒輪為了與第1齒輪囓合, 已經距離定位線, 多轉了 180 度, 再加上第2齒輪的一齒角度, 因為要帶動第3齒輪定位, 
+# 這個修正角度必須要再配合第2齒與第3齒的轉速比加以轉換成第3齒輪的轉角, 因此乘上 n_g2/n_g3
+ctx.rotate(-math.pi/2-math.pi/n_g3+(math.pi+math.pi/n_g2)*n_g2/n_g3)
+# put it back
+ctx.translate(-x_g3, -y_g3)
+Spur(ctx).Gear(x_g3, y_g3, rp_g3, n_g3, pa, "red")
+ctx.restore()
+&lt;/script&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;上述正齒輪囓合繪圖原始碼:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+&amp;lt;canvas id='gear3' width='800' height='400'&amp;gt;&amp;lt;/canvas&amp;gt;
+
+&amp;lt;script type="text/python3"&amp;gt;
+# 導入 browser 模組中的 document, 並設為 doc 變數
+from browser import document as doc
+import math
+# deg 為角度轉為徑度的轉換因子
+deg = math.pi/180.
+# 定義 Spur 類別
+class Spur(object):
+    def __init__(self, ctx):
+        self.ctx = ctx
+
+    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
+        self.ctx.beginPath()
+        self.ctx.lineWidth = width
+        self.ctx.moveTo(x1, y1)
+        self.ctx.lineTo(x2, y2)
+        self.ctx.strokeStyle = fill
+        self.ctx.stroke()
+    #
+    # 定義一個繪正齒輪的繪圖函式
+    # midx 為齒輪圓心 x 座標
+    # midy 為齒輪圓心 y 座標
+    # rp 為節圓半徑, n 為齒數
+    # pa 為壓力角 (deg)
+    # rot 為旋轉角 (deg)
+    # 已經針對 n 大於等於 52 齒時的繪圖錯誤修正, 因為 base circle 與齒根圓大小必須進行判斷
+    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
+        # 齒輪漸開線分成 15 線段繪製
+        imax = 15
+        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
+        self.create_line(midx, midy, midx, midy-rp)
+        # 畫出 rp 圓, 畫圓函式尚未定義
+        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
+        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
+        # 模數也就是齒冠大小
+        a=2*rp/n
+        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
+        d=2.5*rp/n
+        # ra 為齒輪的外圍半徑
+        ra=rp+a
+        # 畫出 ra 圓, 畫圓函式尚未定義
+        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
+        # rb 則為齒輪的基圓半徑
+        # 基圓為漸開線長齒之基準圓
+        rb=rp*math.cos(pa*deg)
+        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
+        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
+        # rd 為齒根圓半徑
+        rd=rp-d
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
+        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
+        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
+        # 將圓弧分成 imax 段來繪製漸開線
+        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+        if rd&amp;gt;rb:
+            dr = (ra-rd)/imax
+        else:
+            dr=(ra-rb)/imax
+        # tan(pa*deg)-pa*deg 為漸開線函數
+        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
+        for j in range(n):
+            ang=-2.*j*math.pi/n+sigma
+            ang2=2.*j*math.pi/n+sigma
+            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
+            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&amp;gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(alpha-ang)
+                ypt=r*math.cos(alpha-ang)
+                xd=rd*math.sin(-ang)
+
+                yd=rd*math.cos(-ang)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    lfx=midx+xpt
+                    lfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # the line from last end of dedendum point to the recent
+            # end of dedendum point
+            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
+            # 下列為齒根圓上用來近似圓弧的直線
+            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
+            for i in range(imax+1):
+                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
+                if rd&amp;gt;rb:
+                    r=rd+i*dr
+                else:
+                    r=rb+i*dr
+                theta=math.sqrt((r*r)/(rb*rb)-1.)
+                alpha=theta-math.atan(theta)
+                xpt=r*math.sin(ang2-alpha)
+                ypt=r*math.cos(ang2-alpha)
+                xd=rd*math.sin(ang2)
+                yd=rd*math.cos(ang2)
+                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
+                if(i==0):
+                    last_x = midx+xd
+                    last_y = midy-yd
+                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
+                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
+                # 最後一點, 則為齒頂圓
+                if(i==imax):
+                    rfx=midx+xpt
+                    rfy=midy-ypt
+                last_x = midx+xpt
+                last_y = midy-ypt
+            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
+            # 下列為齒頂圓上用來近似圓弧的直線
+            self.create_line(lfx,lfy,rfx,rfy,fill=color)
+
+# 準備在 id="gear3" 的 canvas 中繪圖
+canvas = doc["gear3"]
+ctx = canvas.getContext("2d")
+
+# 模數決定齒的尺寸大小, 囓合齒輪組必須有相同的模數與壓力角
+# 壓力角 pa 單位為角度
+pa = 20
+# 第1齒輪齒數
+n_g1 = 17
+# 第2齒輪齒數
+n_g2 = 11
+# 第3齒輪齒數
+n_g3 = 13
+# m 為模數, 根據畫布的寬度, 計算適合的模數大小
+m = (0.8*canvas.width)/(n_g1+n_g2+n_g3)
+# 根據模數 m, 計算各齒輪的節圓半徑
+rp_g1 = m*n_g1/2
+rp_g2 = m*n_g2/2
+rp_g3 = m*n_g3/2
+#單一正齒輪繪圖呼叫格式 Spur(ctx).Gear(x, y, r, n, pa, "blue")
+# 開始繪製囓合齒輪輪廓
+# 繪圖第1齒輪的圓心座標, 因為希望繪圖佔去 canvas.width 的 80%, 所以兩邊各預留 10% 距離
+x_g1 = canvas.width*0.1+rp_g1
+# y 方向繪圖區域上方預留 canvas.height 的 20%
+y_g1 = canvas.height*0.2+rp_g1
+# 第2齒輪的圓心座標, 假設排列成水平, 表示各齒輪圓心 y 座標相同
+x_g2 = x_g1 + rp_g1 + rp_g2
+y_g2 = y_g1
+# 第3齒輪的圓心座標
+x_g3 = x_g1 + rp_g1 + 2*rp_g2 + rp_g3
+y_g3 = y_g1
+
+# 將第1齒輪順時鐘轉 90 度, 也就是 math.pi/2
+# 使用 ctx.save() 與 ctx.restore() 以確保各齒輪以相對座標進行旋轉繪圖
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g1, y_g1)
+# rotate to engage
+ctx.rotate(math.pi/2)
+# put it back
+ctx.translate(-x_g1, -y_g1)
+# 繪製第一個齒輪輪廓
+Spur(ctx).Gear(x_g1, y_g1, rp_g1, n_g1, pa, "blue")
+ctx.restore()
+
+# 將第2齒輪逆時鐘轉 90 度之後, 再多轉一齒, 以便與第1齒輪進行囓合
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g2, y_g2)
+# rotate to engage
+ctx.rotate(-math.pi/2-math.pi/n_g2)
+# put it back
+ctx.translate(-x_g2, -y_g2)
+Spur(ctx).Gear(x_g2, y_g2, rp_g2, n_g2, pa, "black")
+ctx.restore()
+
+# 將第3齒輪逆時鐘轉 90 度之後, 再往回轉第2齒輪定位帶動轉角, 然後再逆時鐘多轉一齒, 以便與第2齒輪進行囓合
+ctx.save()
+# translate to the origin of second gear
+ctx.translate(x_g3, y_g3)
+# rotate to engage
+# math.pi+math.pi/n_g2 為第2齒輪從順時鐘轉 90 度之後, 必須配合目前的標記線所作的齒輪 2 轉動角度, 要轉換到齒輪3 的轉動角度
+# 必須乘上兩齒輪齒數的比例, 若齒輪2 大, 則齒輪3 會轉動較快
+# 第1個 -math.pi/2 為將原先垂直的第3齒輪定位線逆時鐘旋轉 90 度
+# -math.pi/n_g3 則是第3齒與第2齒定位線重合後, 必須再逆時鐘多轉一齒的轉角, 以便進行囓合
+# (math.pi+math.pi/n_g2)*n_g2/n_g3 則是第2齒原定位線為順時鐘轉動 90 度, 
+# 但是第2齒輪為了與第1齒輪囓合, 已經距離定位線, 多轉了 180 度, 再加上第2齒輪的一齒角度, 因為要帶動第3齒輪定位, 
+# 這個修正角度必須要再配合第2齒與第3齒的轉速比加以轉換成第3齒輪的轉角, 因此乘上 n_g2/n_g3
+ctx.rotate(-math.pi/2-math.pi/n_g3+(math.pi+math.pi/n_g2)*n_g2/n_g3)
+# put it back
+ctx.translate(-x_g3, -y_g3)
+Spur(ctx).Gear(x_g3, y_g3, rp_g3, n_g3, pa, "red")
+ctx.restore()
+&amp;lt;/script&amp;gt;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;轉為 Brython 繪圖的模擬應用:&lt;/p&gt;
+&lt;canvas id='robot' width='800' height='400'&gt;&lt;/canvas&gt;
+
+&lt;script type="text/python"&gt;
+from javascript import JSConstructor
+from browser import window
+
+cango2d = JSConstructor(window.Cango2D)
+shapedefs = window.shapeDefs
+obj2d = JSConstructor(window.Obj2D)
+tweener = JSConstructor(window.Tweener)
+
+cgo = cango2d("robot")
+# 清除畫面
+cgo.clearCanvas("lightyellow")
+cgo.setWorldCoords(-50, -50, 300)
+
+# 加上基軸與第一桿
+# 畫筆移到 -20, -10, 畫直線到 -10,-10 以及 -10,0 
+standData = ['M', -20,-10, 'L', -10,-10, -10,0, 'A', 10,10,0,0,0,10,0, 'L',10,-10, 20,-10, 20,-40, -20,-40,'z']
+stand = obj2d(standData, "SHAPE", {
+        "fillColor":'darkgray',
+        "border": True,
+        "strokeColor": "#222222" })
+axle0 = obj2d(shapedefs.circle(10), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222" })
+armGrp = cgo.createGroup2D(stand, axle0)
+
+segData = ['M',0,-8, 'A',8,8,0,0,0,0,8, 'L',50,8, 'A',8,8,0,0,0,50,-8, 'Z']
+seg1 = obj2d(segData, "SHAPE", {
+        "fillColor":'darkGray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": -1 })
+# 利用 zIndex 決定疊層的先後次序
+axle1 = obj2d(shapedefs.circle(8), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": 1 })
+axle1.translate(50, 0)
+seg1Grp = cgo.createGroup2D(seg1, axle1)
+armGrp.addObj(seg1Grp)
+
+# 加上第二軸
+seg2 = obj2d(segData, "SHAPE", {
+        "fillColor":'darkGray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": -1 })
+axle2 = obj2d(shapedefs.circle(8), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": 1 })
+axle2.translate(50, 0)
+seg2Grp = cgo.createGroup2D(seg2, axle2)
+cgo.render(seg2Grp)
+# 請注意 seg2Grp 加上 seg1Grp 物件上
+seg1Grp.addObj(seg2Grp)
+
+seg3 = obj2d(segData, "SHAPE", {
+        'fillColor':'darkGray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': -1 })
+axle3 = obj2d(shapedefs.circle(6), "SHAPE", {
+        'fillColor':'gray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': 1 })
+axle3.translate(50, 0)
+seg3Grp = cgo.createGroup2D(seg3, axle3)
+seg2Grp.addObj(seg3Grp)
+
+seg4Data = ['M',0,-6, 'A',6,6,0,0,0,0,6, 'L',40,6, 40,12, 50,12, 50,-12, 40,-12, 40,-6, 'Z']
+seg4 = obj2d(seg4Data, "SHAPE", {
+        'fillColor':'darkGray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': -1 })
+seg3Grp.addObj(seg4)
+
+# setup animation
+animData = {'s1': [0, 80, 45, 0],
+                  's2': [0, -60, -60, 0],
+                  's3': [0, -90, 0, 90, 0],
+                  's4': [0, 30, -90, 0]}
+
+armTwnr = tweener(0, 3500, 'loop')
+
+def initArm(opts):
+    seg2Grp.transform.translate(50,0)
+    seg3Grp.transform.translate(50,0)
+    seg4.transform.translate(50,0)
 
 
-&lt;h2&gt;Virtualbox 功能&lt;/h2&gt;
-&lt;p&gt;虛擬器的功能有下列幾點:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;在任一操作系統開機後, 可以同時啟動多種虛擬的操作系統平台, 並且透過虛擬硬體的配置與設定, 執行各種老舊的操作系統應用程式 , 畢竟老應用程式不死, 只是慢慢凋零!&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;以檔案的架構保留各種電腦軟硬體的配置, 可提升軟體開發效能外, 並可在軟體推銷過程避開多次煩雜的設定 (當然 Docker based 的虛擬技術, 已經逐漸超越這種整套操作系統虛擬的應用).&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;程式開發者可以在虛擬機器中廣泛透過虛擬的硬體配置, 大膽進行各項操作與測試, 無需擔心損毀電腦週邊實體.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;在開機的一台電腦實體中, 可同時模擬多台電腦的運作, 省下操作可能消耗的電力, 降低實體運作與硬體維護成本.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Virtualbox 的參考手冊: &lt;a href="https://www.virtualbox.org/manual/"&gt;https://www.virtualbox.org/manual/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;以下將針對 Virtualbox 的網路設定與應用加以說明:&lt;/p&gt;
-&lt;p&gt;Virtualbox 的網路設定模式分為 NAT, Bridged, Internal, Host-only, UDP tunnel 與 VDE 等.&lt;/p&gt;
-&lt;p&gt;NAT 使用情境為啟動虛擬機器後, 當作一般客戶端電腦使用, 虛擬機的連網是透過 NAT 轉址, 以 Host 電腦的網路 IP 對外抓取資料.&lt;/p&gt;
-&lt;p&gt;Bridged 使用情境為啟動虛擬機器後, 當作一般伺服器電腦使用, 在 Host 操作系統中模擬出的虛擬網卡, 可以與 Host 電腦的實體網路卡進行橋接與設定外部 IP 後, 視為網路幹線上的一台伺服器.&lt;/p&gt;
-&lt;p&gt;Internal 使用情境主要關注在虛擬機器之間的網路彼此相連, 但卻自外於與 Host 連接的區域或廣域網路, Internal networking 的特性通常用來當作資料庫伺服器, 可以透過 internal 網路, 提供對外連線的全球資訊網伺服器資料, 但是外部電腦無法跨越 internal 網路架構直接連線.&lt;/p&gt;
-&lt;p&gt;Host-only 使用情境則將網路服務的範圍界定在 Host 主機範圍內, 在虛擬機器所啟動的各種服務, 可以讓 Host 連線, 但是因為沒有像 Bridged 網路設置, 與 Host 的實體網路卡進行橋接, 因此 Host-only 的網路環境通常讓操作 Host 的程式設計師將 Host-only 的電腦當作跨網路的虛擬伺服器使用.&lt;/p&gt;
-&lt;p&gt;UDP tunnel 網路用來串接位於不同 Hosts 的虛擬機器, 而 VDE 則是 Virtual Distributed Ethernet 則是一種虛擬網路基礎架構.&lt;/p&gt;
-&lt;p&gt;以機械設計的電腦輔助設計應用而言, Virtualbox 網路中的 NAT 與 Host-only 模式最為常用, 而 NAT 網路的設定非常直覺, 只要在所新增的虛擬機器中的網路設定, 選擇 NAT, 然後開機之後, 就可以直接在虛擬機器中使用轉址的網路服務.&lt;/p&gt;
-&lt;h2&gt;Host-only 虛擬網路設定&lt;/h2&gt;
-&lt;p&gt;Host-only 的網路設置則稍微複雜, 其中牽涉到 Virtualbox 應用程式的網路偏好設定, 以及虛擬機器本身的網路設定搭配, 才能讓 Host 中的應用程式透過 Host 操作系統中的 Host-only 虛擬網路卡, 與位於同一網段的虛擬機器設置連線.&lt;/p&gt;
-&lt;h3&gt;Virtualbox 網路偏好設定&lt;/h3&gt;
-&lt;p&gt;Virtualbox 的網路相關設定分為兩個層次, 有關整個 Virtualbox 的設定位於 File-&amp;gt;Preferences-&amp;gt;Network, 而第二個層次為各虛擬機器的個別設定. 若以 File-&amp;gt;Preferences-&amp;gt;Network 中, 有關 Host-only 網路設定的目的, 在讓 Virtualbox 的 Host 本體, 可以透過虛擬的網路卡與 Virtualbox 中的虛擬機器網路卡處於同一個區域網路中.&lt;/p&gt;
-&lt;p&gt;換言之, 如 Host-only 這個名稱本身的所謂 Host only, 就是虛擬機器的網路能見度, 僅止於 Host only, 外部電腦無法與這些虛擬機器連線, 甚至若虛擬機器沒有透過 Host 電腦中的代理主機, 虛擬機器中的瀏覽器也無法連線上網.&lt;/p&gt;
-&lt;p&gt;至於 File-&amp;gt;Preferences-&amp;gt;Network 中的 Host-only 設定, 總共決定兩件虛擬功能, 其一為位於 Host 中的虛擬網路卡, 要採用的網路協定與網址, 所謂的網路協定就是可以使用 IPV4 或 IPV6 網路協定, 至於虛擬網卡的網址, 就會決定這個所謂的 Host-only 網路, 位於那一個內部網段, 例如, 可以使用 IPV4 協定, 並將虛擬網路卡的網址設為 192.168.56.1, 也就是將 Host-only 的網段設為 192.168.56.0.&lt;/p&gt;
-&lt;p&gt;File-&amp;gt;Preferences-&amp;gt;Network 中的 Host-only 第 2 個設定, 就是在這個上述設定的虛擬網段中, 是否要再虛擬出一台 DHCP 伺服器, 例如, 選擇要在這個虛擬 Host-only 網段中啟用虛擬的 DHCP 伺服器, 就可以決定這個虛擬的 DHCP 伺服器的 IP (當然要與第 1 項設定的網段相同, 也就是必須位於 192.168.56.0 網段中), 例如, 將虛擬的 DHCP server IP 設為 192.168.56.100, 並且將 DHCP IP 範圍設為 192.168.56.101-200.&lt;/p&gt;
-&lt;p&gt;儘管 Virtualbox 中的 File-&amp;gt;Preferences-&amp;gt;Network 中的 Host-only 第 2 個設定, 可以啟用 DHCP, 但是通常使用 Host-only 虛擬網路模式的目的, 大多要在 Host 中連接虛擬機器中的伺服器, 使用特定的服務內容, 因此一般都停用 Host-only 網路設定中的虛擬 DHCP server 服務, 而採手動設定虛擬機器中的 IP 與 Gateway.&lt;/p&gt;
-&lt;h3&gt;虛擬機器的網路設定&lt;/h3&gt;
-&lt;p&gt;例如, 可以將其中第一台使用 Host-only 網路模式的虛擬機器網路 IP 設為 192.168.56.101, 並將 Gateway 設為 192.168.56.1 (也就是 Host 中對應虛擬網卡的 IP 位址), 第 2 台則設可為 192.168.56.102, 依此類推採用固定的 IP 位址來界定虛擬機器所提供的不同服務.&lt;/p&gt;
-&lt;p&gt;Host-only 虛擬網路相關設定的參考畫面如下:&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_1.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_2.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_3.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_4.png" width="800" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox_host_only_5.png" width="800" /&gt;&lt;/p&gt;</summary><category term="CADLab"></category><category term="虛擬機器"></category></entry><entry><title>Onshape Featurescript Spur Gear 零件</title><link href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-ling-jian.html" rel="alternate"></link><updated>2016-06-16T06:21:54+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-16:post/onshape-featurescript-spur-gear-ling-jian.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch"&gt;https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch&lt;/a&gt; 的討論, 我們得知, 目前無法利用 FeatureScript 在繪圖平面中利用 opFillet, 對特定平面圖元進行倒圓角運算, 因此延續&lt;a href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-lun-kuo-hui-tu.html"&gt;上一篇利用漸開線正齒輪輪廓&lt;/a&gt;轉換為正齒輪零件, 就必須在實體模型中進行倒圓角運算.&lt;/p&gt;
+def armPathFn(time, opts):
+    seg1Rot = armTwnr.getVal(time, opts.s1)
+    seg2Rot = armTwnr.getVal(time, opts.s2)
+    seg3Rot = armTwnr.getVal(time, opts.s3)
+    seg4Rot = armTwnr.getVal(time, opts.s4)
+
+    seg1Grp.transform.rotate(seg1Rot)
+    seg2Grp.transform.rotate(seg2Rot)
+    seg2Grp.transform.translate(50,0)
+    seg3Grp.transform.rotate(seg3Rot)
+    seg3Grp.transform.translate(50,0)
+    seg4.transform.rotate(seg4Rot)
+    seg4.transform.translate(50,0)
+
+cgo.animate(armGrp, initArm, armPathFn, animData)
+cgo.playAnimation()
+&lt;/script&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;上述動態模擬的原始碼:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+&amp;lt;canvas id='robot' width='800' height='400'&amp;gt;&amp;lt;/canvas&amp;gt;
+
+&amp;lt;script type="text/python"&amp;gt;
+from javascript import JSConstructor
+from browser import window
+
+cango2d = JSConstructor(window.Cango2D)
+shapedefs = window.shapeDefs
+obj2d = JSConstructor(window.Obj2D)
+tweener = JSConstructor(window.Tweener)
+
+cgo = cango2d("robot")
+# 清除畫面
+cgo.clearCanvas("lightyellow")
+cgo.setWorldCoords(-50, -50, 300)
+
+# 加上基軸與第一桿
+# 畫筆移到 -20, -10, 畫直線到 -10,-10 以及 -10,0 
+standData = ['M', -20,-10, 'L', -10,-10, -10,0, 'A', 10,10,0,0,0,10,0, 'L',10,-10, 20,-10, 20,-40, -20,-40,'z']
+stand = obj2d(standData, "SHAPE", {
+        "fillColor":'darkgray',
+        "border": True,
+        "strokeColor": "#222222" })
+axle0 = obj2d(shapedefs.circle(10), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222" })
+armGrp = cgo.createGroup2D(stand, axle0)
+
+segData = ['M',0,-8, 'A',8,8,0,0,0,0,8, 'L',50,8, 'A',8,8,0,0,0,50,-8, 'Z']
+seg1 = obj2d(segData, "SHAPE", {
+        "fillColor":'darkGray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": -1 })
+# 利用 zIndex 決定疊層的先後次序
+axle1 = obj2d(shapedefs.circle(8), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": 1 })
+axle1.translate(50, 0)
+seg1Grp = cgo.createGroup2D(seg1, axle1)
+armGrp.addObj(seg1Grp)
+
+# 加上第二軸
+seg2 = obj2d(segData, "SHAPE", {
+        "fillColor":'darkGray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": -1 })
+axle2 = obj2d(shapedefs.circle(8), "SHAPE", {
+        "fillColor":'gray',
+        "border": True,
+        "strokeColor": "#222222",
+        "zIndex": 1 })
+axle2.translate(50, 0)
+seg2Grp = cgo.createGroup2D(seg2, axle2)
+cgo.render(seg2Grp)
+# 請注意 seg2Grp 加上 seg1Grp 物件上
+seg1Grp.addObj(seg2Grp)
+
+seg3 = obj2d(segData, "SHAPE", {
+        'fillColor':'darkGray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': -1 })
+axle3 = obj2d(shapedefs.circle(6), "SHAPE", {
+        'fillColor':'gray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': 1 })
+axle3.translate(50, 0)
+seg3Grp = cgo.createGroup2D(seg3, axle3)
+seg2Grp.addObj(seg3Grp)
+
+seg4Data = ['M',0,-6, 'A',6,6,0,0,0,0,6, 'L',40,6, 40,12, 50,12, 50,-12, 40,-12, 40,-6, 'Z']
+seg4 = obj2d(seg4Data, "SHAPE", {
+        'fillColor':'darkGray',
+        'border': True,
+        'strokeColor': "#222222",
+        'zIndex': -1 })
+seg3Grp.addObj(seg4)
+
+# setup animation
+animData = {'s1': [0, 80, 45, 0],
+                  's2': [0, -60, -60, 0],
+                  's3': [0, -90, 0, 90, 0],
+                  's4': [0, 30, -90, 0]}
+
+armTwnr = tweener(0, 3500, 'loop')
+
+def initArm(opts):
+    seg2Grp.transform.translate(50,0)
+    seg3Grp.transform.translate(50,0)
+    seg4.transform.translate(50,0)
+
+
+def armPathFn(time, opts):
+    seg1Rot = armTwnr.getVal(time, opts.s1)
+    seg2Rot = armTwnr.getVal(time, opts.s2)
+    seg3Rot = armTwnr.getVal(time, opts.s3)
+    seg4Rot = armTwnr.getVal(time, opts.s4)
+
+    seg1Grp.transform.rotate(seg1Rot)
+    seg2Grp.transform.rotate(seg2Rot)
+    seg2Grp.transform.translate(50,0)
+    seg3Grp.transform.rotate(seg3Rot)
+    seg3Grp.transform.translate(50,0)
+    seg4.transform.rotate(seg4Rot)
+    seg4.transform.translate(50,0)
+
+cgo.animate(armGrp, initArm, armPathFn, animData)
+cgo.playAnimation()
+&amp;lt;/script&amp;gt;
+&lt;/pre&gt;</summary><category term="MCAD"></category><category term="Web based"></category></entry><entry><title>Wordpress 網誌文章中的網際程式碼</title><link href="http://cadlab.mde.tw/post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html" rel="alternate"></link><updated>2016-06-26T10:06:56+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-06-26:post/wordpress-wang-zhi-wen-zhang-zhong-de-wang-ji-cheng-shi-ma.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://www.w3.org/Graphics/SVG/History"&gt;SVG 歷史&lt;/a&gt; 與 &lt;a href="https://en.wikipedia.org/wiki/WebGL#History"&gt;WebGL 歷史&lt;/a&gt;, 以及 &lt;a href="https://github.com/socketio/socket.io/blob/master/History.md"&gt; socket.io 歷史&lt;/a&gt;, 也許不難發現, 多人協同在瀏覽器為基礎的應用程式環境, 已然成型.&lt;/p&gt;
+
+
+&lt;p&gt;儘管如此, 要將所有的工作全時在網路連線的環境中完成, 可能仍言之過早, 比較讓人確定的是, 多點觸控的平台伴隨著本地端的桌機或者是筆電, 還會繼續是主流的電腦輔助設計環境.&lt;/p&gt;
+&lt;p&gt;在這樣的所謂 Web Based (網際) 環境中, 身為一位機械設計工程師, 除了要關注傳統的 2D/3D 靜態與動態內容表達外, 能否逐步導入多點觸控裝置的資料, 便成為重點.&lt;/p&gt;
+&lt;p&gt;以網際 2D 繪圖而言, 2013 年推出的 &lt;a href="http://snapsvg.io/"&gt;http://snapsvg.io/&lt;/a&gt;, 就是一套能夠順應未來電腦輔助機械設計繪圖的工具之一.&lt;/p&gt;
+&lt;p&gt;從 &lt;a href="http://chiamingyen.github.io/kmolab/blog/dao-ru-brython-yu-snapsvg-wang-ji-hui-tu.html"&gt;導入 Brython 與 Snap.svg 網際繪圖&lt;/a&gt; 的說明中, 我們已經知道能夠透過網際的 Brython 來呼叫並運用 snap.svg 程式庫, 但是假如希望完成如 &lt;a href="http://project.mde.tw/blog/yen-pelican-jing-tai-wang-ye-yu-wordpress-de-zheng-he-fang-an.html"&gt;Pelican 靜態網頁與 Wordpress 的整合方案&lt;/a&gt; 中所談到的資料整合, 並且導入 snap.svg 到 Wordpress 與 Pelican 網誌系統, 需要注意到 Wordpress 對於內文中處理程式碼的用法, 否則由 Pelican 靜態網誌轉進 Wordpress 系統中的所有 Brython 或 Javascript 程式內容, 將會全數被 Wordpress 當作一般文字資料處理.&lt;/p&gt;
+&lt;p&gt;應對的方法很簡單, 只需要明確利用 html 的註解標註, 跳過 Wordpress 對於 Brython 與 Javascript 程式碼的額外處理就行.&lt;/p&gt;
+&lt;p&gt;以下舉 Snap.svg 典型的動態模擬為例:&lt;/p&gt;
+&lt;script type="text/javascript" src="http://brython.info/src/brython_dist.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+//&lt;!--
+window.onload=function(){
+brython(1);
+}
+//--&gt;
+&lt;/script&gt;
+
+&lt;p&gt;&lt;svg width="800" height="600" viewBox="0 0 800 600" id="svgout"&gt;&lt;/svg&gt;&lt;/p&gt;
+&lt;script type="text/python"&gt;
+#&lt;!--
+from javascript import JSConstructor
+from browser import alert
+from browser import window, document
+
+# 透過 window 與 JSConstructor 從 Brython 物件 snap 擷取 Snap 物件的內容
+snap = JSConstructor(window.Snap)
+
+# 使用 id 為 "svgout" 的 svg 標註進行繪圖
+s = snap("#svgout")
+
+offsetY = 50
+
+# 是否標示出繪圖範圍
+#borderRect = s.rect(0,0,800,640,10,10).attr({ 'stroke': "silver", 'fill': "silver", 'strokeWidth': "3" })
+
+g = s.group().transform('t250,120')
+r0 = s.rect(150,150,100,100,20,20).attr({ 'fill': "orange", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c0 = s.circle(225,225,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4"  }).attr({ 'id': 'c0' })
+g0 = s.group( r0,c0 ).attr({ 'id': 'g0' })
+#g0.animate({ 'transform' : 't250,120r360,225,225' },4000)
+g0.appendTo( g )
+g0.animate({ 'transform' : 'r360,225,225' },4000)
+# 讓 g0 可以拖動
+g0.drag()
+
+r1 = s.rect(100,100,100,100,20,20).attr({ 'fill': "red", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c1 = s.circle(175,175,10).attr({ 'fill': "silver", 'stroke': "black" , 'strokeWidth': "4"}).attr({ 'id': 'c1' })
+g1 = s.group( r1,c1 ).attr({ 'id': 'g1' })
+g1.appendTo( g0 ).attr({ 'id': 'g1' })
+g1.animate({ 'transform' : 'r360,175,175' },4000)
+
+r2 = s.rect(50,50,100,100,20,20).attr({ 'fill': "blue", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c2 = s.circle(125,125,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c2' })
+g2 = s.group(r2,c2).attr({ 'id': 'g2' })
+
+g2.appendTo( g1 );
+g2.animate( { 'transform' : 'r360,125,125' },4000);
+
+r3 = s.rect(0,0,100,100,20,20).attr({ 'fill': "yellow", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c3 = s.circle(75,75,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c3' })
+g3 = s.group(r3,c3).attr({ 'id': 'g3' })
+
+g3.appendTo( g2 )
+g3.animate( { 'transform' : 'r360,75,75' },4000)
+
+r4 = s.rect(-50,-50,100,100,20,20).attr({ 'fill': "green", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c4 = s.circle(25,25,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c4' })
+g4 = s.group(r4,c4).attr({ 'id': 'g4' });
+g4.appendTo( g3 )
+g4.animate( { 'transform' : 'r360,25,25' },4000)
+#--&gt;
+&lt;/script&gt;
+
+&lt;p&gt;Brython 程式碼:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+&amp;lt;script type="text/javascript" src="http://brython.info/src/brython_dist.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"&amp;gt;&amp;lt;/script&amp;gt;
+
+&amp;lt;script&amp;gt;
+//&amp;lt;!--
+window.onload=function(){
+brython(1);
+}
+//--&amp;gt;
+&amp;lt;/script&amp;gt;
+
+&amp;lt;svg width="800" height="600" viewBox="0 0 800 600" id="svgout"&amp;gt;&amp;lt;/svg&amp;gt;
+
+&amp;lt;script type="text/python"&amp;gt;
+#&amp;lt;!--
+from javascript import JSConstructor
+from browser import alert
+from browser import window, document
+
+# 透過 window 與 JSConstructor 從 Brython 物件 snap 擷取 Snap 物件的內容
+snap = JSConstructor(window.Snap)
+
+# 使用 id 為 "svgout" 的 svg 標註進行繪圖
+s = snap("#svgout")
+
+offsetY = 50
+
+# 是否標示出繪圖範圍
+#borderRect = s.rect(0,0,800,640,10,10).attr({ 'stroke': "silver", 'fill': "silver", 'strokeWidth': "3" })
+
+g = s.group().transform('t250,120')
+r0 = s.rect(150,150,100,100,20,20).attr({ 'fill': "orange", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c0 = s.circle(225,225,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4"  }).attr({ 'id': 'c0' })
+g0 = s.group( r0,c0 ).attr({ 'id': 'g0' })
+#g0.animate({ 'transform' : 't250,120r360,225,225' },4000)
+g0.appendTo( g )
+g0.animate({ 'transform' : 'r360,225,225' },4000)
+# 讓 g0 可以拖動
+g0.drag()
+
+r1 = s.rect(100,100,100,100,20,20).attr({ 'fill': "red", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c1 = s.circle(175,175,10).attr({ 'fill': "silver", 'stroke': "black" , 'strokeWidth': "4"}).attr({ 'id': 'c1' })
+g1 = s.group( r1,c1 ).attr({ 'id': 'g1' })
+g1.appendTo( g0 ).attr({ 'id': 'g1' })
+g1.animate({ 'transform' : 'r360,175,175' },4000)
+
+r2 = s.rect(50,50,100,100,20,20).attr({ 'fill': "blue", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c2 = s.circle(125,125,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c2' })
+g2 = s.group(r2,c2).attr({ 'id': 'g2' })
+
+g2.appendTo( g1 );
+g2.animate( { 'transform' : 'r360,125,125' },4000);
+
+r3 = s.rect(0,0,100,100,20,20).attr({ 'fill': "yellow", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c3 = s.circle(75,75,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c3' })
+g3 = s.group(r3,c3).attr({ 'id': 'g3' })
+
+g3.appendTo( g2 )
+g3.animate( { 'transform' : 'r360,75,75' },4000)
+
+r4 = s.rect(-50,-50,100,100,20,20).attr({ 'fill': "green", 'opacity': "0.8", 'stroke': "black", 'strokeWidth': "2" })
+c4 = s.circle(25,25,10).attr({ 'fill': "silver", 'stroke': "black", 'strokeWidth': "4" }).attr({ 'id': 'c4' })
+g4 = s.group(r4,c4).attr({ 'id': 'g4' });
+g4.appendTo( g3 )
+g4.animate( { 'transform' : 'r360,25,25' },4000)
+#--&amp;gt;
+&amp;lt;/script&amp;gt;
+&lt;/pre&gt;</summary><category term="Wordpress"></category><category term="MCAD"></category></entry><entry><title>Onshape Featurescript Spur Gear 零件</title><link href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-ling-jian.html" rel="alternate"></link><updated>2016-06-16T06:21:54+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-16:post/onshape-featurescript-spur-gear-ling-jian.html</id><summary type="html">&lt;p&gt;從 &lt;a href="https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch"&gt;https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch&lt;/a&gt; 的討論, 我們得知, 目前無法利用 FeatureScript 在繪圖平面中利用 opFillet, 對特定平面圖元進行倒圓角運算, 因此延續&lt;a href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-lun-kuo-hui-tu.html"&gt;上一篇利用漸開線正齒輪輪廓&lt;/a&gt;轉換為正齒輪零件, 就必須在實體模型中進行倒圓角運算.&lt;/p&gt;
 
 
 &lt;p&gt;這裡的 FeatureScript 程式碼, 基本架構引用 &lt;a href="https://cad.onshape.com/documents/57494152e4b05f50e871a72c/w/a4a3f09939bf1f43a8e4f133/e/2b865798923d6f648f7196f9"&gt;Onshape 官方正齒輪繪圖 FeatureScript 程式第1版&lt;/a&gt; 的內容, 只將推導的漸開線點座標, 透過 skFitSpline 轉為平滑曲線, 但是原版的 offset 參數, 目前只導入 offsetAngle, 以便產生的正齒輪, 可以在組立件中進行囓合.&lt;/p&gt;
@@ -2097,28 +2692,7 @@ export const gearTest = defineFeature(function(context is Context, id is Id, def
         // 利用 skSolve 解出畫布上的所有繪圖內容, 並顯示出來
         skSolve(gearSketch);
     });
-&lt;/pre&gt;</summary><category term="Onshape"></category><category term="FeatureScript"></category></entry><entry><title>電腦輔助設計室電腦磁區規劃</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-dian-nao-ci-qu-gui-hua.html" rel="alternate"></link><updated>2016-06-14T22:36:38+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-14:post/dian-nao-fu-zhu-she-ji-shi-dian-nao-ci-qu-gui-hua.html</id><summary type="html">&lt;div&gt;希望能根據不同性質課程, 將軟體分為 3 個開機磁區:&lt;/div&gt;
-
-&lt;ol&gt;
-    &lt;li&gt;安裝所有老師提出的上課套件, 集中在第 1 磁區, 其中包括 CAD, CAE, CAM, 數值分析與自動控制相關所有套件.&lt;/li&gt;
-    &lt;li&gt;只安裝 Solidworks, PTC Creo, AutoDesk Inventor, AutoCAD, A360, Ansys, Comsol, Matlab 與 Mathematica, 等 CAD, CAE 與數值分析相關套件.&lt;/li&gt;
-    &lt;li&gt;只安裝操作系統, 加上無需安裝的綠色套件 (PTC, Creo, Comsol, Matlab 等).&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div&gt;
-
-
-
-&lt;/div&gt;
-
-&lt;div&gt;至於以上 3 個開機磁區則傾向將新購買的 Windows 10 Pro 操作系統降為 Windows 7 Pro, 以提升使用效能. 但是仍然在第 2 磁區利用 Virtualbox 建立安裝 Windows 10 Pro 的兩台虛擬機器, 其中一台虛擬機配合安裝 Solidworks, PTC Creo, AutoDesk Inventor 與 Matlab , 而另一台虛擬機也採用 Windows 10 Pro 開機, 但只配置各軟體的原始 DVD, 可以讓老師教導學生執行各套件安裝與設定的教學.&lt;/div&gt;
-
-&lt;div&gt;至於第 3 磁區則將利用 Virtualbox 建立一台配置&lt;a href="http://www.squid-cache.org/"&gt;網路代理功能&lt;/a&gt; (IPV4/IPV6 雙支援) 的 Ubuntu Server 虛擬伺服器, 以及一台空白的 Windows 10 Pro 虛擬機, 以便在純 IPV6 環境下進行課程教學.&lt;/div&gt;
-
-&lt;div&gt;註解:&lt;/div&gt;
-
-&lt;p&gt;根據 &lt;a href="https://en.wikipedia.org/wiki/X86_virtualization#Intel-VT-x"&gt;https://en.wikipedia.org/wiki/X86_virtualization#Intel-VT-x&lt;/a&gt; 與 &lt;a href="https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors"&gt;https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors&lt;/a&gt; 的說明, 幾乎所有的 Intel CPU 都已經支援 VT-x 虛擬技術, 只要電腦的其他軟硬體配合啟動 VT-x, 就可以在 64 位元的操作系統主體, 模擬 64 位元的虛擬機, 假如再配合 Oracle 的新聞稿: &lt;a href="http://www.oracle.com/us/corporate/press/1842885"&gt;http://www.oracle.com/us/corporate/press/1842885&lt;/a&gt; 說明, Virtualbox 中的一台虛擬機 (Virtual Machine) 最多可以啟用 36 片虛擬網路卡, 因此只要電腦主體的硬體支援許可, 利用虛擬機就能有效模擬出相當複雜的網路伺服器架構.&lt;/p&gt;
-&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/virtualbox5_upto_36_NIC.png" width="800" /&gt;&lt;/p&gt;</summary><category term="電腦輔助設計室"></category><category term="電腦硬體"></category></entry><entry><title>CADLab 新電腦系統</title><link href="http://cadlab.mde.tw/post/cadlab-xin-dian-nao-xi-tong.html" rel="alternate"></link><updated>2016-06-14T22:36:38+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-14:post/cadlab-xin-dian-nao-xi-tong.html</id><summary type="html">&lt;p&gt;CPU 選擇: &lt;span style="background-color: #ffff00;"&gt;Intel i7-6700&lt;/span&gt;&lt;/p&gt;
+&lt;/pre&gt;</summary><category term="Onshape"></category><category term="FeatureScript"></category></entry><entry><title>CADLab 新電腦系統</title><link href="http://cadlab.mde.tw/post/cadlab-xin-dian-nao-xi-tong.html" rel="alternate"></link><updated>2016-06-14T22:36:38+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-14:post/cadlab-xin-dian-nao-xi-tong.html</id><summary type="html">&lt;p&gt;CPU 選擇: &lt;span style="background-color: #ffff00;"&gt;Intel i7-6700&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;Ram  選擇: &lt;span style="background-color: #ffff00;"&gt;16GB (8GBx2) DDR4-3000 (至少還可再升級 8GBx2)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;HD: &lt;span style="background-color: #ffff00;"&gt;2TB (64MB) SATA III&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;Video Card: &lt;span style="background-color: #ffff00;"&gt;NVIDIA GEFORCE GTX950 2GB GDDR5&lt;/span&gt;&lt;/p&gt;
