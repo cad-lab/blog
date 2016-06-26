@@ -156,6 +156,7 @@
 <v t="amd.20160622201721.1"><vh>@clean yen_20160622.md</vh></v>
 <v t="amd.20160623151329.1"><vh>@clean yen_20160623.md</vh></v>
 <v t="amd.20160626092325.1"><vh>@clean yen_20160626.md</vh></v>
+<v t="amd.20160626102516.1"><vh>@@clean yen_20160626-1.md</vh></v>
 </v>
 </v>
 </v>
@@ -7727,7 +7728,7 @@ Ubuntu 16.04 剛推出兩個月, Windows 10 則推出將近滿一年, 這兩個�
 
 在 Windows 64 位元環境中, 我們已經製作了一套可攜的 Python3 程式環境, 其中還包括 Git 與 Leo Editor, 使用者只要 git clone https://github.com/chiamingyen/kmol2016.git 就可以取得, 但前提是使用者的 Windows 環境必須要有 git 工具, 可以從 &lt;a href="https://github.com/git-for-windows/git/releases"&gt;https://github.com/git-for-windows/git/releases&lt;/a&gt; 下載.
 
-假如是在 Ubuntu 14.04 或 16.04 環境中, 使用純 IPV6 網路協定上網, 而 apt-get, pip3 或 git 等指令正, 可能就必須要設定支援 IPV4/IPV6 的代理主機, 才能正確執行.
+假如是在 Ubuntu 14.04 或 16.04 環境中, 使用純 IPV6 網路協定上網, 而 apt-get, pip3 或 git 等指令, 可能就必須要設定支援 IPV4/IPV6 的代理主機, 才能正確執行.
 
 ###Git 使用代理主機
 
@@ -7902,7 +7903,7 @@ Category: 導引
 Tags: cadlab, Virtualbox, 虛擬機器
 Author: Cad Lab
 @others
-目前所使用的 Virtualbox 主體分別是 Windows 7 與 Ubuntu 14.04/16.04, 在 Windows 7 的虛擬機器可以透過 &lt;a href="http://vboxvmservice.sourceforge.net/"&gt;http://vboxvmservice.sourceforge.net/&lt;/a&gt;, 讓特定虛擬機器 (virtual machine), 隨著 Host 電腦的開啟而以 service 的方式啟用. 至於在 Ubuntu 14.04 或 16.04 操作系統中, 則可以在 /etc/init.d/ 目錄下建立一個啟動程序, 然後讓電腦在開關機時執行, 主要的指令是開機時, 利用 VBoxHeadless 啟動個別的虛擬機器, 且在關機時, 利用 VBoxManage controlvm 儲存各虛擬機器的運行狀態.
+目前所使用的 Virtualbox 主體分別是 Windows 7 與 Ubuntu 14.04/16.04 等, 在 Windows 7 的虛擬機器可以透過 &lt;a href="http://vboxvmservice.sourceforge.net/"&gt;http://vboxvmservice.sourceforge.net/&lt;/a&gt;, 讓特定虛擬機器 (virtual machine), 隨著 Host 電腦的開啟而以 service 的方式啟用. 至於在 Ubuntu 14.04 或 16.04 操作系統中, 則可以在 /etc/init.d/ 目錄下建立一個啟動程序, 然後讓電腦在開關機時執行, 主要的指令是開機時, 利用 VBoxHeadless 啟動個別的虛擬機器, 且在關機時, 利用 VBoxManage controlvm 儲存各虛擬機器的運行狀態.
 
 &lt;!-- PELICAN_END_SUMMARY --&gt;
 
@@ -7947,7 +7948,56 @@ sudo chmod +x /etc/init.d/StartVM
 
 sudo update-rc.d StartVM defaults 99 01
 
+有關 update-rc.d 用法說明: &lt;a href="http://manpages.ubuntu.com/manpages/precise/man8/update-rc.d.8.html"&gt;http://manpages.ubuntu.com/manpages/precise/man8/update-rc.d.8.html&lt;/a&gt;.
+
+sudo update-rc.d StartVM defaults 99 01 指令表示利用 super user 的權限執行 update-rc.d 指令, 並且讓 StartVM 程序以第 99 編號次序執行 StartVM 中的 start (以開機啟動順位排序最後的方式執行, 有效編號從 00 到 99), 而 01 則表示要求以排序編號 01 的方式執行 StartVM 中的 stop 程序. 通常 update-rc.d 中使用的 start 與 stop runlevel 編號, 是最後啟動的程序要先執行 stop (兩者相加總數為 100), 詳細說明請參考: &lt;a href="https://help.ubuntu.com/community/UbuntuBootupHowto"&gt;https://help.ubuntu.com/community/UbuntuBootupHowto&lt;/a&gt;.
+
 參考資料: &lt;a href="http://askubuntu.com/questions/57220/start-vboxheadless-vm-at-startup"&gt;http://askubuntu.com/questions/57220/start-vboxheadless-vm-at-startup&lt;/a&gt;</t>
+<t tx="amd.20160626102516.1">@language md
+Title: 電腦虛擬化技術與機械設計
+Category: 導引
+Tags: cadlab
+Author: Cad Lab
+@others
+
+Virtual Technology
+
+http://www.gta.ufrj.br/ensino/CPE758/artigos-basicos/IntelVT-Computer.pdf
+
+http://www.intel.com/content/www/us/en/virtualization/virtualization-technology/intel-virtualization-technology.html
+
+docker
+
+http://www.openfoundry.org/tw/tech-column/9319-docker-101
+
+https://philipzheng.gitbooks.io/docker_practice/content/introduction/what.html
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+實作 gogs docker
+
+https://github.com/gogits/gogs
+
+flask docker
+
+https://realpython.com/blog/python/dockerizing-flask-with-compose-and-machine-from-localhost-to-the-cloud/
+
+https://github.com/heddle317/docker-flask-example
+
+https://www.digitalocean.com/community/tutorials/docker-explained-how-to-containerize-python-web-applications
+
+https://hub.docker.com/r/tiangolo/uwsgi-nginx-flask/
+
+機械設計流程的虛擬化技術在 CAX 時代已經成熟, 但是機械設計流程的 docker 化該如何進行?
+
+假如機械產品設計流程也能 docker 化
+
+Docker 與 Python
+
+https://www.fullstackpython.com/docker.html
+
+
+</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
