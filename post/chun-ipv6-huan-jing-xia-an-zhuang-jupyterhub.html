@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>CADLab (虎尾科大MDE)</title>
+    <title>純 IPV6 環境下安裝 Jupyterhub - CADLab (虎尾科大MDE)</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -166,15 +166,23 @@ init_mathjax = function() {
 init_mathjax();
 </script>
 
-<link rel="canonical" href="http://cadlab.mde.tw/post">
-        <meta name="author" content="kmol" />
+<link rel="canonical" href="http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html">
 
-    <!-- Open Graph tags -->
+        <meta name="author" content="Cad Lab" />
+        <meta name="keywords" content="cadlab,Jupyterhub,IPV6" />
+        <meta name="description" content="https://github.com/jupyterhub/jupyterhub 是一套支援多用戶的網際運算伺服器, 這裡展示如何在純 IPV6 的 Ubuntu 14.04 環境下進行安裝設定." />
+
         <meta property="og:site_name" content="CADLab (虎尾科大MDE)" />
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="CADLab (虎尾科大MDE)"/>
-        <meta property="og:url" content="http://cadlab.mde.tw/post"/>
-        <meta property="og:description" content="CADLab (虎尾科大MDE)"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="純 IPV6 環境下安裝 Jupyterhub"/>
+        <meta property="og:url" content="http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html"/>
+        <meta property="og:description" content="https://github.com/jupyterhub/jupyterhub 是一套支援多用戶的網際運算伺服器, 這裡展示如何在純 IPV6 的 Ubuntu 14.04 環境下進行安裝設定."/>
+        <meta property="article:published_time" content="2016-06-29" />
+            <meta property="article:section" content="MISC" />
+            <meta property="article:tag" content="cadlab" />
+            <meta property="article:tag" content="Jupyterhub" />
+            <meta property="article:tag" content="IPV6" />
+            <meta property="article:author" content="Cad Lab" />
 
 
     <!-- Bootstrap -->
@@ -264,7 +272,7 @@ CADLab (虎尾科大MDE)            </a>
                         <li >
                             <a href="http://cadlab.mde.tw/post/category/gui-hua.html">規劃</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="http://cadlab.mde.tw/post/category/misc.html">Misc</a>
                         </li>
                         <li >
@@ -289,118 +297,326 @@ CADLab (虎尾科大MDE)            </a>
     <div class="row">
         <div class="col-sm-9">
 
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-dian-nao-ci-qu-gui-hua.html">電腦輔助設計室電腦磁區規劃</a></h2>
-                <div class="summary"><div>希望能根據不同性質課程, 將軟體分為 3 個開機磁區:</div>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html"
+                       rel="bookmark"
+                       title="Permalink to 純 IPV6 環境下安裝 Jupyterhub">
+                        純 IPV6 環境下安裝 Jupyterhub
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-06-29T00:19:53.044479+08:00"> 三 29 六月 2016</time>
+    </span>
+            <span class="label label-default">By</span>
+            <a href="http://cadlab.mde.tw/post/author/cad-lab.html"><i class="fa fa-user"></i> Cad Lab</a>
 
-<ol>
-    <li>安裝所有老師提出的上課套件, 集中在第 1 磁區, 其中包括 CAD, CAE, CAM, 數值分析與自動控制相關所有套件.</li>
-    <li>只安裝 Solidworks, PTC Creo, AutoDesk Inventor, AutoCAD, A360, Ansys, Comsol, Matlab 與 Mathematica, 等 CAD, CAE 與數值分析相關套件.</li>
-    <li>只安裝操作系統, 加上無需安裝的綠色套件 (PTC, Creo, Comsol, Matlab 等).</li>
-</ol>
-
-<div>
 
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-dian-nao-ci-qu-gui-hua.html">more ...</a>
+<span class="label label-default">Tags</span>
+	<a href="http://cadlab.mde.tw/post/tag/cadlab.html">cadlab</a>
+        /
+	<a href="http://cadlab.mde.tw/post/tag/jupyterhub.html">Jupyterhub</a>
+        /
+	<a href="http://cadlab.mde.tw/post/tag/ipv6.html">IPV6</a>
+    
+</footer><!-- /.post-info -->                    </div>
                 </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/virtualbox-de-ying-yong-yu-wang-lu-she-ding.html">Virtualbox 的應用與網路設定</a></h2>
-                <div class="summary"><p><a href="https://www.virtualbox.org/">Virtualbox</a> 是一套能在 Windows, Linux, Mac 與 Solaris 操作系統上使用的虛擬器 (Virtualizer).</p>
+                <p><a href="https://github.com/jupyterhub/jupyterhub">https://github.com/jupyterhub/jupyterhub</a> 是一套支援多用戶的網際運算伺服器, 這裡展示如何在純 IPV6 的 Ubuntu 14.04 環境下進行安裝設定.</p>
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/virtualbox-de-ying-yong-yu-wang-lu-she-ding.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-ling-jian.html">Onshape Featurescript Spur Gear 零件</a></h2>
-                <div class="summary"><p>從 <a href="https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch">https://forum.onshape.com/discussion/4064/use-opfillet-for-a-sketch</a> 的討論, 我們得知, 目前無法利用 FeatureScript 在繪圖平面中利用 opFillet, 對特定平面圖元進行倒圓角運算, 因此延續<a href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-lun-kuo-hui-tu.html">上一篇利用漸開線正齒輪輪廓</a>轉換為正齒輪零件, 就必須在實體模型中進行倒圓角運算.</p>
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-ling-jian.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-lun-kuo-hui-tu.html">Onshape Featurescript Spur Gear 輪廓繪圖</a></h2>
-                <div class="summary"><p>學習 Onshape 可以從 614 頁的 pdf 格式導引手冊: <a href="https://cad.onshape.com/help/PDF/Onshape.pdf">https://cad.onshape.com/help/PDF/Onshape.pdf</a> 下手, 在手動操作逐漸熟悉之後, 就可以透過下列的 FeatureScript 程式客製化理想中的各種零件, 這裡先來看看漸開線正齒輪輪廓繪圖, 有關齒輪的參考資料, 請參閱 <a href="http://khkgears.net/gear-knowledge/">http://khkgears.net/gear-knowledge/</a>.</p>
+<p>首先假如沒有固定的 IPV4 位址, 就必須透過 IPV4/IPV6 雙支援的代理主機執行 apt-get, pip3 與 http 連結.</p>
+<p>要讓 apt-get 使用代理主機, 必須編輯 /etc/apt/apt.conf, 並且納入下列內容:</p>
+<p>Acquire::http::Proxy "http://username:password@your.proxy.server:3128";</p>
+<p>接著就可以進行 Jupyterhub 執行所需的 apt-get install 安裝:</p>
+<p>安裝 npm 與 nodejs-legacy 套件:</p>
+<p>sudo apt-get install npm nodejs-legacy</p>
+<p>安裝 pip3 工具:</p>
+<p>sudo apt-get install python3-pip</p>
+<p>安裝 jupyterhub 與 notebook 模組 (假如無法順利完成, 必須透過臨時的固定 IPV4 網址設定, 再直接執行):</p>
+<p>sudo pip3 --proxy http://[2001:288:6004:17::17]:3128 install jupyterhub</p>
+<p>sudo pip3 --proxy http://[2001:288:6004:17::17]:3128 install notebook</p>
+<p>接著為了要採 https 啟動, 需要建立認証編碼用的 crt 與 key 檔案:</p>
+<p>sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout jupyterhub.key -out jupyterhub.crt</p>
+<p>完成後就可以指定 IP 啟動:</p>
+<p>jupyterhub --ip your_server_ip --port 443 --ssl-key jupyterhub.key --ssl-cert jupyterhub.crt</p>
+<p>或不指定 IP 方式啟動:</p>
+<p>jupyterhub  --port 9443 --ssl-key jupyterhub.key --ssl-cert jupyterhub.crt</p>
+<p>啟動之後則可以透過 https://your_server_ip:9443 連結, 以系統帳號登入.</p>
+<p>接下來要讓 Jupyterhub 隨著伺服器開機時啟動, 需要建立 /etc/jupyterhub/jupyterhub_config.py 與 /etc/init.d/jupyterhub 等兩個設定檔案, 並且配置 /srv/jupyterhub 目錄作為啟動目錄, 且將 jupyterhub.key 與  jupyterhub.crt 放入 /srv/jupyterhub/ssl 目錄中.</p>
+<p>/etc/jupyterhub/jupyterhub_config.py 檔案內容:</p>
+<pre class="brush: jscript">
+# jupyterhub_config.py
+# jupyterhub -f /etc/jupyterhub/jupyterhub_config.py
+c = get_config()
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/onshape-featurescript-spur-gear-lun-kuo-hui-tu.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-xiang-guan-qu-yu-wang-lu-she-ding.html">電腦輔助設計室相關區域網路設定</a></h2>
-                <div class="summary"><p>今天早上發現一台 Asus 電腦, 裝了 IIS 8 的伺服器佔用了 17.9 的 IPV4 網路位址, 導致原先配置的 Ubuntu 16.04 代理主機無法正常連線.</p>
+import os
+pjoin = os.path.join
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-xiang-guan-qu-yu-wang-lu-she-ding.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/onshape-featurescript-tutorial-dao-yin.html">Onshape Featurescript Tutorial 導引</a></h2>
-                <div class="summary"><p>Onshape 配合公開 FeatureScript 特徵程式語言的過程, 特別製作了一個詳細的教學導引:<a href="https://cad.onshape.com/FsDoc/tutorials/create-a-slot-feature.html">https://cad.onshape.com/FsDoc/tutorials/create-a-slot-feature.html</a>, 從這個導引中, 可以一窺 FeatureScript 的基本用法.</p>
+runtime_dir = os.path.join('/srv/jupyterhub')
+ssl_dir = pjoin(runtime_dir, 'ssl')
+if not os.path.exists(ssl_dir):
+    os.makedirs(ssl_dir)
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/onshape-featurescript-tutorial-dao-yin.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/cadlab-xin-dian-nao-xi-tong.html">CADLab 新電腦系統</a></h2>
-                <div class="summary"><p>CPU 選擇: <span style="background-color: #ffff00;">Intel i7-6700</span></p>
-<p>Ram  選擇: <span style="background-color: #ffff00;">16GB (8GBx2) DDR4-3000 (至少還可再升級 8GBx2)</span></p>
-<p>HD: <span style="background-color: #ffff00;">2TB (64MB) SATA III</span></p>
-<p>Video Card: <span style="background-color: #ffff00;">NVIDIA GEFORCE GTX950 2GB GDDR5</span></p>
-<p>NIC: <span style="background-color: #ffff00;">1Gbits/s*5 (除了主機板上的兩片網路卡之外 ,再加上 3 片外接式網路卡, 以便與各開機磁區中的虛擬機橋接出虛擬的多台連外伺服器)</span></p>
-<p>參考:</p>
-<p>i7: <a href="https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors">https://en.wikipedia.org/wiki/List_of_Intel_Core_i7_microprocessors</a></p>
-<p>i7-6700: <a href="http://ark.intel.com/products/88196">http://ark.intel.com/products/88196</a></p>
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/cadlab-xin-dian-nao-xi-tong.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan-yi.html">Onshape FeatureScript 程式語言 (一)</a></h2>
-                <div class="summary"><p>接續上一篇文章, 整理目前 Onshape 已經釋出的 FeatureScript 相關應用範例.</p>
+# https on :9443
+c.JupyterHub.port = 9443
+# 以 IPV6 位址綁定 Jupyterhub
+c.JupyterHub.ip = '2001:288:1::8888'
+c.JupyterHub.ssl_key = pjoin(ssl_dir, 'jupyterhub.key')
+c.JupyterHub.ssl_cert = pjoin(ssl_dir, 'jupyterhub.crt')
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan-yi.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan.html">Onshape FeatureScript 程式語言</a></h2>
-                <div class="summary"><p>在 <a href="https://embedwistia-a.akamaihd.net/deliveries/02d2dfd77d4c465c42fa30e66e3bb53f26467cbc/file.mp4">FeatureScript 簡介</a>的影片中, 可以看到 Onshape 打造了一個客製化特徵功能的程式語言與社群分享機制, 任何人利用 FeatureScript 建立的延伸功能, 都能夠透過 Add custom features 指令與其他使用者分享.</p>
+# put the JjupyterHub cookie secret and state db
+# in /var/run/jupyterhub
+c.JupyterHub.cookie_secret_file = pjoin(runtime_dir, 'jupyterhub_cookie_secret')
+c.JupyterHub.db_url = pjoin(runtime_dir, 'jupyterhub.sqlite')
+# or `--db=/path/to/jupyterhub.sqlite` on the command-line
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/onshape-featurescript-cheng-shi-yu-yan.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://cadlab.mde.tw/post/yun-duan-ping-tai-shang-de-dian-nao-fu-zhu-ji-jie-she-ji.html">雲端平台上的電腦輔助機械設計</a></h2>
-                <div class="summary"><p><a href="https://www.onshape.com/">Onshape</a> 在 <a href="http://wordpress-2015course.rhcloud.com/?p=4514">2015年12月</a>正式全面對外公開之後, 已經啟動電腦輔助機械設計的雲端世代, 為了追求高效能的全球協同產品設計流程, 利用跨硬體裝置, 免安裝, 具備設計特徵版次管理, 而且提供類似 <a href="https://cad.onshape.com/FsDoc/">Featurescript</a> 客製化功能建構環境 (i.e. Feature Studio) 的全雲端電腦輔助機械設計工具, 將會日漸完備.</p>
+# put the log file in /var/log
+c.JupyterHub.log_file = '/var/log/jupyterhub.log'
 
-                    <a class="btn btn-default btn-xs" href="http://cadlab.mde.tw/post/yun-duan-ping-tai-shang-de-dian-nao-fu-zhu-ji-jie-she-ji.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
+# use GitHub OAuthenticator for local users
+'''
+c.JupyterHub.authenticator_class = 'oauthenticator.LocalGitHubOAuthenticator'
+c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
+# create system users that don't exist yet
+c.LocalAuthenticator.create_system_users = True
+'''
+# specify users and admin
+c.Authenticator.whitelist = {'username1', 'username2'}
+c.Authenticator.admin_users = {'username1', 'username2'}
 
-        <ul class="pagination">
-                <li class="prev"><a href="http://cadlab.mde.tw/post/index.html">&laquo;</a>
-                </li>
-                    <li class=""><a
-                            href="http://cadlab.mde.tw/post/index.html">1</a></li>
-                    <li class="active"><a
-                            href="http://cadlab.mde.tw/post/index2.html">2</a></li>
-                    <li class=""><a
-                            href="http://cadlab.mde.tw/post/index3.html">3</a></li>
-                    <li class=""><a
-                            href="http://cadlab.mde.tw/post/index4.html">4</a></li>
-                    <li class=""><a
-                            href="http://cadlab.mde.tw/post/index5.html">5</a></li>
-                <li class="next"><a
-                        href="http://cadlab.mde.tw/post/index3.html">&raquo;</a></li>
-        </ul>
+# start single-user notebook servers in ~/assignments,
+# with ~/assignments/Welcome.ipynb as the default landing page
+# this config could also be put in
+# /etc/ipython/ipython_notebook_config.py
+#c.Spawner.notebook_dir = '~/tmp'
+#c.Spawner.args = ['--NotebookApp.default_url=/notebooks/Welcome.ipynb']
+</pre>
+
+<p>/etc/init.d/jupyterhub 檔案內容:</p>
+<pre class="brush: jscript">
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          jupyterhub
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start jupyterhub
+# Description:       This file should be used to construct scripts to be
+#                    placed in /etc/init.d.
+### END INIT INFO
+
+# Author: Alisue &lt;lambdalisue@hashnote.net&gt;
+#
+# Please remove the "Author" lines above and replace them
+# with your own name if you copy and modify this script.
+
+# Do NOT "set -e"
+
+# PATH should only include /usr/* if it runs after the mountnfs.sh script
+PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
+DESC="Multi-user server for Jupyter notebooks"
+NAME=jupyterhub
+DAEMON=/usr/local/bin/jupyterhub
+DAEMON_ARGS="--config=/etc/jupyterhub/jupyterhub_config.py"
+PIDFILE=/var/run/$NAME.pid
+SCRIPTNAME=/etc/init.d/$NAME
+
+# Exit if the package is not installed
+[ -x "$DAEMON" ] || exit 0
+
+# Read configuration variable file if it is present
+[ -r /etc/default/$NAME ] &amp;&amp; . /etc/default/$NAME
+
+# Load the VERBOSE setting and other rcS variables
+. /lib/init/vars.sh
+
+# Define LSB log_* functions.
+# Depend on lsb-base (&gt;= 3.2-14) to ensure that this file is present
+# and status_of_proc is working.
+. /lib/lsb/init-functions
+
+#
+# Function that starts the daemon/service
+#
+do_start()
+{
+    # Return
+    #   0 if daemon has been started
+    #   1 if daemon was already running
+    #   2 if daemon could not be started
+    start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test &gt; /dev/null \
+        || return 1
+    start-stop-daemon --start --background --make-pidfile --quiet --pidfile $PIDFILE --exec $DAEMON -- \
+        $DAEMON_ARGS \
+        || return 2
+    # Add code here, if necessary, that waits for the process to be ready
+    # to handle requests from services started subsequently which depend
+    # on this one.  As a last resort, sleep for some time.
+}
+
+#
+# Function that stops the daemon/service
+#
+do_stop()
+{
+    # Return
+    #   0 if daemon has been stopped
+    #   1 if daemon was already stopped
+    #   2 if daemon could not be stopped
+    #   other if a failure occurred
+    start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name $NAME
+    RETVAL="$?"
+    [ "$RETVAL" = 2 ] &amp;&amp; return 2
+    # Wait for children to finish too if this is a daemon that forks
+    # and if the daemon is only ever run from this initscript.
+    # If the above conditions are not satisfied then add some other code
+    # that waits for the process to drop all resources that could be
+    # needed by services started subsequently.  A last resort is to
+    # sleep for some time.
+    start-stop-daemon --stop --quiet --oknodo --retry=0/30/KILL/5 --exec $DAEMON
+    [ "$?" = 2 ] &amp;&amp; return 2
+    # Many daemons don't delete their pidfiles when they exit.
+    rm -f $PIDFILE
+    return "$RETVAL"
+}
+
+#
+# Function that sends a SIGHUP to the daemon/service
+#
+do_reload() {
+    #
+    # If the daemon can reload its configuration without
+    # restarting (for example, when it is sent a SIGHUP),
+    # then implement that here.
+    #
+    start-stop-daemon --stop --signal 1 --quiet --pidfile $PIDFILE --name $NAME
+    return 0
+}
+
+case "$1" in
+  start)
+    [ "$VERBOSE" != no ] &amp;&amp; log_daemon_msg "Starting $DESC" "$NAME"
+    do_start
+    case "$?" in
+        0|1) [ "$VERBOSE" != no ] &amp;&amp; log_end_msg 0 ;;
+        2) [ "$VERBOSE" != no ] &amp;&amp; log_end_msg 1 ;;
+    esac
+    ;;
+  stop)
+    [ "$VERBOSE" != no ] &amp;&amp; log_daemon_msg "Stopping $DESC" "$NAME"
+    do_stop
+    case "$?" in
+        0|1) [ "$VERBOSE" != no ] &amp;&amp; log_end_msg 0 ;;
+        2) [ "$VERBOSE" != no ] &amp;&amp; log_end_msg 1 ;;
+    esac
+    ;;
+  status)
+    status_of_proc "$DAEMON" "$NAME" &amp;&amp; exit 0 || exit $?
+    ;;
+  #reload|force-reload)
+    #
+    # If do_reload() is not implemented then leave this commented out
+    # and leave 'force-reload' as an alias for 'restart'.
+    #
+    #log_daemon_msg "Reloading $DESC" "$NAME"
+    #do_reload
+    #log_end_msg $?
+    #;;
+  restart|force-reload)
+    #
+    # If the "reload" option is implemented then remove the
+    # 'force-reload' alias
+    #
+    log_daemon_msg "Restarting $DESC" "$NAME"
+    do_stop
+    case "$?" in
+      0|1)
+        do_start
+        case "$?" in
+            0) log_end_msg 0 ;;
+            1) log_end_msg 1 ;; # Old process is still running
+            *) log_end_msg 1 ;; # Failed to start
+        esac
+        ;;
+      *)
+        # Failed to stop
+        log_end_msg 1
+        ;;
+    esac
+    ;;
+  *)
+    #echo "Usage: $SCRIPTNAME {start|stop|restart|reload|force-reload}" &gt;&amp;2
+    echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" &gt;&amp;2
+    exit 3
+    ;;
+esac
+
+:
+</pre>
+
+<p>設定隨機啟動步驟:</p>
+<pre class="brush: jscript">
+$ sudo chmod +x /etc/init.d/jupyterhub
+# Create a default config to /etc/jupyterhub/jupyterhub_config.py
+$ sudo jupyterhub --generate-config -f /etc/jupyterhub/jupyterhub_config.py
+# Start jupyterhub
+$ sudo service jupyterhub start
+# Stop jupyterhub
+$ sudo service jupyterhub stop
+# Start jupyterhub on boot
+$ sudo update-rc.d jupyterhub defaults
+</pre>
+
+<p>設定完成後, 利用 sudo /etc/init.d/jupyterhub start 進行測試, 利用 /etc/init.d/jupyterhub stop 關閉.</p>
+<p>啟動後, 則可開啟瀏覽器連結 https://[2001:288:1::8888]:9443 , 以系統帳號登入 Jupyterhub.</p>
+<p>參考資料:</p>
+<p><a href="https://jupyterhub.readthedocs.io">https://jupyterhub.readthedocs.io</a></p>
+<p><a href="https://gist.github.com/lambdalisue/f01c5a65e81100356379">https://gist.github.com/lambdalisue/f01c5a65e81100356379</a></p>
+            </div>
+            <!-- /.entry-content -->
+    <hr/>
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'cadlab'; // required: replace example with your forum shortname
+
+                    var disqus_identifier = 'chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub';
+                var disqus_url = 'http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html';
+
+            var disqus_config = function () {
+                this.language = "en";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
         </div>
         <div class="col-sm-3" id="sidebar">
             <aside>
