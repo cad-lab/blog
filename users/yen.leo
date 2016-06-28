@@ -157,6 +157,7 @@
 <v t="amd.20160623151329.1"><vh>@clean yen_20160623.md</vh></v>
 <v t="amd.20160626092325.1"><vh>@clean yen_20160626.md</vh></v>
 <v t="amd.20160626102516.1"><vh>@@clean yen_20160626-1.md</vh></v>
+<v t="amd.20160628112511.1"><vh>@clean yen_20160628.md</vh></v>
 </v>
 </v>
 </v>
@@ -7998,6 +7999,267 @@ https://www.fullstackpython.com/docker.html
 
 
 </t>
+<t tx="amd.20160628112511.1">@language md
+Title: 純 IPV6 環境下的 CMSimply
+Category: MISC
+Tags: cadlab, 網際內容管理系統, CMSimply, IPV6
+Author: Cad Lab
+@others
+IPV6 是工業 4.0 的一項重要技術, 隨著電腦輔助設計室導入 IPV6, 作為網際程式教學用的 CMSimply 也必須配合轉到 IPV6 相容的環境.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+有關機械設計工程系 IPV6 位址規劃, 請參考 &lt;a href="http://cadlab.mde.tw/post/ji-jie-she-ji-gong-cheng-xi-ipv6-wang-zhi-fen-pei.html"&gt;http://cadlab.mde.tw/post/ji-jie-she-ji-gong-cheng-xi-ipv6-wang-zhi-fen-pei.html&lt;/a&gt;.
+
+至於測試純 IPV6 環境, 假如是在 Host 主機內部, 可以啟用 Host-only 的網路設定, 以內部 fd00::/8 網址進行測試. 假如是要建立外部 IPV6 測試主機, 則可使用 Bridged 網路卡, 直接在廣域網路上執行測試, 相關設定細節請參考 &lt;a href="http://cadlab.mde.tw/post/kua-cao-zuo-xi-tong-de-virtualbox-vdi-dang-an.html"&gt;http://cadlab.mde.tw/post/kua-cao-zuo-xi-tong-de-virtualbox-vdi-dang-an.html&lt;/a&gt;.
+
+CMSimply 的原始碼位於: &lt;a href="https://github.com/chiamingyen/cmsimply.git"&gt;https://github.com/chiamingyen/cmsimply.git&lt;/a&gt;.
+
+本次版本的修改, 主要問題在原先的 tinymce3 無法正確解析 IPV6 網址, 有些團隊著重在修改 tinymce3, 讓舊程式碼可以在 IPV6 環境中使用, 但是 &lt;a href="https://www.tinymce.com/"&gt;https://www.tinymce.com/&lt;/a&gt; 第 4 版的程式碼較第 3 版精簡許多 ,設定也比較多元, 因此 CADLab 決定直接將 CMSimply 的 html5 編輯器升級到 tinymce4.
+
+升級修改的部份主要集中在 3 個項目, 也就是(1)設定差異, (2)檔案引用差異, (3)程式碼 highlight 引用差異等, 首先就是 tinymce3 與 tinymce4 的啟用設定不同, 許多舊的方法都已經作廢, 因此將程式碼引用導向開放源版本的 tinymce4 之後, 就必須配合修改設定, 與 CMSimply 有關的主要設定檔為全域方法中的 editorhead:
+
+&lt;pre class="brush: python"&gt;
+def editorhead():
+    return '''
+&amp;lt;br /&amp;gt;
+&amp;lt;script src="//cdn.tinymce.com/4/tinymce.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src="/static/tinymce4/tinymce/plugins/sh4tinymce/plugin.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;link rel = "stylesheet" href = "/static/tinymce4/tinymce/plugins/sh4tinymce/style/style.css"&amp;gt;
+&amp;lt;script&amp;gt;
+tinymce.init({
+  selector: "textarea",
+  height: 500,
+  element_format : "xhtml",
+  language : "en",
+  plugins: [
+    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+    'searchreplace wordcount visualblocks visualchars code fullscreen',
+    'insertdatetime media nonbreaking save table contextmenu directionality',
+    'emoticons template paste textcolor colorpicker textpattern imagetools sh4tinymce'
+  ],
+  toolbar1: 'insertfile save undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+  toolbar2: 'link image | print preview media | forecolor backcolor emoticons | code sh4tinymce',
+  relative_urls: false,
+  toolbar_items_size: 'small',
+  file_picker_callback: function(callback, value, meta) {
+        cmsFilePicker(callback, value, meta);
+    },
+  templates: [
+    { title: 'Test template 1', content: 'Test 1' },
+    { title: 'Test template 2', content: 'Test 2' }
+  ],
+  content_css: [
+    '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+    '//www.tinymce.com/css/codepen.min.css'
+  ]
+});
+
+function cmsFilePicker(callback, value, meta) {
+    tinymce.activeEditor.windowManager.open({
+        title: 'Uploaded File Browser',
+        url: '/file_selector?type=' + meta.filetype,
+        width: 800,
+        height: 550,
+    }, {
+        oninsert: function (url, objVals) {
+            callback(url, objVals);
+        }
+    });
+};
+&amp;lt;/script&amp;gt;
+'''
+&lt;/pre&gt;
+
+其中最重要的設定為 relative_urls: false, 主要是讓 tinymce4 針對編輯內容中的網址引用, 採用絕對網址, 而不要讓 tinymce4 將 IPV6 網址修改為相對網址, 因為轉換過程會截斷 IPV6 網址而出錯.
+
+第 2 項重要的設定則是:
+
+&lt;pre class="brush: jscript"&gt;
+file_picker_callback: function(callback, value, meta) {
+        cmsFilePicker(callback, value, meta);
+    }
+&lt;/pre&gt;
+
+也就是所謂 file_picker_callback 函式的宣告, 這裡使用 anonymous 函式格式, 將檔案選擇的回呼函式設為 cmsFilePicker, 也就是隨後編寫的:
+
+&lt;pre class="brush: jscript"&gt;
+function cmsFilePicker(callback, value, meta) {
+    tinymce.activeEditor.windowManager.open({
+        title: 'Uploaded File Browser',
+        url: '/file_selector?type=' + meta.filetype,
+        width: 800,
+        height: 550,
+    }, {
+        oninsert: function (url, objVals) {
+            callback(url, objVals);
+        }
+    });
+&lt;/pre&gt;
+
+其中的關鍵是要求使用者按下檔案引用選擇按鈕時, 會經由 url 所指定的  '/file_selector?type=' + meta.filetype' 執行, 而這個 file_selector 方法內容為:
+
+&lt;pre class="brush: python"&gt;
+@cherrypy.expose
+def file_selector(self, type=None, page=1, item_per_page=10, keyword=None):
+    if not self.isAdmin():
+        raise cherrypy.HTTPRedirect("login")
+    else:
+        if type == "file":
+            type = 'downloads'
+            return file_lister("downloads", type, page, item_per_page)
+        elif type == "image":
+            #return images_file_selector()
+            return file_lister("images", type, page, item_per_page)
+&lt;/pre&gt;
+
+可以根據 type 決定引用上傳的 file 或 image, 分別導向不同的伺服器目錄, 列出可以引用的檔案.
+
+而且因為 file_lister 方法中的所有可選檔案, 都以 anchor 製作, 內容如下:
+
+&lt;pre class="brush: python"&gt;
+def file_lister(directory, type=None, page=1, item_per_page=10):
+    files = os.listdir(download_root_dir+directory)
+    total_rows = len(files)
+    totalpage = math.ceil(total_rows/int(item_per_page))
+    starti = int(item_per_page) * (int(page) - 1) + 1
+    endi = starti + int(item_per_page) - 1
+    outstring = file_selector_script()
+    notlast = False
+    if total_rows &amp;gt; 0:
+        outstring += "&amp;lt;br /&amp;gt;"
+        if (int(page) * int(item_per_page)) &amp;lt; total_rows:
+            notlast = True
+        if int(page) &amp;gt; 1:
+            outstring += "&amp;lt;a href='"
+            outstring += "file_selector?type="+type+"&amp;amp;page=1&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&amp;gt;&amp;lt;&amp;lt;&amp;lt;/a&amp;gt; "
+            page_num = int(page) - 1
+            outstring += "&amp;lt;a href='"
+            outstring += "file_selector?type="+type+"&amp;amp;page="+str(page_num)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&amp;gt;Previous&amp;lt;/a&amp;gt; "
+        span = 10
+        for index in range(int(page)-span, int(page)+span):
+        #for ($j=$page-$range;$j&amp;lt;$page+$range;$j++)
+            if index&amp;gt;= 0 and index&amp;lt; totalpage:
+                page_now = index + 1 
+                if page_now == int(page):
+                    outstring += "&amp;lt;font size='+1' color='red'&amp;gt;"+str(page)+" &amp;lt;/font&amp;gt;"
+                else:
+                    outstring += "&amp;lt;a href='"
+                    outstring += "file_selector?type="+type+"&amp;amp;page="+str(page_now)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                    outstring += "'&amp;gt;"+str(page_now)+"&amp;lt;/a&amp;gt; "
+
+        if notlast == True:
+            nextpage = int(page) + 1
+            outstring += " &amp;lt;a href='"
+            outstring += "file_selector?type="+type+"&amp;amp;page="+str(nextpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&amp;gt;Next&amp;lt;/a&amp;gt;"
+            outstring += " &amp;lt;a href='"
+            outstring += "file_selector?type="+type+"&amp;amp;page="+str(totalpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&amp;gt;&amp;gt;&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;"
+        if (int(page) * int(item_per_page)) &amp;lt; total_rows:
+            notlast = True
+            if type == "downloads":
+                outstring += downloadselect_access_list(files, starti, endi)+"&amp;lt;br /&amp;gt;"
+            else:
+                outstring += imageselect_access_list(files, starti, endi)+"&amp;lt;br /&amp;gt;"
+        else:
+            outstring += "&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;"
+            if type == "downloads":
+                outstring += downloadselect_access_list(files, starti, total_rows)+"&amp;lt;br /&amp;gt;"
+            else:
+                outstring += imageselect_access_list(files, starti, total_rows)+"&amp;lt;br /&amp;gt;"
+        if int(page) &amp;gt; 1:
+            outstring += "&amp;lt;a href='"
+            outstring += "file_selector?type="+type+"&amp;amp;page=1&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&amp;gt;&amp;lt;&amp;lt;&amp;lt;/a&amp;gt; "
+            page_num = int(page) - 1
+            outstring += "&amp;lt;a href='"
+            outstring += "file_selector?type="+type+"&amp;amp;page="+str(page_num)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&amp;gt;Previous&amp;lt;/a&amp;gt; "
+        span = 10
+        for index in range(int(page)-span, int(page)+span):
+        #for ($j=$page-$range;$j&amp;lt;$page+$range;$j++)
+            if index &amp;gt;=0 and index &amp;lt; totalpage:
+                page_now = index + 1
+                if page_now == int(page):
+                    outstring += "&amp;lt;font size='+1' color='red'&amp;gt;"+str(page)+" &amp;lt;/font&amp;gt;"
+                else:
+                    outstring += "&amp;lt;a href='"
+                    outstring += "file_selector?type="+type+"&amp;amp;page="+str(page_now)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                    outstring += "'&amp;gt;"+str(page_now)+"&amp;lt;/a&amp;gt; "
+        if notlast == True:
+            nextpage = int(page) + 1
+            outstring += " &amp;lt;a href='"
+            outstring += "file_selector?type="+type+"&amp;amp;page="+str(nextpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&amp;gt;Next&amp;lt;/a&amp;gt;"
+            outstring += " &amp;lt;a href='"
+            outstring += "file_selector?type="+type+"&amp;amp;page="+str(totalpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&amp;gt;&amp;gt;&amp;gt;&amp;lt;/a&amp;gt;"
+    else:
+        outstring += "no data!"
+
+    if type == "downloads":
+        return outstring+"&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;a href='fileuploadform'&amp;gt;file upload&amp;lt;/a&amp;gt;"
+    else:
+        return outstring+"&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;a href='imageuploadform'&amp;gt;image upload&amp;lt;/a&amp;gt;"
+&lt;/pre&gt;
+
+因此, 當使用者進入跳出的檔案引用頁面, 必須要透過選用的 anchor 項目, 跳回引用檔案的主頁面中, 並且帶回引用檔案的所在位置連結及屬性:
+
+&lt;pre class="brush: python"&gt;
+def file_selector_script():
+    return '''
+&amp;lt;script language="javascript" type="text/javascript"&amp;gt;
+$(function(){
+    $('.a').on('click', function(event){
+        setLink();
+    });
+});
+
+function setLink (url, objVals) {
+    top.tinymce.activeEditor.windowManager.getParams().oninsert(url, objVals);
+    top.tinymce.activeEditor.windowManager.close();
+    return false;
+}
+&amp;lt;/script&amp;gt;
+'''
+&lt;/pre&gt;
+
+修改至此, 在 CMSimply 導入 tinymce4 的檔案引用程序已經完成, 只要檔案引用的網址採用全網址, 而且配合既有的檔案上傳功能, 已經可以正常在 IPV6 網址環境中運作.
+
+最後, 只剩下程式碼的 highlight 功能, 也必須同步升級到 tinymce4, 這裡選擇使用 &lt;a href="http://lab.nomadonweb.com/en/sh4tinymce"&gt;http://lab.nomadonweb.com/en/sh4tinymce&lt;/a&gt; 所釋出的 plugin.
+
+只需要在 tinymce4 引用的 cdn core plugins 之外, 額外導入自帶的 sh4tinymce 模組 .js 與 .css 即可. 也就是在 editorhead 的前頭導入時所設定的內容:
+
+&lt;pre class="brush: python"&gt;
+&amp;lt;script src="//cdn.tinymce.com/4/tinymce.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src="/static/tinymce4/tinymce/plugins/sh4tinymce/plugin.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;link rel = "stylesheet" href = "/static/tinymce4/tinymce/plugins/sh4tinymce/style/style.css"&amp;gt;
+&lt;/pre&gt;
+
+上述將 CMSimply 升級使用 tinymce4 並引用 sh4tinymce 套件之後的執行畫面:
+
+CMSimply 在純 IPV6 網址伺服器中運行, 進入 html5 編輯畫面:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/cmsimply_for_ipv6_1.png" width="800" /&gt;
+
+加入 tinymce4 中的 file_picker_callback 設定後, file 與 image 多了一個引用按鈕:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/cmsimply_for_ipv6_2.png" width="800" /&gt;
+
+加入 tinymce4 中的 file_picker_callback 設定後, 使用者編輯內容時可以引用伺服器既有的 image 檔案:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/cmsimply_for_ipv6_3.png" width="800" /&gt;
+
+加入 tinymce4 中的 file_picker_callback 設定後, 使用者編輯內容時可以引用伺服器既有的 file 檔案:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/cmsimply_for_ipv6_4.png" width="800" /&gt;
+
+導入 sh4tinymce plugin 之後, 可以將程式碼置入 highlight 編輯設定:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201606/cmsimply_for_ipv6_5.png" width="800" /&gt;</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃
