@@ -84,7 +84,7 @@
 </v>
 <v t="amd.20160531094803.1"><vh>Brython 程式庫</vh></v>
 <v t="amd.20160106093454.1" a="E"><vh>yen 網誌文章</vh>
-<v t="amd.20160605111320.1" a="E"><vh>before 201606</vh>
+<v t="amd.20160605111320.1"><vh>upto 201606</vh>
 <v t="amd.20160106093510.1" a="E"><vh>201601</vh>
 <v t="ibm.20160115121941.1"><vh>@clean yen_20160115.md</vh></v>
 <v t="amd.20160117143423.1"><vh>@clean yen_20160117.md</vh>
@@ -122,7 +122,7 @@
 <v t="amd.20160412201150.1"><vh>201604</vh>
 <v t="amd.20160412201156.1"><vh>@clean yen_20160412.md</vh></v>
 </v>
-<v t="amd.20160506230749.1"><vh>201605</vh></v>
+<v t="amd.20160506230749.1"><vh>201605</vh>
 <v t="amd.20160506230801.1"><vh>@clean yen_20160506.md</vh>
 <v t="amd.20160506235635.1"><vh>43</vh></v>
 </v>
@@ -138,12 +138,12 @@
 <v t="amd.20160529144234.1"><vh>@clean yen_20160529.md</vh></v>
 <v t="amd.20160529155022.1"><vh>@clean yen_20160529-1.md</vh></v>
 </v>
-<v t="amd.20160605111404.1" a="E"><vh>201606</vh>
+<v t="amd.20160605111404.1"><vh>201606</vh>
 <v t="amd.20160603225335.1"><vh>@clean yen_20160603.md</vh></v>
 <v t="amd.20160605104719.1"><vh>@clean yen_20160605.md</vh>
 <v t="amd.20160605104725.1"><vh>68</vh></v>
 </v>
-<v t="amd.20160605104803.1"><vh>@clean yen_20160605-1.md</vh>
+<v t="amd.20160605104803.1" a="E"><vh>@clean yen_20160605-1.md</vh>
 <v t="amd.20160605104803.2"><vh>85</vh></v>
 </v>
 <v t="amd.20160608105837.1"><vh>@clean yen_20160608.md</vh></v>
@@ -159,6 +159,10 @@
 <v t="amd.20160626102516.1"><vh>@@clean yen_20160626-1.md</vh></v>
 <v t="amd.20160628112511.1"><vh>@clean yen_20160628.md</vh></v>
 <v t="amd.20160628234307.1"><vh>@clean yen_20160628-1.md</vh></v>
+</v>
+</v>
+<v t="amd.20160701144511.1" a="E"><vh>201607</vh>
+<v t="amd.20160701144521.1"><vh>@clean yen_20160701.md</vh></v>
 </v>
 </v>
 </v>
@@ -8287,11 +8291,11 @@ sudo apt-get install npm nodejs-legacy
 
 sudo apt-get install python3-pip
 
-安裝 jupyterhub 與 notebook 模組 (假如無法順利完成, 必須透過臨時的固定 IPV4 網址設定, 再直接執行):
+安裝 jupyterhub 與 notebook 模組:
 
-sudo pip3 --proxy http://[2001:288:6004:17::17]:3128 install jupyterhub
+sudo pip3 --proxy http://2001:288:6004:17::17:3128 install jupyterhub
  
-sudo pip3 --proxy http://[2001:288:6004:17::17]:3128 install notebook
+sudo pip3 --proxy http://2001:288:6004:17::17:3128 install notebook
 
 接著為了要採 https 啟動, 需要建立認証編碼用的 crt 與 key 檔案:
 
@@ -8546,6 +8550,286 @@ $ sudo update-rc.d jupyterhub defaults
 &lt;a href="https://jupyterhub.readthedocs.io"&gt;https://jupyterhub.readthedocs.io&lt;/a&gt;
 
 &lt;a href="https://gist.github.com/lambdalisue/f01c5a65e81100356379"&gt;https://gist.github.com/lambdalisue/f01c5a65e81100356379&lt;/a&gt;</t>
+<t tx="amd.20160701144511.1"></t>
+<t tx="amd.20160701144521.1">@language md
+Title: Jupyterhub oauth2 登入設定
+Category: MISC
+Tags: cadlab, Jupyterhub, IPV6, oauth2
+Author: Cad Lab
+@others
+當機械設計工程師精熟了 Matlab 與 Mathematica 之後, 若想更進一步了解這些數值運算工具的整體架構, 可以試著在實體機或虛擬機器 (或 Docker 容器) 上架設自由開源的 Jupyterhub, 好按照各自研發團隊的需求, 打造永續的設計運算生態系統.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+&lt;a href="http://jupyter.org/"&gt;http://jupyter.org/&lt;/a&gt; 是一套支援&lt;a href="https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages"&gt;超過 40 種&lt;/a&gt;程式語言的開源互動式資料運算平台, 而 &lt;a href="https://github.com/jupyterhub/jupyterhub"&gt;Jupyterhub&lt;/a&gt; 則是一套提供多人使用 Jupyter 的網際數值運算伺服器.
+
+這裡要介紹的是如何利用 Github 或 Google 帳號登入到團隊間所架設的 Jupyterhub 主機.
+
+###Jupyterhub 安裝
+
+如 &lt;a href="http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html"&gt;http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html&lt;/a&gt; 中的說明, 可以利用下列指令安裝 Jupyter:
+
+&lt;pre class="brush: jscript"&gt;
+sudo apt-get install npm nodejs-legacy
+sudo apt-get install python3-pip
+sudo pip3 install jupyterhub
+sudo pip3 install notebook
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout jupyterhub.key -out jupyterhub.crt
+&lt;/pre&gt;
+
+完成後, 就可以利用 jupyterhub --port 9443 --ssl-key jupyterhub.key --ssl-cert jupyterhub.crt 啟動, 然後以瀏覽器連接後
+, 用伺服器機器系統帳號登入, 此時啟動的 Jupyterhub 完全採用內建的設定啟用.
+
+###設定 Github 與 Google 帳號
+
+接下來要按照 &lt;a href="https://github.com/jupyterhub/oauthenticator"&gt;https://github.com/jupyterhub/oauthenticator&lt;/a&gt; 中的說明, 利用 Github 與 Google 帳號, 分別註冊 &lt;a href="https://github.com/settings/applications/new"&gt;https://github.com/settings/applications/new&lt;/a&gt; 與 &lt;a href="https://console.developers.google.com"&gt;https://console.developers.google.com&lt;/a&gt; 的網際應用程式開發設定, 主要的操作, 在根據 &lt;a href="https://github.com/jupyterhub/oauthenticator"&gt;https://github.com/jupyterhub/oauthenticator&lt;/a&gt; 程式模組的設計, 從 Jupyterhub 登入時, 分別跳轉到 Github 或 Google 的登入流程, 待使用者完成登入並同意取用基本的帳號資料後, 即轉回 Jupyterhub 的回呼函式, 然後再按照 Jupyterhub 的啟動設定, 將使用者導向特定的 Jupyterhub 中的筆記本工作環境.
+
+###安裝 oauthenticator
+
+第 1 步要先安裝 oauthenticator：
+
+sudo pip3 install oauthenticator
+
+接著處理 Github 的網際延伸程式開發設定, 必須先登入到 Github 帳號, 然後進入 &lt;a href="https://github.com/settings/applications/new"&gt;https://github.com/settings/applications/new&lt;/a&gt;, 註冊一個新的 OAuth 應用程式, 如下圖所示:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201607/jupyterhub_github_oauth_1.png" width="800" /&gt;
+
+其中最重要的就是 https://your.server.domain:9443/hub/oauth_callback, 這是 &lt;a href="https://github.com/jupyterhub/oauthenticator"&gt;https://github.com/jupyterhub/oauthenticator&lt;/a&gt; 模組中所選定的回呼函式連結. 完成後 ,只需要在 Jupyterhub_config.py 設定中加上:
+
+&lt;pre class="brush:python"&gt;
+c.JupyterHub.authenticator_class = 'oauthenticator.LocalGitHubOAuthenticator'
+c.GitHubOAuthenticator.oauth_callback_url = 'https://your.server.domain:9443/hub/oauth_callback' 
+c.GitHubOAuthenticator.client_id = 'your_github_oauth_application_client_id'
+c.GitHubOAuthenticator.client_secret = 'your_github_oauth_application_client_secret'
+&lt;/pre&gt;
+
+重新啟動後的 Jupyterhub, 就會將登入導向 Github, 之後再透過回呼函式進入 Jupyterhub 環境. 這裡必須特別注意的是, Github 尚未全面支援 IPV6, 因此導向 Github Oauth2 登入, 目前只適用於 IPV4 主機.
+
+###Google OAuth 設定
+
+轉用 Google OAuth 登入的作法也很類似, 首先登入 Google 帳號, 進入 &lt;a href="https://console.developers.google.com"&gt;https://console.developers.google.com&lt;/a&gt; 後, 在 API manager 處建立一個網際應用程式開發授權認証, 完成後, 在 Jupyterhub_config.py 設定中加上:
+
+&lt;pre class="brush:python"&gt;
+c.JupyterHub.authenticator_class = 'oauthenticator.LocalGoogleOAuthenticator'
+c.GoogleOAuthenticator.oauth_callback_url = 'https://your.server.domain:9443/hub/oauth_callback' 
+c.GoogleOAuthenticator.client_id = 'your_google_oauth_client_id'
+c.GoogleOAuthenticator.client_secret = 'your_google_oauth_client_secret'
+c.GoogleOAuthenticator.hosted_domain = 'your.hosted.domain'
+c.GoogleOAuthenticator.login_service = 'your hosted service title'
+&lt;/pre&gt;
+
+啟動後的 Jupyterhub, 就會將登入導向 Google, 之後再透過回呼函式進入 Jupyterhub 環境. 而且 Google 目前的所有服務已經全面支援 IPV6, 因此適用純 IPV6 的伺服主機.
+
+下圖就是登入 Gmail 帳號, 進入 &lt;a href="https://console.developers.google.com"&gt;https://console.developers.google.com&lt;/a&gt; 後, 準備建立 Oauth Client 認証註冊的畫面:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201607/jupyterhub_google_oauth_1.png" width="800" /&gt;
+
+下圖顯示, 這裡要註冊的 Client ID 類別為 Web Application:
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201607/jupyterhub_google_oauth_2.png" width="800" /&gt;
+
+接著在登記建立應用程式的認証流程中, 輸入 Authorized Javascript origin: https://your.server.domain:9443, 以及 Authorized redirect URI: https://your.server.domain:9443/hub/oauth_callback, 設置完成後, 即可取得與網際應用程式對應的 Client_id 與 Client_secret.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201607/jupyterhub_google_oauth_3.png" width="800" /&gt;
+
+完成設定後的登入畫面如下, 由於此台測試機採純 IPV6 位址上網, 只有啟動 IPV6 上網設置的客戶端或透過 IPV4/IPV6 雙支援的代理主機才能擷取.
+
+&lt;img src="http://cad-lab.github.io/cadlab_data/files/201607/jupyterhub_google_oauth_4.png" width="800" /&gt;
+
+以下則是 Jupyterhub_config.py 設定檔案內容:
+
+&lt;pre class="brush: python"&gt;
+# jupyterhub_config.py
+# jupyterhub -f /etc/jupyterhub/jupyterhub_config.py
+c = get_config()
+  
+import os
+pjoin = os.path.join
+  
+runtime_dir = os.path.join('/srv/jupyterhub')
+ssl_dir = pjoin(runtime_dir, 'ssl')
+if not os.path.exists(ssl_dir):
+    os.makedirs(ssl_dir)
+
+# https on :9443
+c.JupyterHub.port = 9443
+c.JupyterHub.ip = '2001:288::8888'
+#c.JupyterHub.proxy_api_ip = '2001:288::8888'
+c.JupyterHub.ssl_key = pjoin(ssl_dir, 'jupyterhub.key')
+c.JupyterHub.ssl_cert = pjoin(ssl_dir, 'jupyterhub.crt')
+  
+# put the JjupyterHub cookie secret and state db
+# in /var/run/jupyterhub
+c.JupyterHub.cookie_secret_file = pjoin(runtime_dir, 'jupyterhub_cookie_secret')
+c.JupyterHub.db_url = pjoin(runtime_dir, 'jupyterhub.sqlite')
+
+# or `--db=/path/to/jupyterhub.sqlite` on the command-line
+  
+# put the log file in /var/log
+c.JupyterHub.extra_log_file = '/var/log/jupyterhub.log'
+
+# use Google OAuthenticator for local users
+c.JupyterHub.authenticator_class = 'oauthenticator.LocalGoogleOAuthenticator'
+c.GoogleOAuthenticator.oauth_callback_url = 'https://your.server.domain:9443/hub/oauth_callback' 
+c.GoogleOAuthenticator.client_id = 'your_google_oauth_client_id'
+c.GoogleOAuthenticator.client_secret = 'your_google_oauth_client_secret'
+c.GoogleOAuthenticator.hosted_domain = 'your.hosted.domain'
+c.GoogleOAuthenticator.login_service = 'your hosted service title'
+
+'''
+# use Github OAuthenticator for local users (not compatible with IPV6 service yet)
+c.JupyterHub.authenticator_class = 'oauthenticator.LocalGitHubOAuthenticator'
+c.GitHubOAuthenticator.oauth_callback_url = 'https://your.server.domain:9443/hub/oauth_callback' 
+c.GitHubOAuthenticator.client_id = 'your_github_oauth_application_client_id'
+c.GitHubOAuthenticator.client_secret = 'your_github_oauth_application_client_secret'
+'''
+# create system users that don't exist yet
+c.LocalAuthenticator.create_system_users = True
+
+# specify users and admin
+# needed for LocalGitHubOAuthenticator
+c.Authenticator.whitelist = {'u_admin1', 'u_admin2', 'u_scrum1', 'u_scrum2'}
+c.Authenticator.admin_users = {'u_admin1','u_admin2'}
+  
+# start single-user notebook servers in ~/assignments,
+# with ~/assignments/Welcome.ipynb as the default landing page
+# this config could also be put in
+# /etc/ipython/ipython_notebook_config.py
+#c.Spawner.notebook_dir = '~/tmp'
+c.Spawner.notebook_dir = '/home/notebook'
+#c.Spawner.args = ['--NotebookApp.default_url=/notebooks/Welcome.ipynb']
+&lt;/pre&gt;
+
+由上面的設定檔案可以得知, 能登入 Jupyterhub 的帳號位於 c.Authenticator.whitelist 中, 且管理者則列入 c.Authenticator.admin_users 設定.
+
+至於與上述設定配合的 Google 認証模組的程式碼位於: /usr/local/lib/python3.4/dist-packages/oauthenticator/google.py, 管理者可以仔細了解下列程式碼的運作流程, 並配合團隊的需求進行修改.
+
+&lt;pre class="brush: python"&gt;
+"""
+Custom Authenticator to use Google OAuth with JupyterHub.
+
+Derived from the GitHub OAuth authenticator.
+"""
+
+import os
+import json
+
+from tornado             import gen
+from tornado.auth        import GoogleOAuth2Mixin
+from tornado.web         import HTTPError
+
+from traitlets           import Unicode
+
+from jupyterhub.auth     import LocalAuthenticator
+from jupyterhub.utils    import url_path_join
+
+from .oauth2 import OAuthLoginHandler, OAuthCallbackHandler, OAuthenticator
+
+class GoogleLoginHandler(OAuthLoginHandler, GoogleOAuth2Mixin):
+    '''An OAuthLoginHandler that provides scope to GoogleOAuth2Mixin's
+       authorize_redirect.'''
+    def get(self):
+        guess_uri = '{proto}://{host}{path}'.format(
+            proto=self.request.protocol,
+            host=self.request.host,
+            path=url_path_join(
+                self.hub.server.base_url,
+                'oauth_callback'
+            )
+        )
+
+        redirect_uri = self.authenticator.oauth_callback_url or guess_uri
+        self.log.info('redirect_uri: %r', redirect_uri)
+
+        self.authorize_redirect(
+            redirect_uri=redirect_uri,
+            client_id=self.authenticator.client_id,
+            scope=['openid', 'email'],
+            response_type='code')
+
+class GoogleOAuthHandler(OAuthCallbackHandler, GoogleOAuth2Mixin):
+    @gen.coroutine
+    def get(self):
+        self.settings['google_oauth'] = {
+            'key': self.authenticator.client_id,
+            'secret': self.authenticator.client_secret,
+            'scope': ['openid', 'email']
+        }
+        self.log.debug('google: settings: "%s"', str(self.settings['google_oauth']))
+        # FIXME: we should verify self.settings['google_oauth']['hd']
+
+        # "Cannot redirect after headers have been written" ?
+        #OAuthCallbackHandler.get(self)
+        username = yield self.authenticator.get_authenticated_user(self, None)
+        self.log.info('google: username: "%s"', username)
+        if username:
+            user = self.user_from_username(username)
+            self.set_login_cookie(user)
+            self.redirect(url_path_join(self.hub.server.base_url, 'home'))
+        else:
+            # todo: custom error
+            raise HTTPError(403)
+
+class GoogleOAuthenticator(OAuthenticator, GoogleOAuth2Mixin):
+
+    login_handler = GoogleLoginHandler
+    callback_handler = GoogleOAuthHandler
+
+    hosted_domain = Unicode(
+        os.environ.get('HOSTED_DOMAIN', ''),
+        config=True,
+        help="""Hosted domain used to restrict sign-in, e.g. mycollege.edu"""
+    )
+    login_service = Unicode(
+        os.environ.get('LOGIN_SERVICE', 'Google'),
+        config=True,
+        help="""Google Apps hosted domain string, e.g. My College"""
+    )
+
+    @gen.coroutine
+    def authenticate(self, handler, data=None):
+        code = handler.get_argument('code', False)
+        if not code:
+            raise HTTPError(400, "oauth callback made without a token") 
+        if not self.oauth_callback_url:
+            raise HTTPError(500, "No callback URL")
+        user = yield handler.get_authenticated_user(
+            redirect_uri=self.oauth_callback_url,
+            code=code)
+        access_token = str(user['access_token'])
+
+        http_client = handler.get_auth_http_client()
+
+        response = yield http_client.fetch(
+            self._OAUTH_USERINFO_URL + '?access_token=' + access_token
+        )
+
+        if not response:
+            self.clear_all_cookies()
+            raise HTTPError(500, 'Google authentication failed')
+
+        body = response.body.decode()
+        self.log.debug('response.body.decode(): {}'.format(body))
+        bodyjs = json.loads(body)
+
+        username = bodyjs['email']
+
+        if self.hosted_domain:
+            if not username.endswith('@'+self.hosted_domain) or \
+                bodyjs['hd'] != self.hosted_domain:
+                raise HTTPError(403,
+                    "You are not signed in to your {} account.".format(
+                        self.hosted_domain)
+                )
+            else:
+                username = username.split('@')[0]
+
+        return username
+
+class LocalGoogleOAuthenticator(LocalAuthenticator, GoogleOAuthenticator):
+    """A version that mixes in local system user creation"""
+    pass
+&lt;/pre&gt;</t>
 <t tx="ibm.20160115121941.1">@language md
 Title: 電腦輔助設計室網誌開通
 Category: 規劃

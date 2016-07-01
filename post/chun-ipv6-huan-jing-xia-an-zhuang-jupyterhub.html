@@ -177,7 +177,7 @@ init_mathjax();
         <meta property="og:title" content="純 IPV6 環境下安裝 Jupyterhub"/>
         <meta property="og:url" content="http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html"/>
         <meta property="og:description" content="https://github.com/jupyterhub/jupyterhub 是一套支援多用戶的網際運算伺服器, 這裡展示如何在純 IPV6 的 Ubuntu 14.04 環境下進行安裝設定."/>
-        <meta property="article:published_time" content="2016-06-29" />
+        <meta property="article:published_time" content="2016-06-30" />
             <meta property="article:section" content="MISC" />
             <meta property="article:tag" content="cadlab" />
             <meta property="article:tag" content="Jupyterhub" />
@@ -314,7 +314,7 @@ CADLab (虎尾科大MDE)            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2016-06-29T00:19:53.044479+08:00"> 三 29 六月 2016</time>
+        <i class="fa fa-calendar"></i><time datetime="2016-06-30T20:23:15.650579+08:00"> 四 30 六月 2016</time>
     </span>
             <span class="label label-default">By</span>
             <a href="http://cadlab.mde.tw/post/author/cad-lab.html"><i class="fa fa-user"></i> Cad Lab</a>
@@ -341,9 +341,9 @@ CADLab (虎尾科大MDE)            </a>
 <p>sudo apt-get install npm nodejs-legacy</p>
 <p>安裝 pip3 工具:</p>
 <p>sudo apt-get install python3-pip</p>
-<p>安裝 jupyterhub 與 notebook 模組 (假如無法順利完成, 必須透過臨時的固定 IPV4 網址設定, 再直接執行):</p>
-<p>sudo pip3 --proxy http://[2001:288:6004:17::17]:3128 install jupyterhub</p>
-<p>sudo pip3 --proxy http://[2001:288:6004:17::17]:3128 install notebook</p>
+<p>安裝 jupyterhub 與 notebook 模組:</p>
+<p>sudo pip3 --proxy http://2001:288:6004:17::17:3128 install jupyterhub</p>
+<p>sudo pip3 --proxy http://2001:288:6004:17::17:3128 install notebook</p>
 <p>接著為了要採 https 啟動, 需要建立認証編碼用的 crt 與 key 檔案:</p>
 <p>sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout jupyterhub.key -out jupyterhub.crt</p>
 <p>完成後就可以指定 IP 啟動:</p>
@@ -627,6 +627,11 @@ $ sudo update-rc.d jupyterhub defaults
             <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Recent Posts</span></h4>
                 <ul class="list-group" id="recentposts">
                     <li class="list-group-item">
+                        <a href="http://cadlab.mde.tw/post/jupyterhub-oauth2-deng-ru-she-ding.html">
+                            Jupyterhub oauth2 登入設定
+                        </a>
+                    </li>
+                    <li class="list-group-item">
                         <a href="http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html">
                             純 IPV6 環境下安裝 Jupyterhub
                         </a>
@@ -644,11 +649,6 @@ $ sudo update-rc.d jupyterhub defaults
                     <li class="list-group-item">
                         <a href="http://cadlab.mde.tw/post/ubuntu-1604-windows-7-yu-windows-10-xu-ni-ji-qi.html">
                             Ubuntu 16.04, Windows 7 與 Windows 10 虛擬機器
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="http://cadlab.mde.tw/post/wang-ji-ji-jie-she-ji-2d-hui-tu.html">
-                            網際機械設計 2D 繪圖
                         </a>
                     </li>
                 </ul>

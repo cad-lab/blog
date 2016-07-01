@@ -1,5 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/misc.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-06-29T00:19:53+08:00</updated><entry><title>純 IPV6 環境下安裝 Jupyterhub</title><link href="http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html" rel="alternate"></link><updated>2016-06-29T00:19:53+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-29:post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/jupyterhub/jupyterhub"&gt;https://github.com/jupyterhub/jupyterhub&lt;/a&gt; 是一套支援多用戶的網際運算伺服器, 這裡展示如何在純 IPV6 的 Ubuntu 14.04 環境下進行安裝設定.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/misc.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-07-01T23:03:06+08:00</updated><entry><title>Jupyterhub oauth2 登入設定</title><link href="http://cadlab.mde.tw/post/jupyterhub-oauth2-deng-ru-she-ding.html" rel="alternate"></link><updated>2016-07-01T23:03:06+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-07-01:post/jupyterhub-oauth2-deng-ru-she-ding.html</id><summary type="html">&lt;p&gt;當機械設計工程師精熟了 Matlab 與 Mathematica 之後, 若想更進一步了解這些數值運算工具的整體架構, 可以試著在實體機或虛擬機器 (或 Docker 容器) 上架設自由開源的 Jupyterhub, 好按照各自研發團隊的需求, 打造永續的設計運算生態系統.&lt;/p&gt;
+
+
+&lt;p&gt;&lt;a href="http://jupyter.org/"&gt;http://jupyter.org/&lt;/a&gt; 是一套支援&lt;a href="https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages"&gt;超過 40 種&lt;/a&gt;程式語言的開源互動式資料運算平台, 而 &lt;a href="https://github.com/jupyterhub/jupyterhub"&gt;Jupyterhub&lt;/a&gt; 則是一套提供多人使用 Jupyter 的網際數值運算伺服器.&lt;/p&gt;
+&lt;p&gt;這裡要介紹的是如何利用 Github 或 Google 帳號登入到團隊間所架設的 Jupyterhub 主機.&lt;/p&gt;
+&lt;h3&gt;Jupyterhub 安裝&lt;/h3&gt;
+&lt;p&gt;如 &lt;a href="http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html"&gt;http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html&lt;/a&gt; 中的說明, 可以利用下列指令安裝 Jupyter:&lt;/p&gt;
+&lt;pre class="brush: jscript"&gt;
+sudo apt-get install npm nodejs-legacy
+sudo apt-get install python3-pip
+sudo pip3 install jupyterhub
+sudo pip3 install notebook
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout jupyterhub.key -out jupyterhub.crt
+&lt;/pre&gt;
+
+&lt;p&gt;完成後, 就可以利用 jupyterhub --port 9443 --ssl-key jupyterhub.key --ssl-cert jupyterhub.crt 啟動, 然後以瀏覽器連接後
+, 用伺服器機器系統帳號登入, 此時啟動的 Jupyterhub 完全採用內建的設定啟用.&lt;/p&gt;
+&lt;h3&gt;設定 Github 與 Google 帳號&lt;/h3&gt;
+&lt;p&gt;接下來要按照 &lt;a href="https://github.com/jupyterhub/oauthenticator"&gt;https://github.com/jupyterhub/oauthenticator&lt;/a&gt; 中的說明, 利用 Github 與 Google 帳號, 分別註冊 &lt;a href="https://github.com/settings/applications/new"&gt;https://github.com/settings/applications/new&lt;/a&gt; 與 &lt;a href="https://console.developers.google.com"&gt;https://console.developers.google.com&lt;/a&gt; 的網際應用程式開發設定, 主要的操作, 在根據 &lt;a href="https://github.com/jupyterhub/oauthenticator"&gt;https://github.com/jupyterhub/oauthenticator&lt;/a&gt; 程式模組的設計, 從 Jupyterhub 登入時, 分別跳轉到 Github 或 Google 的登入流程, 待使用者完成登入並同意取用基本的帳號資料後, 即轉回 Jupyterhub 的回呼函式, 然後再按照 Jupyterhub 的啟動設定, 將使用者導向特定的 Jupyterhub 中的筆記本工作環境.&lt;/p&gt;
+&lt;h3&gt;安裝 oauthenticator&lt;/h3&gt;
+&lt;p&gt;第 1 步要先安裝 oauthenticator：&lt;/p&gt;
+&lt;p&gt;sudo pip3 install oauthenticator&lt;/p&gt;
+&lt;p&gt;接著處理 Github 的網際延伸程式開發設定, 必須先登入到 Github 帳號, 然後進入 &lt;a href="https://github.com/settings/applications/new"&gt;https://github.com/settings/applications/new&lt;/a&gt;, 註冊一個新的 OAuth 應用程式, 如下圖所示:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201607/jupyterhub_github_oauth_1.png" width="800" /&gt;&lt;/p&gt;
+&lt;p&gt;其中最重要的就是 https://your.server.domain:9443/hub/oauth_callback, 這是 &lt;a href="https://github.com/jupyterhub/oauthenticator"&gt;https://github.com/jupyterhub/oauthenticator&lt;/a&gt; 模組中所選定的回呼函式連結. 完成後 ,只需要在 Jupyterhub_config.py 設定中加上:&lt;/p&gt;
+&lt;pre class="brush:python"&gt;
+c.JupyterHub.authenticator_class = 'oauthenticator.LocalGitHubOAuthenticator'
+c.GitHubOAuthenticator.oauth_callback_url = 'https://your.server.domain:9443/hub/oauth_callback' 
+c.GitHubOAuthenticator.client_id = 'your_github_oauth_application_client_id'
+c.GitHubOAuthenticator.client_secret = 'your_github_oauth_application_client_secret'
+&lt;/pre&gt;
+
+&lt;p&gt;重新啟動後的 Jupyterhub, 就會將登入導向 Github, 之後再透過回呼函式進入 Jupyterhub 環境. 這裡必須特別注意的是, Github 尚未全面支援 IPV6, 因此導向 Github Oauth2 登入, 目前只適用於 IPV4 主機.&lt;/p&gt;
+&lt;h3&gt;Google OAuth 設定&lt;/h3&gt;
+&lt;p&gt;轉用 Google OAuth 登入的作法也很類似, 首先登入 Google 帳號, 進入 &lt;a href="https://console.developers.google.com"&gt;https://console.developers.google.com&lt;/a&gt; 後, 在 API manager 處建立一個網際應用程式開發授權認証, 完成後, 在 Jupyterhub_config.py 設定中加上:&lt;/p&gt;
+&lt;pre class="brush:python"&gt;
+c.JupyterHub.authenticator_class = 'oauthenticator.LocalGoogleOAuthenticator'
+c.GoogleOAuthenticator.oauth_callback_url = 'https://your.server.domain:9443/hub/oauth_callback' 
+c.GoogleOAuthenticator.client_id = 'your_google_oauth_client_id'
+c.GoogleOAuthenticator.client_secret = 'your_google_oauth_client_secret'
+c.GoogleOAuthenticator.hosted_domain = 'your.hosted.domain'
+c.GoogleOAuthenticator.login_service = 'your hosted service title'
+&lt;/pre&gt;
+
+&lt;p&gt;啟動後的 Jupyterhub, 就會將登入導向 Google, 之後再透過回呼函式進入 Jupyterhub 環境. 而且 Google 目前的所有服務已經全面支援 IPV6, 因此適用純 IPV6 的伺服主機.&lt;/p&gt;
+&lt;p&gt;下圖就是登入 Gmail 帳號, 進入 &lt;a href="https://console.developers.google.com"&gt;https://console.developers.google.com&lt;/a&gt; 後, 準備建立 Oauth Client 認証註冊的畫面:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201607/jupyterhub_google_oauth_1.png" width="800" /&gt;&lt;/p&gt;
+&lt;p&gt;下圖顯示, 這裡要註冊的 Client ID 類別為 Web Application:&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201607/jupyterhub_google_oauth_2.png" width="800" /&gt;&lt;/p&gt;
+&lt;p&gt;接著在登記建立應用程式的認証流程中, 輸入 Authorized Javascript origin: https://your.server.domain:9443, 以及 Authorized redirect URI: https://your.server.domain:9443/hub/oauth_callback, 設置完成後, 即可取得與網際應用程式對應的 Client_id 與 Client_secret.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201607/jupyterhub_google_oauth_3.png" width="800" /&gt;&lt;/p&gt;
+&lt;p&gt;完成設定後的登入畫面如下, 由於此台測試機採純 IPV6 位址上網, 只有啟動 IPV6 上網設置的客戶端或透過 IPV4/IPV6 雙支援的代理主機才能擷取.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://cad-lab.github.io/cadlab_data/files/201607/jupyterhub_google_oauth_4.png" width="800" /&gt;&lt;/p&gt;
+&lt;p&gt;以下則是 Jupyterhub_config.py 設定檔案內容:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+# jupyterhub_config.py
+# jupyterhub -f /etc/jupyterhub/jupyterhub_config.py
+c = get_config()
+
+import os
+pjoin = os.path.join
+
+runtime_dir = os.path.join('/srv/jupyterhub')
+ssl_dir = pjoin(runtime_dir, 'ssl')
+if not os.path.exists(ssl_dir):
+    os.makedirs(ssl_dir)
+
+# https on :9443
+c.JupyterHub.port = 9443
+c.JupyterHub.ip = '2001:288::8888'
+#c.JupyterHub.proxy_api_ip = '2001:288::8888'
+c.JupyterHub.ssl_key = pjoin(ssl_dir, 'jupyterhub.key')
+c.JupyterHub.ssl_cert = pjoin(ssl_dir, 'jupyterhub.crt')
+
+# put the JjupyterHub cookie secret and state db
+# in /var/run/jupyterhub
+c.JupyterHub.cookie_secret_file = pjoin(runtime_dir, 'jupyterhub_cookie_secret')
+c.JupyterHub.db_url = pjoin(runtime_dir, 'jupyterhub.sqlite')
+
+# or `--db=/path/to/jupyterhub.sqlite` on the command-line
+
+# put the log file in /var/log
+c.JupyterHub.extra_log_file = '/var/log/jupyterhub.log'
+
+# use Google OAuthenticator for local users
+c.JupyterHub.authenticator_class = 'oauthenticator.LocalGoogleOAuthenticator'
+c.GoogleOAuthenticator.oauth_callback_url = 'https://your.server.domain:9443/hub/oauth_callback' 
+c.GoogleOAuthenticator.client_id = 'your_google_oauth_client_id'
+c.GoogleOAuthenticator.client_secret = 'your_google_oauth_client_secret'
+c.GoogleOAuthenticator.hosted_domain = 'your.hosted.domain'
+c.GoogleOAuthenticator.login_service = 'your hosted service title'
+
+'''
+# use Github OAuthenticator for local users (not compatible with IPV6 service yet)
+c.JupyterHub.authenticator_class = 'oauthenticator.LocalGitHubOAuthenticator'
+c.GitHubOAuthenticator.oauth_callback_url = 'https://your.server.domain:9443/hub/oauth_callback' 
+c.GitHubOAuthenticator.client_id = 'your_github_oauth_application_client_id'
+c.GitHubOAuthenticator.client_secret = 'your_github_oauth_application_client_secret'
+'''
+# create system users that don't exist yet
+c.LocalAuthenticator.create_system_users = True
+
+# specify users and admin
+# needed for LocalGitHubOAuthenticator
+c.Authenticator.whitelist = {'u_admin1', 'u_admin2', 'u_scrum1', 'u_scrum2'}
+c.Authenticator.admin_users = {'u_admin1','u_admin2'}
+
+# start single-user notebook servers in ~/assignments,
+# with ~/assignments/Welcome.ipynb as the default landing page
+# this config could also be put in
+# /etc/ipython/ipython_notebook_config.py
+#c.Spawner.notebook_dir = '~/tmp'
+c.Spawner.notebook_dir = '/home/notebook'
+#c.Spawner.args = ['--NotebookApp.default_url=/notebooks/Welcome.ipynb']
+&lt;/pre&gt;
+
+&lt;p&gt;由上面的設定檔案可以得知, 能登入 Jupyterhub 的帳號位於 c.Authenticator.whitelist 中, 且管理者則列入 c.Authenticator.admin_users 設定.&lt;/p&gt;
+&lt;p&gt;至於與上述設定配合的 Google 認証模組的程式碼位於: /usr/local/lib/python3.4/dist-packages/oauthenticator/google.py, 管理者可以仔細了解下列程式碼的運作流程, 並配合團隊的需求進行修改.&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+"""
+Custom Authenticator to use Google OAuth with JupyterHub.
+
+Derived from the GitHub OAuth authenticator.
+"""
+
+import os
+import json
+
+from tornado             import gen
+from tornado.auth        import GoogleOAuth2Mixin
+from tornado.web         import HTTPError
+
+from traitlets           import Unicode
+
+from jupyterhub.auth     import LocalAuthenticator
+from jupyterhub.utils    import url_path_join
+
+from .oauth2 import OAuthLoginHandler, OAuthCallbackHandler, OAuthenticator
+
+class GoogleLoginHandler(OAuthLoginHandler, GoogleOAuth2Mixin):
+    '''An OAuthLoginHandler that provides scope to GoogleOAuth2Mixin's
+       authorize_redirect.'''
+    def get(self):
+        guess_uri = '{proto}://{host}{path}'.format(
+            proto=self.request.protocol,
+            host=self.request.host,
+            path=url_path_join(
+                self.hub.server.base_url,
+                'oauth_callback'
+            )
+        )
+
+        redirect_uri = self.authenticator.oauth_callback_url or guess_uri
+        self.log.info('redirect_uri: %r', redirect_uri)
+
+        self.authorize_redirect(
+            redirect_uri=redirect_uri,
+            client_id=self.authenticator.client_id,
+            scope=['openid', 'email'],
+            response_type='code')
+
+class GoogleOAuthHandler(OAuthCallbackHandler, GoogleOAuth2Mixin):
+    @gen.coroutine
+    def get(self):
+        self.settings['google_oauth'] = {
+            'key': self.authenticator.client_id,
+            'secret': self.authenticator.client_secret,
+            'scope': ['openid', 'email']
+        }
+        self.log.debug('google: settings: "%s"', str(self.settings['google_oauth']))
+        # FIXME: we should verify self.settings['google_oauth']['hd']
+
+        # "Cannot redirect after headers have been written" ?
+        #OAuthCallbackHandler.get(self)
+        username = yield self.authenticator.get_authenticated_user(self, None)
+        self.log.info('google: username: "%s"', username)
+        if username:
+            user = self.user_from_username(username)
+            self.set_login_cookie(user)
+            self.redirect(url_path_join(self.hub.server.base_url, 'home'))
+        else:
+            # todo: custom error
+            raise HTTPError(403)
+
+class GoogleOAuthenticator(OAuthenticator, GoogleOAuth2Mixin):
+
+    login_handler = GoogleLoginHandler
+    callback_handler = GoogleOAuthHandler
+
+    hosted_domain = Unicode(
+        os.environ.get('HOSTED_DOMAIN', ''),
+        config=True,
+        help="""Hosted domain used to restrict sign-in, e.g. mycollege.edu"""
+    )
+    login_service = Unicode(
+        os.environ.get('LOGIN_SERVICE', 'Google'),
+        config=True,
+        help="""Google Apps hosted domain string, e.g. My College"""
+    )
+
+    @gen.coroutine
+    def authenticate(self, handler, data=None):
+        code = handler.get_argument('code', False)
+        if not code:
+            raise HTTPError(400, "oauth callback made without a token") 
+        if not self.oauth_callback_url:
+            raise HTTPError(500, "No callback URL")
+        user = yield handler.get_authenticated_user(
+            redirect_uri=self.oauth_callback_url,
+            code=code)
+        access_token = str(user['access_token'])
+
+        http_client = handler.get_auth_http_client()
+
+        response = yield http_client.fetch(
+            self._OAUTH_USERINFO_URL + '?access_token=' + access_token
+        )
+
+        if not response:
+            self.clear_all_cookies()
+            raise HTTPError(500, 'Google authentication failed')
+
+        body = response.body.decode()
+        self.log.debug('response.body.decode(): {}'.format(body))
+        bodyjs = json.loads(body)
+
+        username = bodyjs['email']
+
+        if self.hosted_domain:
+            if not username.endswith('@'+self.hosted_domain) or \
+                bodyjs['hd'] != self.hosted_domain:
+                raise HTTPError(403,
+                    "You are not signed in to your {} account.".format(
+                        self.hosted_domain)
+                )
+            else:
+                username = username.split('@')[0]
+
+        return username
+
+class LocalGoogleOAuthenticator(LocalAuthenticator, GoogleOAuthenticator):
+    """A version that mixes in local system user creation"""
+    pass
+&lt;/pre&gt;</summary><category term="cadlab"></category><category term="Jupyterhub"></category><category term="IPV6"></category><category term="oauth2"></category></entry><entry><title>純 IPV6 環境下安裝 Jupyterhub</title><link href="http://cadlab.mde.tw/post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html" rel="alternate"></link><updated>2016-06-30T20:23:15+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-06-30:post/chun-ipv6-huan-jing-xia-an-zhuang-jupyterhub.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/jupyterhub/jupyterhub"&gt;https://github.com/jupyterhub/jupyterhub&lt;/a&gt; 是一套支援多用戶的網際運算伺服器, 這裡展示如何在純 IPV6 的 Ubuntu 14.04 環境下進行安裝設定.&lt;/p&gt;
 
 
 &lt;p&gt;首先假如沒有固定的 IPV4 位址, 就必須透過 IPV4/IPV6 雙支援的代理主機執行 apt-get, pip3 與 http 連結.&lt;/p&gt;
@@ -10,9 +253,9 @@
 &lt;p&gt;sudo apt-get install npm nodejs-legacy&lt;/p&gt;
 &lt;p&gt;安裝 pip3 工具:&lt;/p&gt;
 &lt;p&gt;sudo apt-get install python3-pip&lt;/p&gt;
-&lt;p&gt;安裝 jupyterhub 與 notebook 模組 (假如無法順利完成, 必須透過臨時的固定 IPV4 網址設定, 再直接執行):&lt;/p&gt;
-&lt;p&gt;sudo pip3 --proxy http://[2001:288:6004:17::17]:3128 install jupyterhub&lt;/p&gt;
-&lt;p&gt;sudo pip3 --proxy http://[2001:288:6004:17::17]:3128 install notebook&lt;/p&gt;
+&lt;p&gt;安裝 jupyterhub 與 notebook 模組:&lt;/p&gt;
+&lt;p&gt;sudo pip3 --proxy http://2001:288:6004:17::17:3128 install jupyterhub&lt;/p&gt;
+&lt;p&gt;sudo pip3 --proxy http://2001:288:6004:17::17:3128 install notebook&lt;/p&gt;
 &lt;p&gt;接著為了要採 https 啟動, 需要建立認証編碼用的 crt 與 key 檔案:&lt;/p&gt;
 &lt;p&gt;sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout jupyterhub.key -out jupyterhub.crt&lt;/p&gt;
 &lt;p&gt;完成後就可以指定 IP 啟動:&lt;/p&gt;
