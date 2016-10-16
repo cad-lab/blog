@@ -9017,7 +9017,7 @@ Author: Cad Lab
 
 &lt;!-- PELICAN_END_SUMMARY --&gt;
 
-有關此批電腦的 IPV4/IPV4 雙支援代理主機安裝, 請參考&lt;a href="http://project.mde.tw/blog/yen-dian-nao-fu-zhu-she-ji-shi-dian-nao-pei-zhi.html"&gt;電腦輔助設計室電腦配置&lt;/a&gt;中的說明.
+有關此批電腦的 IPV4/IPV6 雙支援代理主機安裝, 請參考&lt;a href="http://project.mde.tw/blog/yen-dian-nao-fu-zhu-she-ji-shi-dian-nao-pei-zhi.html"&gt;電腦輔助設計室電腦配置&lt;/a&gt;中的說明.
 
 目前開機設置, 採用&lt;a href="http://www.teamsoftex.com"&gt;群準&lt;/a&gt;的 EVOsys PRO/SATA 還原卡控管, 第一開機磁區為  Windows 7 64 位元專業版, 主要提供尚無法在 Windows 10 操作系統運作的上課套件安裝之用.
 
