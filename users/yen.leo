@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Created by Leo: http://leoeditor.com/leo_toc.html -->
-<?xml-stylesheet ekr_test ?>
 <leo_file xmlns:leo="http://leoeditor.com/namespaces/leo-python-editor/1.1" >
 <leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/>
 <globals body_outline_ratio="0.5" body_secondary_ratio="0.5">
@@ -163,6 +162,7 @@
 </v>
 <v t="amd.20160701144511.1" a="E"><vh>201607</vh>
 <v t="amd.20160701144521.1"><vh>@clean yen_20160701.md</vh></v>
+<v t="yen.20161016110401.1"><vh>@clean yen_20161016.md</vh></v>
 </v>
 </v>
 </v>
@@ -9007,5 +9007,26 @@ PLUGINS = ['liquid_tags.notebook', 'summary']
 <t tx="leo.20151213230957.1"># 設定網誌以 md 檔案建立的 file system date 為準, 無需自行設定
 
 DEFAULT_DATE = 'fs'</t>
+<t tx="yen.20161016110401.1">@language md
+Title: 電腦輔助設計室電腦更新結果
+Category: MISC
+Tags: cadlab, asus
+Author: Cad Lab
+@others
+首先要感謝&lt;a href="http://www.hicitron.com.tw/"&gt;采誠&lt;/a&gt;與&lt;a href="https://www.asus.com"&gt;華碩&lt;/a&gt;公司, 對於 &lt;a href="http://cadlab.mde.tw"&gt;CADLab&lt;/a&gt; 電腦軟硬體所提供的各項規劃與安裝支援服務.
+
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+有關此批電腦的 IPV4/IPV4 雙支援代理主機安裝, 請參考&lt;a href="http://project.mde.tw/blog/yen-dian-nao-fu-zhu-she-ji-shi-dian-nao-pei-zhi.html"&gt;電腦輔助設計室電腦配置&lt;/a&gt;中的說明.
+
+目前開機設置, 採用&lt;a href="http://www.teamsoftex.com"&gt;群準&lt;/a&gt;的 EVOsys PRO/SATA 還原卡控管, 第一開機磁區為  Windows 7 64 位元專業版, 主要提供尚無法在 Windows 10 操作系統運作的上課套件安裝之用.
+
+第二開機磁區為 Windows 10 64 位元 Pro 版, 安裝所有在電腦輔助設計室上課所需的 CAD/CAE/CAM 與自動控制相關套件.
+
+第三開機磁區也是 Windows 10 64 位元 Pro 版, 除了 MS Office 之外, 專供可攜程式環境使用.
+
+接下來將要利用六台主機安裝 18 台虛擬 IPV4/IPV6 雙支援代理主機, 以便讓電腦輔助設計室可以在 18 個固定 IPV4 網路位址的配置下, 全面使用 IPV6 網路協定.
+
+</t>
 </tnodes>
 </leo_file>
