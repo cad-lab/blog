@@ -22,7 +22,7 @@
 </v>
 <v t="ibm.20160115125316.1"><vh>管理者在產生遠端資料前, 定期清理 post 目錄</vh></v>
 <v t="ibm.20160115125101.1"><vh>@button git rm -fr post</vh></v>
-<v t="amd.20151215180106.1" a="E"><vh>設定與開發</vh>
+<v t="amd.20151215180106.1"><vh>設定與開發</vh>
 <v t="amd.20151216151325.1"><vh>@edit index.html</vh></v>
 <v t="amd.20151216152209.1"><vh>@edit README.md</vh></v>
 <v t="amd.20160118111604.1"><vh>@edit LICENSE</vh></v>
@@ -171,6 +171,8 @@
 <v t="amd.20160106094844.1"><vh>@edit yen_pages_1.md</vh></v>
 </v>
 </v>
+<v t="yen.20170315233512.1"><vh>@button https server</vh></v>
+<v t="yen.20170315233558.1"><vh>@button ipv6 https server</vh></v>
 </vnodes>
 <tnodes>
 <t tx="amd.20151215170031.1"></t>
@@ -1524,7 +1526,7 @@ Author: kmol
 
 以下舉 Snap.svg 典型的動態模擬為例:
 
-&lt;script type="text/javascript" src="http://brython.info/src/brython_dist.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="https://brython.info/src/brython_dist.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"&gt;&lt;/script&gt;
  
 &lt;script&gt;
@@ -1666,6 +1668,7 @@ g4.animate( { 'transform' : 'r360,25,25' },4000)
 <t tx="amd.20160506235635.1"></t>
 <t tx="amd.20160514153227.1">@language md
 Title: 常用 Python3 程式模組
+Date: 2016.05.14
 Category:導引
 Tags: Python3, module
 Author: kmol
@@ -1890,14 +1893,14 @@ Author: kmol
 }
 &lt;/style&gt;
 
-&lt;script type="text/javascript" src="http://brython.info/src/brython_dist.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/Cango-8v03.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/Cango2D-7v01-min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/CangoAxes-1v33.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/flintlockPartDefs-02.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/CangoAnimation-4v01.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="./../data/brython_dist.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="https://2015fallhw.github.io/cptocadp/static/Cango-8v03.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="https://2015fallhw.github.io/cptocadp/static/Cango2D-7v01-min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="https://2015fallhw.github.io/cptocadp/static/CangoAxes-1v33.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="https://2015fallhw.github.io/cptocadp/static/flintlockPartDefs-02.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="https://2015fallhw.github.io/cptocadp/static/CangoAnimation-4v01.js"&gt;&lt;/script&gt;
 
-&lt;script type="text/javascript" src="http://2015fallhw.github.io/cptocadp/static/gearUtils-05.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="https://2015fallhw.github.io/cptocadp/static/gearUtils-05.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 window.onload=function(){
@@ -9007,5 +9010,55 @@ Author: Cad Lab
 接下來將要利用六台主機安裝 18 台虛擬 IPV4/IPV6 雙支援代理主機, 以便讓電腦輔助設計室可以在 18 個固定 IPV4 網路位址的配置下, 全面使用 IPV6 網路協定.
 
 </t>
+<t tx="yen.20170315233512.1">@language python
+import os
+import subprocess
+import threading
+import http.server, ssl
+
+def domake():
+    # build directory
+    os.chdir("./../")
+    server_address = ('localhost', 8443)
+    httpd = http.server.HTTPServer(server_address, http.server.SimpleHTTPRequestHandler)
+    httpd.socket = ssl.wrap_socket(httpd.socket,
+                                   server_side=True,
+                                   certfile='localhost.crt',
+                                   keyfile='localhost.key',
+                                   ssl_version=ssl.PROTOCOL_TLSv1)
+    print("8443 https server started")
+    httpd.serve_forever()
+
+# 利用執行緒執行 https 伺服器
+make = threading.Thread(target=domake)
+make.start()</t>
+<t tx="yen.20170315233558.1">@language python
+import os
+import subprocess
+import threading
+import socket
+import http.server, ssl
+
+class HTTPServerV6(http.server.HTTPServer):
+    address_family = socket.AF_INET6
+  
+def domake():
+    # build directory
+    os.chdir("./../")
+    ipv6_address = '::1'
+    server_address = (ipv6_address, 6443)
+    #httpd = http.server.HTTPServer(server_address, http.server.SimpleHTTPRequestHandler)
+    httpd = HTTPServerV6(server_address, http.server.SimpleHTTPRequestHandler)
+    httpd.socket = ssl.wrap_socket(httpd.socket,
+                                   server_side=True,
+                                   certfile='localhost.crt',
+                                   keyfile='localhost.key',
+                                   ssl_version=ssl.PROTOCOL_TLSv1)
+    print("6443 https server started")
+    httpd.serve_forever()
+
+# 利用執行緒執行 https 伺服器
+make = threading.Thread(target=domake)
+make.start()</t>
 </tnodes>
 </leo_file>
