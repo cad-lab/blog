@@ -1,5 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2016-10-16T11:24:14+08:00</updated><entry><title>電腦輔助設計室電腦更新結果</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-dian-nao-geng-xin-jie-guo.html" rel="alternate"></link><published>2016-10-16T11:24:14+08:00</published><updated>2016-10-16T11:24:14+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-10-16:post/dian-nao-fu-zhu-she-ji-shi-dian-nao-geng-xin-jie-guo.html</id><summary type="html">&lt;p&gt;首先要感謝&lt;a href="http://www.hicitron.com.tw/"&gt;采誠&lt;/a&gt;與&lt;a href="https://www.asus.com"&gt;華碩&lt;/a&gt;公司, 對於 &lt;a href="http://cadlab.mde.tw"&gt;CADLab&lt;/a&gt; 電腦軟硬體所提供的各項規劃與安裝支援服務.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2017-03-15T23:30:36+08:00</updated><entry><title>常用 Python3 程式模組</title><link href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html" rel="alternate"></link><published>2017-03-15T23:30:36+08:00</published><updated>2017-03-15T23:30:36+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2017-03-15:post/chang-yong-python3-cheng-shi-mo-zu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.&lt;/p&gt;
+
+
+&lt;p&gt;其中的 &lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt; 與 &lt;a href="http://flask.pocoo.org/"&gt;Flask&lt;/a&gt; 位階相似, 但是
+特性卻有很大差別, CherryPy 小而自給自足, Flask 則架構較具彈性, 許多延伸功能都採 extension 方式補足, 有關 CherryPy 的各種用法, 請參考 &lt;a href="http://cad-lab.github.io/manual/post/cherrypy-shi-yong-shou-ce.html"&gt;http://cad-lab.github.io/manual/post/cherrypy-shi-yong-shou-ce.html&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/zzzeek/mako"&gt;https://github.com/zzzeek/mako&lt;/a&gt; 的最大特色, 是將 Python 的語法直接放到 template 文件中, 儘管如此可能會讓使用者將原本應該放在控制端的資料流程, 分散到展示端, 但是實際採用後, 也沒有發生太大問題, 反而可以利用相同的網際程式, 直接套用到 Mako 與 Flask 內建的 template 語法中, 進行比較.&lt;/p&gt;
+&lt;p&gt;github3.py 針對 Github 倉儲新增協同者的程式片斷範例:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+@app.route('/yourrepoadd', methods=['POST'])
+def yourrepoadd():
+    account = request.form["account"]
+    repository = "yourrepo"
+    url = "https://github.com/youraccount/yourrepo.git"
+    # 登入系統
+    g = github3.login("youraccount", "yourpassword")
+    # 以下則新增協同者
+    #g.repository(倉儲帳號, 倉儲名稱).add_collaborator(協同者 github 帳號)
+    # 若新增 collaborator 成功傳回 True 否則傳回 False
+    if g.repository("youraccount", repository).add_collaborator(account):
+        # 共同使用 cpaadd.html
+        return render_template("cpaadd.html", account=account, repository=repository, url=url)
+    else:
+        return render_template("cpaerror.html")
+&lt;/pre&gt;
+
+&lt;p&gt;至於 authomatic 的使用, 共有3個步驟:&lt;/p&gt;
+&lt;h2&gt;1. 取得 key 與 secret&lt;/h2&gt;
+&lt;p&gt;設定網址:&lt;/p&gt;
+&lt;p&gt;https://console.developers.google.com&lt;/p&gt;
+&lt;p&gt;總共有兩項設定:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;啟用 Google + API&lt;/li&gt;
+&lt;li&gt;然後到憑證處建立專案, 設定授權的 URI&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;設定目的在希望透過 Google+ API 讓 Web browser (Javascript) 能夠擷取 User data, 這時需要的是 Create an OAuth 2.0 client ID, 建立專案後, 必須選擇 Authorized Javascript origins 為 http://your.server.domain.name 與 http://localhost:5000, 而 Authorized redirect URIs 為: http://your.server.domain.name/autho_login/google/ 與 http://localhost:5000/autho_login/google/&lt;/p&gt;
+&lt;h2&gt;2. 導入模組, 進行設定&lt;/h2&gt;
+&lt;pre class="brush: python"&gt;
+import authomatic
+from authomatic.providers import oauth2
+
+CONFIG = {
+        'google': {
+            'class_': oauth2.Google,
+            'consumer_key': '1234567.apps.googleusercontent.com',
+            'consumer_secret': '87654321',
+            #'scope': oauth2.Google.user_info_scope
+            # 以下只允許(瞭解您在 Google 上的身分)與(檢視電子郵件地址)
+            'scope': ['email']
+        }
+    }
+&lt;/pre&gt;
+
+&lt;h2&gt;3. 配合建立登入連結&lt;/h2&gt;
+&lt;pre class="brush: python"&gt;
+@app.route('/autho_login/&amp;lt;provider_name&amp;gt;/', methods=['GET', 'POST'])
+def autho_login(provider_name):
+
+    # We need response object for the WerkzeugAdapter.
+    response = make_response()
+
+    # Log the user in, pass it the adapter and the provider name.
+    result = authomatic.login(WerkzeugAdapter(request, response), provider_name)
+
+    # If there is no LoginResult object, the login procedure is still pending.
+    if result:
+        if result.user:
+            # We need to update the user to get more info.
+            result.user.update()
+
+        # 利用 session 登記登入者的 email
+        session['login_email'] = result.user.email
+
+        # 這裡必須分近端與雲端, 因為 google logout redirect 的 url 不同
+        if 'OPENSHIFT_REPO_DIR' in os.environ.keys():
+            # 表示程式在雲端執行
+            local = False
+        else:
+            # 表示在近端執行
+            local = True
+        # The rest happens inside the template.
+        return render_template('autho_login.html', result=result, local=local)
+
+    # Don't forget to return the response.
+    return response
+&lt;/pre&gt;
+
+&lt;h2&gt;oauth2 登入的情境&lt;/h2&gt;
+&lt;p&gt;使用 oauth2 的目的, 在利用既有的使用者帳號進行應用程式的登入, 例如, 使用 facebook 或 gmail 帳號登入到我們所開發的網際應用程式, 好處是, 使用者無需在各類網際程式中額外再申請帳號, 而程式開發者也可以免去管理使用者帳號的難題.&lt;/p&gt;
+&lt;p&gt;但是, 為了在使用者被 oauth2 協定轉介到 gmail 登入頁面, 完成登入後, 就會再帶著帳號擁有者所允許的相關訊息, 回到網際應用程式中, 通常這些網際程式會利用 session 與 cookie 來儲存使用者登入的身份資料, 如此一來, 便有以下情境:&lt;/p&gt;
+&lt;p&gt;假如使用者在選擇登入到網際程式之前, 已經登入到 gmail, 那麼使用者無需再輸入帳號密碼, 只要同意允許擷取帳號資料 ,就會直接跳轉到網際程式功能中, 特別注意到, 這時 gmail 有使用者登入的 session 與 cookie, 而且使用者的瀏覽器還存在登入到網際應用程式的狀態.&lt;/p&gt;
+&lt;p&gt;第2種情況則是, 使用者被轉介到 gmail 登入畫面時, 才輸入帳號密碼登入, 之後情境就與上述第1種情況相同.&lt;/p&gt;
+&lt;p&gt;上述兩種情況, 在瀏覽器中, 使用者的狀態是同時登入到 gmail 與網際程式中, 即便使用者登入網際程式後, 若使用者沒有主動登出 gmail, 這位使用者在瀏覽器的狀態中, 仍然保持登入到 gmail 的狀態.&lt;/p&gt;
+&lt;p&gt;因此第3種情況則是, 使用者經由 oauth2 協定轉介到 gmail 登入後同意讓網際程式擷取帳號資料後, 就能登入到網際程式中, 隨後使用者主動登出 gmail, 並不會影響仍然登入到網際程式中的狀態, 一直到使用者選擇登出網際應用程式為止.&lt;/p&gt;
+&lt;p&gt;理論上, 假如我們所開發的網際程式, 只是透過一系列上述的設定, 藉由 gmail 的帳號, 來登入我們所開發的網際程式, 比較好的作法是一旦完成我們網際應用程式的登入後, 可以經由程式方法登出使用者的 gmail 帳號, 然後再由使用者決定何時要登出我們所開發的網際程式.&lt;/p&gt;
+&lt;p&gt;以下就是利用 Javascript 在登入應用程式之後, 設法登出使用者 gmail 帳號的設計, 並且同時支援本地端程式開發與雲端應用的情況:&lt;/p&gt;
+&lt;pre class="brush: python"&gt;
+{# autho_login.html #}
+{Percent extends "autho_base.html" Percent}
+
+{% block body %}
+
+&amp;lt;!-- 這裡應該要再分近端與雲端的不同處理流程, 而且要在設定時便取得綁定的雲端網址 --&amp;gt;
+{% if local %}
+&amp;lt;script type="text/javascript"&amp;gt;
+window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:5000/check_login";
+&amp;lt;/script&amp;gt;
+{% else %}
+&amp;lt;script type="text/javascript"&amp;gt;
+window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://your.server.domain.name/check_login";
+&amp;lt;/script&amp;gt;
+{% endif %}
+
+{% endblock body %}
+&lt;/pre&gt;</summary><category term="Python3"></category><category term="module"></category></entry><entry><title>電腦輔助設計室電腦更新結果</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-dian-nao-geng-xin-jie-guo.html" rel="alternate"></link><published>2016-10-16T11:24:14+08:00</published><updated>2016-10-16T11:24:14+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-10-16:post/dian-nao-fu-zhu-she-ji-shi-dian-nao-geng-xin-jie-guo.html</id><summary type="html">&lt;p&gt;首先要感謝&lt;a href="http://www.hicitron.com.tw/"&gt;采誠&lt;/a&gt;與&lt;a href="https://www.asus.com"&gt;華碩&lt;/a&gt;公司, 對於 &lt;a href="http://cadlab.mde.tw"&gt;CADLab&lt;/a&gt; 電腦軟硬體所提供的各項規劃與安裝支援服務.&lt;/p&gt;
 
 
 &lt;p&gt;有關此批電腦的 IPV4/IPV6 雙支援代理主機安裝, 請參考&lt;a href="http://project.mde.tw/blog/yen-dian-nao-fu-zhu-she-ji-shi-dian-nao-pei-zhi.html"&gt;電腦輔助設計室電腦配置&lt;/a&gt;中的說明.&lt;/p&gt;
@@ -1711,120 +1824,7 @@ p.b = line1 + line2 + line3 + line4 + line5 + post_content + "\n"
 # 因為節點資料更新, commander 必須 redraw
 c.redraw() 
 g.es("資料已經取回")
-&lt;/pre&gt;</summary><category term="CADLAB"></category><category term="Pelican"></category><category term="Leo Editor"></category></entry><entry><title>常用 Python3 程式模組</title><link href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html" rel="alternate"></link><published>2016-10-16T11:03:17+08:00</published><updated>2016-10-16T11:03:17+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-10-16:post/chang-yong-python3-cheng-shi-mo-zu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.&lt;/p&gt;
-
-
-&lt;p&gt;其中的 &lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt; 與 &lt;a href="http://flask.pocoo.org/"&gt;Flask&lt;/a&gt; 位階相似, 但是
-特性卻有很大差別, CherryPy 小而自給自足, Flask 則架構較具彈性, 許多延伸功能都採 extension 方式補足, 有關 CherryPy 的各種用法, 請參考 &lt;a href="http://cad-lab.github.io/manual/post/cherrypy-shi-yong-shou-ce.html"&gt;http://cad-lab.github.io/manual/post/cherrypy-shi-yong-shou-ce.html&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/zzzeek/mako"&gt;https://github.com/zzzeek/mako&lt;/a&gt; 的最大特色, 是將 Python 的語法直接放到 template 文件中, 儘管如此可能會讓使用者將原本應該放在控制端的資料流程, 分散到展示端, 但是實際採用後, 也沒有發生太大問題, 反而可以利用相同的網際程式, 直接套用到 Mako 與 Flask 內建的 template 語法中, 進行比較.&lt;/p&gt;
-&lt;p&gt;github3.py 針對 Github 倉儲新增協同者的程式片斷範例:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-@app.route('/yourrepoadd', methods=['POST'])
-def yourrepoadd():
-    account = request.form["account"]
-    repository = "yourrepo"
-    url = "https://github.com/youraccount/yourrepo.git"
-    # 登入系統
-    g = github3.login("youraccount", "yourpassword")
-    # 以下則新增協同者
-    #g.repository(倉儲帳號, 倉儲名稱).add_collaborator(協同者 github 帳號)
-    # 若新增 collaborator 成功傳回 True 否則傳回 False
-    if g.repository("youraccount", repository).add_collaborator(account):
-        # 共同使用 cpaadd.html
-        return render_template("cpaadd.html", account=account, repository=repository, url=url)
-    else:
-        return render_template("cpaerror.html")
-&lt;/pre&gt;
-
-&lt;p&gt;至於 authomatic 的使用, 共有3個步驟:&lt;/p&gt;
-&lt;h2&gt;1. 取得 key 與 secret&lt;/h2&gt;
-&lt;p&gt;設定網址:&lt;/p&gt;
-&lt;p&gt;https://console.developers.google.com&lt;/p&gt;
-&lt;p&gt;總共有兩項設定:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;啟用 Google + API&lt;/li&gt;
-&lt;li&gt;然後到憑證處建立專案, 設定授權的 URI&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;設定目的在希望透過 Google+ API 讓 Web browser (Javascript) 能夠擷取 User data, 這時需要的是 Create an OAuth 2.0 client ID, 建立專案後, 必須選擇 Authorized Javascript origins 為 http://your.server.domain.name 與 http://localhost:5000, 而 Authorized redirect URIs 為: http://your.server.domain.name/autho_login/google/ 與 http://localhost:5000/autho_login/google/&lt;/p&gt;
-&lt;h2&gt;2. 導入模組, 進行設定&lt;/h2&gt;
-&lt;pre class="brush: python"&gt;
-import authomatic
-from authomatic.providers import oauth2
-
-CONFIG = {
-        'google': {
-            'class_': oauth2.Google,
-            'consumer_key': '1234567.apps.googleusercontent.com',
-            'consumer_secret': '87654321',
-            #'scope': oauth2.Google.user_info_scope
-            # 以下只允許(瞭解您在 Google 上的身分)與(檢視電子郵件地址)
-            'scope': ['email']
-        }
-    }
-&lt;/pre&gt;
-
-&lt;h2&gt;3. 配合建立登入連結&lt;/h2&gt;
-&lt;pre class="brush: python"&gt;
-@app.route('/autho_login/&amp;lt;provider_name&amp;gt;/', methods=['GET', 'POST'])
-def autho_login(provider_name):
-
-    # We need response object for the WerkzeugAdapter.
-    response = make_response()
-
-    # Log the user in, pass it the adapter and the provider name.
-    result = authomatic.login(WerkzeugAdapter(request, response), provider_name)
-
-    # If there is no LoginResult object, the login procedure is still pending.
-    if result:
-        if result.user:
-            # We need to update the user to get more info.
-            result.user.update()
-
-        # 利用 session 登記登入者的 email
-        session['login_email'] = result.user.email
-
-        # 這裡必須分近端與雲端, 因為 google logout redirect 的 url 不同
-        if 'OPENSHIFT_REPO_DIR' in os.environ.keys():
-            # 表示程式在雲端執行
-            local = False
-        else:
-            # 表示在近端執行
-            local = True
-        # The rest happens inside the template.
-        return render_template('autho_login.html', result=result, local=local)
-
-    # Don't forget to return the response.
-    return response
-&lt;/pre&gt;
-
-&lt;h2&gt;oauth2 登入的情境&lt;/h2&gt;
-&lt;p&gt;使用 oauth2 的目的, 在利用既有的使用者帳號進行應用程式的登入, 例如, 使用 facebook 或 gmail 帳號登入到我們所開發的網際應用程式, 好處是, 使用者無需在各類網際程式中額外再申請帳號, 而程式開發者也可以免去管理使用者帳號的難題.&lt;/p&gt;
-&lt;p&gt;但是, 為了在使用者被 oauth2 協定轉介到 gmail 登入頁面, 完成登入後, 就會再帶著帳號擁有者所允許的相關訊息, 回到網際應用程式中, 通常這些網際程式會利用 session 與 cookie 來儲存使用者登入的身份資料, 如此一來, 便有以下情境:&lt;/p&gt;
-&lt;p&gt;假如使用者在選擇登入到網際程式之前, 已經登入到 gmail, 那麼使用者無需再輸入帳號密碼, 只要同意允許擷取帳號資料 ,就會直接跳轉到網際程式功能中, 特別注意到, 這時 gmail 有使用者登入的 session 與 cookie, 而且使用者的瀏覽器還存在登入到網際應用程式的狀態.&lt;/p&gt;
-&lt;p&gt;第2種情況則是, 使用者被轉介到 gmail 登入畫面時, 才輸入帳號密碼登入, 之後情境就與上述第1種情況相同.&lt;/p&gt;
-&lt;p&gt;上述兩種情況, 在瀏覽器中, 使用者的狀態是同時登入到 gmail 與網際程式中, 即便使用者登入網際程式後, 若使用者沒有主動登出 gmail, 這位使用者在瀏覽器的狀態中, 仍然保持登入到 gmail 的狀態.&lt;/p&gt;
-&lt;p&gt;因此第3種情況則是, 使用者經由 oauth2 協定轉介到 gmail 登入後同意讓網際程式擷取帳號資料後, 就能登入到網際程式中, 隨後使用者主動登出 gmail, 並不會影響仍然登入到網際程式中的狀態, 一直到使用者選擇登出網際應用程式為止.&lt;/p&gt;
-&lt;p&gt;理論上, 假如我們所開發的網際程式, 只是透過一系列上述的設定, 藉由 gmail 的帳號, 來登入我們所開發的網際程式, 比較好的作法是一旦完成我們網際應用程式的登入後, 可以經由程式方法登出使用者的 gmail 帳號, 然後再由使用者決定何時要登出我們所開發的網際程式.&lt;/p&gt;
-&lt;p&gt;以下就是利用 Javascript 在登入應用程式之後, 設法登出使用者 gmail 帳號的設計, 並且同時支援本地端程式開發與雲端應用的情況:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-{# autho_login.html #}
-{% extends "autho_base.html" %}
-
-{% block body %}
-
-&amp;lt;!-- 這裡應該要再分近端與雲端的不同處理流程, 而且要在設定時便取得綁定的雲端網址 --&amp;gt;
-{% if local %}
-&amp;lt;script type="text/javascript"&amp;gt;
-window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:5000/check_login";
-&amp;lt;/script&amp;gt;
-{% else %}
-&amp;lt;script type="text/javascript"&amp;gt;
-window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://your.server.domain.name/check_login";
-&amp;lt;/script&amp;gt;
-{% endif %}
-
-{% endblock body %}
-&lt;/pre&gt;</summary><category term="Python3"></category><category term="module"></category></entry><entry><title>大學教育政策白皮書讀後心得報告</title><link href="http://cadlab.mde.tw/post/da-xue-jiao-yu-zheng-ce-bai-pi-shu-du-hou-xin-de-bao-gao.html" rel="alternate"></link><published>2016-10-16T11:03:17+08:00</published><updated>2016-10-16T11:03:17+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-10-16:post/da-xue-jiao-yu-zheng-ce-bai-pi-shu-du-hou-xin-de-bao-gao.html</id><summary type="html">&lt;p&gt;15 年前寫的&lt;a href="http://cad-lab.github.io/cadlab_data/files/90.07_taiwan_univ_white_paperpdf"&gt;大學教育政策白皮書&lt;/a&gt;讀後心得報告&lt;/p&gt;
+&lt;/pre&gt;</summary><category term="CADLAB"></category><category term="Pelican"></category><category term="Leo Editor"></category></entry><entry><title>大學教育政策白皮書讀後心得報告</title><link href="http://cadlab.mde.tw/post/da-xue-jiao-yu-zheng-ce-bai-pi-shu-du-hou-xin-de-bao-gao.html" rel="alternate"></link><published>2016-10-16T11:03:17+08:00</published><updated>2016-10-16T11:03:17+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2016-10-16:post/da-xue-jiao-yu-zheng-ce-bai-pi-shu-du-hou-xin-de-bao-gao.html</id><summary type="html">&lt;p&gt;15 年前寫的&lt;a href="http://cad-lab.github.io/cadlab_data/files/90.07_taiwan_univ_white_paperpdf"&gt;大學教育政策白皮書&lt;/a&gt;讀後心得報告&lt;/p&gt;
 
 
 &lt;p&gt;科技大學的本質在教導學生獲得知識的能力，二十一世紀知識經濟最大的特色，在於必須將知識迅速化為商品，由於市場全球化的影響，未能即時將本身所擁有的知識，快速轉化為商品，並被市場接受的企業，終將難逃被時代淘汰的命運，企業如此，教育界也正面臨同樣的挑戰。&lt;/p&gt;

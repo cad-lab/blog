@@ -1,13 +1,12 @@
 from browser import document as doc
 from browser import window
 from browser import html
-from javascript import JSConstructor
 import math
    
-cango = JSConstructor(window.Cango)
+cango = window.Cango.new
 shapedefs = window.shapeDefs
-cobj = JSConstructor(window.Cobj)
-creategeartooth = JSConstructor(window.createGearTooth)
+cobj = window.Cobj.new
+creategeartooth = window.createGearTooth.new
 #cgo = cango("gear")
 
 class Spur():

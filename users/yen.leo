@@ -22,7 +22,7 @@
 </v>
 <v t="ibm.20160115125316.1"><vh>管理者在產生遠端資料前, 定期清理 post 目錄</vh></v>
 <v t="ibm.20160115125101.1"><vh>@button git rm -fr post</vh></v>
-<v t="amd.20151215180106.1"><vh>設定與開發</vh>
+<v t="amd.20151215180106.1" a="E"><vh>設定與開發</vh>
 <v t="amd.20151216151325.1"><vh>@edit index.html</vh></v>
 <v t="amd.20151216152209.1"><vh>@edit README.md</vh></v>
 <v t="amd.20160118111604.1"><vh>@edit LICENSE</vh></v>
@@ -83,7 +83,7 @@
 </v>
 <v t="amd.20160531094803.1"><vh>Brython 程式庫</vh></v>
 <v t="amd.20160106093454.1" a="E"><vh>yen 網誌文章</vh>
-<v t="amd.20160605111320.1"><vh>upto 201606</vh>
+<v t="amd.20160605111320.1" a="E"><vh>upto 201606</vh>
 <v t="amd.20160106093510.1" a="E"><vh>201601</vh>
 <v t="ibm.20160115121941.1"><vh>@clean yen_20160115.md</vh></v>
 <v t="amd.20160117143423.1"><vh>@clean yen_20160117.md</vh>
@@ -121,7 +121,7 @@
 <v t="amd.20160412201150.1"><vh>201604</vh>
 <v t="amd.20160412201156.1"><vh>@clean yen_20160412.md</vh></v>
 </v>
-<v t="amd.20160506230749.1"><vh>201605</vh>
+<v t="amd.20160506230749.1" a="E"><vh>201605</vh>
 <v t="amd.20160506230801.1"><vh>@clean yen_20160506.md</vh>
 <v t="amd.20160506235635.1"><vh>43</vh></v>
 </v>
@@ -1787,7 +1787,7 @@ def autho_login(provider_name):
 
 &lt;pre class="brush: python"&gt;
 {# autho_login.html #}
-{% extends "autho_base.html" %}
+{Percent extends "autho_base.html" Percent}
 
 {% block body %}
 
