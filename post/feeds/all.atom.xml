@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2017-03-15T23:30:36+08:00</updated><entry><title>常用 Python3 程式模組</title><link href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html" rel="alternate"></link><published>2017-03-15T23:30:36+08:00</published><updated>2017-03-15T23:30:36+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2017-03-15:post/chang-yong-python3-cheng-shi-mo-zu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/all.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2017-03-15T23:32:18+08:00</updated><entry><title>常用 Python3 程式模組</title><link href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html" rel="alternate"></link><published>2017-03-15T23:32:18+08:00</published><updated>2017-03-15T23:32:18+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2017-03-15:post/chang-yong-python3-cheng-shi-mo-zu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.&lt;/p&gt;
 
 
 &lt;p&gt;其中的 &lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt; 與 &lt;a href="http://flask.pocoo.org/"&gt;Flask&lt;/a&gt; 位階相似, 但是
@@ -92,27 +92,7 @@ def autho_login(provider_name):
 &lt;p&gt;第2種情況則是, 使用者被轉介到 gmail 登入畫面時, 才輸入帳號密碼登入, 之後情境就與上述第1種情況相同.&lt;/p&gt;
 &lt;p&gt;上述兩種情況, 在瀏覽器中, 使用者的狀態是同時登入到 gmail 與網際程式中, 即便使用者登入網際程式後, 若使用者沒有主動登出 gmail, 這位使用者在瀏覽器的狀態中, 仍然保持登入到 gmail 的狀態.&lt;/p&gt;
 &lt;p&gt;因此第3種情況則是, 使用者經由 oauth2 協定轉介到 gmail 登入後同意讓網際程式擷取帳號資料後, 就能登入到網際程式中, 隨後使用者主動登出 gmail, 並不會影響仍然登入到網際程式中的狀態, 一直到使用者選擇登出網際應用程式為止.&lt;/p&gt;
-&lt;p&gt;理論上, 假如我們所開發的網際程式, 只是透過一系列上述的設定, 藉由 gmail 的帳號, 來登入我們所開發的網際程式, 比較好的作法是一旦完成我們網際應用程式的登入後, 可以經由程式方法登出使用者的 gmail 帳號, 然後再由使用者決定何時要登出我們所開發的網際程式.&lt;/p&gt;
-&lt;p&gt;以下就是利用 Javascript 在登入應用程式之後, 設法登出使用者 gmail 帳號的設計, 並且同時支援本地端程式開發與雲端應用的情況:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-{# autho_login.html #}
-{Percent extends "autho_base.html" Percent}
-
-{% block body %}
-
-&amp;lt;!-- 這裡應該要再分近端與雲端的不同處理流程, 而且要在設定時便取得綁定的雲端網址 --&amp;gt;
-{% if local %}
-&amp;lt;script type="text/javascript"&amp;gt;
-window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:5000/check_login";
-&amp;lt;/script&amp;gt;
-{% else %}
-&amp;lt;script type="text/javascript"&amp;gt;
-window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://your.server.domain.name/check_login";
-&amp;lt;/script&amp;gt;
-{% endif %}
-
-{% endblock body %}
-&lt;/pre&gt;</summary><category term="Python3"></category><category term="module"></category></entry><entry><title>電腦輔助設計室電腦更新結果</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-dian-nao-geng-xin-jie-guo.html" rel="alternate"></link><published>2016-10-16T11:24:14+08:00</published><updated>2016-10-16T11:24:14+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-10-16:post/dian-nao-fu-zhu-she-ji-shi-dian-nao-geng-xin-jie-guo.html</id><summary type="html">&lt;p&gt;首先要感謝&lt;a href="http://www.hicitron.com.tw/"&gt;采誠&lt;/a&gt;與&lt;a href="https://www.asus.com"&gt;華碩&lt;/a&gt;公司, 對於 &lt;a href="http://cadlab.mde.tw"&gt;CADLab&lt;/a&gt; 電腦軟硬體所提供的各項規劃與安裝支援服務.&lt;/p&gt;
+&lt;p&gt;理論上, 假如我們所開發的網際程式, 只是透過一系列上述的設定, 藉由 gmail 的帳號, 來登入我們所開發的網際程式, 比較好的作法是一旦完成我們網際應用程式的登入後, 可以經由程式方法登出使用者的 gmail 帳號, 然後再由使用者決定何時要登出我們所開發的網際程式.&lt;/p&gt;</summary><category term="Python3"></category><category term="module"></category></entry><entry><title>電腦輔助設計室電腦更新結果</title><link href="http://cadlab.mde.tw/post/dian-nao-fu-zhu-she-ji-shi-dian-nao-geng-xin-jie-guo.html" rel="alternate"></link><published>2016-10-16T11:24:14+08:00</published><updated>2016-10-16T11:24:14+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-10-16:post/dian-nao-fu-zhu-she-ji-shi-dian-nao-geng-xin-jie-guo.html</id><summary type="html">&lt;p&gt;首先要感謝&lt;a href="http://www.hicitron.com.tw/"&gt;采誠&lt;/a&gt;與&lt;a href="https://www.asus.com"&gt;華碩&lt;/a&gt;公司, 對於 &lt;a href="http://cadlab.mde.tw"&gt;CADLab&lt;/a&gt; 電腦軟硬體所提供的各項規劃與安裝支援服務.&lt;/p&gt;
 
 
 &lt;p&gt;有關此批電腦的 IPV4/IPV6 雙支援代理主機安裝, 請參考&lt;a href="http://project.mde.tw/blog/yen-dian-nao-fu-zhu-she-ji-shi-dian-nao-pei-zhi.html"&gt;電腦輔助設計室電腦配置&lt;/a&gt;中的說明.&lt;/p&gt;

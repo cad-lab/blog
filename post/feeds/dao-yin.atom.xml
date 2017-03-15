@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/dao-yin.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2017-03-15T23:30:36+08:00</updated><entry><title>常用 Python3 程式模組</title><link href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html" rel="alternate"></link><published>2017-03-15T23:30:36+08:00</published><updated>2017-03-15T23:30:36+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2017-03-15:post/chang-yong-python3-cheng-shi-mo-zu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CADLab (虎尾科大MDE)</title><link href="http://cadlab.mde.tw/post/" rel="alternate"></link><link href="http://cadlab.mde.tw/post/feeds/dao-yin.atom.xml" rel="self"></link><id>http://cadlab.mde.tw/post/</id><updated>2017-03-15T23:32:18+08:00</updated><entry><title>常用 Python3 程式模組</title><link href="http://cadlab.mde.tw/post/chang-yong-python3-cheng-shi-mo-zu.html" rel="alternate"></link><published>2017-03-15T23:32:18+08:00</published><updated>2017-03-15T23:32:18+08:00</updated><author><name>kmol</name></author><id>tag:cadlab.mde.tw,2017-03-15:post/chang-yong-python3-cheng-shi-mo-zu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt;, &lt;a href="http://pytz.sourceforge.net/"&gt;pytz&lt;/a&gt;, &lt;a href="http://www.makotemplates.org/"&gt;mako&lt;/a&gt;, &lt;a href="https://www.crummy.com/software/BeautifulSoup/"&gt;beautifulsoup4&lt;/a&gt;, &lt;a href="https://github.com/PyMySQL/PyMySQL"&gt;pymysql&lt;/a&gt;, &lt;a href="https://github.com/coleifer/peewee"&gt;peewee&lt;/a&gt;, &lt;a href="https://github.com/sigmavirus24/github3.py"&gt;github3.py&lt;/a&gt;, &lt;a href="http://peterhudec.github.io/authomatic/"&gt;authomatic&lt;/a&gt; 等是 CADLab 網際程式開發流程中較常用的 Python3 模組.&lt;/p&gt;
 
 
 &lt;p&gt;其中的 &lt;a href="http://www.cherrypy.org/"&gt;CherryPy&lt;/a&gt; 與 &lt;a href="http://flask.pocoo.org/"&gt;Flask&lt;/a&gt; 位階相似, 但是
@@ -92,27 +92,7 @@ def autho_login(provider_name):
 &lt;p&gt;第2種情況則是, 使用者被轉介到 gmail 登入畫面時, 才輸入帳號密碼登入, 之後情境就與上述第1種情況相同.&lt;/p&gt;
 &lt;p&gt;上述兩種情況, 在瀏覽器中, 使用者的狀態是同時登入到 gmail 與網際程式中, 即便使用者登入網際程式後, 若使用者沒有主動登出 gmail, 這位使用者在瀏覽器的狀態中, 仍然保持登入到 gmail 的狀態.&lt;/p&gt;
 &lt;p&gt;因此第3種情況則是, 使用者經由 oauth2 協定轉介到 gmail 登入後同意讓網際程式擷取帳號資料後, 就能登入到網際程式中, 隨後使用者主動登出 gmail, 並不會影響仍然登入到網際程式中的狀態, 一直到使用者選擇登出網際應用程式為止.&lt;/p&gt;
-&lt;p&gt;理論上, 假如我們所開發的網際程式, 只是透過一系列上述的設定, 藉由 gmail 的帳號, 來登入我們所開發的網際程式, 比較好的作法是一旦完成我們網際應用程式的登入後, 可以經由程式方法登出使用者的 gmail 帳號, 然後再由使用者決定何時要登出我們所開發的網際程式.&lt;/p&gt;
-&lt;p&gt;以下就是利用 Javascript 在登入應用程式之後, 設法登出使用者 gmail 帳號的設計, 並且同時支援本地端程式開發與雲端應用的情況:&lt;/p&gt;
-&lt;pre class="brush: python"&gt;
-{# autho_login.html #}
-{Percent extends "autho_base.html" Percent}
-
-{% block body %}
-
-&amp;lt;!-- 這裡應該要再分近端與雲端的不同處理流程, 而且要在設定時便取得綁定的雲端網址 --&amp;gt;
-{% if local %}
-&amp;lt;script type="text/javascript"&amp;gt;
-window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:5000/check_login";
-&amp;lt;/script&amp;gt;
-{% else %}
-&amp;lt;script type="text/javascript"&amp;gt;
-window.location="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://your.server.domain.name/check_login";
-&amp;lt;/script&amp;gt;
-{% endif %}
-
-{% endblock body %}
-&lt;/pre&gt;</summary><category term="Python3"></category><category term="module"></category></entry><entry><title>讓 Virtualbox 虛擬機器隨主機啟動</title><link href="http://cadlab.mde.tw/post/rang-virtualbox-xu-ni-ji-qi-sui-zhu-ji-qi-dong.html" rel="alternate"></link><published>2016-10-16T11:03:17+08:00</published><updated>2016-10-16T11:03:17+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-10-16:post/rang-virtualbox-xu-ni-ji-qi-sui-zhu-ji-qi-dong.html</id><summary type="html">&lt;p&gt;目前所使用的 Virtualbox 主體分別是 Windows 7 與 Ubuntu 14.04/16.04 等, 在 Windows 7 的虛擬機器可以透過 &lt;a href="http://vboxvmservice.sourceforge.net/"&gt;http://vboxvmservice.sourceforge.net/&lt;/a&gt;, 讓特定虛擬機器 (virtual machine), 隨著 Host 電腦的開啟而以 service 的方式啟用. 至於在 Ubuntu 14.04 或 16.04 操作系統中, 則可以在 /etc/init.d/ 目錄下建立一個啟動程序, 然後讓電腦在開關機時執行, 主要的指令是開機時, 利用 VBoxHeadless 啟動個別的虛擬機器, 且在關機時, 利用 VBoxManage controlvm 儲存各虛擬機器的運行狀態.&lt;/p&gt;
+&lt;p&gt;理論上, 假如我們所開發的網際程式, 只是透過一系列上述的設定, 藉由 gmail 的帳號, 來登入我們所開發的網際程式, 比較好的作法是一旦完成我們網際應用程式的登入後, 可以經由程式方法登出使用者的 gmail 帳號, 然後再由使用者決定何時要登出我們所開發的網際程式.&lt;/p&gt;</summary><category term="Python3"></category><category term="module"></category></entry><entry><title>讓 Virtualbox 虛擬機器隨主機啟動</title><link href="http://cadlab.mde.tw/post/rang-virtualbox-xu-ni-ji-qi-sui-zhu-ji-qi-dong.html" rel="alternate"></link><published>2016-10-16T11:03:17+08:00</published><updated>2016-10-16T11:03:17+08:00</updated><author><name>Cad Lab</name></author><id>tag:cadlab.mde.tw,2016-10-16:post/rang-virtualbox-xu-ni-ji-qi-sui-zhu-ji-qi-dong.html</id><summary type="html">&lt;p&gt;目前所使用的 Virtualbox 主體分別是 Windows 7 與 Ubuntu 14.04/16.04 等, 在 Windows 7 的虛擬機器可以透過 &lt;a href="http://vboxvmservice.sourceforge.net/"&gt;http://vboxvmservice.sourceforge.net/&lt;/a&gt;, 讓特定虛擬機器 (virtual machine), 隨著 Host 電腦的開啟而以 service 的方式啟用. 至於在 Ubuntu 14.04 或 16.04 操作系統中, 則可以在 /etc/init.d/ 目錄下建立一個啟動程序, 然後讓電腦在開關機時執行, 主要的指令是開機時, 利用 VBoxHeadless 啟動個別的虛擬機器, 且在關機時, 利用 VBoxManage controlvm 儲存各虛擬機器的運行狀態.&lt;/p&gt;
 
 
 &lt;p&gt;StartVM 檔案的內容如下, 分別控制三台虛擬機器:&lt;/p&gt;
